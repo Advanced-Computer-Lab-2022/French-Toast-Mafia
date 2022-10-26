@@ -1,6 +1,6 @@
 const express= require("express");
 const mongoose= require ("mongoose");
-const MongoURI='';
+const MongoURI='mongodb+srv://admin:Mayar2611@db.ntawmzm.mongodb.net/?retryWrites=true&w=majority';
 
 const app= express();
 const port= process.env.PORT || "5000" ;
@@ -9,27 +9,36 @@ const admin= require('./Models/Admin');
 const Instructor= require('./Models/Instructor');
 const course= require('./Models/Course');
 
-const getAllUser= require ("./Controller/user-controller");
-const getAllAdmin= require ("./Controller/admin-controller");
-const getAllInstructor= require("./Controller/instructor-controller");
-const getAllCourse= require ("./Controller/course-controllers");
+const getAllUser = require ("./Controllers/user-controller");
+const getAllAdmin = require ("./Controllers/admin-controller");
+const {getAllInstructors , addCourse} = require("./Controllers/instructor-controller");
+const getAllCourses = require ("./Controllers/course-controllers");
 
+// THIS IS NEEDED TO PARSE THE BODY OF A RESPONSE AKA res.body
+app.use(express.json());
 
+mongoose.connect(MongoURI).then (()=> {
 
-mongoose.connect("mongodb+srv://admin:Mayar2611@db.ntawmzm.mongodb.net/?retryWrites=true&w=majority"
-        )
-        .then (()=> {
             console.log("mongoDB is now connected")
-            app.listen(5000, () => {
-                console.log('listening to requests on http://localhost:5000')
+            app.listen(port, () => {
+                console.log(`listening to requests on http://localhost:${port}`);
             })
         })
         .catch((err) => console.log(err));
 
-    app.get('/adminlist', getAllAdmin);
-    app.get('/courselist', getAllCourse);
-    app.get('/instructorlist', getAllInstructor);
-    app.get('/userlist', getAllUser);
+    //Admin Pages
+    app.get('/adminList', getAllAdmin);
+
+    //Course Pages
+    app.get('/courseList', getAllCourses);
+    
+    //Instructor Pages
+    app.get('/instructorList', getAllInstructors);
+    // app.post('/addCourse:id', addCourse);
+    app.post('/addCourse', addCourse);
+
+    //User Pages
+    app.get('/userList', getAllUser);
 
     app.use(express.json())
     app.post('/adduser', async (req,res)=>{
