@@ -6,11 +6,7 @@ const intructorSchema = new Schema({
       type: String,
       required: true
     },
-    InstrId: {
-      type: Number,
-      required: true,
-      unique: true
-    },
+    //removed instructor id since it gets automatically added by mongoDB
     InstrEmail: {
       type: String,
       required: true,
