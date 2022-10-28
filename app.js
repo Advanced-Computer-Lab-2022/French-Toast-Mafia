@@ -35,12 +35,12 @@ mongoose.connect(MongoURI).then (()=> {
     //Instructor Pages
     app.get('/instructorList', getAllInstructors);
     // app.post('/addCourse:id', addCourse);
-    app.post('/addCourse', addCourse);
+    app.post('/addCourse/:id', addCourse);
 
     //User Pages
     app.get('/userList', getAllUser);
 
-    app.use(express.json())
+
     app.post('/adduser', async (req,res)=>{
         const {AdminName,AdminId,AdminCountry}  = req.body
         const r = await admin.create({AdminName,AdminId,AdminCountry})
