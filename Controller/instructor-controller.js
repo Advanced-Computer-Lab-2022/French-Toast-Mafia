@@ -1,10 +1,13 @@
 const instructor=require("../Models/Instructor");
+const course=require("../Models/Course");
 
-function getAllInstructor (req,res) {
+function getAllInstructors (req,res) {
     instructor.find({}).then (function (instructor) {
     res.send(instructor);
     });
 };
 
-module.exports=getAllInstructor;
+
+
+module.exports={getAllInstructors,viewCoursePriceInstructor};
    

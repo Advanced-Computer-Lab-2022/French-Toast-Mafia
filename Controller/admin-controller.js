@@ -1,8 +1,9 @@
-const admin= require("../Models/Admin");
+const Admin= require("../Models/Admin");
+const course=require("../Models/Course");
 
 function getAllAdmin (req,res) {
-    admin.find({}).then (function (admin) {
-    res.send(admin);
+    Admin.find({}).then (function (Admin) {
+    res.send(Admin);
     });
 };
 

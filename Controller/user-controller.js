@@ -6,29 +6,40 @@ function getAllUser (req,res) {
     user.find({}).then (function (user) {
     res.send(user);
     });
-}
-// Model.find(userId: req.params.userId
+};
 
-//view all the titles of the courses available including the total hours of the course and course rating
-function viewCourseTitleHoursRating (req,res) {
-    course.find({TitleOfCourse,TotalHours,CourseRating}).then (function (course) {
-    res.send(course);
-    });
-}
-//view the price of each course
-function viewCoursePrice (req,res) {
-    //check user type if its corporate or not
-    if (user.type!="corporate") {
-    course.find({Price}).then (function (course) {
-    res.send(course);
-    });
-}
-else {
+//maryam functions
 
-    res.send("You are not allowed to view the price of the course");
-}
+//Requirement 7 --> View Course Title, Hours, Rating
+const viewCourseTitleHoursRating = async (req, res) => {
+    const a = await course.find({}, { NameOfCourse: 1, Duration: 1, Rating: 1, _id: 0 });
+    if (a == null) {
+        res.status(404).send('no courses available');
+    }
+    else {
+        res.json(a);
+    }
+};
+
+//Requirement 8 --> View Course Price (Individual Trainee)
+    const viewCoursePrice = async (req, res) => {
+        //user type must be individual trainee 
+        const t = await user.find({}, { Type: "Corporate Trainee" });
+        if (t == null) {
+            const courseID = req.params.id;
+            try {
+                const c = await course.findById(courseID, { Cost: 1, _id: 0 });
+                res.status(200).json(c)
+            }
+            catch (error) {
+                res.status(400).json({ error: error.message })
+            }
+        }
+        else {
+            res.status(404).send('Price is not Available');
+        }
+    };
 
 
-}
-module.exports= {getAllUser,viewCourseTitleHoursRating,viewCoursePrice};
+module.exports = {getAllUser,viewCourseTitleHoursRating,viewCoursePrice};
 
