@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const intructorSchema = new Schema({
+const instructorSchema = new Schema({
     InsrtName: {
       type: String,
       required: true
@@ -47,5 +47,5 @@ const intructorSchema = new Schema({
     }
   }, { timestamps: true });
   
-  const Instructor = mongoose.model('Instructor', intructorSchema);
+  const Instructor = mongoose.model('Instructor', instructorSchema);
   module.exports = Instructor;
