@@ -1,26 +1,22 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+
+
 const courseSchema = new Schema({
     NameOfCourse: {
       type: String,
       required: true
     },
 
-    //This references the instructor id that made the course (to make sure that the instructor actually exists)
-    //It will be useful if we need to filter courses by instructor
-    //El 7etta di Hatfdal commented l8ayet ma n3mel add instructors lel database fe3leyan
-    /*
-    InstructorId: {
-      type: mongoose.Types.ObjectId,
-      ref:'Instructor',
+    
+    Instructor: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Instructor',
       required: true
+
     },
-    */
-    InstructorId: {
-      type: String,
-      required: true
-    },
+   
     CourseSubtitle: {
       type: String,
       required: true
