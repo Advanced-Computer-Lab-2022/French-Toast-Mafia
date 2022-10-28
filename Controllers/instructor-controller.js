@@ -21,14 +21,8 @@ const getAllInstructors = async (req, res) => {
 const addCourse = async(req , res) => {
     //fill in all the required course details (that an instructor should fill when creating it)
    
-    //Uncomment this bit to delete a specific course
-
-    // try{
     
-    // courseModel.deleteMany({ NameOfCourse: 'PleaseWork' }, function (err) {
-    //     if(err) console.log(err);
-    //     console.log("Successful deletion");
-    //   });
+
 
     const Instructor = req.params.id;
    
@@ -36,8 +30,16 @@ const addCourse = async(req , res) => {
    const result = await instructorModel.findOne({_id:mongoose.Types.ObjectId(Instructor)});
    if(result !== null){
         try{
-    
-            // get the details from the body of the request
+
+            //Uncomment this block to delete a course
+            /*
+            courseModel.deleteOne({ NameOfCourse: 'PleaseWork' }, function (err) {
+                if(err) console.log(err);
+                console.log("Successful deletion");
+              });
+            */
+
+            // // get the details from the body of the request
             const{NameOfCourse,
                 CourseSubtitle,
                 Summary,
@@ -52,9 +54,16 @@ const addCourse = async(req , res) => {
                 LevelOfCourse,
                 Summary,
                 Subject,
+
                 Cost});
-        
-            res.status(200).json(result);
+    
+            //adds the course id to the instructor's courses given array
+            await instructorModel.findByIdAndUpdate(Instructor,{$push:{CourseGiven: course._id}},{new : true});
+
+            //in case you need to remove a course (1 removes the last element in the array)
+            // await instructorModel.findByIdAndUpdate(Instructor,{$pop: { CourseGiven: 1 }});
+             
+            res.status(200).json("Course Added");
             
         
         }catch(error){
