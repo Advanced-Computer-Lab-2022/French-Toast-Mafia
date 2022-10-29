@@ -4,6 +4,6 @@ const Course= require( "../Controller/instructor-controller");
 
 const router = express.Router();
 
-router.get("/",getAllInstructor );
+router.get("/",getInstructor );
 
 module.exports=router;

@@ -1,15 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const {ObjectId} = mongoose.Schema;
 
-const intructorSchema = new Schema({
-    InsrtName: {
+const instructorSchema = new Schema({
+    InstrName: {
       type: String,
       required: true
-    },
-    InstrId: {
-      type: Number,
-      required: true,
-      unique: true
     },
     InstrEmail: {
       type: String,
@@ -18,7 +14,7 @@ const intructorSchema = new Schema({
     },
     InstrCountry: {
       type: String,
-      required: true
+      required: false
     },
     InstrPassword: {
       type: String,
@@ -27,15 +23,15 @@ const intructorSchema = new Schema({
     },
     Department: {
       type: String,
-      required: true
+      required: false
     },
     Biography: {
-      type: Number,
-      required: true
+      type: String,
+      required: false
     },
     CourseGiven: {
       type: String,
-      required: true
+      required: false
     },
     ProfileViews: {
       type: Number,
@@ -43,13 +39,18 @@ const intructorSchema = new Schema({
     },
     PercentOrMoneyTaken: {
       type: Number,
-      required: true
+      required: false
     },
     Wallet: {
       type: Number,
-      required: true
+      required: false
+    },
+    Currency: {
+      type: String,
+      required: false
     }
+    
   }, { timestamps: true });
   
-  const Instructor = mongoose.model('Instructor', intructorSchema);
+  const Instructor = mongoose.model('Instructor', instructorSchema);
   module.exports = Instructor;
