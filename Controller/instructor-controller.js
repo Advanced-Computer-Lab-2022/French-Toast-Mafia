@@ -1,6 +1,7 @@
 const instructor= require("../Models/Instructor");
 const { default: mongoose } = require('mongoose');
 const Course = require ("../Models/Course")
+const searchCourseIns= require("../Controller/user-controller");
 
 //create instructor 
 const createInstructor = async(req,res) => {
