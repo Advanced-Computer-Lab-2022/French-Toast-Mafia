@@ -111,7 +111,7 @@ const filterSubject = async (req,res) => {
          filtersubj= {Subject: req.body.Subject}
     }
     const courseSubj= await Course.find(filtersubj).populate('Subject');
-    if (!Course){
+    if (!course){
      res.status(404).json({success: false})
     }
     res.send(courseSubj);
@@ -125,7 +125,7 @@ const filterSubject = async (req,res) => {
          filterRate= {Rating: req.body.Rating}
      }
      const courseRate= await Course.find(filterRate).populate('Rating');
-     if (!Course){
+     if (!course){
       res.status(404).json({success: false})
      }
      res.send(courseRate);
@@ -138,8 +138,8 @@ const filterSubject = async (req,res) => {
      if (req.body.Cost){
          listCost= {Cost: req.body.Cost}
      }
-     const filterCost= await Course.find(listCost).populate('Cost');
-     if (!Course){
+     const filterCost= await course.find(listCost).populate('Cost');
+     if (!course){
       res.status(404).json({success: false})
      }
      res.send(filterCost);
@@ -148,7 +148,7 @@ const filterSubject = async (req,res) => {
 
   const ViewMyCourses = async (req , res) => {
     const w = req.params.id;
-   const a = await Course.find({Instructor:w }, {NameOfCourse:1,_id:0});
+   const a = await course.find({instructor:w }, {NameOfCourse:1,_id:0});
        res.json(a);
       console.log(a);
    
@@ -167,7 +167,7 @@ const filterSubject = async (req,res) => {
 
 const SearchCourse = async (req,res) => {
     const w = req.params.id;
-    const a = await Course.find({
+    const a = await course.find({
         Instructor:w , 
         
         $or:[
@@ -199,7 +199,7 @@ const SearchCourse = async (req,res) => {
  const filterCourseSubjcet = async (req,res) => {
     const w = req.params.id;
     //const y = req.params.Subject;
-    const a = await Course.find({Instructor:w ,Subject:{'$regex': req.body.Subject}}, {Subject:1,_id:0});
+    const a = await course.find({instructor:w ,Subject:{'$regex': req.body.Subject}}, {Subject:1,_id:0});
       res.json(a);
      console.log(a);
     
@@ -219,7 +219,7 @@ const SearchCourse = async (req,res) => {
 const filterCourseCost = async (req,res) => {
     const w = req.params.id;
    // const y = req.params.Cost;
-    const a = await Course.find({Instructor:w ,
+    const a = await course.find({Instructor:w ,
         minPrice: { $lte: {price: req.body.price}}, 
          maxPrice: { $gte: {price: req.body.price}}}, 
         {NameOfCourse:1,Cost:1,_id:0});
