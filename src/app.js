@@ -3,8 +3,12 @@ const mongoose= require ("mongoose");
 const MongoURI='';
 require('dotenv').config()
 
+const cors=require('cors');
+
+
 const app= express();
-const port= process.env.PORT || "5000" ;
+app.use(cors());
+const port= process.env.PORT || 5000 ;
 const user= require('./Models/User');
 const admin= require('./Models/Admin');
 const Instructor= require('./Models/Instructor');
@@ -18,15 +22,17 @@ const  {getAllCourse } = require ("./Controller/course-controllers");
 
 app.use(express.json());
 
-mongoose.connect(process.env.Mongo_URI
-        )
+mongoose.connect("mongodb+srv://admin:Mayar2611@db.ntawmzm.mongodb.net/?retryWrites=true&w=majority")
         .then (()=> {
             console.log("mongoDB is now connected")
             app.listen(5000, () => {
                 console.log('listening to requests on http://localhost:5000')
             })
         })
-        //.catch((err) => console.log(err));
+        .catch((err) => console.log(err));
+
+
+
 
     app.get('/adminlist', getAllAdmin);
     app.get('/courselist', getAllCourse);
