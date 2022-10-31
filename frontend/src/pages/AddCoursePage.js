@@ -103,6 +103,7 @@ const AddCoursePage = () =>{
             <h2>Add a new Course</h2>
 
             <label>Course Name:</label>
+            <br />
             <input
                 type="text"
                 onChange={(e) => setName(e.target.value)}
@@ -110,6 +111,7 @@ const AddCoursePage = () =>{
             />
             <br />
             <label>Instructor:</label>
+            <br />
             <input
                 type="text"
                 onChange={(e) => setInstructor(e.target.value)}
@@ -117,6 +119,7 @@ const AddCoursePage = () =>{
             />
             <br />
              <label>Course Level:</label>
+             <br />
             <input
                 type="text"
                 onChange={(e) => setLevel(e.target.value)}
@@ -124,6 +127,7 @@ const AddCoursePage = () =>{
             />
             <br />
              <label>Summary:</label>
+             <br />
             <input
                 type="text"
                 onChange={(e) => setSummary(e.target.value)}
@@ -131,6 +135,7 @@ const AddCoursePage = () =>{
             />
             <br />
              <label>Subject</label>
+             <br />
             <input
                 type="text"
                 onChange={(e) => setSubject(e.target.value)}
@@ -138,6 +143,7 @@ const AddCoursePage = () =>{
             />
             <br />
              <label>Cost:</label>
+             <br />
             <input
                 type="number"
                 onChange={(e) => setCost(e.target.value)}
@@ -148,6 +154,7 @@ const AddCoursePage = () =>{
             <h3>Add Subtitle 1</h3>
 
             <label>Name:</label>
+            <br />
             <input
                 type="text"
                 onChange={(e) => setSubtitle1(e.target.value)}
@@ -155,6 +162,7 @@ const AddCoursePage = () =>{
             />
             <br />
             <label>Exercise:</label>
+            <br />
             <input
                 type="text"
                 onChange={(e) => setSubtitleEx1(e.target.value)}
@@ -162,6 +170,7 @@ const AddCoursePage = () =>{
             />
             <br />
             <label>Duration:</label>
+            <br />
             <input
                 type="text"
                 onChange={(e) => setSubtitleD1(e.target.value)}
@@ -171,6 +180,7 @@ const AddCoursePage = () =>{
             <h3>Add Subtitle 2</h3>
 
             <label>Name:</label>
+            <br />
             <input
                 type="text"
                 onChange={(e) => setSubtitle2(e.target.value)}
@@ -178,6 +188,7 @@ const AddCoursePage = () =>{
             />
             <br />
             <label>Exercise:</label>
+            <br />
             <input
                 type="text"
                 onChange={(e) => setSubtitleEx2(e.target.value)}
@@ -185,6 +196,7 @@ const AddCoursePage = () =>{
             />
             <br />
             <label>Duration:</label>
+            <br />
             <input
                 type="text"
                 onChange={(e) => setSubtitleD2(e.target.value)}
@@ -194,6 +206,7 @@ const AddCoursePage = () =>{
             <h3>Add Subtitle 3</h3>
 
             <label>Name:</label>
+            <br />
             <input
                 type="text"
                 onChange={(e) => setSubtitle3(e.target.value)}
@@ -201,6 +214,7 @@ const AddCoursePage = () =>{
             />
             <br />
             <label>Exercise:</label>
+            <br />
             <input
                 type="text"
                 onChange={(e) => setSubtitleEx3(e.target.value)}
@@ -208,6 +222,7 @@ const AddCoursePage = () =>{
             />
             <br />
             <label>Duration:</label>
+            <br />
             <input
                 type="text"
                 onChange={(e) => setSubtitleD3(e.target.value)}
@@ -217,6 +232,7 @@ const AddCoursePage = () =>{
             <h3>Add Subtitle 4</h3>
 
             <label>Name:</label>
+            <br />
             <input
                 type="text"
                 onChange={(e) => setSubtitle4(e.target.value)}
@@ -224,6 +240,7 @@ const AddCoursePage = () =>{
             />
             <br />
             <label>Exercise:</label>
+            <br />
             <input
                 type="text"
                 onChange={(e) => setSubtitleEx4(e.target.value)}
@@ -231,6 +248,7 @@ const AddCoursePage = () =>{
             />
             <br />
             <label>Duration:</label>
+            <br />
             <input
                 type="text"
                 onChange={(e) => setSubtitleD4(e.target.value)}
@@ -240,6 +258,7 @@ const AddCoursePage = () =>{
             <h3>Add Subtitle 5</h3>
 
             <label>Name:</label>
+            <br />
             <input
                 type="text"
                 onChange={(e) => setSubtitle5(e.target.value)}
@@ -247,6 +266,7 @@ const AddCoursePage = () =>{
             />
             <br />
             <label>Exercise:</label>
+            <br />
             <input
                 type="text"
                 onChange={(e) => setSubtitleEx5(e.target.value)}
@@ -254,6 +274,7 @@ const AddCoursePage = () =>{
             />
             <br />
             <label>Duration:</label>
+            <br />
             <input
                 type="text"
                 onChange={(e) => setSubtitleD5(e.target.value)}
