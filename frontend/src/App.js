@@ -1,25 +1,32 @@
-// import logo from './logo.svg';
-// import './App.css';
+import {BrowserRouter,Routes,Route} from 'react-router-dom';
+import React, {useState,useEffect} from 'react';
+import './App.css';
+import axios from 'axios';
 
-function App() {
+import Navbar from './Components/Navbar';
+import FrontPage from './pages/FrontPage';
+import AllCoursesInfo from './Components/AllCoursesInfo';
+import CourseInfoPage from './pages/CourseInfoPage';
+import CoursePricePage from './pages/CoursePricePage';
+
+function App(){
+
   return (
-    <div className="App">
-      {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header> */}
-    </div>
+  <div>
+   <BrowserRouter>
+
+   <Navbar/>
+   <div className='pages'> 
+   <Routes>
+    <Route exact path='/' element={<FrontPage/>}/>
+    <Route exact path='/CourseInfoPage' element={<CourseInfoPage/>}/>
+    <Route exact path='/CoursePricePage' element={<CoursePricePage/>}/>
+   </Routes>
+   </div>
+   </BrowserRouter>
+  </div>
   );
 }
+
 
 export default App;

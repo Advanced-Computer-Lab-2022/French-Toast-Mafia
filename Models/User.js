@@ -10,23 +10,22 @@ const userSchema = new Schema({
       type: String,
       required: true,
       unique: true
-
     },
     Age: {
       type: Number,
-      required: true,
+      required: false
     },
     Gender: {
         type: String,
-        required: true,
+        required: false
     },
     Birthday: {
         type: Date,
-        required: true,
+        required: false
     },
     Country: {
       type: String,
-      required: true
+      required: false
     },
     Password: {
       type: String,
@@ -35,19 +34,19 @@ const userSchema = new Schema({
     },
     PhoneNumber: {
       type: Number,
-      required: true
+      required: false
     },
-    Type : {                //individual or coorperate trainee
+    Type : {                //individual or corperate trainee 
         type: String,
         required: true
     },
     Job: {
       type: String,
-      required: true
+      required: false
     },
     FieldOrMajor: {
         type: String,
-        required: true
+        required: false
     },
     University: {
         type: String,
@@ -60,7 +59,11 @@ const userSchema = new Schema({
     PreferredLevel : {
         type: String,
         required: false
-    }
+    },
+    UserCurrency : {
+      type: Number,
+      required: false
+  }
   }, { timestamps: true });
   
   const User = mongoose.model('User', userSchema);

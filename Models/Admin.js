@@ -11,12 +11,8 @@ const AdminSchema = new Schema({
         required: true,
         unique: true
 
-    },
-    AdminCountry: {
-        type: String,
-        required: true
     }
 
 }, { timestamps: true });
 const Admin = mongoose.model('Admin', AdminSchema);
-  module.exports = Admin;
+module.exports = Admin;
