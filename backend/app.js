@@ -20,7 +20,7 @@ const {getAllCourse , viewCourse}= require ("./Controller/course-controllers");
 //const selectCountry= require ("./Controller/user-controller");
 //const selectCount=require("./views/SelectCountry");
 const {getAllUser,viewCourseTitleHoursRating,viewCoursePrice,selectCountryUser,ChangeCurrency}= require ("./Controller/user-controller");
-const {getAllInstructors,selectCountryInstructor,addCourse , ViewMyCourses,createInstructor , filterCourseSubjcet , filterCourseCost , ViewMyCourses , SearchCourse}= require ("./Controller/instructor-controller");
+const {getAllInstructors,selectCountryInstructor,addCourse , createInstructor , filterCourseSubjcet , filterCourseCost , ViewMyCourses , SearchCourse}= require ("./Controller/instructor-controller");
 
 
 mongoose.connect(MongoURI)
