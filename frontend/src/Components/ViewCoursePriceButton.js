@@ -6,6 +6,8 @@ import axios from 'axios'
 
 
 const ViewCoursePriceButton = ({price}) => {
+  
+  
   const navigate=useNavigate();
   const[showPrice,setShowPrice]=useState(false);
  

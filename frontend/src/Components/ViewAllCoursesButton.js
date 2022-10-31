@@ -11,8 +11,7 @@ const ViewAllCoursesButton = () => {
   
   return (
   <div>
-  <div>
-   
+  <div>   
     <button onClick={onClick}>   
       View All Courses</button>
      
