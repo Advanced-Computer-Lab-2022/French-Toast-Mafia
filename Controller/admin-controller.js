@@ -13,14 +13,12 @@ const createAdmin = async(req,res) => {  //add administrator
         
     var name = req.body.AdminName;
     var id = req.body.AdminId;
-     var country= req.body.AdminCountry;
 
         let findAdmin= await Admin.findOne({AdminName: name })
         if(!findAdmin){
             try{ const admin = await Admin.create(
                 { AdminName:name ,
                   AdminId: id,
-                  AdminCountry: country
     
                 }
             )
@@ -41,32 +39,17 @@ const createAdmin = async(req,res) => {  //add administrator
 
     const createInstructor = async(req,res) => {  //add instructors
       
-        var name=req.body.InsrtName;
-        var id= req.body.InstrId;
+        var name=req.body.InstrName;
         var email = req.body.InstrEmail;
-        var country= req.body.InstrCountry;
         var password = req.body.InstrPassword;
-        var department=req.body.Department;
-        var biography=req.body.Biography;
-        var coursegiven=req.body.CourseGiven;
-        var profileviews=req.body.ProfileViews;
-        var percentOrMoneyTaken=req.body.PercentOrMoneyTaken;
-        var wallet=req.body.Wallet;
+        
 
         
     try{ const instructor = await Instructor.create(
        {
-        InsrtName: name,
-        InstrId: id,
-        InstrEmail:email ,
-        InstrCountry: country,
-        InstrPassword: password,
-        Department:department,
-        Biography:biography,
-        CourseGiven: coursegiven,
-        ProfileViews: profileviews,
-        PercentOrMoneyTaken: percentOrMoneyTaken,
-        Wallet: wallet
+        InstrName: name,
+        InstrEmail: email ,
+        InstrPassword: password
         }
     )
    return res.status(200).json({Message: "Instructor is added successfully!"});
@@ -82,30 +65,16 @@ const createCorporateTrainess = async(req,res) => { //Requirement 3
 
     var name=req.body.Name;
     var email=req.body.Email;
-    var age=req.body.Age;
-    var gender= req.body.Gender;
-    var birthday=req.body.Birthday;
-    var country=req.body.Country;
     var password=req.body.Password;
-    var phonenumber=req.body.PhoneNumber;
     var type=req.body.Type;
-    var job = req.body.Job;
-    var fieldormajor=req.body.FieldOrMajor;
     
     if( type == "corporate trainee"){
         try{ const corporateTrainees = await User.create(
             {
              Name: name,
              Email:email ,
-             Age: age ,
-             Gender: gender,
-             Birthday: birthday,
-             Country: country,
              Password: password,
-             PhoneNumber: phonenumber,
              Type: type,
-             Job: job,
-             FieldOrMajor: fieldormajor
             } )
         }
         catch(err){

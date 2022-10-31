@@ -14,19 +14,19 @@ const userSchema = new Schema({
     },
     Age: {
       type: Number,
-      required: true,
+      required: false,
     },
     Gender: {
         type: String,
-        required: true,
+        required: false,
     },
     Birthday: {
         type: Date,
-        required: true,
+        required: false,
     },
     Country: {
       type: String,
-      required: true
+      required: false
     },
     Password: {
       type: String,
@@ -35,7 +35,7 @@ const userSchema = new Schema({
     },
     PhoneNumber: {
       type: Number,
-      required: true
+      required: false
     },
     Type : {                //individual or coorperate trainee
         type: String,
@@ -43,11 +43,11 @@ const userSchema = new Schema({
     },
     Job: {
       type: String,
-      required: true
+      required: false
     },
     FieldOrMajor: {
         type: String,
-        required: true
+        required: false
     },
     University: {
         type: String,

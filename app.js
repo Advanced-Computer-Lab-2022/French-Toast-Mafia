@@ -1,9 +1,11 @@
 const express= require("express");
 const mongoose= require ("mongoose");
 const MongoURI='';
+const cors = require('cors');
 
 const app= express();
 app.use(express.json()) 
+app.use(cors());
 
 
 const port= process.env.PORT || "5000" ;
@@ -35,7 +37,7 @@ mongoose.connect("mongodb+srv://admin:Mayar2611@db.ntawmzm.mongodb.net/?retryWri
     app.get('/userlist', getAllUser);
     app.get('/adminlist', getAllAdmin);
     app.post('/createAdmin',createAdmin);
-    app.post('/creatInstructor',createInstructor);
+    app.post('/createInstructor',createInstructor);
     app.post('/createCorporatetrainess',createCorporateTrainess);
 
     app.use(express.json()) 

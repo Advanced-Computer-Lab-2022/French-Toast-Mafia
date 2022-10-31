@@ -2,14 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const intructorSchema = new Schema({
-    InsrtName: {
+    InstrName: {
       type: String,
       required: true
-    },
-    InstrId: {
-      type: Number,
-      required: true,
-      unique: true
     },
     InstrEmail: {
       type: String,
@@ -18,7 +13,7 @@ const intructorSchema = new Schema({
     },
     InstrCountry: {
       type: String,
-      required: true
+      required: false
     },
     InstrPassword: {
       type: String,
@@ -27,15 +22,15 @@ const intructorSchema = new Schema({
     },
     Department: {
       type: String,
-      required: true
+      required: false
     },
     Biography: {
       type: Number,
-      required: true
+      required: false
     },
     CourseGiven: {
       type: String,
-      required: true
+      required: false
     },
     ProfileViews: {
       type: Number,
@@ -43,11 +38,11 @@ const intructorSchema = new Schema({
     },
     PercentOrMoneyTaken: {
       type: Number,
-      required: true
+      required: false
     },
     Wallet: {
       type: Number,
-      required: true
+      required: false
     }
   }, { timestamps: true });
   
