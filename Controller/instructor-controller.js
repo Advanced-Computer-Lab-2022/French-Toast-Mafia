@@ -31,8 +31,8 @@ function getInstructor (req,res) {
 //filter courses based on subject
 const filterSubject = async (req,res) => {
    let filtersubj= {};
-   if (req.params.Subject){
-        filtersubj= {Subject: req.params.Subject}
+   if (req.body.Subject){
+        filtersubj= {Subject: req.body.Subject}
    }
    const courseSubj= await Course.find(filtersubj).populate('Subject');
    if (!Course){
@@ -45,8 +45,8 @@ const filterSubject = async (req,res) => {
 //filter rating 
 const filterRating = async (req,res) => {
     let filterRate= {};
-    if (req.params.Rating){
-        filterRate= {Rating: req.params.Rating}
+    if (req.body.Rating){
+        filterRate= {Rating: req.body.Rating}
     }
     const courseRate= await Course.find(filterRate).populate('Rating');
     if (!Course){
@@ -59,8 +59,8 @@ const filterRating = async (req,res) => {
  //filter price 
  const filterCost = async (req,res) => {
     let listCost= {};
-    if (req.params.Cost){
-        listCost= {Cost: req.params.Cost}
+    if (req.body.Cost){
+        listCost= {Cost: req.body.Cost}
     }
     const filterCost= await Course.find(listCost).populate('Cost');
     if (!Course){

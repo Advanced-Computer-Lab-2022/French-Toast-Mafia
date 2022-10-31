@@ -35,11 +35,11 @@ mongoose.connect(process.env.Mongo_URI
     app.get('/userlist/:id', getAllUser);
 
 
-    app.get("/filterSub/:Subject",filterSubject);
-    app.get("/filterRating/:Rating",filterRating);
-    app.get("/filterCost/:Cost",filterCost);
-    app.get("/filterCostUser/:Cost", filterCostUser);
-    app.get("/searchCourseUser/:key",SearchCourse);
+    app.get("/filterSub",filterSubject);
+    app.get("/filterRating",filterRating);
+    app.get("/filterCost",filterCost);
+    app.get("/filterCostUser", filterCostUser);
+    app.get("/searchCourseUser",SearchCourse);
 
 
 

@@ -33,13 +33,13 @@ function getAllUser (req,res) {
     user.find({}).then (function (user) {
     res.send(user);
     });
-};
+}
 
 //filter price if you're individual trainee
 const filterCostUser = async (req,res) => {
     let listCost= {};
-    if (req.params.Cost && req.params.Type!=="Corporate Trainee"){
-        listCost= {Cost: req.params.Cost}
+    if (req.body.Cost && req.body.Type!=="Corporate Trainee"){
+        listCost= {Cost: req.body.Cost}
     }
     const filterCostUser= await Course.find(listCost).populate('Cost');
     if (!Course){
@@ -50,21 +50,66 @@ const filterCostUser = async (req,res) => {
 
  }
 
- //search course name ,subject, instructor
-const SearchCourse= async (req,res) => {
-        let searchList= await Course.find({
-                $or: [
-                    { NameOfCourse: { '$regex': req.params.key } },
-                    { Subject: { '$regex': req.params.key } } ,
-                    {Instructor: req.params.key }  
-                  ],
-                })
-                    res.send(searchList);
+
+ const SearchCourse = async (req,res) => {
+   
+    const { NameOfCourse, Subject, Instructor}= req.body;
+    try {
+        if (NameOfCourse){
+            const courses= await Course.find ({'NameOfCourse': {'$regex': NameOfCourse,'$options':'i'}})
+                .select('NameOfCourse');
+                return res.status(200).json(courses);
+        }
+        if (Subject){
+            const courses= await Course.find ({'Subject': {'$regex': Subject,'$options':'i'}})
+                .select('Subject');
+                return res.status(200).json(courses);
+        }
+        if (Instructor){
+            const courses= await Course.find ({'Instructor': {'$regex': Instructor}})
+                .select('Instructor');
+                return res.status(200).json(courses);
+        }
+    } catch (error) {
+         res.status(400).json({error:error.message})
+    }
+
+        // res.send(SearchList);
+
+        //  res.json(SearchList);
+
+    //  console.log(SearchList);
+     // if (SearchList == null) {
+    //     res.status(404).send('not available');
+    // }
+    // else {
+    //     let x= Object.values(SearchList);
+    //     //console.log(x);
+    //     let result = x.map(SearchList => SearchList.Subject);
+    //     console.log(result);
+       
+    // }
+   
 }
+
+
 module.exports={getAllUser, createUser,filterCostUser,SearchCourse };
 
 
-// // let keyCourses = await Courses.find
+
+
+ //search course name ,subject, instructor
+// const SearchCourse= async (req,res) => {
+//         let searchList= await Course.find({
+//                 $or: [
+//                     { NameOfCourse: { '$regex': req.body.NameOfCourse } },
+//                     { Subject: { '$regex': req.body.Subject } } ,
+//                     {Instructor: req.body.Instructor }  
+//                   ]
+//                 })
+//                     res.send(searchList);
+// }
+
  
 
 
@@ -85,3 +130,31 @@ module.exports={getAllUser, createUser,filterCostUser,SearchCourse };
 
         //    ) 
         //    searchList=) 
+
+
+
+
+         // const {search}= req.body;
+    // const nameOfCourse= new RegExp (search,"i");
+    // const subject= new RegExp (search, "i");
+    // const instr= new RegExp (search,"i");
+    // const searchList = await Course.find({
+    //      $or:[
+    //     { NameOfCourse: {nameOfCourse }},
+    //     { Subject: {subject },
+    //     {"" : {$in:instr}}
+    //     // { Instructor: req.body.Instructor }  
+    // ]  
+    // },  {Subject:1,  
+    //     NameOfCourse:1 , 
+    //     CourseSubtitle:1 ,
+    //     LevelOfCourse:1 ,  
+    //     Summary:1 ,
+    //     Rating:1 ,
+    //     NoOfViews:1 ,
+    //     Cost:1,
+    //     _id:1});
+
+
+         
+   
