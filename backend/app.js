@@ -39,7 +39,7 @@ mongoose.connect(MongoURI)
     .catch((err) => console.log(err));
 
 
-    app.get('/adminlist', getAllAdmin);
+    // app.get('/adminlist', getAllAdmin);
     app.get('/courselist', getAllCourse);
     app.get('/instructorList', getAllInstructors);
     app.get('/userlist', getAllUser);
@@ -56,7 +56,7 @@ mongoose.connect(MongoURI)
 
     //////////////////////////////////////////////////////////////////////////////////
 
-    app.post ('/addInstructor', createInstructor);
+    // app.post ('/addInstructor', createInstructor);
 
     app.get ('/ViewMyCourses/:id',ViewMyCourses);
 
@@ -76,7 +76,7 @@ mongoose.connect(MongoURI)
         res.json(r)
     });
 
-    app.get('/adminlist', getAllAdmin);
+    // app.get('/adminlist', getAllAdmin);
 
 
     app.get("/viewcourses", async (req,res)=> {

@@ -32,8 +32,8 @@ const createUser = async(req,res) => {
 
 //get all users 
 
-const user=require("../Models/User");
-const course=require("../Models/Course");
+
+
 
 
 

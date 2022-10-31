@@ -34,11 +34,11 @@ const courseSchema = new Schema({
     },
     Rating: {
       type: String,
-      required: true
+      required: false
     },
     NoOfViews: {
       type: Number,
-      required: true
+      required: false
     },
     Discount: {
       type: Number,
