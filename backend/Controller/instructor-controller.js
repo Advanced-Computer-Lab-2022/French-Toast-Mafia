@@ -63,7 +63,6 @@ const addCourse = async(req , res) => {
                 LevelOfCourse,
                 Summary,
                 Subject,
-                
                 Cost});
     
             //adds the course id to the instructor's courses given array
