@@ -11,10 +11,6 @@ const AdminSchema = new Schema({
         required: true,
         unique: true
 
-    },
-    AdminCountry: {
-        type: String,
-        required: false
     }
 
 }, { timestamps: true });

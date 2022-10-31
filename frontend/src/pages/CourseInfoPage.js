@@ -9,6 +9,7 @@ const CourseInfoPage = () => {
     const fetchCourses = async () => {
       const response = await 
       fetch('http://localhost:5000/viewcoursetitlehoursrating');
+
       const data = await response.json();
       
       if(response.ok){

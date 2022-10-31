@@ -11,15 +11,40 @@ body {
   margin: 0;
   font-family: "Poppins";
 }
+
 .navBar{
-  background: white;
-  max-width: 1500px;
-  margin: 0 auto;
-  padding: 0px 20px;
-  display: flex;
+ padding: 0;
+ margin: 0;
+ box-sizing: border-box;
+}
+.navBar header{
+display: flex;
   align-items: center;
   justify-content: space-between;
+  height: 80px;
+  padding: 0 2rem;
+  background-color: #1aac83;
+  color: whitesmoke;
 }
+
+.navBar a{
+  margin: 0 2rem;
+  color: whitesmoke;
+  text-decoration: none;
+}
+
+.navBar a:hover{
+  color: #000000;
+}
+
+.navBar logo{
+  font-size: 30px;
+  font-family: "VT323";
+  color: var(--primary);
+  text-decoration: none;
+}
+
+
 header {
   background: rgb(241,241,241);
 }

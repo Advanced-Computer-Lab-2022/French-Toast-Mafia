@@ -1,45 +1,32 @@
-import { DownOutlined } from '@ant-design/icons';
-import { Dropdown, Menu, message, Space } from 'antd';
-import React from 'react';
-import '../App.css';
 
-
-const onClick = ({ key }) => {
-  message.info(`Click on item ${key}`);
+const CountriesDropdown = () => {
+ 
   
-};
-
-const menu = (
-  <Menu
-    onClick={onClick}
-    items={[
-      {
-        label: '1st menu item',
-        key: '1',
-      },
-      {
-        label: '2nd menu item',
-        key: '2',
-      },
-      {
-        label: '3rd menu item',
-        key: '3',
-      },
-    ]}
-  />
-);
-const CountriesDropdown = () => (
-  <header className='Dropdown'>
-  <Dropdown overlay={menu}>
-    <a onClick={(e) => e.preventDefault()}>
-      <Space>
-        Select Your Country
-        <DownOutlined />
-      </Space>
-    </a>
-  </Dropdown>
-  </header>
-);
+  return (
+    <div>
+    <FormControl fullWidth>
+    <InputLabel id="demo-simple-select-label">Select your Country</InputLabel>
+    <Select
+      labelId="demo-simple-select-label"
+      id="demo-simple-select"
+      // value={Country}
+      // label="Country"
+      // onChange={handleChange}
+    >
+      <MenuItem value={10}>Egypt</MenuItem>
+      <MenuItem value={20}>United Kingdom</MenuItem>
+      <MenuItem value={30}>United States</MenuItem>
+      <MenuItem value={30}>Spain</MenuItem>
+      <MenuItem value={30}>India</MenuItem>
+    </Select>
+  </FormControl>
+  </div>
+  )
+}
 
 
-export default CountriesDropdown;
+
+
+export default CountriesDropdown
+
+

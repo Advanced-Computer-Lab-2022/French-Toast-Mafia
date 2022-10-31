@@ -4,7 +4,7 @@ import React, {useState,useEffect} from 'react';
 
 //components
 import ViewAllCoursesButton from '../Components/ViewAllCoursesButton'
-import CourseInfoPage from './CourseInfoPage';
+import CountriesDropdown from '../Components/CountriesDropdown'
 const FrontPage = () => {
     
   
@@ -14,6 +14,11 @@ const FrontPage = () => {
         <h1 className='App'>Online Learning Platform</h1>
           <header className='home'>
               <ViewAllCoursesButton/>
+           
+          </header>
+          <header className='app'>
+
+          <CountriesDropdown/>
           </header>
          
           </div>
