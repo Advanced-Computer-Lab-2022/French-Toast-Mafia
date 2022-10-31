@@ -20,7 +20,7 @@ const {getAllCourse , viewCourse}= require ("./Controller/course-controllers");
 //const selectCountry= require ("./Controller/user-controller");
 //const selectCount=require("./views/SelectCountry");
 const {getAllUser,viewCourseTitleHoursRating,viewCoursePrice,selectCountryUser,ChangeCurrency}= require ("./Controller/user-controller");
-const {getAllInstructors,selectCountryInstructor,addCourse,ViewMyCourses}= require ("./Controller/instructor-controller");
+const {getAllInstructors,selectCountryInstructor,addCourse , ViewMyCourses,createInstructor , filterCourseSubjcet , filterCourseCost , ViewMyCourses , SearchCourse}= require ("./Controller/instructor-controller");
 
 
 mongoose.connect(MongoURI)
@@ -38,8 +38,11 @@ mongoose.connect(MongoURI)
     })
     .catch((err) => console.log(err));
 
+
+    app.get('/adminlist', getAllAdmin);
     app.get('/courselist', getAllCourse);
     app.get('/instructorList', getAllInstructors);
+    app.get('/userlist', getAllUser);
 
      /////////////////////////////////////////////////////////////////////////////////
      
@@ -53,6 +56,18 @@ mongoose.connect(MongoURI)
 
     //////////////////////////////////////////////////////////////////////////////////
 
+    app.post ('/addInstructor', createInstructor);
+
+    app.get ('/ViewMyCourses/:id',ViewMyCourses);
+
+    app.get ('/filterCourseSubject/:id',filterCourseSubjcet);
+
+    
+    app.get ('/filterCourseCost/:id',filterCourseCost) ; 
+
+    app.post ('/addCourse/:id',addCourse);
+
+    app.get ('/SearchCourse/:id',SearchCourse);
 
     app.use(express.json())
     app.post('/adduser', async (req,res)=>{
@@ -64,4 +79,13 @@ mongoose.connect(MongoURI)
     app.get('/adminlist', getAllAdmin);
 
 
-      
+    app.get("/viewcourses", async (req,res)=> {
+        console.log(req.params);
+        const a= await Course.find();
+        if(a==null){
+         res.status(404).send('no courses available');
+        }
+        else{
+         res.json(a); }
+     
+     });
