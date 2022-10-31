@@ -10,7 +10,6 @@ const userSchema = new Schema({
       type: String,
       required: true,
       unique: true
-
     },
     Age: {
       type: Number,
@@ -37,7 +36,7 @@ const userSchema = new Schema({
       type: Number,
       required: false
     },
-    Type : {                //individual or coorperate trainee
+    Type : {                //individual or coorperate trainee 
         type: String,
         required: true
     },
@@ -60,7 +59,11 @@ const userSchema = new Schema({
     PreferredLevel : {
         type: String,
         required: false
-    }
+    },
+    UserCurrency : {
+      type: Number,
+      required: false
+  }
   }, { timestamps: true });
   
   const User = mongoose.model('User', userSchema);

@@ -1,8 +1,9 @@
+
 const Admin = require("../Models/Admin");
 const Instructor= require("../Models/Instructor");
-const User= require("../Models/User");
+const User= require("../Models/User")
 
-
+//get admins
 function getAllAdmin (req,res) {
    let x= Admin.find({}).then (function (admin) {
     res.send(admin);
@@ -52,6 +53,7 @@ const createAdmin = async(req,res) => {  //add administrator
         InstrPassword: password
         }
     )
+    
    return res.status(200).json({Message: "Instructor is added successfully!"});
   }
   catch(err){

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const {ObjectId} = mongoose.Schema;
 
 const courseSchema = new Schema({
     NameOfCourse: {
@@ -10,18 +11,14 @@ const courseSchema = new Schema({
       type: String,
       required: true
     },
-    CourseId: {
-      type: String,
-      required: true,
-      unique: true
-    },
     Instructor: {
-      type: String,
+      type: mongoose.Types.ObjectId,
+      ref: 'Instructor',
       required: true
     },
     Duration: {
       type: String,
-      required: true
+      required: false
     },
     LevelOfCourse: {
       type: String,
@@ -48,9 +45,14 @@ const courseSchema = new Schema({
       required: false
     },
     Cost: {
-        type: String,
+        type: Number,
         required: true
-      }
+      },
+    CourseCurrency: {
+        type: Number,
+        required: false
+    }
+    
   }, { timestamps: true });
   
   const Course = mongoose.model('Course', courseSchema);
