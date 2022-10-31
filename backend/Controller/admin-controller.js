@@ -43,7 +43,6 @@ const createAdmin = async(req,res) => {  //add administrator
         var email = req.body.InstrEmail;
         var password = req.body.InstrPassword;
         
-
         
     try{ const instructor = await Instructor.create(
        {

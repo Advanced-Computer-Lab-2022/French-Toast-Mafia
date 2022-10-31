@@ -13,14 +13,14 @@ const admin= require('./Models/Admin');
 const Instructor= require('./Models/Instructor');
 const course= require('./Models/Course');
 
-const getAllAdmin= require ("./Controller/admin-controller");
+    const {getAllAdmin,  createInstructor }= require ("./Controller/admin-controller");
 const {getAllCourse , viewCourse}= require ("./Controller/course-controllers");
 
 //maryam functions importing from user-controller.js
 //const selectCountry= require ("./Controller/user-controller");
 //const selectCount=require("./views/SelectCountry");
 const {getAllUser,viewCourseTitleHoursRating,viewCoursePrice,selectCountryUser,ChangeCurrency}= require ("./Controller/user-controller");
-const {getAllInstructors,selectCountryInstructor,addCourse , createInstructor , filterCourseSubjcet , filterCourseCost , ViewMyCourses , SearchCourse}= require ("./Controller/instructor-controller");
+const {getAllInstructors,selectCountryInstructor,addCourse , filterCourseSubjcet , filterCourseCost , ViewMyCourses , SearchCourse}= require ("./Controller/instructor-controller");
 
 
 mongoose.connect(MongoURI)
@@ -39,10 +39,15 @@ mongoose.connect(MongoURI)
     .catch((err) => console.log(err));
 
 
-    // app.get('/adminlist', getAllAdmin);
+    app.get('/adminlist', getAllAdmin);
     app.get('/courselist', getAllCourse);
     app.get('/instructorList', getAllInstructors);
     app.get('/userlist', getAllUser);
+    app.get('/viewcoursetitlehoursrating',viewCourseTitleHoursRating);
+    app.get('viewcourseprice/:id',viewCoursePrice);
+    app.post ('/selectCountry/:id', selectCountryUser);
+    app.post('/selectCountryInstr/:id', selectCountryInstructor);
+    app.post('/addInstructor',createInstructor)
 
      /////////////////////////////////////////////////////////////////////////////////
      
@@ -62,10 +67,7 @@ mongoose.connect(MongoURI)
 
     app.get ('/filterCourseSubject/:id',filterCourseSubjcet);
 
-    
     app.get ('/filterCourseCost/:id',filterCourseCost) ; 
-
-    app.post ('/addCourse/:id',addCourse);
 
     app.get ('/SearchCourse/:id',SearchCourse);
 
