@@ -4,6 +4,8 @@ const MongoURI='';
 require ('dotenv').config()
 
 const app= express();
+const cors=require('cors');
+
 const port= process.env.PORT || "5000" ;
 const user= require('./Models/User');
 const admin= require('./Models/Admin');
@@ -14,7 +16,9 @@ const getAllAdmin= require ("./Controller/admin-controller");
 const {getInstructor, createInstructor, filterSubject, filterRating, filterCost} = require("./Controller/instructor-controller");
 const {getAllCourse, createCourse} = require ("./Controller/course-controllers");
 
-app.use(express.json())   
+app.use(express.json())  
+app.use(cors());
+ 
 mongoose.connect(process.env.Mongo_URI
         )
         .then (()=> {

@@ -52,8 +52,8 @@ const filterCostUser = async (req,res) => {
 
 
  const SearchCourse = async (req,res) => {
-   
-    const { NameOfCourse, Subject, Instructor}= req.body;
+   const {NameOfCourse, Subject, Instructor}= req.body;
+
     try {
         if (NameOfCourse){
             const courses= await Course.find ({'NameOfCourse': {'$regex': NameOfCourse,'$options':'i'}})
@@ -65,33 +65,16 @@ const filterCostUser = async (req,res) => {
                 .select('Subject');
                 return res.status(200).json(courses);
         }
-        if (Instructor){
-            const courses= await Course.find ({'Instructor': {'$regex': Instructor}})
-                .select('Instructor');
-                return res.status(200).json(courses);
+        if(InstrName){
+            const courses = await InstrName.find({'InstrName': {'$regex': InstrName,'$options':'i'}})
+            .select('InstrName');
+            return res.status(200).json(courses); 
         }
+       
     } catch (error) {
          res.status(400).json({error:error.message})
     }
-
-        // res.send(SearchList);
-
-        //  res.json(SearchList);
-
-    //  console.log(SearchList);
-     // if (SearchList == null) {
-    //     res.status(404).send('not available');
-    // }
-    // else {
-    //     let x= Object.values(SearchList);
-    //     //console.log(x);
-    //     let result = x.map(SearchList => SearchList.Subject);
-    //     console.log(result);
-       
-    // }
-   
 }
-
 
 module.exports={getAllUser, createUser,filterCostUser,SearchCourse };
 
@@ -155,6 +138,35 @@ module.exports={getAllUser, createUser,filterCostUser,SearchCourse };
     //     Cost:1,
     //     _id:1});
 
+
+
+     // if (insName){
+        //     const instr = await Course.find({});
+        //     for (let i = 0; i < instr.length; i++) {
+        //       const c1 = instr[i];                
+        //       const ins = await Instructor.findById(c1.Instructor)
+        //       const instrName=ins.name
+        //       if(insName == (instrName)){
+        //           res.status(200).json(instr[i].NameOfCourse)
+              
+        //          } } }
+
+
+            // res.send(SearchList);
+
+        //  res.json(SearchList);
+
+    //  console.log(SearchList);
+     // if (SearchList == null) {
+    //     res.status(404).send('not available');
+    // }
+    // else {
+    //     let x= Object.values(SearchList);
+    //     //console.log(x);
+    //     let result = x.map(SearchList => SearchList.Subject);
+    //     console.log(result);
+       
+    // }
 
          
    
