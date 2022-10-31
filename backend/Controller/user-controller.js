@@ -1,4 +1,3 @@
-
 const Instructor = require("../Models/Instructor");
 const user=require("../Models/User");
 const Course = require ("../Models/Course")
@@ -230,7 +229,7 @@ const ChangeCurrencyUser = async (req, res) => {
 
 //Requirement 7 --> View Course Title, Hours, Rating
 const viewCourseTitleHoursRating = async (req, res) => {
-    const a = await course.find({}, { _id:1, NameOfCourse: 1, Duration: 1, Rating: 1,Cost:1});
+    const a = await Course.find({}, { _id:1, NameOfCourse: 1, Duration: 1, Rating: 1,Cost:1});
     if (a == null) {
         res.status(404).send('no courses available');
     }
@@ -248,7 +247,7 @@ const viewCourseTitleHoursRating = async (req, res) => {
         if (t !== "Corporate Trainee") {
             const courseID = req.params.id;
             try {
-                const c = await course.findById(courseID, { Cost: 1, _id: 0 });
+                const c = await Course.findById(courseID, { Cost: 1, _id: 0 });
                 res.status(200).json(c)
             }
             catch (error) {
