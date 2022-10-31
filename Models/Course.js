@@ -1,29 +1,29 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
-
+const {ObjectId} = mongoose.Schema;
 
 const courseSchema = new Schema({
     NameOfCourse: {
       type: String,
       required: true
     },
-
-    
-    Instructor: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Instructor',
-      required: true
-
-    },
-   
     CourseSubtitle: {
       type: String,
       required: true
     },
-
-    //Removed CourseID since it gets automatically added by mongoDB
-    
+    Instructor: {
+      type: mongoose.Types.ObjectId,
+      ref: 'Instructor',
+      required: true
+    },
+    Duration: {
+      type: String,
+      required: false
+    },
+    LevelOfCourse: {
+      type: String,
+      required: true
+    },
     Summary: {
       type: String,
       required: true
@@ -32,34 +32,27 @@ const courseSchema = new Schema({
       type: String,
       required: true
     },
-    LevelOfCourse: {
-      type: String,
-      required: true
-    },
-    Cost: {
-      type: String,
-      required: true
-    },
-
-    //Commenting the 'required' parameter since these arent required to be added by the instructor when first creating the course
-    Duration: {
-      type: String,
-      // required: true
-    },
-    
-   
     Rating: {
       type: String,
-      // required: true
+      required: false
     },
     NoOfViews: {
       type: Number,
-      // required: true
+      required: false
     },
     Discount: {
       type: Number,
-      // required: false
+      required: false
+    },
+    Cost: {
+        type: Number,
+        required: true
+      },
+    CourseCurrency: {
+        type: Number,
+        required: false
     }
+    
   }, { timestamps: true });
   
   const Course = mongoose.model('Course', courseSchema);
