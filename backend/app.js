@@ -8,19 +8,14 @@ const port= process.env.PORT || "5000" ;
 app.use(express.json());
 app.use(cors());
 
-const user= require('./Models/User');
 const admin= require('./Models/Admin');
-const Instructor= require('./Models/Instructor');
-const course= require('./Models/Course');
 
-    const {getAllAdmin,  createInstructor }= require ("./Controller/admin-controller");
-const {getAllCourse , viewCourse}= require ("./Controller/course-controllers");
 
-//maryam functions importing from user-controller.js
-//const selectCountry= require ("./Controller/user-controller");
-//const selectCount=require("./views/SelectCountry");
-const {getAllUser,viewCourseTitleHoursRating,viewCoursePrice,selectCountryUser,ChangeCurrency}= require ("./Controller/user-controller");
-const {getAllInstructors,selectCountryInstructor,addCourse , filterCourseSubjcet , filterCourseCost , ViewMyCourses , SearchCourse}= require ("./Controller/instructor-controller");
+//require the routes
+const userRoute = require('./Routes/User-route');
+const adminRoute = require('./Routes/Admin-route');
+const instructorRoute = require('./Routes/Instructor-route');
+const courseRoute = require('./Routes/Course-route');
 
 
 mongoose.connect(MongoURI)
@@ -39,55 +34,21 @@ mongoose.connect(MongoURI)
     .catch((err) => console.log(err));
 
 
-    app.get('/adminlist', getAllAdmin);
-    app.get('/courselist', getAllCourse);
-    app.get('/instructorList', getAllInstructors);
-    app.get('/userlist', getAllUser);
-    app.get('/viewcoursetitlehoursrating',viewCourseTitleHoursRating);
-    app.get('viewcourseprice/:id',viewCoursePrice);
-    app.post ('/selectCountry/:id', selectCountryUser);
-    app.post('/selectCountryInstr/:id', selectCountryInstructor);
-    app.post('/addInstructor',createInstructor)
 
-     /////////////////////////////////////////////////////////////////////////////////
-     
-     //nouran functions
+    app.use('/Admin',adminRoute);
 
-     //Instructor
-     app.post('/addCourse/:id', addCourse);
+    app.use('/Course',courseRoute);
 
-     //Course
-     app.get('/viewCourse/:id',viewCourse)
+    app.use('/Instructor',instructorRoute);
 
-    //////////////////////////////////////////////////////////////////////////////////
-
-    // app.post ('/addInstructor', createInstructor);
-
-    app.get ('/ViewMyCourses/:id',ViewMyCourses);
-
-    app.get ('/filterCourseSubject/:id',filterCourseSubjcet);
-
-    app.get ('/filterCourseCost/:id',filterCourseCost) ; 
-
-    app.get ('/SearchCourse/:id',SearchCourse);
-
+    app.use('/User',userRoute);
+    
+    
     app.use(express.json())
-    app.post('/adduser', async (req,res)=>{
+
+
+    app.post('/addUser', async (req,res)=>{
         const {AdminName,AdminId,AdminCountry}  = req.body
         const r = await admin.create({AdminName,AdminId,AdminCountry})
         res.json(r)
     });
-
-    // app.get('/adminlist', getAllAdmin);
-
-
-    app.get("/viewcourses", async (req,res)=> {
-        console.log(req.params);
-        const a= await Course.find();
-        if(a==null){
-         res.status(404).send('no courses available');
-        }
-        else{
-         res.json(a); }
-     
-     });
