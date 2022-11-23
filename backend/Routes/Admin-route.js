@@ -1,11 +1,13 @@
 const express= require("express");
-const {getAllAdmin , createInstructor }= require ("../Controller/admin-controller");
+const {getAllAdmin , createAdmin, createInstructor,createCorporateTrainess  }= require ("../Controller/admin-controller");
 
 const router = express.Router();
 
 router.get("/", getAllAdmin);
 
-router.post('/addInstructor',createInstructor)
+router.post('/createAdmin',createAdmin);
+router.post('/addInstructor',createInstructor);
+router.post('/createCorporatetrainess',createCorporateTrainess);
 
 
 // export default router;
