@@ -43,7 +43,6 @@ mongoose.connect(MongoURI)
 
     app.use('/User',userRoute);
     
-    
     app.use(express.json())
 
 
