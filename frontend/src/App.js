@@ -14,7 +14,12 @@ import Add2 from './Components/Add2'
 import SignUp from './Components/SignUp'
 //import { Routes, Route } from "react-router-dom"
 import { Router,Link  } from "react-router-dom";
-
+import { FaStar } from "react-icons/fa";
+import StarRating from './Components/StarRating';
+import UserAdded from './Components/UserAdded';
+import AdminAdded from './Components/AdminAdded';
+import InstrAdded from './Components/InstrAdded';
+ 
 
 function App(){
   const newAdmin = (admin) => {
@@ -38,17 +43,18 @@ function App(){
     <Route path="/addadmin" element={ <Add2/>} />
     <Route path="/addinstr" element={ <Add/>} />
     <Route path="/adduser" element={ <Add1/>} />
+    <Route path="/rate" element={ <StarRating/>} />
+    <Route path="/UserAdded" element={ <UserAdded/>} />
+    <Route path="/AdminAdded" element={ <AdminAdded/>} />
+    <Route path="/InstrAdded" element={ <InstrAdded/>} />
+
+
    </Routes>
    </div>
    </BrowserRouter>
   </div>
-
-
-   
-
-
-  );
-}
+  )
+};
 
 
 export default App;

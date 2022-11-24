@@ -4,12 +4,20 @@ import {Box, Typography } from '@mui/material'
 import { FormLabel } from '@mui/material';
 import { TextField } from '@mui/material';
 import { Button } from '@mui/material';
+import UserAdded from './UserAdded';
 //import {MenuItem, Select, InputLabel} from '@mui/material';
 //import { purple } from '@mui/material/colors';
 //import addAdministrator from '../api-helpers/helpers'
 //import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
+const heading =  {
+    fontSize: '72 px' ,
+    color : 'black',
+    textAlign:'center'
+  }
 
+  
 const Add1 = () => {
     
     const[Name , setName1 ] = useState('')
@@ -17,6 +25,7 @@ const Add1 = () => {
     const[Password , setPassword1] = useState('')
     const[Type , setType1] = useState('')
     const[err , setErr] = useState(null)
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -55,18 +64,17 @@ const Add1 = () => {
 
   return < Box display='flex' flexDirection={"column "} width='100%' height = "100%" >
     < Box display='flex' margin='auto' padding={2} >
-    {/* < Typography variant="h1" fontWeight={"bold "} fontFamily={'dancing script'} >
-        Sign-up
-    </Typography> */}
+    
     </Box>
     <form onSubmit={ handleSubmit}>
       <Box 
       padding={3}
-      width="80%"
+      width="60%"
       display='flex'
       margin= 'auto'
       flexDirection= {"column"}
       >
+        <h5 className='App-text' > Create User account:   </h5>
         <FormLabel> Name </FormLabel>
         <TextField 
         
@@ -99,7 +107,17 @@ const Add1 = () => {
         onChange={(e) => setType1(e.target.value)} />
 
         <Button 
-        type='submit' color="purple" sx={{ width:"50%", margin:"auto ", mt: "2", borderRadius: 7}} variant="contained "> Create </Button>
+        onClick={ () => { navigate("/UserAdded") } }
+        style={{width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
+
+        type='submit'
+         //color="purple" sx={{ width:"50%", margin:"auto ", mt: "2", borderRadius: 7}}
+          variant="contained "> 
+         <h1  > Add </h1>
+
+         
+         
+        </Button>
     </Box>
   </form>
 </Box>

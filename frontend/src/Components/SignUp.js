@@ -12,14 +12,19 @@ import { Button } from '@mui/material';
 //import Button from './componentss/Button';
 import { Routes, Route } from "react-router-dom"
 import { Link } from "react-router-dom";
+import PropTypes from 'prop-types'
+
+
+const heading =  {
+  fontSize: '72 px' ,
+  color : 'black',
+  textAlign:'center'
+}
 
 const SignUp = () => {
 
     return(
         <Box>
-        {/* < Typography variant="h1" fontWeight={"bold "} fontFamily={'dancing script'} >
-        Sign-Up As:
-    </Typography> */}
     <h1 className='App'>Sign-Up As:</h1>
         <Box>
             <form>
@@ -28,27 +33,45 @@ const SignUp = () => {
       width="80%"
       display='flex'
       margin= 'auto'
-      flexDirection= {"column"}
+      flexDirection= {"row"}
+      justifyContent= "space-evenly"
       >
         
-
         <Button 
+        style={{width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
         type='submit'
         LinkComponent={Link} to ="/addadmin"
-        color="purple" sx={{ width:"50%", margin:"auto ", mt: "2", borderRadius: 7}} variant="contained "> Admin
+        //color="purple" sx={{ width:"50%", margin:"auto ", mt: "2", borderRadius: 7}} 
+        variant="contained "> 
+        <h1 > Admin </h1> 
         </Button>
 
-     <Button 
-     type='submit'
+     <Button
+        style={{width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
+        type='submit'
      LinkComponent={Link} to ="/addinstr"
-      color="purple" sx={{ width:"50%", margin:"auto ", mt: "2", borderRadius: 7}} variant="contained "> Instructor </Button>
+      //color="purple" sx={{ width:"50%", margin:"auto ", mt: "2", borderRadius: 7}} 
+     variant="contained ">  
+    <h1  > Instructor </h1> 
+      
+    </Button>
    
       <Button 
+        style={{width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
+        type='submit'
+       LinkComponent={Link} to ="/adduser"
+       variant="contained ">  
+       <h1  > User </h1>
+      </Button>
+
+
+
+
+     {/* <Button 
       type='submit'
-      LinkComponent={Link} to ="/adduser"
-       color="purple" sx={{ width:"50%", margin:"auto ", mt: "2", borderRadius: 7}} variant="contained "> User </Button>
-     
-   
+      LinkComponent={Link} to ="/rate"
+       color="purple" sx={{ width:"50%", margin:"auto ", mt: "2", borderRadius: 7}} variant="contained "> Rate  </Button> */}
+    
 
 
 
@@ -59,17 +82,5 @@ const SignUp = () => {
 
    
 )}
-
-
-
-
-
-
-
-
-
-
-
-
 
 export default SignUp;

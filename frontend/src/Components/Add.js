@@ -8,6 +8,8 @@ import { Button } from '@mui/material';
 //import { purple } from '@mui/material/colors';
 //import addAdministrator from '../api-helpers/helpers'
 //import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const Add = () => {
@@ -16,6 +18,8 @@ const Add = () => {
     const[InstrEmail , setEmail] = useState('')
     const[InstrPassword , setPassword] = useState('')
     const[err , setErr] = useState(null)
+    const navigate = useNavigate();
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -53,18 +57,18 @@ const Add = () => {
 
   return < Box display='flex' flexDirection={"column "} width='100%' height = "100%" >
     < Box display='flex' margin='auto' padding={2} >
-    {/* < Typography variant="h1" fontWeight={"bold "} fontFamily={'dancing script'} >
-        Sign-up
-    </Typography> */}
+    
     </Box>
     <form onSubmit={ handleSubmit}>
       <Box 
       padding={3}
-      width="80%"
+      width="60%"
       display='flex'
       margin= 'auto'
       flexDirection= {"column"}
       >
+        <h6 className='App-text' > Create Instructor account: </h6>
+
         <FormLabel> Name </FormLabel>
         <TextField 
         
@@ -90,7 +94,15 @@ const Add = () => {
         
 
         <Button 
-        type='submit' color="purple" sx={{ width:"50%", margin:"auto ", mt: "2", borderRadius: 7}} variant="contained "> Create </Button>
+        onClick={ () => { navigate("/InstrAdded") } }
+        style={{width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
+
+        type='submit'
+         //color="purple" sx={{ width:"50%", margin:"auto ", mt: "2", borderRadius: 7}}
+          variant="contained "> 
+         <h1  > Add </h1>
+
+         </Button>
     </Box>
   </form>
 </Box>

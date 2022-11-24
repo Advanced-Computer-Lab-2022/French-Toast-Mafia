@@ -27,7 +27,7 @@ const CourseInfoPage = () => {
         {courses && courses.map((course) => (
             <AllCoursesInfo key={course.id} course={course} />
         ))}
-
+       
 
     </div>
     );
