@@ -19,8 +19,8 @@ import { FaStar } from "react-icons/fa";
 import UserAdded from './Components/UserAdded';
 import AdminAdded from './Components/AdminAdded';
 import InstrAdded from './Components/InstrAdded';
-import InstructorCourseList from './Components/ViewMyCoursesInstructor';
- 
+import InstructorCourseList from './Pages/ViewMyCoursesInstructor';
+import ViewCourse from './Pages/ViewCourse';
 
 function App(){
   const newAdmin = (admin) => {
@@ -47,6 +47,7 @@ function App(){
     <Route path="/adduser" element={ <Add1/>} />
     {/* <Route path="/rate" element={ <StarRating/>} /> */}
     <Route path="/ViewMyCoursesInstructor" element = {<InstructorCourseList/>} />
+    <Route path="/ViewCourse" element = {<ViewCourse/>} />
     <Route path="/UserAdded" element={ <UserAdded/>} />
     <Route path="/AdminAdded" element={ <AdminAdded/>} />
     <Route path="/InstrAdded" element={ <InstrAdded/>} />
