@@ -320,11 +320,7 @@ const viewCourseTitleHoursRating = async (req, res) => {
        }
     }
 
-
-module.exports = {getAllUser,
-    viewCourseTitleHoursRating,viewCoursePrice,
-    selectCountryUser,ChangeCurrencyUser,
-    viewMyInfo,ViewMyCourses,changePassword};
+  
     const addCourse = async(req , res) => {
         //fill in all the required course details (that an instructor should fill when creating it)
     
@@ -370,6 +366,9 @@ module.exports = {getAllUser,
 }
 
 
-module.exports = {getAllUser,viewCourseTitleHoursRating,viewCoursePrice,selectCountryUser,ChangeCurrencyUser,addCourse };
+//module.exports = {getAllUser,viewCourseTitleHoursRating,viewCoursePrice,selectCountryUser,ChangeCurrencyUser,addCourse };
 
-
+module.exports = {getAllUser,
+    viewCourseTitleHoursRating,viewCoursePrice,
+    selectCountryUser,ChangeCurrencyUser,addCourse,
+    viewMyInfo,ViewMyCourses,changePassword};

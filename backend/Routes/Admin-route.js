@@ -7,7 +7,7 @@ router.get("/", getAllAdmin);
 
 router.post('/createAdmin',createAdmin);
 router.post('/addInstructor',createInstructor);
-router.post('/createCorporatetrainess',createCorporateTrainess);
+router.post('/createCorporateTrainess',createCorporateTrainess);
 
 
 // export default router;
