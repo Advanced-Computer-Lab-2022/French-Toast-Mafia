@@ -46,7 +46,7 @@ function App(){
     <Route path="/addinstr" element={ <Add/>} />
     <Route path="/adduser" element={ <Add1/>} />
     {/* <Route path="/rate" element={ <StarRating/>} /> */}
-    <Route path="/ViewInstructorCourses" element = {<InstructorCourseList/>} />
+    <Route path="/ViewMyCoursesInstructor" element = {<InstructorCourseList/>} />
     <Route path="/UserAdded" element={ <UserAdded/>} />
     <Route path="/AdminAdded" element={ <AdminAdded/>} />
     <Route path="/InstrAdded" element={ <InstrAdded/>} />
