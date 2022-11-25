@@ -7,7 +7,8 @@ const { getAllInstructors,
         filterCourseSubjcet ,
         filterCourseCost ,
         ViewMyCourses ,
-        SearchCourse }= require ("../Controller/instructor-controller");
+        SearchCourse,viewInstrInfo
+    ,changeInstrPassword }= require ("../Controller/instructor-controller");
 
 
 const router = express.Router();
@@ -26,5 +27,11 @@ router.get ('/filterCourseSubject/:id',filterCourseSubjcet);
 router.get ('/filterCourseCost/:id',filterCourseCost) ; 
 
 router.get ('/SearchCourse/:id',SearchCourse);
+
+router.get ('/viewInstrInfo',viewInstrInfo);
+
+router.put ('/changeInstrPassword',changeInstrPassword);
+
+
 
 module.exports=router;

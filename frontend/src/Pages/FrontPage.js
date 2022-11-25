@@ -5,14 +5,14 @@ import React, {useState,useEffect} from 'react';
 //components
 import ViewAllCoursesButton from '../Components/ViewAllCoursesButton'
 import CountriesDropdown from '../Components/CountriesDropdown'
-import StarRating from '../Components/StarRating';
+//import StarRating from '../Components/StarRating';
 const FrontPage = () => {
     
   
 
   return (
       <div>
-        <h1 className='App'>Online Learning Platform</h1>
+        
           <header className='home'>
               <ViewAllCoursesButton/>
            

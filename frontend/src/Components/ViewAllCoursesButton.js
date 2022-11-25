@@ -5,7 +5,7 @@ import {Link,useNavigate} from 'react-router-dom';
 const ViewAllCoursesButton = () => {
  const navigate=useNavigate();
   const onClick=()=>{
-    navigate('/CourseInfoPage');
+    navigate('/Courses');
   }
  
   

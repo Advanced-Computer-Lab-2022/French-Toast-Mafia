@@ -276,8 +276,47 @@ const filterCourseCost = async (req,res) => {
 //                 res.send(searchList);
 // }
 
+const viewInstrInfo = async(req , res) => {
+    const instrId = req.query.id;
+if (instrId) {
+    try{
+        const result = await instructor.findOne({_id:mongoose.Types.ObjectId(instrId)});
+        // get the details of the course 
+        const instructorDetails = 
+            {"Name": result.InstrName,
+            "Email":result.InstrEmail,
+            "Password": result.InstrPassword}
+
+        res.status(200).json(instructorDetails);
+        
+    
+    }catch(error){
+        res.status(400).json({error:error.message})
+    }
+}
+else{
+    res.status(400).json({error:"Please provide the instructor id"})
+}
+
+}
+
+const changeInstrPassword = async(req, res) => {
+
+     const instrId = req.query.id;
+     const {InstrPassword} = req.body;
+     try{
+         const instructorPassword = await instructor.findByIdAndUpdate(instrId, {InstrPassword:InstrPassword}, {new:true});
+         res.status(200).json(instructorPassword)
+     }
+     catch(error){
+         res.status(400).json({error:error.message})
+     }
+ }
 
 
 
-module.exports={getAllInstructors , selectCountryInstructor , addCourse , filterCost, filterRating, filterSubject, filterCourseSubjcet , filterCourseCost , ViewMyCourses , SearchCourse};
+module.exports={getAllInstructors , selectCountryInstructor ,
+     addCourse , filterCost, filterRating, filterSubject, 
+     filterCourseSubjcet , filterCourseCost , ViewMyCourses
+      , SearchCourse, viewInstrInfo, changeInstrPassword};
    

@@ -1,6 +1,7 @@
 const Instructor = require("../Models/Instructor");
 const user=require("../Models/User");
 const Course = require ("../Models/Course")
+var mongoose = require('mongoose');
 const userFilterSubj= require ("../Controller/instructor-controller")
 const userFilterRate= require ("../Controller/instructor-controller")
 
@@ -177,11 +178,6 @@ module.exports={getAllUser, createUser,filterCostUser,SearchCourse };
        
     // }
 
-module.exports=getAllUser;
-
-       
-   
-
 
 //maryam functions
 const axios = require("axios");
@@ -259,7 +255,73 @@ const viewCourseTitleHoursRating = async (req, res) => {
         }
     };
 
+    const viewMyInfo = async(req , res) => {
+        const userId = req.query.id;
+    if (userId){
+        try{
+            const result = await user.findOne({_id:mongoose.Types.ObjectId(userId)});
+            const userDetails = 
+                {"Name": result.Name,
+                "Email":result.Email,
+                "Password": result.Password}
+    
+            res.status(200).json(userDetails);
+            
+        
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }
+    }
+    else{
+        res.status(404).send('User not found');
+    }
+    
+    }
 
-module.exports = {getAllUser,viewCourseTitleHoursRating,viewCoursePrice,selectCountryUser,ChangeCurrencyUser};
+    const ViewMyCourses = async(req , res) => {
+        const userId = req.query.id;
+    if (userId){
+        try{
+            const result = await user.find({_id:mongoose.Types.ObjectId(userId)}).populate('Courses'); 
+            const userCourses = 
+                {"Courses": result.Courses}
+    
+            res.status(200).json(userCourses);
+            
+        
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }
+    }
+    else{
+        res.status(404).send('User not found');
+    }
+}
+
+
+    const changePassword = async(req, res) => {
+
+        const userId = req.query.id;
+        const {Password} = req.body;
+        if (userId) {
+        try{
+            const userPassword = await user.
+            findByIdAndUpdate(userId, {Password:Password}, {new:true});
+            res.status(200).json(userPassword)
+        }
+        catch(error){
+            res.status(400).json({error:error.message})
+        }
+       }
+       else{
+           res.status(400).json({error:"Please provide the user id"})
+       }
+    }
+
+
+module.exports = {getAllUser,
+    viewCourseTitleHoursRating,viewCoursePrice,
+    selectCountryUser,ChangeCurrencyUser,
+    viewMyInfo,ViewMyCourses,changePassword};
 
 
