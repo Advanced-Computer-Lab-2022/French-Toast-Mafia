@@ -1,0 +1,135 @@
+/* google font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
+
+/* layout */
+:root {
+  --primary: #1aac83;
+  --error: #e7195a;
+}
+body {
+  background: #f1f1f1;
+  margin: 0;
+  font-family: "Poppins";
+}
+
+.navBar{
+ padding: 0;
+ margin: 0;
+ box-sizing: border-box;
+}
+.navBar header{
+display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 80px;
+  padding: 0 2rem;
+  background-color: #1aac83;
+  color: whitesmoke;
+}
+
+.navBar a{
+  margin: 0 2rem;
+  color: whitesmoke;
+  text-decoration: none;
+}
+
+.navBar a:hover{
+  color: #000000;
+}
+
+.navBar logo{
+  font-size: 30px;
+  font-family: "VT323";
+  color: var(--primary);
+  text-decoration: none;
+}
+
+
+header {
+  background: rgb(241,241,241);
+}
+header .container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+header a {
+  color: #333;
+  text-decoration: none;
+}
+.pages{
+  max-width: 1400px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+/* View All Course Name,Duration,Price */
+.home {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0px;
+  margin-inline-start: 45%;
+}
+.courses-info {
+  background: #fff;
+  border-radius: 4px;
+  margin: 20px  auto;
+  padding: 20px;
+  position: relative;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+}
+.courses-info h4 {
+  margin: 0 0 10px 0;
+  font-size: 1.2em;
+  color: var(--primary);
+}
+.courses-info p {
+  margin: 5;
+  font-size: 0.9em;
+  color: #555;
+}
+.courses-info span {
+  position: absolute;
+  top: 30px;
+  right: 45px;
+  cursor: pointer;
+  background: rgb(26,172,131);
+  border-radius: 0;
+  color: white;
+  font-size:19px;
+
+  
+}
+
+.viewPrice{
+  position: absolute;
+  top: 30px;
+  right: 20px;
+  width: 1000px;
+  cursor: pointer;
+  background: #f1f1f1;
+  border-radius: 50%;
+  color: #333;
+}
+.viewPrice button{
+  position: absolute;
+  top: 00px;
+  right: 20px;
+  cursor: pointer;
+  background: #f1f1f1;
+  border-radius: 50%;
+  color: #333;
+}
+
+button {
+  background: var(--primary);
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
+}
