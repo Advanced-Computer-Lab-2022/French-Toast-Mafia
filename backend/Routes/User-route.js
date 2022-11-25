@@ -6,7 +6,7 @@ const {getAllUser,
     viewCoursePrice,
     selectCountryUser,
     ChangeCurrencyUser,
-    viewMyInfo,ViewMyCourses,changePassword}= require ("../Controller/user-controller");
+   addCourse, viewMyInfo,ViewMyCourses,changePassword}= require ("../Controller/user-controller");
 
 
 const router = express.Router();
@@ -24,5 +24,8 @@ router.get('/viewMyInfo',viewMyInfo);
 router.get('/ViewMyCourses',ViewMyCourses);
 
 router.put('/changePassword',changePassword);
+router.post('/addCourse/:id', addCourse);
+
+
 
 module.exports=router;

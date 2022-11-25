@@ -4,6 +4,8 @@ const Course = require ("../Models/Course")
 var mongoose = require('mongoose');
 const userFilterSubj= require ("../Controller/instructor-controller")
 const userFilterRate= require ("../Controller/instructor-controller")
+var mongoose = require('mongoose');
+
 
 
 //creatig user 
@@ -323,5 +325,51 @@ module.exports = {getAllUser,
     viewCourseTitleHoursRating,viewCoursePrice,
     selectCountryUser,ChangeCurrencyUser,
     viewMyInfo,ViewMyCourses,changePassword};
+    const addCourse = async(req , res) => {
+        //fill in all the required course details (that an instructor should fill when creating it)
+    
+        const instructorId = req.params.id;
+       
+       //check if the Instructor exists first (this check will probably be removed when authentication is implemented)
+       const result = await Instructor.findOne({_id:mongoose.Types.ObjectId(instructorId)});
+       if(result !== null){
+            try{
+    
+                // get the details from the body of the request
+                const{NameOfCourse,
+                    Summary,
+                    Subject,
+                    Rating,
+                    LevelOfCourse,
+                    Cost} = req.body;
+    
+                //create the course
+                const createdCourse = await Course.create(
+                    {NameOfCourse,
+                    Summary,
+                    Subject,
+                    Rating,
+                    LevelOfCourse,
+                    Instructor: instructorId,
+                    Cost});
+        
+                //adds the course id to the user's courses given array
+                await Instructor.findByIdAndUpdate(instructorId,{$push:{CourseGiven: createdCourse._id}});
+                     
+                res.status(200).json(createdCourse);
+                
+            
+            }catch(error){
+                res.status(400).json({error:error.message})
+            }
+    
+       } else{
+        res.status(400).json({error:"Please enter a valid instructor Id"});
+    }
+        
+}
+
+
+module.exports = {getAllUser,viewCourseTitleHoursRating,viewCoursePrice,selectCountryUser,ChangeCurrencyUser,addCourse };
 
 

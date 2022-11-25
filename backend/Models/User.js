@@ -64,7 +64,8 @@ const userSchema = new Schema({
       type: Number,
       required: false
   },
-   Courses : {
+   Courses:
+  {
     type: Array,
     items: {
       type: mongoose.Types.ObjectId,
