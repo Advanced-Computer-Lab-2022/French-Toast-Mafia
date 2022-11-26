@@ -312,18 +312,7 @@ else{
 
 }
 
-const changeInstrPassword = async(req, res) => {
 
-     const instrId = req.query.id;
-     const {InstrPassword} = req.body;
-     try{
-         const instructorPassword = await instructor.findByIdAndUpdate(instrId, {InstrPassword:InstrPassword}, {new:true});
-         res.status(200).json(instructorPassword)
-     }
-     catch(error){
-         res.status(400).json({error:error.message})
-     }
- }
 
  //edit email/ biography 
  const editBiography = async (req,res) => {
@@ -415,6 +404,6 @@ const ViewMyReview = async (req , res) => {
 module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      addCourse , filterCost, filterRating, filterSubject, 
      filterCourseSubjcet , filterCourseCost , ViewMyCourses
-      , SearchCourse, viewInstrInfo, changeInstrPassword,
+      , SearchCourse, viewInstrInfo,
     editBiography, editEmail,ViewMyRatings , ViewMyReview};
    
