@@ -37,7 +37,7 @@ function Navbar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: '#1aac83'}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -53,6 +53,7 @@ function Navbar() {
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'inherit',
+              backgroundColor: '#1aac83',
               textDecoration: 'none',
             }}
           >
@@ -111,6 +112,7 @@ function Navbar() {
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'inherit',
+              backgroundColor: '#1aac83',
               textDecoration: 'none',
             }}
           >
@@ -121,7 +123,7 @@ function Navbar() {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'white',  backgroundColor: '#1aac83',display: 'block' }}
               >
                 <Link style={{color:'white'}} to={`/${page}`}>{page}</Link>
               </Button>
@@ -141,11 +143,13 @@ function Navbar() {
               anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
+                backgroundColor: '#1aac83',
               }}
               keepMounted
               transformOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
+                backgroundColor: '#1aac83',
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
