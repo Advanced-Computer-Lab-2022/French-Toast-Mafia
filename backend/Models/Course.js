@@ -58,11 +58,11 @@ const courseSchema = new Schema({
     },
     DurationDiscount: {
       type: Number,
-      required: true
+      required: false
     },  
     Preview: {
       type: String,
-      required: true
+      required: false
     },
     
   }, { timestamps: true });

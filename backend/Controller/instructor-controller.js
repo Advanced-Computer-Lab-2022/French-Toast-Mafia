@@ -64,13 +64,14 @@ const addCourse = async(req , res) => {
 
             //Uncomment this block to delete a course
             /*
-            course.deleteOne({ NameOfCourse: 'FinallyWorking' }, function (err) {
+            course.deleteOne({ NameOfCourse: 'CSEN704' }, function (err) {
                 if(err) console.log(err);
                 console.log("Successful deletion");
               });
             */
 
             // get the details from the body of the request
+
             const{NameOfCourse,
                 CourseSubtitle,
                 Summary,

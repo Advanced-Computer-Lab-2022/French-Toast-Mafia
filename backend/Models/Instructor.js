@@ -30,7 +30,7 @@ const instructorSchema = new Schema({
       required: false
     },
     CourseGiven: {
-      type: String,
+      type: Array,
       required: false
     },
     ProfileViews: {
