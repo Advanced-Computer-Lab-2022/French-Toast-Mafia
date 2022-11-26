@@ -322,37 +322,25 @@ const viewCourseTitleHoursRating = async (req, res) => {
 
   
     const addCourse = async(req , res) => {
-        //fill in all the required course details (that an instructor should fill when creating it)
-    
-        const instructorId = req.params.id;
-       
-       //check if the Instructor exists first (this check will probably be removed when authentication is implemented)
-       const result = await Instructor.findOne({_id:mongoose.Types.ObjectId(instructorId)});
-       if(result !== null){
+        const userId = req.params.id;
+        const courseId=req.body;
+      
+       const resultUser = await user.findOne({_id:mongoose.Types.ObjectId(userId)});
+       const resultCourse = await Course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+
+         if (resultUser && resultCourse){
             try{
-    
                 // get the details from the body of the request
-                const{NameOfCourse,
-                    Summary,
-                    Subject,
-                    Rating,
-                    LevelOfCourse,
-                    Cost} = req.body;
+                //const{NameOfCourse,Summary,Subject,Rating,LevelOfCourse, Cost} = req.body;
     
-                //create the course
-                const createdCourse = await Course.create(
-                    {NameOfCourse,
-                    Summary,
-                    Subject,
-                    Rating,
-                    LevelOfCourse,
-                    Instructor: instructorId,
-                    Cost});
+                // create the course
+                // const createdCourse = await Course.create(
+                //     {NameOfCourse, Summary,Subject,Rating, LevelOfCourse,Cost});
         
                 //adds the course id to the user's courses given array
-                await Instructor.findByIdAndUpdate(instructorId,{$push:{CourseGiven: createdCourse._id}});
+                await user.findByIdAndUpdate(userId,{$push:{Courses: resultCourse._id}});
                      
-                res.status(200).json(createdCourse);
+                res.status(200).json(resultCourse);
                 
             
             }catch(error){
@@ -360,7 +348,7 @@ const viewCourseTitleHoursRating = async (req, res) => {
             }
     
        } else{
-        res.status(400).json({error:"Please enter a valid instructor Id"});
+        res.status(400).json({error:"Please enter a valid userId & courseId"});
     }
         
 }
