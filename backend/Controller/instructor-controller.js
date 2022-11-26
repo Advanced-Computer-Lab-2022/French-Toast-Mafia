@@ -20,7 +20,10 @@ const createInstructor = async(req,res) => {
         CourseGiven:req.body.CourseGiven, 
         ProfileViews:req.body.ProfileViews, 
         PercentOrMoneyTaken:req.body.PercentOrMoneyTaken, 
-        Wallet:req.body.Wallet }) 
+        Wallet:req.body.Wallet,
+        Currency:req.body.Currency,
+        InstrReview:req.body.InstrReview,
+        InstrRating:req.body.InstrRating}) 
    
         newInstructor.save()
         .then (result => res.status(200).send(result))
@@ -73,7 +76,11 @@ const addCourse = async(req , res) => {
                 Summary,
                 Subject,
                 LevelOfCourse,
-                Cost} = req.body;
+                Cost,
+                CourseCurrency,
+                Exams,
+                DurationDiscount,
+                Preview} = req.body;
 
             //create the course
             const createdCourse = await course.create(
@@ -83,7 +90,10 @@ const addCourse = async(req , res) => {
                 LevelOfCourse,
                 Summary,
                 Subject,
-                Cost});
+                Cost , CourseCurrency,
+                Exams,
+                DurationDiscount,
+                Preview});
     
             //adds the course id to the instructor's courses given array
             await instructor.findByIdAndUpdate(instructorId,{$push:{CourseGiven: createdCourse._id}});
@@ -314,10 +324,96 @@ const changeInstrPassword = async(req, res) => {
      }
  }
 
+ //edit email/ biography 
+ const editBiography = async (req,res) => {
+        const instructorId= req.params.id;
+        const {Biography}= req.body;
+        try{
+            const newBio= await instructor.findByIdAndUpdate(instructorId, {Biography:Biography}, {new:true});
+            res.status(200).json(newBio)
+        }
+        catch(error){
+            res.status(400).json({error:error.message})
+        }
+ }
+ const editEmail = async (req,res) => {
+    const instructorId= req.params.id;
+    const {InstrEmail}= req.body;
+    try{
+        const newEmail= await instructor.findByIdAndUpdate(instructorId, {InstrEmail:InstrEmail}, {new:true});
+        res.status(200).json(newEmail)
+    }
+    catch(error){
+        res.status(400).json({error:error.message})
+    }
+}
+// View Instructor  ratings
+const ViewMyRatings = async (req , res) => {
+    const w = req.params.id;
+    const a = await instructor.find({instructor:w }, {InstrRating:1,_id:1});
+        // res.json(a);
+        // console.log(a);
+    
+    if (a == null) {
+        res.status(404).send('no instructors available');
+    }
+    else {
+        res.json(a);
+        //let x= Object.values(a);
+        //console.log(x);
+        //let result = x.map(a => a.NameOfCourse);
+        // console.log(result);
+        
+    }
+
+} // View Instructor reviews
+const ViewMyReview = async (req , res) => {
+    const w = req.params.id;
+    const a = await instructor.find({instructor:w }, {InstrReview:1,_id:1});
+        // res.json(a);
+        // console.log(a);
+    
+    if (a == null) {
+        res.status(404).send('no instructors available');
+    }
+    else {
+        res.json(a);
+        //let x= Object.values(a);
+        //console.log(x);
+        //let result = x.map(a => a.NameOfCourse);
+        // console.log(result);
+        
+    }
+
+}
+// create Exam
+// const createExam = async (req , res) => {
+//     const w = req.params.id;
+//     const x = req.body;
+//     const a = await course.find({instructor:w , NameOfCourse:x}, {
+//         Exams.push(),_id:1});
+//         // res.json(a);
+//         // console.log(a);
+    
+//     if (a == null) {
+//         res.status(404).send('no instructors available');
+//     }
+//     else {
+//         res.json(a);
+//         //let x= Object.values(a);
+//         //console.log(x);
+//         //let result = x.map(a => a.NameOfCourse);
+//         // console.log(result);
+        
+//     }
 
 
-module.exports={getAllInstructors , selectCountryInstructor ,
+
+
+
+module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      addCourse , filterCost, filterRating, filterSubject, 
      filterCourseSubjcet , filterCourseCost , ViewMyCourses
-      , SearchCourse, viewInstrInfo, changeInstrPassword};
+      , SearchCourse, viewInstrInfo, changeInstrPassword,
+    editBiography, editEmail,ViewMyRatings , ViewMyReview};
    

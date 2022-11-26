@@ -51,7 +51,19 @@ const courseSchema = new Schema({
     CourseCurrency: {
         type: Number,
         required: false
-    }
+    },
+    Exams: {
+      type: Array,
+      required: true
+    },
+    DurationDiscount: {
+      type: Number,
+      required: true
+    },  
+    Preview: {
+      type: String,
+      required: true
+    },
     
   }, { timestamps: true });
   

@@ -48,7 +48,15 @@ const instructorSchema = new Schema({
     Currency: {
       type: String,
       required: false
-    }
+    },
+    InstrReview: {
+      type: String,
+      required: false
+    },
+    InstrRating: {
+      type: Number,
+      required: false
+    },
     
   }, { timestamps: true });
   
