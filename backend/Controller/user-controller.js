@@ -322,39 +322,31 @@ const viewCourseTitleHoursRating = async (req, res) => {
 
   
     const addCourse = async(req , res) => {
-        const userId = req.params.id;
+        const userId = req.query.id;
         const courseId=req.body;
       
        const resultUser = await user.findOne({_id:mongoose.Types.ObjectId(userId)});
        const resultCourse = await Course.findOne({_id:mongoose.Types.ObjectId(courseId)});
 
-         if (resultUser && resultCourse){
+         if (resultUser){
+            if (resultCourse){
             try{
-                // get the details from the body of the request
-                //const{NameOfCourse,Summary,Subject,Rating,LevelOfCourse, Cost} = req.body;
-    
-                // create the course
-                // const createdCourse = await Course.create(
-                //     {NameOfCourse, Summary,Subject,Rating, LevelOfCourse,Cost});
-        
-                //adds the course id to the user's courses given array
-                await user.findByIdAndUpdate(userId,{$push:{Courses: resultCourse._id}});
-                     
+
+                await user.findByIdAndUpdate(userId,{$push:{Courses: resultCourse._id}});  
                 res.status(200).json(resultCourse);
-                
-            
+
             }catch(error){
                 res.status(400).json({error:error.message})
+            }}
+            else{
+                res.status(404).send('Course not found');
             }
-    
        } else{
-        res.status(400).json({error:"Please enter a valid userId & courseId"});
+        res.status(400).json({error:"Please enter a valid userId"});
     }
         
 }
 
-
-//module.exports = {getAllUser,viewCourseTitleHoursRating,viewCoursePrice,selectCountryUser,ChangeCurrencyUser,addCourse };
 
 module.exports = {getAllUser,
     viewCourseTitleHoursRating,viewCoursePrice,
