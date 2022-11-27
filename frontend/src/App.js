@@ -7,7 +7,7 @@ import Navbar from './Components/Navbar';
 import FrontPage from './Pages/FrontPage';
 import Courses from './Pages/Courses';
 import ViewMyCoursesInstructor from './Pages/ViewMyCoursesInstructor';
-import EditCourseInstructor from './Pages/EditCourseInstructor';
+import ViewCourse from './Pages/ViewCourse';
 import CoursePricePage from './Pages/CoursePricePage';
 import AddCoursePage from './Pages/AddCoursePage';
 import Add from './Components/Add'
@@ -29,6 +29,9 @@ import InstrRating from './Pages/InstrRating';
 import MyCourses from './Components/MyCourses';
 import AllUsers from './Components/AllUsers';
 import UserCoursePage from './Pages/UserCoursePage';
+import ViewCourseSubtitle from './Pages/ViewCourseSubtitles'
+import ViewCourseExam from './Pages/ViewCourseExam'
+
 
 function App(){
   const newAdmin = (admin) => {
@@ -54,8 +57,10 @@ function App(){
     <Route path="/addinstr" element={ <Add/>} />
     <Route path="/adduser" element={ <Add1/>} />
     {/* <Route path="/rate" element={ <StarRating/>} /> */}
-    <Route path="editCourse" element={<EditCourseInstructor/>} />
-    <Route path="/ViewMyCoursesInstructor" element = {<ViewMyCoursesInstructor/>} />
+    <Route path="/viewCourse" element={<ViewCourse/>} />
+    <Route path="/viewCourse/Subtitle" element={<ViewCourseSubtitle/>} />
+    <Route path="/viewCourse/Exam" element={<ViewCourseExam/>} />
+    <Route path="/viewMyCoursesInstructor" element = {<ViewMyCoursesInstructor/>} />
     <Route path="/UserAdded" element={ <UserAdded/>} />
     <Route path="/AdminAdded" element={ <AdminAdded/>} />
     <Route path="/InstrAdded" element={ <InstrAdded/>} />

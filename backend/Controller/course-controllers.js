@@ -93,6 +93,38 @@ const viewCourseInstructor = async(req , res) => {
 
 }
 
+const viewCourseSubtitle = async(req , res) => {
+    const courseId = req.query.id;
 
-module.exports={getAllCourse , viewCourse, createCourse,viewCourseInstructor};
+    try{
+        const courseToView = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+        // get the subtitles of the course 
+        const courseSubs = courseToView.CourseSubtitle
+            
+        res.status(200).json(courseSubs);
+    
+    }catch(error){
+        res.status(400).json({error:error.message})
+    }
+
+}
+
+
+const viewCourseExam = async(req , res) => {
+    const courseId = req.query.id;
+
+    try{
+        const courseToView = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+        // get the subtitles of the course 
+        const courseExam = courseToView.Exams
+            
+        res.status(200).json(courseExam);
+    
+    }catch(error){
+        res.status(400).json({error:error.message})
+    }
+
+}
+
+module.exports={getAllCourse , viewCourse, createCourse,viewCourseInstructor, viewCourseSubtitle, viewCourseExam};
    
