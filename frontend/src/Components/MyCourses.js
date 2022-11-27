@@ -90,7 +90,7 @@ const MyCourses = () => {
                 }
             }}
             
-            onClick={() => window.location.href=`/filter?userId=${Courses._id}`}
+            onClick={() => window.location.href=`/UserCoursePage?courseId=${Courses._id}`}
               key={Courses._id}
 
               >

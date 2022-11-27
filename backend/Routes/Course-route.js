@@ -1,12 +1,14 @@
 const express= require("express");
-const {getAllCourse , viewCourse, createCourse}= require ("../Controller/course-controllers");
+const {getAllCourse , viewCourse,viewCourseInstructor, createCourse}= require ("../Controller/course-controllers");
 
 
 const router = express.Router();
 
 router.get("/",getAllCourse );
 
-router.get('/viewCourse/:id',viewCourse);
+router.get('/viewCourse',viewCourse);
+
+router.get('/viewCourseInstructor',viewCourseInstructor);
 
 router.post('/createCourse',createCourse);
 

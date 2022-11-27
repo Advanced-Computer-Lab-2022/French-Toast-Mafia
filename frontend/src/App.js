@@ -6,7 +6,7 @@ import axios from 'axios';
 import Navbar from './Components/Navbar';
 import FrontPage from './Pages/FrontPage';
 import Courses from './Pages/Courses';
-//import InstructorCourseList from './Pages/ViewMyCoursesInstructor';
+import ViewMyCoursesInstructor from './Pages/ViewMyCoursesInstructor';
 import EditCourseInstructor from './Pages/EditCourseInstructor';
 import CoursePricePage from './Pages/CoursePricePage';
 import AddCoursePage from './Pages/AddCoursePage';
@@ -22,12 +22,13 @@ import UserAdded from './Components/UserAdded';
 import AdminAdded from './Components/AdminAdded';
 import InstrAdded from './Components/InstrAdded';
 import AddCourse from './Components/AddCourse';
-//import InstructorCourseList from './Components/ViewMyCoursesInstructor';
 import Profile from './Pages/Profile';
 import ForgotPassword from './Pages/ForgotPassword';
 import ChangePassword from './Pages/ChangePassword';
+import InstrRating from './Pages/InstrRating';
 import MyCourses from './Components/MyCourses';
 import AllUsers from './Components/AllUsers';
+import UserCoursePage from './Pages/UserCoursePage';
 
 function App(){
   const newAdmin = (admin) => {
@@ -54,7 +55,7 @@ function App(){
     <Route path="/adduser" element={ <Add1/>} />
     {/* <Route path="/rate" element={ <StarRating/>} /> */}
     <Route path="editCourse" element={<EditCourseInstructor/>} />
-    {/*<Route path="/ViewInstructorCourses" element = {<InstructorCourseList/>} />*/}
+    <Route path="/ViewMyCoursesInstructor" element = {<ViewMyCoursesInstructor/>} />
     <Route path="/UserAdded" element={ <UserAdded/>} />
     <Route path="/AdminAdded" element={ <AdminAdded/>} />
     <Route path="/InstrAdded" element={ <InstrAdded/>} />
@@ -65,6 +66,8 @@ function App(){
     <Route path="/MyCourses" element={ <MyCourses/>} />
     <Route path="/AllUsers" element={ <AllUsers/>} />
 
+    <Route path="/UserCoursePage" element={ <UserCoursePage/>} />
+    <Route path="/InstrRating" element={<InstrRating/>}/>
 
 
 
