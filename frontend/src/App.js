@@ -21,7 +21,6 @@ import { Router,Link  } from "react-router-dom";
 import UserAdded from './Components/UserAdded';
 import AdminAdded from './Components/AdminAdded';
 import InstrAdded from './Components/InstrAdded';
-import InstructorCourseList from './Components/ViewMyCoursesInstructor';
 import Profile from './Pages/Profile';
 import ForgotPassword from './Pages/ForgotPassword';
 import ChangePassword from './Pages/ChangePassword';
