@@ -29,13 +29,13 @@ const { useState } = require("react");
 
 const MyCourses = () => { 
     const params = new URLSearchParams(window.location.search);
-    const userId = params.get('userId');
-    console.log(userId);
+    const id = params.get('id');
+    console.log(id);
     const [course,setCourses] = useState([]);
 
     const getCourses =  async () => {
-         //await axios.get(`http://localhost:5000/user/viewcoursetitlehoursrating`).then(
-        await axios.get(`http://localhost:5000/user/ViewMyCourses?userId=${userId}`).then(
+         await axios.get(`http://localhost:5000/user/viewcoursetitlehoursrating`).then(
+
         (res) => { 
             const course = res.data
             console.log(course)
@@ -50,7 +50,7 @@ const MyCourses = () => {
   
     return(
 
-        <div className="UserCourses">
+        <div className="UserCourses"   >
             <Box sx={{marginBottom: 2}}>
             <Button variant="contained"
             style={{width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}

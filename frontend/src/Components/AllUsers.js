@@ -77,7 +77,7 @@ const AllUsers = () => {
                 width: "100%"
                 }
             }}
-            onClick={() => window.location.href=`/ViewMyCourses?userId=${user._id}`}
+            onClick={() => window.location.href=`/MyCourses?userId=${user._id}`}
               key={user._id}
 
               >
