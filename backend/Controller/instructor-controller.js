@@ -1,5 +1,6 @@
 const instructor=require("../Models/Instructor");
 const course=require("../Models/Course");
+const exam= require ("../Models/Exams");
 var mongoose = require('mongoose');
 
 function getAllInstructors (req,res) {
@@ -289,6 +290,9 @@ const filterCourseCost = async (req,res) => {
 //                 res.send(searchList);
 // }
 
+
+
+
 const viewInstrInfo = async(req , res) => {
     const instrId = req.query.id;
 if (instrId) {
@@ -312,6 +316,18 @@ else{
 }
 
 }
+
+
+//instructor create an exam req 26
+// const createExam = async (req, res) =>{
+//         const newExam = new exam ({
+
+//         })
+
+
+
+    
+// }
 
 
  //edit email/ biography req 29
@@ -380,27 +396,6 @@ const ViewMyReview = async (req , res) => {
 
 // }
 
-
-// create Exam
-// const createExam = async (req , res) => {
-//     const w = req.params.id;
-//     const x = req.body;
-//     const a = await course.find({instructor:w , NameOfCourse:x}, {
-//         Exams.push(),_id:1});
-//         // res.json(a);
-//         // console.log(a);
-    
-//     if (a == null) {
-//         res.status(404).send('no instructors available');
-//     }
-//     else {
-//         res.json(a);
-//         //let x= Object.values(a);
-//         //console.log(x);
-//         //let result = x.map(a => a.NameOfCourse);
-//         // console.log(result);
-        
-//     }
 
 module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      addCourse , filterCost, filterRating, filterSubject, 

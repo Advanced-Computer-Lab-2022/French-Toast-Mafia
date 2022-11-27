@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const {ObjectId} = mongoose.Schema;
 
-import Course from "./Course";
 
 const examSchema = new Schema ({
     ExamId: {
@@ -13,6 +12,10 @@ const examSchema = new Schema ({
       Questions: {
         type: Array,
         required: true
+      }, 
+      Choices: {
+        type: String,
+        required: true 
       }
 }, { timestamps: true });
 
