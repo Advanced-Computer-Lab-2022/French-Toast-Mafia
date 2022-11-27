@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import Table from '@mui/material/Table';
@@ -10,7 +9,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { getFormControlUtilityClasses } from '@mui/material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -23,60 +21,63 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   }));
 const { useState } = require("react");
 
+const queryParameters = new URLSearchParams(window.location.search)
+const courseId = queryParameters.get("courseId")
+console.log(courseId)
 
-const InstructorCourseList = () => { 
-    const [course,setICourses] = useState([]);
+
+const ExamQuestions = () => { 
+    const [questions,setQuestions] = useState([]);
     
-    const getCourses =  async () => {
-        const queryParameters = new URLSearchParams(window.location.search)
-        const Id = queryParameters.get("Id")
-        console.log(Id)
-       await axios.get(`http://localhost:5000/Instructor/ViewMyCourses/${Id}`).then(
+    const getQuestions =  async () => {
+         await axios.get(`http://localhost:5000/Course/viewCourseExam?id=${courseId}`).then(
         (res) => { 
-            const courses = res.data
-            // console.log(courses)
-            setICourses(courses)
+            const qs = res.data
+            console.log(qs)
+            setQuestions(qs)
+            
         }
          );
     
 
     }
     return(
+
         // visualize authors in a table map over authors
-        <div className="CourseList" key = {course._id} >
-              <Box sx={{marginBottom: 2}}>
+        <div className="Questions">
+            <Box sx={{marginBottom: 2}}>
             <Button variant="contained"
-            onClick={getCourses}
+            onClick={getQuestions}
             margin="normal"
             padding="normal"
-            >Load Courses</Button>
+            >Load Exam Questions</Button>
             {/* margin */}
             </Box>
+            
         
         
             
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table" >
+      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table"  >
         <TableHead>
           <TableRow>
-            <StyledTableCell align="center"> Course Title</StyledTableCell>
+            <StyledTableCell align="center">Question</StyledTableCell>
+            <StyledTableCell align="center">Answer</StyledTableCell>        
           </TableRow>
         </TableHead>
-        <TableBody>
-          {course.map((course) => (
-            <TableRow
-            hover
+
+        <TableBody >
+          {questions.map((q) => (
+            <TableRow  hover
             sx={{
                 "&:hover":{
                 cursor: "pointer",
                 backgroundColor: "#f5f5f5",
                 width: "100%"
                 }
-            }}
-            onClick={() => window.location.href=`/viewCourse?courseId=${course._id}`}
-            key={course._id}
-            >
-              <TableCell align="center">{course.NameOfCourse}</TableCell>
+            }} >
+              <TableCell align="center" onClick={()=> console.log("clicky clicky")}>{q.Question}</TableCell>
+              <TableCell align="center">{q.Answer}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -88,5 +89,4 @@ const InstructorCourseList = () => {
 
     )
 }
-
-export default InstructorCourseList;
+export default ExamQuestions;

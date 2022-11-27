@@ -8,6 +8,7 @@ const UserCourseInfo = ({course}) => {
     return (
       <div className="course-info">
               <p><strong>Course Title: </strong> {course.user}</p>
+              <p><strong>Subject : </strong> {course.Subject}</p>
                    <p><strong>Duration : </strong> {course.Duration}</p>
                    <p><strong>Rating : </strong>  {course.Rating}</p>
                   <ViewCoursePriceButton price={course.Cost}/>

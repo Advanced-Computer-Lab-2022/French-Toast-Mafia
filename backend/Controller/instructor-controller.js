@@ -55,7 +55,7 @@ const selectCountryInstructor = async (req, res) => {
 const addCourse = async(req , res) => {
     //fill in all the required course details (that an instructor should fill when creating it)
 
-    const instructorId = req.params.id;
+    const instructorId = req.query.id;
    
    //check if the Instructor exists first (this check will probably be removed when authentication is implemented)
    const result = await instructor.findOne({_id:mongoose.Types.ObjectId(instructorId)});
@@ -64,12 +64,11 @@ const addCourse = async(req , res) => {
 
             //Uncomment this block to delete a course
             /*
-            course.deleteOne({ NameOfCourse: 'ARCH205' }, function (err) {
+            course.deleteOne({ NameOfCourse: 'ARCH 205' }, function (err) {
                 if(err) console.log(err);
                 console.log("Successful deletion");
               });
             */
-
             // get the details from the body of the request
 
             const{NameOfCourse,
@@ -98,8 +97,8 @@ const addCourse = async(req , res) => {
                 DurationDiscount,
                 Preview});
     
-            //adds the course id to the instructor's courses given array
-            //await instructor.findByIdAndUpdate(instructorId,{$push:{CourseGiven: createdCourse._id}});
+            // //adds the course id to the instructor's courses given array
+            await instructor.findByIdAndUpdate(instructorId,{$push:{CourseGiven: createdCourse._id}});
 
             //in case you need to remove a course (1 removes the last element in the array)
             // await instructor.findByIdAndUpdate(instructorId,{$pop: { CourseGiven: 1 }});
@@ -315,8 +314,7 @@ else{
 }
 
 
-
- //edit email/ biography 
+ //edit email/ biography req 29
  const editBiography = async (req,res) => {
         const instructorId= req.params.id;
         const {Biography}= req.body;
@@ -339,45 +337,50 @@ else{
         res.status(400).json({error:error.message})
     }
 }
-// View Instructor  ratings
+
+
+// View Instructor  ratings req 28
 const ViewMyRatings = async (req , res) => {
     const w = req.params.id;
     const a = await instructor.find({instructor:w }, {InstrRating:1,_id:1});
-        // res.json(a);
-        // console.log(a);
-    
+     
     if (a == null) {
         res.status(404).send('no instructors available');
     }
     else {
-        res.json(a);
-        //let x= Object.values(a);
-        //console.log(x);
-        //let result = x.map(a => a.NameOfCourse);
-        // console.log(result);
-        
+        res.json(a);  
     }
-
-} // View Instructor reviews
+} 
+// View Instructor reviews
 const ViewMyReview = async (req , res) => {
     const w = req.params.id;
     const a = await instructor.find({instructor:w }, {InstrReview:1,_id:1});
-        // res.json(a);
-        // console.log(a);
-    
+   
     if (a == null) {
         res.status(404).send('no instructors available');
     }
     else {
         res.json(a);
-        //let x= Object.values(a);
-        //console.log(x);
-        //let result = x.map(a => a.NameOfCourse);
-        // console.log(result);
-        
     }
-
 }
+
+// define promotion/discount for the course req 30 
+// const defineDiscount = async (req,res) => {
+//     const courseID=req.params.id;
+//     const {discount, durationDiscount}= req.body;
+//         try {
+//             const newDiscount= await course.findOneAndUpdate()
+//             res.status(200).json(newDiscount);
+
+//         } catch {
+
+//         }
+
+
+
+// }
+
+
 // create Exam
 // const createExam = async (req , res) => {
 //     const w = req.params.id;
@@ -398,10 +401,6 @@ const ViewMyReview = async (req , res) => {
 //         // console.log(result);
         
 //     }
-
-
-
-
 
 module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      addCourse , filterCost, filterRating, filterSubject, 

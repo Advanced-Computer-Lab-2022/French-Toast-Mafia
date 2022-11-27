@@ -59,7 +59,7 @@ const SignUp = () => {
       <Button 
         style={{width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
         type='submit'
-        LinkComponent={Link} to ="/MyCourses"
+        LinkComponent={Link} to ="/AllUsers"
         //color="purple" sx={{ width:"50%", margin:"auto ", mt: "2", borderRadius: 7}} 
         variant="contained "> 
         <h1 > temp </h1> 
