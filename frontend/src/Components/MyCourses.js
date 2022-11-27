@@ -28,10 +28,14 @@ const { useState } = require("react");
 
 
 const MyCourses = () => { 
+    const params = new URLSearchParams(window.location.search);
+    const userId = params.get('userId');
+    console.log(userId);
     const [course,setCourses] = useState([]);
-    
+
     const getCourses =  async () => {
-         await axios.get('http://localhost:5000/user/viewcoursetitlehoursrating').then(
+         //await axios.get(`http://localhost:5000/user/viewcoursetitlehoursrating`).then(
+        await axios.get(`http://localhost:5000/user/ViewMyCourses?userId=${userId}`).then(
         (res) => { 
             const course = res.data
             console.log(course)
@@ -60,7 +64,7 @@ const MyCourses = () => {
         
             
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table"  style={{ backgroundColor:' #1aac83', color:'#FFF'}} >
+      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table"  style={{ backgroundColor:'yellow', color:'#FFF'}} >
         <TableHead  sx={{
               backgroundColor: "black",
               borderColor: "white",
@@ -105,3 +109,4 @@ const MyCourses = () => {
     )
 }
 export default MyCourses;
+
