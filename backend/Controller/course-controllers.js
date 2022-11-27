@@ -37,7 +37,7 @@ const viewCourse = async(req , res) => {
 }
 
 const createCourse = async(req,res) => {
-    const newCourse = new course ({
+       const newCourse = new course ({
         NameOfCourse: req.body.NameOfCourse,
         CourseSubtitle: req.body.CourseSubtitle, 
         Instructor: req.body.Instructor, 
@@ -48,7 +48,12 @@ const createCourse = async(req,res) => {
         Rating: req.body.Rating, 
         NoOfViews: req.body.NoOfViews,
         Discount: req.body.Discount,
-        Cost: req.body.Cost
+        Cost: req.body.Cost,
+        CourseCurrency:req.body.CourseCurrency,
+        Exams:req.body.Exams,
+        DurationDiscount:req.body.DurationDiscount,
+        Preview:req.body.Preview,
+
     }) 
    
         newCourse.save()
