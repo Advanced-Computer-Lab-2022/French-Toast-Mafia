@@ -55,7 +55,7 @@ const selectCountryInstructor = async (req, res) => {
 const addCourse = async(req , res) => {
     //fill in all the required course details (that an instructor should fill when creating it)
 
-    const instructorId = req.params.id;
+    const instructorId = req.query.id;
    
    //check if the Instructor exists first (this check will probably be removed when authentication is implemented)
    const result = await instructor.findOne({_id:mongoose.Types.ObjectId(instructorId)});
@@ -64,12 +64,11 @@ const addCourse = async(req , res) => {
 
             //Uncomment this block to delete a course
             /*
-            course.deleteOne({ NameOfCourse: 'ARCH205' }, function (err) {
+            course.deleteOne({ NameOfCourse: 'ARCH 205' }, function (err) {
                 if(err) console.log(err);
                 console.log("Successful deletion");
               });
             */
-
             // get the details from the body of the request
 
             const{NameOfCourse,
@@ -98,8 +97,8 @@ const addCourse = async(req , res) => {
                 DurationDiscount,
                 Preview});
     
-            //adds the course id to the instructor's courses given array
-            //await instructor.findByIdAndUpdate(instructorId,{$push:{CourseGiven: createdCourse._id}});
+            // //adds the course id to the instructor's courses given array
+            await instructor.findByIdAndUpdate(instructorId,{$push:{CourseGiven: createdCourse._id}});
 
             //in case you need to remove a course (1 removes the last element in the array)
             // await instructor.findByIdAndUpdate(instructorId,{$pop: { CourseGiven: 1 }});
