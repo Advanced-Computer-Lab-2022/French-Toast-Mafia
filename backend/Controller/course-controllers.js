@@ -1,4 +1,5 @@
 const course= require("../Models/Course");
+const instructor= require("../Models/Instructor");
 const mongoose = require('mongoose');
 
 function getAllCourse (req,res) {
@@ -9,19 +10,19 @@ function getAllCourse (req,res) {
 
 
 const viewCourse = async(req , res) => {
-    const courseId = req.params.id;
+    const courseId = req.query.id;
 
     try{
         const courseToView = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
         // get the details of the course 
         const courseDetails = 
-            {"Course Name": courseToView.NameOfCourse,
-            "Course Subtitles":courseToView.CourseSubtitle,
-            "Course Summary": courseToView.Summary,
-            "Course Subject": courseToView.Subject,
-            "Course Duration": courseToView.Duration,
-            "Course Level" : courseToView.LevelOfCourse,
-            "Course Price": courseToView.Cost}
+            {"CourseName": courseToView.NameOfCourse,
+            "CourseSubtitles":courseToView.CourseSubtitle,
+            "CourseSummary": courseToView.Summary,
+            "CourseSubject": courseToView.Subject,
+            "CourseDuration": courseToView.Duration,
+            "CourseLevel" : courseToView.LevelOfCourse,
+            "CoursePrice": courseToView.Cost}
 
         res.status(200).json(courseDetails);
         
@@ -59,8 +60,30 @@ function getAllCourse (req,res) {
     });
 };
 
+const viewCourseInstructor = async(req , res) => {
+    const courseId = req.query.id;
+
+    try{
+        const courseToView = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+        // get the details of the course 
+        const courseDetails = 
+            {"Course Instructor": courseToView.Instructor}
+
+        const InstructorToView = await instructor.
+        findOne({_id:mongoose.Types.ObjectId(courseToView.Instructor)});
+      // console.log(InstructorToView);
+        const InstructorDetails =
+            {"Instructor Name": InstructorToView.InstrName,
+            "Instructor Email": InstructorToView.InstrEmail}
+        res.status(200).json(InstructorDetails);
+        
+    
+    }catch(error){
+        res.status(400).json({error:error.message})
+    }
+
+}
 
 
-
-module.exports={getAllCourse , viewCourse, createCourse};
+module.exports={getAllCourse , viewCourse, createCourse,viewCourseInstructor};
    
