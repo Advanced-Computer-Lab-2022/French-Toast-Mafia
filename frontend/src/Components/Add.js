@@ -23,6 +23,7 @@ const Add = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        navigate('/InstrAdded');
 
         const instructor = { InstrName, InstrEmail , InstrPassword }
         const response = await fetch('http://localhost:5000/Admin/addInstructor' , {
@@ -94,7 +95,6 @@ const Add = () => {
         
 
         <Button 
-        onClick={ () => { navigate("/InstrAdded") } }
         style={{width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
 
         type='submit'

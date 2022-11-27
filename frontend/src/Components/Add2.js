@@ -23,6 +23,8 @@ const Add2 = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+         navigate("/AdminAdded");
+
 
         const admin = { AdminName , AdminId  }
         const response = await fetch('http://localhost:5000/Admin/createAdmin' , {
@@ -87,7 +89,6 @@ const Add2 = () => {
         
 
         <Button 
-        onClick={ () => { navigate("/AdminAdded") } }
         style={{width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
 
         type='submit'

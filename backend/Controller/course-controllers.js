@@ -15,17 +15,21 @@ const viewCourse = async(req , res) => {
     try{
         const courseToView = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
         // get the details of the course 
-        const courseDetails = 
-            {"CourseName": courseToView.NameOfCourse,
-            "CourseSubtitles":courseToView.CourseSubtitle,
-            "CourseSummary": courseToView.Summary,
-            "CourseSubject": courseToView.Subject,
-            "CourseDuration": courseToView.Duration,
-            "CourseLevel" : courseToView.LevelOfCourse,
-            "CoursePrice": courseToView.Cost}
+        if (courseToView != null){
+            // const courseDetails = 
+            // {"Title": courseToView.NameOfCourse,
+            // "Subtitles":courseToView.CourseSubtitle,
+            // "Summary": courseToView.Summary,
+            // "Subject": courseToView.Subject,
+            // "Duration": courseToView.Duration,
+            // "Level" : courseToView.LevelOfCourse,
+            // "Exams" : courseToView.Exams,
+            // "Discount": courseToView.Discount
+            // "Price": courseToView.Cost,}
+            // res.status(200).json(courseDetails);
+            res.status(200).json(courseToView);
 
-        res.status(200).json(courseDetails);
-        
+        }        
     
     }catch(error){
         res.status(400).json({error:error.message})
@@ -34,7 +38,7 @@ const viewCourse = async(req , res) => {
 }
 
 const createCourse = async(req,res) => {
-    const newCourse = new course ({
+       const newCourse = new course ({
         NameOfCourse: req.body.NameOfCourse,
         CourseSubtitle: req.body.CourseSubtitle, 
         Instructor: req.body.Instructor, 
@@ -45,7 +49,12 @@ const createCourse = async(req,res) => {
         Rating: req.body.Rating, 
         NoOfViews: req.body.NoOfViews,
         Discount: req.body.Discount,
-        Cost: req.body.Cost
+        Cost: req.body.Cost,
+        CourseCurrency:req.body.CourseCurrency,
+        Exams:req.body.Exams,
+        DurationDiscount:req.body.DurationDiscount,
+        Preview:req.body.Preview,
+
     }) 
    
         newCourse.save()

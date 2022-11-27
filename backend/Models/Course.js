@@ -54,7 +54,7 @@ const courseSchema = new Schema({
     },
     Exams: {
       type: Array,
-      required: true
+      required: false
     },
     DurationDiscount: {
       type: Number,

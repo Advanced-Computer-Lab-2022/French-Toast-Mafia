@@ -64,7 +64,7 @@ const addCourse = async(req , res) => {
 
             //Uncomment this block to delete a course
             /*
-            course.deleteOne({ NameOfCourse: 'CSEN704' }, function (err) {
+            course.deleteOne({ NameOfCourse: 'ARCH205' }, function (err) {
                 if(err) console.log(err);
                 console.log("Successful deletion");
               });
@@ -80,6 +80,7 @@ const addCourse = async(req , res) => {
                 Cost,
                 CourseCurrency,
                 Exams,
+                Discount,
                 DurationDiscount,
                 Preview} = req.body;
 
@@ -93,11 +94,12 @@ const addCourse = async(req , res) => {
                 Subject,
                 Cost , CourseCurrency,
                 Exams,
+                Discount,
                 DurationDiscount,
                 Preview});
     
             //adds the course id to the instructor's courses given array
-            await instructor.findByIdAndUpdate(instructorId,{$push:{CourseGiven: createdCourse._id}});
+            //await instructor.findByIdAndUpdate(instructorId,{$push:{CourseGiven: createdCourse._id}});
 
             //in case you need to remove a course (1 removes the last element in the array)
             // await instructor.findByIdAndUpdate(instructorId,{$pop: { CourseGiven: 1 }});
