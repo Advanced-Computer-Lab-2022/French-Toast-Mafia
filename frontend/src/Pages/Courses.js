@@ -1,5 +1,6 @@
 import AllCoursesInfo from "../Components/AllCoursesInfo";
 import { useEffect,useState } from "react";
+import { Box } from "@mui/system";
 
 const Courses = () => {
     const [courses, setCourses] = useState(null)
@@ -27,10 +28,10 @@ const Courses = () => {
         {courses && courses.map((course) => (
             <AllCoursesInfo key={course.id} course={course} />
         ))}
-       
-
-    </div>
-    );
-    }
+        </div>
+      
+        )}
+  
+    
 
     export default Courses;
