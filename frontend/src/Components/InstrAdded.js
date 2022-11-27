@@ -25,6 +25,16 @@ const InstrAdded = () => {
          <h1  >     Done   </h1> 
             
         </Button>
+
+        <Button 
+
+         style={{width:250, height:40  ,backgroundColor:' #1aac83' ,marginTop:10,justifyContent:'center' ,alignSelf: 'flex-end ', position:'relative', left:'233px' , top:'2px' }}
+         onClick={ () => { navigate("/AddCourse") } }
+         type='submit'
+         variant="contained "  > 
+         <h1  >     Add Course   </h1> 
+            
+        </Button>
     </div>
 
  );
