@@ -29,6 +29,7 @@ const Add1 = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        navigate("/UserAdded");
 
         const corporateTrainees = { Name, Email , Password , Type }
         const response = await fetch('http://localhost:5000/Admin/createCorporatetrainess' , {
@@ -107,7 +108,6 @@ const Add1 = () => {
         onChange={(e) => setType1(e.target.value)} />
 
         <Button 
-        onClick={ () => { navigate("/UserAdded") } }
         style={{width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
 
         type='submit'
