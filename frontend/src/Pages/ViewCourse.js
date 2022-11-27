@@ -14,7 +14,10 @@ import Paper from '@mui/material/Paper';
 import { getFormControlUtilityClasses } from '@mui/material';
 
 const { useState } = require("react");
-let isEditing = false
+
+const queryParameters = new URLSearchParams(window.location.search)
+const courseId = queryParameters.get("courseId")
+console.log(courseId)
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -28,65 +31,52 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 
 const getCellData = (obj) =>{
+
   if(typeof(obj[1])!="object"){
-    if(isEditing == true){
-      console.log("editing")
-      // return <TextField id="outlined-basic" label="Outlined" variant="outlined" size="small" />
-    }
-    else
-      return <TableCell  hover
-      sx={{
-          "&:hover":{
-          cursor: "pointer",
-          backgroundColor: "#f5f5f5",
-          }
-      }}
-      onClick={() => cellClickHandle(obj)}
-      >
+   
+      return <TableCell>
         {obj[1]}</TableCell>
   }
     
   else{
-    return <TableCell>
+    const nextPage = Object.values(Object.values(obj))[0];
+    if(nextPage == "CourseSubtitle"){
+      return <TableCell>
       <Button variant="contained"
         margin="normal"
-        onClick={() => editClickHandle(obj)}
+        onClick={() => window.location.href=`/ViewCourse/Subtitle?courseId=${courseId}`}
         padding="normal"
-        >Edit</Button> 
+        >View Subtitles</Button> 
     </TableCell>
+    }
+    else{
+      return <TableCell>
+      <Button variant="contained"
+        margin="normal"
+        onClick={() => window.location.href=`/ViewCourse/Exam?courseId=${courseId}`}
+        padding="normal"
+        >View Exam</Button> 
+    </TableCell>
+    }
+   
   }
-    // return Object.keys(obj).length 
-  // console.log(obj[1])
-  // console.log(typeof(obj[1]))
+
   
 }
 
-const editClickHandle = (obj) =>{
-  console.log("edit button click")
-}
 
-const cellClickHandle = (obj) =>{
-  console.log("click")
-  isEditing = true
-
-}
-
-const EditCourse = () => { 
+const ViewCourse = () => { 
     const [course,setCourse] = useState([]);
-    
     const getCourse =  async () => {
-        const queryParameters = new URLSearchParams(window.location.search)
-        const courseId = queryParameters.get("courseId")
-        console.log(courseId)
+       
        await axios.get(`http://localhost:5000/Course/ViewCourse?id=${courseId}`).then(
         (res) => { 
             const resCourse = res.data
             setCourse(resCourse)
         }
          )
-    
-
     }
+
     return(
         // {getCourse},
         <div className="CourseAttributes">
@@ -104,7 +94,7 @@ const EditCourse = () => {
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
         {Object.entries(course).map((c) => (
           <TableRow  className='row-style' key={c[0]}>
-              <StyledTableCell variant="head" >{c[0]}</StyledTableCell>
+              <StyledTableCell variant="head" width="75">{c[0]}</StyledTableCell>
               {getCellData(c)}
           </TableRow>
            ))}
@@ -117,4 +107,4 @@ const EditCourse = () => {
     )
 }
 
-export default EditCourse;
+export default ViewCourse;
