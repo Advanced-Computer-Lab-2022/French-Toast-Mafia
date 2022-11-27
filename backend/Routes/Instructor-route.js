@@ -7,8 +7,7 @@ const {createInstructor, getAllInstructors,
         filterCourseSubjcet ,
         filterCourseCost ,
         ViewMyCourses ,
-        SearchCourse,viewInstrInfo
-    ,changeInstrPassword, 
+        SearchCourse,viewInstrInfo, 
     editBiography,
     editEmail , ViewMyRatings, ViewMyReview}= require ("../Controller/instructor-controller");
 
@@ -43,7 +42,6 @@ router.get ('/SearchCourse/:id',SearchCourse);
 
 router.get ('/viewInstrInfo',viewInstrInfo);
 
-router.put ('/changeInstrPassword',changeInstrPassword);
 
 
 

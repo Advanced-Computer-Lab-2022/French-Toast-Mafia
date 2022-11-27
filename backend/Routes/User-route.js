@@ -6,7 +6,7 @@ const {getAllUser,
     viewCoursePrice,
     selectCountryUser,
     ChangeCurrencyUser,
-   addCourse, viewMyInfo,ViewMyCourses,changePassword}= require ("../Controller/user-controller");
+   addCourse, viewMyInfo,ViewMyCourses,changePassword,sendPassChangeMail}= require ("../Controller/user-controller");
 
 
 const router = express.Router();
@@ -27,6 +27,7 @@ router.put('/changePassword',changePassword);
 
 router.post('/addCourse', addCourse);
 
+router.post('/sendPassChangeMail',sendPassChangeMail);
 
 
 module.exports=router;

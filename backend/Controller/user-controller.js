@@ -5,7 +5,8 @@ var mongoose = require('mongoose');
 const userFilterSubj= require ("../Controller/instructor-controller")
 const userFilterRate= require ("../Controller/instructor-controller")
 var mongoose = require('mongoose');
-
+const nodemailer = require('nodemailer')
+const sendgridTransport = require('nodemailer-sendgrid-transport')
 
 
 //creatig user 
@@ -302,22 +303,53 @@ const viewCourseTitleHoursRating = async (req, res) => {
 
 
     const changePassword = async(req, res) => {
-
-        const userId = req.query.id;
-        const {Password} = req.body;
-        if (userId) {
-        try{
-            const userPassword = await user.
-            findByIdAndUpdate(userId, {Password:Password}, {new:true});
+        let x = { Email: req.body.Email }
+        const userPassword = await user.findOneAndUpdate(x, { Password: req.body.Password }, { new: true });
+        if (userPassword) {
             res.status(200).json(userPassword)
         }
-        catch(error){
-            res.status(400).json({error:error.message})
+        else {
+            const instrPassword = await Instructor.findOneAndUpdate(x, { InstrPassword: req.body.Password }, { new: true });
+            if (instrPassword) {
+                res.status(200).json(instrPassword)
+            }
+            else {
+                res.status(404).send('User not found');
+            }
         }
-       }
-       else{
-           res.status(400).json({error:"Please provide the user id"})
-       }
+
+    }
+ 
+    const sendPassChangeMail = async(req, res) => {
+
+        return new Promise((resolve, reject) => {
+        const transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            secure: false,
+            auth: { 
+                user: "frenchtoastmafia404@gmail.com",
+                pass: "rovgchcnlyjqkpxm"
+    
+            },
+            tls: {
+                rejectUnauthorized: false
+              }
+        });    
+       
+        //send email to the user with link to change password
+        const {Email}=req.body.Email;
+        let x={Email: req.body.Email}
+
+            transporter.sendMail({
+                from: 'frenchtoastmafia404@gmail.com',
+                  to: x.Email.toString(),
+                  subject: 'Password Change Request',
+                  text: 'Click on the link to change your password',
+                  html: '<a href="http://localhost:3000/changePassword">Click here to change your password</a>'
+                });
+            
+            });
+
     }
 
   
@@ -351,4 +383,4 @@ const viewCourseTitleHoursRating = async (req, res) => {
 module.exports = {getAllUser,
     viewCourseTitleHoursRating,viewCoursePrice,
     selectCountryUser,ChangeCurrencyUser,addCourse,
-    viewMyInfo,ViewMyCourses,changePassword};
+    viewMyInfo,ViewMyCourses,changePassword,sendPassChangeMail};
