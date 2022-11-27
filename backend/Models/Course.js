@@ -40,8 +40,8 @@ const courseSchema = new Schema({
       type: Number,
       required: false
     },
-    Discount: {
-      type: Number,
+    Promotion: {
+      type: Array,
       required: false
     },
     Cost: {
@@ -52,14 +52,6 @@ const courseSchema = new Schema({
         type: Number,
         required: false
     },
-    Exams: {
-      type: Array,
-      required: false
-    },
-    DurationDiscount: {
-      type: Number,
-      required: false
-    },  
     Preview: {
       type: String,
       required: false

@@ -18,6 +18,8 @@ const userRoute = require('./Routes/User-route');
 const adminRoute = require('./Routes/Admin-route');
 const instructorRoute = require('./Routes/Instructor-route');
 const courseRoute = require('./Routes/Course-route');
+const examRoute = require ('./Routes/Exams-route');
+const ansExams = require ('./Routes/AnsExams-route');
 
 
 mongoose.connect(MongoURI)
