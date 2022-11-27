@@ -89,12 +89,12 @@ const UserCoursePage = () => {
             }
         }}
           >
-          <TableCell align="center">{course.CourseName}</TableCell>
+          <TableCell align="center">{course.NameOfCourse}</TableCell>
          {/*}<TableCell align="center">{course.CourseSubtitle}</TableCell>*/}
-          <TableCell align="center">{course.CourseSummary}</TableCell>
-          <TableCell align="center">{course.CourseSubject}</TableCell>
-         <TableCell align="center">{course.CourseLevel}</TableCell>
-         <TableCell align="center">{course.CoursePrice}</TableCell>
+          <TableCell align="center">{course.Summary}</TableCell>
+          <TableCell align="center">{course.Subject}</TableCell>
+         <TableCell align="center">{course.LevelOfCourse}</TableCell>
+         <TableCell align="center">{course.Cost}</TableCell>
         </TableRow>
       ))}
     </TableBody>
