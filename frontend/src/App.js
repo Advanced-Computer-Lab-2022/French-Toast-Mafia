@@ -6,6 +6,8 @@ import axios from 'axios';
 import Navbar from './Components/Navbar';
 import FrontPage from './Pages/FrontPage';
 import Courses from './Pages/Courses';
+import InstructorCourseList from './Pages/ViewMyCoursesInstructor';
+import EditCourseInstructor from './Pages/EditCourseInstructor';
 import CoursePricePage from './Pages/CoursePricePage';
 import AddCoursePage from './Pages/AddCoursePage';
 import Add from './Components/Add'
@@ -19,7 +21,6 @@ import { Router,Link  } from "react-router-dom";
 import UserAdded from './Components/UserAdded';
 import AdminAdded from './Components/AdminAdded';
 import InstrAdded from './Components/InstrAdded';
-import InstructorCourseList from './Components/ViewMyCoursesInstructor';
 import MyCourses from './Components/MyCourses';
 
 function App(){
@@ -45,6 +46,8 @@ function App(){
     <Route path="/addadmin" element={ <Add2/>} />
     <Route path="/addinstr" element={ <Add/>} />
     <Route path="/adduser" element={ <Add1/>} />
+    {/* <Route path="/rate" element={ <StarRating/>} /> */}
+    <Route path="editCourse" element={<EditCourseInstructor/>} />
     <Route path="/ViewInstructorCourses" element = {<InstructorCourseList/>} />
     <Route path="/UserAdded" element={ <UserAdded/>} />
     <Route path="/AdminAdded" element={ <AdminAdded/>} />

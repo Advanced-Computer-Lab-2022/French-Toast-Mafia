@@ -60,7 +60,6 @@ const InstructorCourseList = () => {
         <TableHead>
           <TableRow>
             <StyledTableCell align="center"> Course Title</StyledTableCell>
-            {/* <StyledTableCell align="center">Body</StyledTableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -74,9 +73,10 @@ const InstructorCourseList = () => {
                 width: "100%"
                 }
             }}
-              >
+            onClick={() => window.location.href=`/editCourse?courseId=${course._id}`}
+            key={course._id}
+            >
               <TableCell align="center">{course.NameOfCourse}</TableCell>
-              {/* <TableCell align="center">{course._id}</TableCell> */}
             </TableRow>
           ))}
         </TableBody>
