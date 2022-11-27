@@ -19,6 +19,7 @@ import { Router,Link  } from "react-router-dom";
 import UserAdded from './Components/UserAdded';
 import AdminAdded from './Components/AdminAdded';
 import InstrAdded from './Components/InstrAdded';
+import AddCourse from './Components/AddCourse';
 import InstructorCourseList from './Components/ViewMyCoursesInstructor';
 import MyCourses from './Components/MyCourses';
 
@@ -49,6 +50,7 @@ function App(){
     <Route path="/UserAdded" element={ <UserAdded/>} />
     <Route path="/AdminAdded" element={ <AdminAdded/>} />
     <Route path="/InstrAdded" element={ <InstrAdded/>} />
+    <Route path="/AddCourse" element={ <AddCourse/>} />
     <Route path="/MyCourses" element={ <MyCourses/>} />
 
 
