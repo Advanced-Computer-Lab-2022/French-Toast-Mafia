@@ -23,20 +23,17 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 const { useState } = require("react");
 
 const UserCoursePage = () => { 
-    const params = new URLSearchParams(window.location.search);
-    const courseId = params.get('courseId');
-    console.log(courseId);
-    const [courses,setCourses] = useState([]);
+    const [course,setCourse] = useState([]);
 
     const getCourses=  async () => {
-        /*
-        get the blogs from the backend  
-        */   
-        await axios.get(`http://localhost:5000/Course/viewCourse?id=${courseId}`).then(
+        const params = new URLSearchParams(window.location.search);
+        const courseId = params.get("courseId");
+        console.log(courseId);
+        await axios.get(`http://localhost:5000/Course/viewCourse/${courseId}`).then(
             (res) => { 
-                const courses = res.data
-                console.log(courses)
-                setCourses(courses)
+                const resCourse = res.data
+                console.log(resCourse)
+                setCourse(resCourse)
                 
             }
              );
@@ -46,11 +43,7 @@ const UserCoursePage = () => {
 
     
     return(
-        /* 
-        1. create a button to load the blogs
-        2. map over the blogs and display them
-        */
-        
+     
         <div className="UserCourses">
         <Box sx={{marginBottom: 2}}>
         <Button variant="contained"
@@ -61,24 +54,15 @@ const UserCoursePage = () => {
         {/* margin */}
         </Box>
 
-        
-    
-    
-        
-<TableContainer component={Paper}>
+        <TableContainer component={Paper}>
   <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
     <TableHead>
       <TableRow>
         <StyledTableCell align="center">Course Name</StyledTableCell>
-      {/*  <StyledTableCell align="center">Course Subtitles</StyledTableCell>*/}
-        <StyledTableCell align="center">Course Summary</StyledTableCell>
-        <StyledTableCell align="center">Course Subject</StyledTableCell>
-        <StyledTableCell align="center">Course Level</StyledTableCell>
-        <StyledTableCell align="center">Course Price</StyledTableCell>
       </TableRow>
     </TableHead>
     <TableBody>
-      {courses.map((course) => (
+      {course.map((c) => (
         <TableRow
         hover
         sx={{
@@ -89,17 +73,14 @@ const UserCoursePage = () => {
             }
         }}
           >
-          <TableCell align="center">{course.NameOfCourse}</TableCell>
-         {/*}<TableCell align="center">{course.CourseSubtitle}</TableCell>*/}
-          <TableCell align="center">{course.Summary}</TableCell>
-          <TableCell align="center">{course.Subject}</TableCell>
-         <TableCell align="center">{course.LevelOfCourse}</TableCell>
-         <TableCell align="center">{course.Cost}</TableCell>
+          <TableCell align="center">{c.NameOfCourse}</TableCell>
         </TableRow>
       ))}
     </TableBody>
   </Table>
 </TableContainer>
+        
+
     </div>
                
 
