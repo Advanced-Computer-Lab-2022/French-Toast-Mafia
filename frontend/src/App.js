@@ -20,7 +20,7 @@ import UserAdded from './Components/UserAdded';
 import AdminAdded from './Components/AdminAdded';
 import InstrAdded from './Components/InstrAdded';
 import InstructorCourseList from './Components/ViewMyCoursesInstructor';
- 
+import MyCourses from './Components/MyCourses';
 
 function App(){
   const newAdmin = (admin) => {
@@ -45,11 +45,12 @@ function App(){
     <Route path="/addadmin" element={ <Add2/>} />
     <Route path="/addinstr" element={ <Add/>} />
     <Route path="/adduser" element={ <Add1/>} />
-    {/* <Route path="/rate" element={ <StarRating/>} /> */}
     <Route path="/ViewInstructorCourses" element = {<InstructorCourseList/>} />
     <Route path="/UserAdded" element={ <UserAdded/>} />
     <Route path="/AdminAdded" element={ <AdminAdded/>} />
     <Route path="/InstrAdded" element={ <InstrAdded/>} />
+    <Route path="/MyCourses" element={ <MyCourses/>} />
+
 
 
    </Routes>

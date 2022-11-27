@@ -24,6 +24,7 @@ router.get('/viewMyInfo',viewMyInfo);
 router.get('/ViewMyCourses',ViewMyCourses);
 
 router.put('/changePassword',changePassword);
+
 router.post('/addCourse', addCourse);
 
 
