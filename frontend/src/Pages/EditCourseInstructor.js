@@ -78,7 +78,7 @@ const EditCourse = () => {
         const queryParameters = new URLSearchParams(window.location.search)
         const courseId = queryParameters.get("courseId")
         console.log(courseId)
-       await axios.get(`http://localhost:5000/Course/ViewCourse/${courseId}`).then(
+       await axios.get(`http://localhost:5000/Course/ViewCourse?id=${courseId}`).then(
         (res) => { 
             const resCourse = res.data
             setCourse(resCourse)
