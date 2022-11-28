@@ -18,7 +18,7 @@ const examSchema = new Schema ({
         required: true
       }, 
       Choices: {
-        type: [String],
+        type: Array,
         required: true 
       }
 }, { timestamps: true });
