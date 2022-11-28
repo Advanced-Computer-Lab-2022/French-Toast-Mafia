@@ -391,10 +391,67 @@ const ViewMyReview = async (req , res) => {
 
 // }
 
+const deleteInstrRating = async(req , res) => {
+    const instrId=req.query.id;
+    const emp=[];
+    if (instrId){
+        try{
+            const result = await instructor.findOneAndUpdate({_id:mongoose.Types.ObjectId(instrId)}, { InstrRating: emp }, { new: true });
+            res.status(200).json(result);
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }
+    }
+}
+
+//add course rating function
+const addInstrRating = async(req , res) => {
+    const instrId=req.query.id;
+    const userId=req.body.id;
+    const rating=req.body.rating;
+    const uId=mongoose.Types.ObjectId(userId);
+    const tuple={uId,rating};
+    if (instrId){
+        try{
+            //check if the user has already rated the instructor
+            const check = await instructor.findOne({_id:mongoose.Types.ObjectId(instrId), InstrRating:{$elemMatch:{uId:uId}}});
+            if (!check){
+            const resCourse = await instructor.findOneAndUpdate({_id:mongoose.Types.ObjectId(instrId)}, { $push: { InstrRating: tuple } }, { new: true });
+            res.status(200).json(resCourse);
+            }
+            else{
+                res.status(400).json({error:"You have already rated the instructor"});
+            }
+
+        }
+        catch(error){
+            res.status(400).json({error:error.message})
+        }
+    }
+}
+
+//calculate rating function
+const calculateInstrRating = async(req , res) => {
+    const instrId=req.query.id;
+    if (instrId){
+        try{
+            const result = await instructor.findOne({_id:mongoose.Types.ObjectId(instrId)});
+            var sum=0;
+            for (let i = 0; i < result.InstrRating.length; i++) {
+                sum+=parseInt(result.InstrRating[i].rating);
+            }
+            const avg=sum/result.InstrRating.length;
+            res.status(200).json(avg);
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }   
+    }
+}
+
 
 module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      addCourse , filterCost, filterRating, filterSubject, 
      filterCourseSubjcet , filterCourseCost , ViewMyCourses
       , SearchCourse, viewInstrInfo,
-    editBiography, editEmail,ViewMyRatings , ViewMyReview};
+    editBiography, editEmail,ViewMyRatings , ViewMyReview, deleteInstrRating,addInstrRating,calculateInstrRating};
    

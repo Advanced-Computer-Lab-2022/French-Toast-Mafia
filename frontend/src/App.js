@@ -31,7 +31,9 @@ import AllUsers from './Components/AllUsers';
 import UserCoursePage from './Pages/UserCoursePage';
 import ViewCourseSubtitle from './Pages/ViewCourseSubtitles'
 import ViewCourseExam from './Pages/ViewCourseExam'
-
+import CourseInstructor from './Pages/CourseInstructor';
+import StarRating from './Components/StarRating';
+import CourseRate from './Pages/CourseRate';
 
 function App(){
   const newAdmin = (admin) => {
@@ -70,10 +72,10 @@ function App(){
     <Route path="/ChangePassword" element={<ChangePassword/>}/>
     <Route path="/MyCourses" element={ <MyCourses/>} />
     <Route path="/AllUsers" element={ <AllUsers/>} />
-
     <Route path="/UserCoursePage" element={ <UserCoursePage/>} />
     <Route path="/InstrRating" element={<InstrRating/>}/>
-
+    <Route path="/CourseInstructor" element={<CourseInstructor/>}/>
+    <Route path="/CourseRate" element={<CourseRate/>}/>
 
 
    </Routes>

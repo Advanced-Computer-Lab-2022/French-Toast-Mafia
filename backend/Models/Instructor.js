@@ -54,7 +54,7 @@ const instructorSchema = new Schema({
       required: false
     },
     InstrRating: {
-      type: Number,
+      type: Array,
       required: false
     },
     
