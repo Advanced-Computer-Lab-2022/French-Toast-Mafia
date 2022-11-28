@@ -418,5 +418,5 @@ module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      addCourse , filterCost, filterRating, filterSubject, 
      filterCourseSubjcet , filterCourseCost , ViewMyCourses
       , SearchCourse, viewInstrInfo, 
-    editBiography, editEmail,ViewMyRatings , ViewMyReview};
+    editBiography, editEmail,ViewMyRatings , ViewMyReview, addExam};
    

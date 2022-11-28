@@ -9,7 +9,7 @@ const {createInstructor, getAllInstructors,
         SearchCourse, viewInstrInfo, 
         editBiography, editEmail ,
          ViewMyRatings, ViewMyReview,
-        createExam}= require ("../Controller/instructor-controller");
+         addExam}= require ("../Controller/instructor-controller");
 
 
 const router = express.Router();
@@ -23,7 +23,7 @@ router.post('/createInstructor', createInstructor);
 
 router.post('/selectCountryInstr/:id', selectCountryInstructor);
 
-// router.post('/createExam/:id', createExam);
+router.post('/addExam', addExam);
 
 router.put('/editInstrBiography/:id', editBiography);
 
