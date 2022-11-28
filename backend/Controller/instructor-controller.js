@@ -92,9 +92,10 @@ const addCourse = async(req , res) => {
                 Summary,
                 Subject,
                 Cost , CourseCurrency,
-                Exams,
-                Discount,
-                DurationDiscount,
+                ExamCourse,
+                Promotion,
+                StartDatePromotion,
+                EndDatePromotion,
                 Preview});
     
             // //adds the course id to the instructor's courses given array
