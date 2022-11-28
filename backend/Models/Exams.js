@@ -4,17 +4,21 @@ const {ObjectId} = mongoose.Schema;
 
 
 const examSchema = new Schema ({
-    ExamId: {
+    Course: {
         type: mongoose.Types.ObjectId,
         ref: 'Course',
         required: true
       }, 
+      ExamId: {
+        type: Number,
+        required: true,
+      },
       Questions: {
         type: Array,
         required: true
       }, 
       Choices: {
-        type: String,
+        type: Array,
         required: true 
       }
 }, { timestamps: true });

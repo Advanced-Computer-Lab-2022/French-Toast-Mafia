@@ -2,14 +2,13 @@ const express= require("express");
 
 
 const {createInstructor, getAllInstructors,
-        selectCountryInstructor,
-        addCourse ,
+        selectCountryInstructor, addCourse ,
         filterCourseSubjcet ,
         filterCourseCost ,
         ViewMyCourses ,
         SearchCourse,viewInstrInfo, 
     editBiography,
-    editEmail , ViewMyRatings, ViewMyReview,deleteInstrRating,addInstrRating,calculateInstrRating}= require ("../Controller/instructor-controller");
+    editEmail , ViewMyRatings, ViewMyReview,deleteInstrRating,addInstrRating,calculateInstrRating,addExam}= require ("../Controller/instructor-controller");
 
 
 const router = express.Router();
@@ -23,8 +22,9 @@ router.post('/createInstructor', createInstructor);
 
 router.post('/selectCountryInstr/:id', selectCountryInstructor);
 
-router.put('/editInstrBiography/:id', editBiography);
+router.post('/addExam', addExam);
 
+router.put('/editInstrBiography/:id', editBiography);
 
 router.put('/editInstrEmail/:id', editEmail);
 
