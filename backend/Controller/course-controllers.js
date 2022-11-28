@@ -1,5 +1,6 @@
 const course= require("../Models/Course");
 const instructor= require("../Models/Instructor");
+const user = require("../Models/User");
 const mongoose = require('mongoose');
 
 function getAllCourse (req,res) {
@@ -126,5 +127,19 @@ const viewCourseExam = async(req , res) => {
 
 }
 
-module.exports={getAllCourse , viewCourse, createCourse,viewCourseInstructor, viewCourseSubtitle, viewCourseExam};
+const viewUserCourse = async(req , res) => {
+    const userId = req.query.id;
+
+    try{
+        const userToView = await user.findOne({_id:mongoose.Types.ObjectId(userId)});
+        // get the details of the course
+        const userCourses = course.find({_id:mongoose.Types.ObjectId(userToView.Courses)})
+        res.status(200).json(userCourses);
+    }
+    catch(error){
+        res.status(400).json({error:error.message})
+    }
+
+}
+module.exports={getAllCourse , viewCourse, createCourse,viewCourseInstructor, viewCourseSubtitle, viewCourseExam, viewUserCourse};
    
