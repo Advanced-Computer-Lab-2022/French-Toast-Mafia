@@ -44,6 +44,18 @@ const courseSchema = new Schema({
       type: Array,
       required: false
     },
+    StartDatePromotion: {
+      type: Date,
+      required: true
+    }, 
+    EndDatePromotion: {
+      type: Date,
+      required: true
+    }, 
+    ExamCourse: {
+      type: Array,
+      required: true
+    },
     Cost: {
         type: Number,
         required: true
