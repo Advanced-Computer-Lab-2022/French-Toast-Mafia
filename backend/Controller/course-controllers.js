@@ -129,16 +129,26 @@ const viewCourseExam = async(req , res) => {
 
 const viewUserCourse = async(req , res) => {
     const userId = req.query.id;
-
+    const resultCourses = [];
+if (userId){
     try{
-        const userToView = await user.findOne({_id:mongoose.Types.ObjectId(userId)});
-        // get the details of the course
-        const userCourses = course.find({_id:mongoose.Types.ObjectId(userToView.Courses)})
-        res.status(200).json(userCourses);
-    }
-    catch(error){
+        const result = await user.findOne({_id:mongoose.Types.ObjectId(userId)});
+        //get each user course details
+        for (let i = 0; i < result.Courses.length; i++) {
+            const courseToView = await course.findOne({_id:mongoose.Types.ObjectId(result.Courses[i])});
+            resultCourses.push(courseToView);
+        }
+        res.status(200).json(resultCourses);
+        
+    }catch(error){
         res.status(400).json({error:error.message})
     }
+}
+else{
+    res.status(404).send('User not found');
+}
+
+   
 
 }
 module.exports={getAllCourse , viewCourse, createCourse,viewCourseInstructor, viewCourseSubtitle, viewCourseExam, viewUserCourse};
