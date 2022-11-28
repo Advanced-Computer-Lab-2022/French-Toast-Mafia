@@ -69,6 +69,7 @@ const addCourse = async(req , res) => {
                 if(err) console.log(err);
                 console.log("Successful deletion");
               });
+            await instructor.findByIdAndUpdate(instructorId,{$pop: { CourseGiven: 1 }});
             */
             // get the details from the body of the request
 
@@ -91,14 +92,13 @@ const addCourse = async(req , res) => {
                 Summary,
                 Subject,
                 Cost , CourseCurrency,
-                Promotion,
+                Exams,
+                Discount,
+                DurationDiscount,
                 Preview});
     
             // //adds the course id to the instructor's courses given array
             await instructor.findByIdAndUpdate(instructorId,{$push:{CourseGiven: createdCourse._id}});
-
-            //in case you need to remove a course (1 removes the last element in the array)
-            // await instructor.findByIdAndUpdate(instructorId,{$pop: { CourseGiven: 1 }});
              
             res.status(200).json(createdCourse);
             
