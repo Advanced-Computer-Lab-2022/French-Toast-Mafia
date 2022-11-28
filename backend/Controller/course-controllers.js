@@ -48,11 +48,9 @@ const createCourse = async(req,res) => {
         Subject: req.body.Subject, 
         Rating: req.body.Rating, 
         NoOfViews: req.body.NoOfViews,
-        Discount: req.body.Discount,
+        Promotion: req.body.Promotion,
         Cost: req.body.Cost,
         CourseCurrency:req.body.CourseCurrency,
-        Exams:req.body.Exams,
-        DurationDiscount:req.body.DurationDiscount,
         Preview:req.body.Preview,
 
     }) 

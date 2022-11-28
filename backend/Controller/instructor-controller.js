@@ -1,6 +1,6 @@
 const instructor=require("../Models/Instructor");
 const course=require("../Models/Course");
-const exam= require ("../Models/Exams");
+const exam = require("../Models/Exams");
 var mongoose = require('mongoose');
 
 function getAllInstructors (req,res) {
@@ -79,9 +79,7 @@ const addCourse = async(req , res) => {
                 LevelOfCourse,
                 Cost,
                 CourseCurrency,
-                Exams,
-                Discount,
-                DurationDiscount,
+                Promotion,
                 Preview} = req.body;
 
             //create the course
@@ -93,9 +91,7 @@ const addCourse = async(req , res) => {
                 Summary,
                 Subject,
                 Cost , CourseCurrency,
-                Exams,
-                Discount,
-                DurationDiscount,
+                Promotion,
                 Preview});
     
             // //adds the course id to the instructor's courses given array
@@ -317,17 +313,36 @@ else{
 
 }
 
-
 //instructor create an exam req 26
-// const createExam = async (req, res) =>{
-//         const newExam = new exam ({
+const addExam = async (req, res) =>{
+    const courseId = req.query.id;
+        //check if course exists or not 
+        const courseExists= await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+        if (courseExists !== null){
+            try{
+                const {Course,ExamId,
+                Questions, Choices} = req.body;
 
-//         })
+              //for instr to create exam 
+              const addnewExam = await exam.create(
+                {Course: courseId,
+                ExamId,
+                Questions,
+                Choices});
 
+            // add exam id to course exams
+            await course.findByIdAndUpdate(courseId, {$push:{Exams:addnewExam._id}})
+            res.status(200).json(addnewExam);
 
-
+        }catch(error) {
+            res.status(400).json({error:error.message})
+        }
+}   else{
+    res.status(400).json({error:"Please enter a valid course Id"});
+}
     
-// }
+}
+
 
 
  //edit email/ biography req 29
@@ -353,6 +368,7 @@ else{
         res.status(400).json({error:error.message})
     }
 }
+
 
 
 // View Instructor  ratings req 28
@@ -400,6 +416,6 @@ const ViewMyReview = async (req , res) => {
 module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      addCourse , filterCost, filterRating, filterSubject, 
      filterCourseSubjcet , filterCourseCost , ViewMyCourses
-      , SearchCourse, viewInstrInfo,
+      , SearchCourse, viewInstrInfo, 
     editBiography, editEmail,ViewMyRatings , ViewMyReview};
    
