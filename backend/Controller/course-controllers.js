@@ -11,7 +11,7 @@ function getAllCourse (req,res) {
 
 
 const viewCourse = async(req , res) => {
-    const courseId = req.params.id;
+    const courseId = req.query.id;
 
     try{
         const courseToView = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});

@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get("/",getAllCourse );
 
-router.get('/viewCourse/:id',viewCourse);
+router.get('/viewCourse',viewCourse);
 
 router.get('/viewCourseInstructor',viewCourseInstructor);
 
