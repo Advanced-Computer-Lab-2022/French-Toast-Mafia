@@ -60,7 +60,7 @@ function App(){
     <Route path="/viewCourse" element={<ViewCourse/>} />
     <Route path="/viewCourse/Subtitle" element={<ViewCourseSubtitle/>} />
     <Route path="/viewCourse/Exam" element={<ViewCourseExam/>} />
-    <Route path="/viewMyCoursesInstructor" element = {<ViewMyCoursesInstructor/>} />
+    <Route path="/Instructor/viewMyCourses" element = {<ViewMyCoursesInstructor/>} />
     <Route path="/UserAdded" element={ <UserAdded/>} />
     <Route path="/AdminAdded" element={ <AdminAdded/>} />
     <Route path="/InstrAdded" element={ <InstrAdded/>} />
