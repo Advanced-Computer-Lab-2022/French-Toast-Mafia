@@ -4,6 +4,7 @@ const Course = require ("../Models/Course")
 var mongoose = require('mongoose');
 const userFilterSubj= require ("../Controller/instructor-controller")
 const userFilterRate= require ("../Controller/instructor-controller")
+const courseController = require("../Controller/course-controllers")
 var mongoose = require('mongoose');
 const nodemailer = require('nodemailer')
 const sendgridTransport = require('nodemailer-sendgrid-transport')
@@ -283,15 +284,12 @@ const viewCourseTitleHoursRating = async (req, res) => {
 
     const ViewMyCourses = async(req , res) => {
         const userId = req.query.id;
+        const resultCourses = [];
     if (userId){
         try{
-            const result = await user.find({_id:mongoose.Types.ObjectId(userId)}).populate('Courses'); 
-            const userCourses = 
-                {"Courses": result.Courses}
-    
-            res.status(200).json(userCourses);
+            const result = await user.findOne({_id:mongoose.Types.ObjectId(userId)}); 
+            res.status(200).json(result.Courses);
             
-        
         }catch(error){
             res.status(400).json({error:error.message})
         }
@@ -378,6 +376,7 @@ const viewCourseTitleHoursRating = async (req, res) => {
     }
         
 }
+
 
 
 module.exports = {getAllUser,
