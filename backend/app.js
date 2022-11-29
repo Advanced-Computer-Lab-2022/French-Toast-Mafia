@@ -19,9 +19,7 @@ const adminRoute = require('./Routes/Admin-route');
 const instructorRoute = require('./Routes/Instructor-route');
 const courseRoute = require('./Routes/Course-route');
 const examRoute = require ('./Routes/Exams-route');
-const ansExams = require ('./Routes/AnsExams-route');
 const subtitleRoute = require ('./Routes/Subtitle-route');
-
 
 mongoose.connect(MongoURI)
     .then(() => {
@@ -50,6 +48,8 @@ mongoose.connect(MongoURI)
 
     app.use('/Subtitle',subtitleRoute);
     
+    app.use('/Exams',examRoute);
+        
     app.use(express.json())
 
 

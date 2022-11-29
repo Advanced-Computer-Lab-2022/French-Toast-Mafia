@@ -315,33 +315,71 @@ else{
 }
 
 //instructor create an exam req 26
-const addExam = async (req, res) =>{
-    const courseId = req.query.id;
-        //check if course exists or not 
-        const courseExists= await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
-        if (courseExists !== null){
-            try{
-                const {Course,ExamId,
-                Questions, Choices} = req.body;
+// const addExam = async (req, res) =>{
+//     const courseId = req.query.id;
+//         //check if course exists or not 
+//         const courseExists= await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+//         if (courseExists !== null){
+//             try{
+//                 const {Course,ExamId,
+//                 Questions, Choices} = req.body;
 
-              //for instr to create exam 
-              const addnewExam = await exam.create(
-                {Course: courseId,
-                ExamId,
-                Questions,
-                Choices});
+//               //for instr to create exam 
+//               const addnewExam = await exam.create(
+//                 {Course: courseId,
+//                 ExamId,
+//                 Questions,
+//                 Choices});
 
-            // add exam id to course exams
-            await course.findByIdAndUpdate(courseId, {$push:{Exams:addnewExam._id}})
-            res.status(200).json(addnewExam);
+//             // add exam id to course exams
+//             await course.findByIdAndUpdate(courseId, {$push:{Exams:addnewExam._id}})
+//             res.status(200).json(addnewExam);
 
-        }catch(error) {
-            res.status(400).json({error:error.message})
-        }
-}   else{
-    res.status(400).json({error:"Please enter a valid course Id"});
+//         }catch(error) {
+//             res.status(400).json({error:error.message})
+//         }
+// }   else{
+//     res.status(400).json({error:"Please enter a valid course Id"});
+// }
+
+// }
+const createExam = async (req,res) => {
+    const mcq = [
+        {
+        question: req.body.question,
+        choice1: req.body.choice1,
+        choice2: req.body.choice2,
+        choice3: req.body.choice3,
+        choice4: req.body.choice4,
+        correct: req.body.correct,
+        },
+    ];
+    const newExam= new exam ({
+        title: req.body.title,
+        description: req.body.description,
+        mcq: mcq,
+    });
+    newExam.save().then((result) => res.status(200).send(result));
 }
-    
+
+const addMCQ = async (req,res) => {
+    const ExamId= req.params.ExamId;
+    await exam.updateOne(
+        {_id: ExamId},
+        {
+            $push: {
+                mcq: {
+                    question: req.body.question,
+                     choice1: req.body.choice1,
+                     choice2: req.body.choice2,
+                     choice3: req.body.choice3,
+                     choice4: req.body.choice4,
+                     correct: req.body.correct,
+                },
+            },
+        }
+    );
+    res.status(200).send('your question has been added');
 }
 
 
@@ -418,5 +456,6 @@ module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      addCourse , filterCost, filterRating, filterSubject, 
      filterCourseSubjcet , filterCourseCost , ViewMyCourses
       , SearchCourse, viewInstrInfo, 
-    editBiography, editEmail,ViewMyRatings , ViewMyReview, addExam};
+    editBiography, editEmail,ViewMyRatings , ViewMyReview, 
+    createExam, addMCQ};
    

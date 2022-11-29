@@ -4,23 +4,42 @@ const {ObjectId} = mongoose.Schema;
 
 
 const examSchema = new Schema ({
-    Course: {
-        type: mongoose.Types.ObjectId,
-        ref: 'Course',
+    title: {
+        type: String,
         required: true
       }, 
-      ExamId: {
-        type: Number,
-        required: true,
+      description: {
+        type: String,
+        required: false,
       },
-      Questions: {
-        type: Array,
-        required: true
-      }, 
-      Choices: {
-        type: Array,
-        required: true 
+      mcq: [{
+          question: {
+            type: String,
+            required: true
+          },
+          choice1: {
+            type: String,
+            required: true
+          },
+          choice2: {
+            type: String,
+            required: true
+          },
+          choice3: {
+            type: String,
+            required: true
+          },
+          choice4: {
+            type: String,
+            required: true
+          },
+          correct: {
+            type: String,
+            required: true
+          },
       }
+    ]
+      
 }, { timestamps: true });
 
 const Exams = mongoose.model('Exams', examSchema);
