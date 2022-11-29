@@ -27,6 +27,7 @@ import ForgotPassword from './Pages/ForgotPassword';
 import ChangePassword from './Pages/ChangePassword';
 import InstrRating from './Pages/InstrRating';
 import MyCourses from './Components/MyCourses';
+import CoursePromotion from './Pages/CoursePromotion';
 
 function App(){
   const newAdmin = (admin) => {
@@ -63,6 +64,7 @@ function App(){
     <Route path="/ChangePassword" element={<ChangePassword/>}/>
     <Route path="/MyCourses" element={ <MyCourses/>} />
     <Route path="/InstrRating" element={<InstrRating/>}/>
+    <Route path="/CoursePromotion" element={<CoursePromotion/>}/>
 
 
 
