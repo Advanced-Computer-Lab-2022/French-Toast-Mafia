@@ -30,13 +30,16 @@ import InstrRating from './Pages/InstrRating';
 import MyCourses from './Components/MyCourses';
 import CoursePromotion from './Pages/CoursePromotion';
 import AllUsers from './Components/AllUsers';
+import AllInstructors from './Components/AllInstructors';
 import UserCoursePage from './Pages/UserCoursePage';
 import ViewCourseSubtitle from './Pages/ViewCourseSubtitles'
 import ViewCourseExam from './Pages/ViewCourseExam'
 import CourseInstructor from './Pages/CourseInstructor';
 import StarRating from './Components/StarRating';
 import CourseRate from './Pages/CourseRate';
-
+import Contract from './Pages/Contract';
+import PopUp from './Components/PopUp';
+import InstrCourses from './Components/InstrCourses';
 
 function App(){
   const newAdmin = (admin) => {
@@ -76,6 +79,7 @@ function App(){
     <Route path="/ChangePassword" element={<ChangePassword/>}/>
     <Route path="/MyCourses" element={ <MyCourses/>} />
     <Route path="/AllUsers" element={ <AllUsers/>} />
+    <Route path="/AllInstructors" element={ <AllInstructors/>} />
     <Route path="/UserCoursePage" element={ <UserCoursePage/>} />
     <Route path="/InstrRating" element={<InstrRating/>}/>
     <Route path="/CoursePromotion" element={<CoursePromotion/>}/>
@@ -83,6 +87,9 @@ function App(){
     <Route path="/CourseInstructor" element={<CourseInstructor/>}/>
     <Route path="/CourseRate" element={<CourseRate/>}/>
 
+    <Route path="/Contract" element={<Contract/>}/>
+    <Route path="/PopUp" element={<PopUp/>}/>
+    <Route path="/InstrCourses" element={ <InstrCourses/>} />
 
    </Routes>
    </div>
