@@ -315,34 +315,6 @@ else{
 }
 
 //instructor create an exam req 26
-// const addExam = async (req, res) =>{
-//     const courseId = req.query.id;
-//         //check if course exists or not 
-//         const courseExists= await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
-//         if (courseExists !== null){
-//             try{
-//                 const {Course,ExamId,
-//                 Questions, Choices} = req.body;
-
-//               //for instr to create exam 
-//               const addnewExam = await exam.create(
-//                 {Course: courseId,
-//                 ExamId,
-//                 Questions,
-//                 Choices});
-
-//             // add exam id to course exams
-//             await course.findByIdAndUpdate(courseId, {$push:{Exams:addnewExam._id}})
-//             res.status(200).json(addnewExam);
-
-//         }catch(error) {
-//             res.status(400).json({error:error.message})
-//         }
-// }   else{
-//     res.status(400).json({error:"Please enter a valid course Id"});
-// }
-
-// }
 const createExam = async (req,res) => {
     const mcq = [
         {
@@ -513,5 +485,6 @@ module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      addCourse , filterCost, filterRating, filterSubject, 
      filterCourseSubjcet , filterCourseCost , ViewMyCourses
       , SearchCourse, viewInstrInfo, 
-    editBiography, editEmail,ViewMyRatings , ViewMyReview, addExam};
+    editBiography, editEmail,ViewMyRatings , ViewMyReview, addInstrRating ,calculateInstrRating,
+    deleteInstrRating, createExam, addMCQ };
    

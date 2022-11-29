@@ -6,17 +6,12 @@ const {createInstructor, getAllInstructors,
         filterCourseSubjcet ,
         filterCourseCost ,
         ViewMyCourses ,
-<<<<<<< HEAD
         SearchCourse, viewInstrInfo, 
         editBiography, editEmail ,
-         ViewMyRatings, ViewMyReview,
-         createExam,
-         addMCQ}= require ("../Controller/instructor-controller");
-=======
-        SearchCourse,viewInstrInfo, 
-    editBiography,
-    editEmail , ViewMyRatings, ViewMyReview,deleteInstrRating,addInstrRating,calculateInstrRating,addExam}= require ("../Controller/instructor-controller");
->>>>>>> a6fb4f42c6073f6b6ff17e81491af32b04e50212
+        ViewMyRatings, ViewMyReview,
+        createExam,
+        addMCQ,
+        deleteInstrRating,addInstrRating,calculateInstrRating}= require ("../Controller/instructor-controller");
 
 
 const router = express.Router();
