@@ -6,9 +6,12 @@ const {createInstructor, getAllInstructors,
         filterCourseSubjcet ,
         filterCourseCost ,
         ViewMyCourses ,
-        SearchCourse,viewInstrInfo, 
-    editBiography,
-    editEmail , ViewMyRatings, ViewMyReview,deleteInstrRating,addInstrRating,calculateInstrRating,addExam}= require ("../Controller/instructor-controller");
+        SearchCourse, viewInstrInfo, 
+        editBiography, editEmail ,
+        ViewMyRatings, ViewMyReview,
+        createExam,
+        addMCQ,
+        deleteInstrRating,addInstrRating,calculateInstrRating}= require ("../Controller/instructor-controller");
 
 
 const router = express.Router();
@@ -22,13 +25,15 @@ router.post('/createInstructor', createInstructor);
 
 router.post('/selectCountryInstr/:id', selectCountryInstructor);
 
-router.post('/addExam', addExam);
+router.post('/addExam', createExam);
+
+router.post ('/addMCQ',addMCQ);
 
 router.put('/editInstrBiography/:id', editBiography);
 
 router.put('/editInstrEmail/:id', editEmail);
 
-router.get ('/ViewMyCourses/:id',ViewMyCourses);
+router.get ('/ViewMyCourses',ViewMyCourses);
 
 router.get ('/ViewMyRatings',ViewMyRatings);
 

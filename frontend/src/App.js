@@ -7,6 +7,7 @@ import Navbar from './Components/Navbar';
 import FrontPage from './Pages/FrontPage';
 import Courses from './Pages/Courses';
 import ViewMyCoursesInstructor from './Pages/ViewMyCoursesInstructor';
+import EditCourse from './Pages/EditCourse';
 import ViewCourse from './Pages/ViewCourse';
 import CoursePricePage from './Pages/CoursePricePage';
 import AddCoursePage from './Pages/AddCoursePage';
@@ -27,13 +28,18 @@ import ForgotPassword from './Pages/ForgotPassword';
 import ChangePassword from './Pages/ChangePassword';
 import InstrRating from './Pages/InstrRating';
 import MyCourses from './Components/MyCourses';
+import CoursePromotion from './Pages/CoursePromotion';
 import AllUsers from './Components/AllUsers';
+import AllInstructors from './Components/AllInstructors';
 import UserCoursePage from './Pages/UserCoursePage';
 import ViewCourseSubtitle from './Pages/ViewCourseSubtitles'
 import ViewCourseExam from './Pages/ViewCourseExam'
 import CourseInstructor from './Pages/CourseInstructor';
 import StarRating from './Components/StarRating';
 import CourseRate from './Pages/CourseRate';
+import Contract from './Pages/Contract';
+import PopUp from './Components/PopUp';
+import InstrCourses from './Components/InstrCourses';
 
 function App(){
   const newAdmin = (admin) => {
@@ -63,6 +69,7 @@ function App(){
     <Route path="/viewCourse/Subtitle" element={<ViewCourseSubtitle/>} />
     <Route path="/viewCourse/Exam" element={<ViewCourseExam/>} />
     <Route path="/Instructor/viewMyCourses" element = {<ViewMyCoursesInstructor/>} />
+    <Route path="/Instructor/EditCourse" element = {<EditCourse/>}/>
     <Route path="/UserAdded" element={ <UserAdded/>} />
     <Route path="/AdminAdded" element={ <AdminAdded/>} />
     <Route path="/InstrAdded" element={ <InstrAdded/>} />
@@ -72,11 +79,17 @@ function App(){
     <Route path="/ChangePassword" element={<ChangePassword/>}/>
     <Route path="/MyCourses" element={ <MyCourses/>} />
     <Route path="/AllUsers" element={ <AllUsers/>} />
+    <Route path="/AllInstructors" element={ <AllInstructors/>} />
     <Route path="/UserCoursePage" element={ <UserCoursePage/>} />
     <Route path="/InstrRating" element={<InstrRating/>}/>
+    <Route path="/CoursePromotion" element={<CoursePromotion/>}/>
+
     <Route path="/CourseInstructor" element={<CourseInstructor/>}/>
     <Route path="/CourseRate" element={<CourseRate/>}/>
 
+    <Route path="/Contract" element={<Contract/>}/>
+    <Route path="/PopUp" element={<PopUp/>}/>
+    <Route path="/InstrCourses" element={ <InstrCourses/>} />
 
    </Routes>
    </div>

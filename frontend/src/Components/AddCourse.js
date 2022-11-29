@@ -4,6 +4,7 @@ import {Box, Typography } from '@mui/material'
 import { FormLabel } from '@mui/material';
 import { TextField } from '@mui/material';
 import { Button } from '@mui/material';
+import axios from 'axios';
 //import {MenuItem, Select, InputLabel} from '@mui/material';
 //import { purple } from '@mui/material/colors';
 //import addAdministrator from '../api-helpers/helpers'
@@ -12,8 +13,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const AddCourse = () => {
-    
+   const AddCourse = () => {
     const[NameOfCourse , setName] = useState('')
     const[CourseSubtitle ,setSubtitle] = useState('')
     const[LevelOfCourse, setLevel] = useState('')
@@ -22,12 +22,12 @@ const AddCourse = () => {
     const[err , setErr] = useState(null)
     const navigate = useNavigate();
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const course = {NameOfCourse,CourseSubtitle,LevelOfCourse, Subject,Cost}
-        const response = await fetch('http://localhost:5000/Instructor/addCourse' , {
+        navigate('/InstrAdded');
+        const course ={NameOfCourse,CourseSubtitle,LevelOfCourse,Subject,Cost};
+       const response= await fetch('http://localhost:5000/Instructor/addCourse' , {
+        
             method : 'POST' ,
             body : JSON.stringify(course) , 
             headers : {
@@ -41,7 +41,7 @@ const AddCourse = () => {
             setErr(json.err)
 
         }
-        if(response.ok){
+         if(response.ok){
             setName('')
             setSubtitle('')
             setLevel('')
@@ -54,11 +54,7 @@ const AddCourse = () => {
 
 
 
-
-
-
-
-  return < Box display='flex' flexDirection={"column "} width='100%' height = "100%" >
+  return  < Box  display='flex' flexDirection={"column "} width='100%' height = "100%" >
     < Box display='flex' margin='auto' padding={2} >
     
     </Box>
@@ -115,9 +111,7 @@ const AddCourse = () => {
         
 
         <Button 
-        onClick={ () => { navigate("/InstrAdded") } }
         style={{width:250, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
-
         type='submit'
          //color="purple" sx={{ width:"50%", margin:"auto ", mt: "2", borderRadius: 7}}
           variant="contained "> 
@@ -127,6 +121,8 @@ const AddCourse = () => {
     </Box>
   </form>
 </Box>
+  
 }
+
 
 export default AddCourse;

@@ -65,7 +65,7 @@ const addCourse = async(req , res) => {
 
             //Uncomment this block to delete a course
             /*
-            course.deleteOne({ NameOfCourse: 'ARCH 205' }, function (err) {
+            course.deleteOne({ NameOfCourse: 'DMET 401' }, function (err) {
                 if(err) console.log(err);
                 console.log("Successful deletion");
               });
@@ -98,7 +98,7 @@ const addCourse = async(req , res) => {
                 EndDatePromotion,
                 Preview});
     
-            // //adds the course id to the instructor's courses given array
+            //adds the course id to the instructor's courses given array
             await instructor.findByIdAndUpdate(instructorId,{$push:{CourseGiven: createdCourse._id}});
              
             res.status(200).json(createdCourse);
@@ -156,25 +156,37 @@ const filterSubject = async (req,res) => {
   
   }
 
-  const ViewMyCourses = async (req , res) => {
-    const w = req.params.id;
-    const a = await course.find({instructor:w }, {NameOfCourse:1,_id:1});
-        // res.json(a);
-        // console.log(a);
-    
-    if (a == null) {
-        res.status(404).send('no courses available');
-    }
-    else {
-        res.json(a);
-        //let x= Object.values(a);
-        //console.log(x);
-        //let result = x.map(a => a.NameOfCourse);
-        // console.log(result);
-        
-    }
+    const ViewMyCourses = async (req , res) => {
+    const instructorId = req.query.instructorId;
+    if (instructorId ){
+    const a = await course.find({Instructor:mongoose.Types.ObjectId(instructorId)}).populate('Instructor');
+    res.status(200).json(a)
+     } else{
+    res.status(400).json({error:"InstructorId is required"})
+}
+   
 
 }
+
+//   const ViewMyCourses = async (req , res) => {
+//     const instructorId = req.query.instructorId;
+//     const a = await course.find({Instructor:mongoose.Types.ObjectId(instructorId)}, {NameOfCourse:1,_id:1,  Duration: 1, Rating: 1,Cost:1});
+//         // res.json(a);
+//         // console.log(a);
+    
+//     if (a == null) {
+//         res.status(404).send('no courses available');
+//     }
+//     else {
+//         res.json(a);
+//         //let x= Object.values(a);
+//         //console.log(x);
+//         //let result = x.map(a => a.NameOfCourse);
+//         // console.log(result);
+        
+//     }
+
+// }
 
 const SearchCourse = async (req,res) => {
     const w = req.params.id;
@@ -315,33 +327,43 @@ else{
 }
 
 //instructor create an exam req 26
-const addExam = async (req, res) =>{
-    const courseId = req.query.id;
-        //check if course exists or not 
-        const courseExists= await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
-        if (courseExists !== null){
-            try{
-                const {Course,ExamId,
-                Questions, Choices} = req.body;
-
-              //for instr to create exam 
-              const addnewExam = await exam.create(
-                {Course: courseId,
-                ExamId,
-                Questions,
-                Choices});
-
-            // add exam id to course exams
-            await course.findByIdAndUpdate(courseId, {$push:{Exams:addnewExam._id}})
-            res.status(200).json(addnewExam);
-
-        }catch(error) {
-            res.status(400).json({error:error.message})
-        }
-}   else{
-    res.status(400).json({error:"Please enter a valid course Id"});
+const createExam = async (req,res) => {
+    const mcq = [
+        {
+        question: req.body.question,
+        choice1: req.body.choice1,
+        choice2: req.body.choice2,
+        choice3: req.body.choice3,
+        choice4: req.body.choice4,
+        correct: req.body.correct,
+        },
+    ];
+    const newExam= new exam ({
+        title: req.body.title,
+        description: req.body.description,
+        mcq: mcq,
+    });
+    newExam.save().then((result) => res.status(200).send(result));
 }
-    
+
+const addMCQ = async (req,res) => {
+    const ExamId= req.params.ExamId;
+    await exam.updateOne(
+        {_id: ExamId},
+        {
+            $push: {
+                mcq: {
+                    question: req.body.question,
+                     choice1: req.body.choice1,
+                     choice2: req.body.choice2,
+                     choice3: req.body.choice3,
+                     choice4: req.body.choice4,
+                     correct: req.body.correct,
+                },
+            },
+        }
+    );
+    res.status(200).send('your question has been added');
 }
 
 
@@ -474,7 +496,7 @@ const calculateInstrRating = async(req , res) => {
 module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      addCourse , filterCost, filterRating, filterSubject, 
      filterCourseSubjcet , filterCourseCost , ViewMyCourses
-      , SearchCourse, viewInstrInfo,
-    editBiography, editEmail,ViewMyRatings , ViewMyReview, deleteInstrRating,addInstrRating,calculateInstrRating,addExam
-};
+      , SearchCourse, viewInstrInfo, 
+    editBiography, editEmail,ViewMyRatings , ViewMyReview, addInstrRating ,calculateInstrRating,
+    deleteInstrRating, createExam, addMCQ };
    
