@@ -22,7 +22,7 @@ const newData = {};
 const promo = {};
 
 const handleSubmit = () => {
-  console.log(newData)
+  // console.log(newData)
 
 }
 
