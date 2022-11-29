@@ -31,7 +31,7 @@ const InstructorCourseList = () => {
         const queryParameters = new URLSearchParams(window.location.search)
         const Id = queryParameters.get("Id")
         console.log(Id)
-       await axios.get(`http://localhost:5000/Instructor/ViewMyCourses/${Id}`).then(
+       await axios.get(`http://localhost:5000/Instructor/ViewMyCourses?instructorId=${Id}`).then(
         (res) => { 
             const courses = res.data
             // console.log(courses)

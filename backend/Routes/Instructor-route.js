@@ -33,7 +33,7 @@ router.put('/editInstrBiography/:id', editBiography);
 
 router.put('/editInstrEmail/:id', editEmail);
 
-router.get ('/ViewMyCourses/:id',ViewMyCourses);
+router.get ('/ViewMyCourses',ViewMyCourses);
 
 router.get ('/ViewMyRatings',ViewMyRatings);
 

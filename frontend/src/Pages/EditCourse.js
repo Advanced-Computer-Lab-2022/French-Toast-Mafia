@@ -21,9 +21,24 @@ const courseId = queryParameters.get("courseId")
 const newData = {};
 const promo = {};
 
-const handleSubmit = () => {
-  // console.log(newData)
+const handleSubmit = async(req , res) => {
 
+        console.log(newData)
+        const response =  await fetch(`http://localhost:5000/Course/editCourse?id=${courseId}`,{
+          method: 'POST',
+          body: JSON.stringify(newData),
+          headers : {
+              'Content-Type':'application/json'
+          }
+      })
+      const json = await response.json();
+      if (!response.ok){
+        console.log('Something wrong happened')
+    }
+    if (response.ok){
+        console.log('Course Updated');
+        window.location.href=`/viewCourse?courseId=${courseId}`
+    }
 }
 
 const handleEditSubtitle = () => {
@@ -39,9 +54,6 @@ const handleChange = (event) => {
   else{
     newData[attr] = event.target.value
   }
-  // console.log(newData)
-
-  // console.log("value changed")
 }
 
 

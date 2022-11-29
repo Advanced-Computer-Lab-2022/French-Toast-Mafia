@@ -208,10 +208,20 @@ const calculateCourseRating = async(req , res) => {
     }
 }
 
+const editCourse = async(req, res) => {
+    const courseId=req.query.id;
+    if (courseId){
+        try{
+            const editCourse = await course.findByIdAndUpdate(courseId , req.body);  
+            res.status(200).json(editCourse);
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }   
+    }
+}
 
 
 
-
-module.exports={getAllCourse , viewCourse, createCourse,viewCourseInstructor,
+module.exports={getAllCourse , viewCourse, createCourse, editCourse, viewCourseInstructor,
      viewCourseSubtitle, viewCourseExam, viewUserCourse,deleteCourseRating,addCourseRating,calculateCourseRating};
    
