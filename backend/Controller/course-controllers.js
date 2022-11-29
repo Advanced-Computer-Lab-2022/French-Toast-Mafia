@@ -209,7 +209,7 @@ const calculateCourseRating = async(req , res) => {
 }
 
 const editCourse = async(req, res) => {
-    const courseId=req.query.id;
+    const courseId = req.query.id;
     if (courseId){
         try{
             const editCourse = await course.findByIdAndUpdate(courseId , req.body);  
