@@ -65,7 +65,7 @@ const addCourse = async(req , res) => {
 
             //Uncomment this block to delete a course
             /*
-            course.deleteOne({ NameOfCourse: 'ARCH 205' }, function (err) {
+            course.deleteOne({ NameOfCourse: 'DMET 401' }, function (err) {
                 if(err) console.log(err);
                 console.log("Successful deletion");
               });
@@ -96,7 +96,7 @@ const addCourse = async(req , res) => {
                 Promotion,
                 Preview});
     
-            // //adds the course id to the instructor's courses given array
+            //adds the course id to the instructor's courses given array
             await instructor.findByIdAndUpdate(instructorId,{$push:{CourseGiven: createdCourse._id}});
              
             res.status(200).json(createdCourse);

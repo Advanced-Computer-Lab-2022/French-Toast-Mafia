@@ -50,7 +50,7 @@ const getCellData = (obj) =>{
     }
     else if(nextPage === "Promotion"){
       const prom = obj[1]
-      return <TableCell>{Object.values(prom[0])[0]}<font style={{ color: 'lightgray'}}> <font style={{ color: 'white'}}>.............</font>Ends on {Object.values(prom[0])[1]}</font></TableCell>
+      return <TableCell>{Object.values(prom[0])[0]}<font style={{ color: 'lightgray'}}> Ends on {Object.values(prom[0])[1]}</font></TableCell>
      
     //   return <TableCell>
     //   <Button variant="contained"
@@ -67,7 +67,7 @@ const getCellData = (obj) =>{
 }
 
 
-const ViewCourse = () => { 
+const EditCourse = () => { 
     const [course,setCourse] = useState([]);
     const getCourse =  async () => {
        
@@ -87,13 +87,13 @@ const ViewCourse = () => {
             onClick={getCourse}
             margin="normal"
             padding="normal"
-            >Load Course</Button>
+            >Load Data</Button>
             {/* margin */}
             <Button variant="contained"
             onClick={() => window.location.href=`/Instructor/EditCourse?courseId=${courseId}`}
             margin="normal"
             padding="normal"
-            >Edit Course</Button>
+            >Submit</Button>
 
             </Box> 
 
@@ -115,4 +115,4 @@ const ViewCourse = () => {
     )
 }
 
-export default ViewCourse;
+export default EditCourse;

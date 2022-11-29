@@ -7,6 +7,7 @@ import Navbar from './Components/Navbar';
 import FrontPage from './Pages/FrontPage';
 import Courses from './Pages/Courses';
 import ViewMyCoursesInstructor from './Pages/ViewMyCoursesInstructor';
+import EditCourse from './Pages/EditCourse';
 import ViewCourse from './Pages/ViewCourse';
 import CoursePricePage from './Pages/CoursePricePage';
 import AddCoursePage from './Pages/AddCoursePage';
@@ -31,6 +32,7 @@ import AllUsers from './Components/AllUsers';
 import UserCoursePage from './Pages/UserCoursePage';
 import ViewCourseSubtitle from './Pages/ViewCourseSubtitles'
 import ViewCourseExam from './Pages/ViewCourseExam'
+
 
 
 function App(){
@@ -61,6 +63,7 @@ function App(){
     <Route path="/viewCourse/Subtitle" element={<ViewCourseSubtitle/>} />
     <Route path="/viewCourse/Exam" element={<ViewCourseExam/>} />
     <Route path="/Instructor/viewMyCourses" element = {<ViewMyCoursesInstructor/>} />
+    <Route path="/Instructor/EditCourse" element = {<EditCourse/>}/>
     <Route path="/UserAdded" element={ <UserAdded/>} />
     <Route path="/AdminAdded" element={ <AdminAdded/>} />
     <Route path="/InstrAdded" element={ <InstrAdded/>} />
