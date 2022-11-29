@@ -33,7 +33,7 @@ const courseSchema = new Schema({
       required: true
     },
     Rating: {
-      type: String,
+      type: Array,
       required: false
     },
     NoOfViews: {
@@ -41,6 +41,18 @@ const courseSchema = new Schema({
       required: false
     },
     Promotion: {
+      type: Array,
+      required: false
+    },
+    StartDatePromotion: {
+      type: Date,
+      required: false
+    }, 
+    EndDatePromotion: {
+      type: Date,
+      required: false
+    }, 
+    ExamCourse: {
       type: Array,
       required: false
     },

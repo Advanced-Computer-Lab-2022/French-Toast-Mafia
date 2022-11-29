@@ -28,11 +28,17 @@ import ForgotPassword from './Pages/ForgotPassword';
 import ChangePassword from './Pages/ChangePassword';
 import InstrRating from './Pages/InstrRating';
 import MyCourses from './Components/MyCourses';
+<<<<<<< HEAD
+import CoursePromotion from './Pages/CoursePromotion';
+=======
 import AllUsers from './Components/AllUsers';
 import UserCoursePage from './Pages/UserCoursePage';
 import ViewCourseSubtitle from './Pages/ViewCourseSubtitles'
 import ViewCourseExam from './Pages/ViewCourseExam'
-
+import CourseInstructor from './Pages/CourseInstructor';
+import StarRating from './Components/StarRating';
+import CourseRate from './Pages/CourseRate';
+>>>>>>> 3b407d250fe1f868cb0d1ca8dbc65936a0327660
 
 
 function App(){
@@ -73,10 +79,15 @@ function App(){
     <Route path="/ChangePassword" element={<ChangePassword/>}/>
     <Route path="/MyCourses" element={ <MyCourses/>} />
     <Route path="/AllUsers" element={ <AllUsers/>} />
-
     <Route path="/UserCoursePage" element={ <UserCoursePage/>} />
     <Route path="/InstrRating" element={<InstrRating/>}/>
+<<<<<<< HEAD
+    <Route path="/CoursePromotion" element={<CoursePromotion/>}/>
 
+=======
+    <Route path="/CourseInstructor" element={<CourseInstructor/>}/>
+    <Route path="/CourseRate" element={<CourseRate/>}/>
+>>>>>>> 3b407d250fe1f868cb0d1ca8dbc65936a0327660
 
 
    </Routes>
