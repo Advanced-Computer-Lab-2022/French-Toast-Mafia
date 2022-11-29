@@ -32,9 +32,22 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 const getCellData = (obj) =>{
 
   if(typeof(obj[1])!="object"){
-   
+  
+   if(obj[0] == "Preview"){
+    if(obj[1] == ""){
       return <TableCell>
-        {obj[1]}</TableCell>
+      Null</TableCell>
+    }
+    else{
+      return <TableCell> <a href= {obj[1]} >View Preview</a></TableCell>
+   
+    }
+   }
+   else{
+    return <TableCell>
+      {obj[1]}</TableCell>
+   }
+     
   }
     
   else{
