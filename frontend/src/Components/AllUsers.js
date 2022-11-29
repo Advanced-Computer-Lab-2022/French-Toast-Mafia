@@ -9,37 +9,28 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Courses from '../Pages/Courses';
-import withStyles from '@mui/material/styles';
-
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      //backgroundColor: theme.palette.common.black,
+      backgroundColor: theme.palette.common.black,
       color: theme.palette.common.white,
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
     },
   }));
-
-
 const { useState } = require("react");
 
 
-const MyCourses = () => { 
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
-    console.log(id);
-    const [course,setCourses] = useState([]);
-
-    const getCourses =  async () => {
-         await axios.get(`http://localhost:5000/user/viewcoursetitlehoursrating`).then(
-
+const AllUsers = () => { 
+    const [users,setUsers] = useState([]);
+    
+    const getUsers =  async () => {
+         await axios.get('http://localhost:5000/user/').then(
         (res) => { 
-            const course = res.data
-            console.log(course)
-            setCourses(course)
+            const users = res.data
+            console.log(users)
+            setUsers(users)
             
         }
          );
@@ -47,39 +38,36 @@ const MyCourses = () => {
     
 
     }
-  
     return(
 
-        <div className="UserCourses"   >
+        // visualize authors in a table map over authors
+        <div className="UsersList">
             <Box sx={{marginBottom: 2}}>
             <Button variant="contained"
             style={{width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
-            onClick={getCourses}
+            onClick={getUsers}
             margin="normal"
             padding="normal"
-            >Load courses</Button>
+            >Load Users</Button>
+            {/* margin */}
             </Box>
             
         
         
             
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table"  style={{ backgroundColor:'yellow', color:'#FFF'}} >
-        <TableHead  sx={{
-              backgroundColor: "black",
-              borderColor: "white",
-              borderWidth: "2px",
-              borderStyle: "solid",
-              padding: "4px",
-            }} >
+      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table"  style={{ backgroundColor:' yellow', color:'#FFF'}}>
+        <TableHead>
           <TableRow>
-            <StyledTableCell align="center" >Name of the registered courses</StyledTableCell>
-
+            <StyledTableCell align="center">Name</StyledTableCell>
+            <StyledTableCell align="center">Email</StyledTableCell>
+            <StyledTableCell align="center">Password</StyledTableCell>
+            <StyledTableCell align="center">Type</StyledTableCell>
 
           </TableRow>
-        </TableHead   >
+        </TableHead>
         <TableBody>
-          {course.map((Courses) =>(
+          { users.map((user) => (
             <TableRow
             hover
             sx={{
@@ -89,12 +77,14 @@ const MyCourses = () => {
                 width: "100%"
                 }
             }}
-            
-            onClick={() => window.location.href=`/UserCoursePage?courseId=${Courses._id}&userId=${params.get('userId')}`}
-              key={Courses._id}
+            onClick={() => window.location.href=`/MyCourses?userId=${user._id}`}
+              key={user._id}
 
               >
-              <TableCell align="center">{Courses.NameOfCourse}</TableCell>
+              <TableCell align="center">{user.Name}</TableCell>
+              <TableCell align="center">{user.Email}</TableCell>
+              <TableCell align="center">{user.Password}</TableCell>
+              <TableCell align="center">{user.Type}</TableCell>
 
 
             </TableRow>
@@ -108,5 +98,4 @@ const MyCourses = () => {
 
     )
 }
-export default MyCourses;
-
+export default AllUsers;
