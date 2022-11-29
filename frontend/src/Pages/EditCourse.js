@@ -18,6 +18,33 @@ const { useState } = require("react");
 const queryParameters = new URLSearchParams(window.location.search)
 const courseId = queryParameters.get("courseId")
 
+const newData = {};
+const promo = {};
+
+const handleSubmit = () => {
+  console.log(newData)
+
+}
+
+const handleEditSubtitle = () => {
+  console.log("Pressed Edit Subtitle")
+}
+
+const handleChange = (event) => {
+  const attr = event.target.id
+  if(attr == "Amount" || attr == "End"){
+    promo[attr] = event.target.value
+    newData["Promotion"] = promo
+  }
+  else{
+    newData[attr] = event.target.value
+  }
+  // console.log(newData)
+
+  // console.log("value changed")
+}
+
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.common.black,
@@ -30,28 +57,90 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 
 const getCellData = (obj) =>{
-
   if(typeof(obj[1])!="object"){
-   
+    if(obj[0]=="_id" || obj[0] == "Instructor" || obj[0] == "createdAt" || obj[0] == "updatedAt" || obj[0] == "__v"){
       return <TableCell>
-        {obj[1]}</TableCell>
+      <Box
+        component="form"
+        sx={{
+          '& .MuiTextField-root': { m: 1, width: '25ch' },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <div>
+          <TextField
+            disabled
+            id={obj[0]}
+            onChange={handleChange}
+            defaultValue={obj[1]}
+            size="small"
+          />
+        </div>
+      </Box>
+      </TableCell>
+    }
+      return <TableCell>
+    <Box
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <div>
+        <TextField
+          id={obj[0]}
+          onChange={handleChange}
+          defaultValue={obj[1]}
+          size="small"
+        />
+      </div>
+    </Box>
+    </TableCell>
   }
-    
+
   else{
     const nextPage = Object.values(Object.values(obj))[0];
     if(nextPage == "CourseSubtitle"){
       return <TableCell>
       <Button variant="contained"
         margin="normal"
-        onClick={() => window.location.href=`/ViewCourse/Subtitle?courseId=${courseId}`}
+        onClick={handleEditSubtitle}
         padding="normal"
-        >View Subtitles</Button> 
+        >Edit Subtitles</Button> 
+        
     </TableCell>
     }
     else if(nextPage === "Promotion"){
       const prom = obj[1]
-      return <TableCell>{Object.values(prom[0])[0]}<font style={{ color: 'lightgray'}}> Ends on {Object.values(prom[0])[1]}</font></TableCell>
-     
+      return <TableCell>
+        <Box
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <div>
+        <TextField
+          id={Object.keys(prom[0])[0]}
+          onChange={handleChange}
+          defaultValue={Object.values(prom[0])[0]}
+          size="small"
+        />  <TextField
+        id={Object.keys(prom[0])[1]}
+        label="Ends on:"
+        type="date"
+        onChange={handleChange}
+        defaultValue= {Object.values(prom[0])[1]}
+        size="small"
+      /> 
+      </div>
+    </Box>
+    </TableCell>
     //   return <TableCell>
     //   <Button variant="contained"
     //     margin="normal"
@@ -89,8 +178,9 @@ const EditCourse = () => {
             padding="normal"
             >Load Data</Button>
             {/* margin */}
+
             <Button variant="contained"
-            onClick={() => window.location.href=`/Instructor/EditCourse?courseId=${courseId}`}
+            onClick={handleSubmit}
             margin="normal"
             padding="normal"
             >Submit</Button>
