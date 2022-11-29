@@ -24,9 +24,8 @@ const { useState } = require("react");
 
 const UserCoursePage = () => { 
     const [courses,setCourses] = useState([]);
-
+    const params = new URLSearchParams(window.location.search);
     const getCourses=  async () => {
-        const params = new URLSearchParams(window.location.search);
        // const courseId = params.get('courseId');
         const userId = params.get('userId');
         console.log(userId);
@@ -56,6 +55,7 @@ const UserCoursePage = () => {
       {/* margin */}
       </Box>
 
+
       <TableContainer component={Paper}>
   <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
     <TableHead>
@@ -63,6 +63,10 @@ const UserCoursePage = () => {
         <StyledTableCell align="center">Course Name</StyledTableCell>
         <StyledTableCell align="center">Level</StyledTableCell>
         <StyledTableCell align="center">Subject</StyledTableCell>
+        <StyledTableCell align="center">Instructor Info</StyledTableCell>
+        <StyledTableCell align="center">Videos</StyledTableCell>
+        <StyledTableCell align="center">Exercises</StyledTableCell>
+        <StyledTableCell align="center">Rate Course</StyledTableCell>
       </TableRow>
     </TableHead>
 
@@ -81,8 +85,53 @@ const UserCoursePage = () => {
           <TableCell align="center">{course.NameOfCourse}</TableCell>
           <TableCell align="center">{course.LevelOfCourse}</TableCell>
           <TableCell align="center">{course.Subject}</TableCell>
+          <TableCell align="center">
+          <Box sx={{marginBottom: 2}}>
+            <Button variant="contained"
+              style={{ width: 210, height: 40, backgroundColor: ' #1aac83', color: '#FFF', marginTop: 10 }}
+              onClick={() => window.location.href=`/CourseInstructor?courseId=${params.get('courseId')}&userId=${params.get('userId')}`}
+              margin="normal"
+              padding="normal"
+            >View Instructor Info</Button>
+            </Box>
+          </TableCell>
+
+          <TableCell align="center">
+          <Box sx={{marginBottom: 2}}>
+            <Button variant="contained"
+              style={{ width:150, height: 40, backgroundColor: ' #1aac83', color: '#FFF', marginTop: 10 }}
+              onClick={() => window.location.href=`/CourseVideos?courseId=${params.get('courseId')}&userId=${params.get('userId')}`}
+              margin="normal"
+              padding="normal"
+            >Watch Videos</Button>
+            </Box>
+          </TableCell>
+
+          <TableCell align="center">
+          <Box sx={{marginBottom: 2}}>
+            <Button variant="contained"
+              style={{ width:150, height: 40, backgroundColor: ' #1aac83', color: '#FFF', marginTop: 10 }}
+              onClick={() => window.location.href=`/CourseExercises?courseId=${params.get('courseId')}&userId=${params.get('userId')}`}
+              margin="normal"
+              padding="normal"
+            >Excercies</Button>
+            </Box>
+          </TableCell>
+
+          <TableCell align="center">
+          <Box sx={{marginBottom: 2}}>
+            <Button variant="contained"
+              style={{ width:150, height: 40, backgroundColor: ' #1aac83', color: '#FFF', marginTop: 10 }}
+              onClick={() => window.location.href=`/CourseRate?courseId=${params.get('courseId')}&userId=${params.get('userId')}`}
+              margin="normal"
+              padding="normal"
+            >Rate Course</Button>
+            </Box>
+          </TableCell>
+         
         </TableRow>
       ))}
+      
     </TableBody>
   </Table>
 </TableContainer>

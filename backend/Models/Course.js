@@ -33,7 +33,7 @@ const courseSchema = new Schema({
       required: true
     },
     Rating: {
-      type: String,
+      type: Array,
       required: false
     },
     NoOfViews: {

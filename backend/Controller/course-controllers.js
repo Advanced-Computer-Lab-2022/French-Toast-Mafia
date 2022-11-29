@@ -81,9 +81,12 @@ const viewCourseInstructor = async(req , res) => {
         findOne({_id:mongoose.Types.ObjectId(courseToView.Instructor)});
       // console.log(InstructorToView);
         const InstructorDetails =
-            {"Instructor Name": InstructorToView.InstrName,
-            "Instructor Email": InstructorToView.InstrEmail}
-        res.status(200).json(InstructorDetails);
+            {"InstrId": InstructorToView._id,
+                "InstructorName": InstructorToView.InstrName,
+            "InstructorEmail": InstructorToView.InstrEmail}
+            const result = [];
+            result.push(InstructorDetails);
+        res.status(200).json(result);
         
     
     }catch(error){
@@ -145,9 +148,70 @@ if (userId){
 else{
     res.status(404).send('User not found');
 }
-
-   
-
 }
-module.exports={getAllCourse , viewCourse, createCourse,viewCourseInstructor, viewCourseSubtitle, viewCourseExam, viewUserCourse};
+
+//delete course rating function
+const deleteCourseRating = async(req , res) => {
+    const courseId=req.query.id;
+    const emp=[];
+    if (courseId){
+        try{
+            const result = await course.findOneAndUpdate({_id:mongoose.Types.ObjectId(courseId)}, { Rating: emp }, { new: true });
+            res.status(200).json(result);
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }
+    }
+}
+
+//add course rating function
+const addCourseRating = async(req , res) => {
+    const courseId=req.query.id;
+    const userId=req.body.id;
+    const rating=req.body.rating;
+    const uId=mongoose.Types.ObjectId(userId);
+    const tuple={uId,rating};
+    if (courseId){
+        try{
+            //check if the user has already rated the course
+            const check = await course.findOne({_id:mongoose.Types.ObjectId(courseId), Rating:{$elemMatch:{uId:uId}}});
+            if (!check){
+            const resCourse = await course.findOneAndUpdate({_id:mongoose.Types.ObjectId(courseId)}, { $push: { Rating: tuple } }, { new: true });
+            res.status(200).json(resCourse);
+            }
+            else{
+                res.status(400).json({error:"User has already rated this course"});
+            }
+
+        }
+        catch(error){
+            res.status(400).json({error:error.message})
+        }
+    }
+}
+
+//calculate rating function
+const calculateCourseRating = async(req , res) => {
+    const courseId=req.query.id;
+    if (courseId){
+        try{
+            const result = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+            var sum=0;
+            for (let i = 0; i < result.Rating.length; i++) {
+                sum+=parseInt(result.Rating[i].rating);
+            }
+            const avg=sum/result.Rating.length;
+            res.status(200).json(avg);
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }   
+    }
+}
+
+
+
+
+
+module.exports={getAllCourse , viewCourse, createCourse,viewCourseInstructor,
+     viewCourseSubtitle, viewCourseExam, viewUserCourse,deleteCourseRating,addCourseRating,calculateCourseRating};
    
