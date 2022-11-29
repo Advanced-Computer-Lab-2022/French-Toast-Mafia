@@ -156,25 +156,37 @@ const filterSubject = async (req,res) => {
   
   }
 
-  const ViewMyCourses = async (req , res) => {
-    const w = req.params.id;
-    const a = await course.find({instructor:w }, {NameOfCourse:1,_id:1});
-        // res.json(a);
-        // console.log(a);
-    
-    if (a == null) {
-        res.status(404).send('no courses available');
-    }
-    else {
-        res.json(a);
-        //let x= Object.values(a);
-        //console.log(x);
-        //let result = x.map(a => a.NameOfCourse);
-        // console.log(result);
-        
-    }
+    const ViewMyCourses = async (req , res) => {
+    const instructorId = req.query.instructorId;
+    if (instructorId ){
+    const a = await course.find({Instructor:mongoose.Types.ObjectId(instructorId)}).populate('Instructor');
+    res.status(200).json(a)
+     } else{
+    res.status(400).json({error:"InstructorId is required"})
+}
+   
 
 }
+
+//   const ViewMyCourses = async (req , res) => {
+//     const instructorId = req.query.instructorId;
+//     const a = await course.find({Instructor:mongoose.Types.ObjectId(instructorId)}, {NameOfCourse:1,_id:1,  Duration: 1, Rating: 1,Cost:1});
+//         // res.json(a);
+//         // console.log(a);
+    
+//     if (a == null) {
+//         res.status(404).send('no courses available');
+//     }
+//     else {
+//         res.json(a);
+//         //let x= Object.values(a);
+//         //console.log(x);
+//         //let result = x.map(a => a.NameOfCourse);
+//         // console.log(result);
+        
+//     }
+
+// }
 
 const SearchCourse = async (req,res) => {
     const w = req.params.id;
