@@ -26,7 +26,6 @@ import AddCourse from './Components/AddCourse';
 import Profile from './Pages/Profile';
 import ForgotPassword from './Pages/ForgotPassword';
 import ChangePassword from './Pages/ChangePassword';
-import InstrRating from './Pages/InstrRating';
 import MyCourses from './Components/MyCourses';
 import CoursePromotion from './Pages/CoursePromotion';
 import AllUsers from './Components/AllUsers';
@@ -81,7 +80,6 @@ function App(){
     <Route path="/AllUsers" element={ <AllUsers/>} />
     <Route path="/AllInstructors" element={ <AllInstructors/>} />
     <Route path="/UserCoursePage" element={ <UserCoursePage/>} />
-    <Route path="/InstrRating" element={<InstrRating/>}/>
     <Route path="/CoursePromotion" element={<CoursePromotion/>}/>
 
     <Route path="/CourseInstructor" element={<CourseInstructor/>}/>
