@@ -33,17 +33,17 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 const { useState } = require("react");
 
-const CourseVideos = () => { 
+const CourseExercises = () => { 
 
-    const [videos,setVideos] = useState([]);
+    const [exercises,setExercises] = useState([]);
     const params = new URLSearchParams(window.location.search);
 
-    const getVideos = async () => {
-        await axios.get(`http://localhost:5000/Subtitle/getCourseSubtitlesVideos?id=${params.get('courseId')}`).then(
+    const getExcercises = async () => {
+        await axios.get(`http://localhost:5000/Subtitle/getCourseSubtitlesExcercises?id=${params.get('courseId')}`).then(
             (res) => {
-                const resVideos = res.data
-                console.log(resVideos)
-                setVideos(resVideos)
+                const resExcercises = res.data
+                console.log(resExcercises)
+                setExercises(resExcercises)
             }
         );
     }
@@ -52,14 +52,16 @@ const CourseVideos = () => {
     return(
      
       <div className="UsersList">
+     <Box  display='flex' flexDirection= {"row"}>
       <Box sx={{marginBottom: 2}}>
       <Button variant="contained"
-      style={{width:300, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10}}
-      onClick={getVideos}
+      style={{width:300, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10,marginRight:10}}
+      onClick={getExcercises}
       margin="normal"
       padding="normal"
-      >Load Course Videos</Button>
+      >Load Course Exercises</Button>
       {/* margin */}
+      </Box>
       </Box>
 
 
@@ -67,12 +69,13 @@ const CourseVideos = () => {
   <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
     <TableHead>
       <TableRow>
-        <StyledTableCell align="center">Course Videos</StyledTableCell>
+        <StyledTableCell align="center">Course Exercises</StyledTableCell>
       </TableRow>
     </TableHead>
 
     <TableBody>
-      {videos.map((v) => (
+      {exercises.map((ex) => (
+        ex.map((e)=>(
         <TableRow
         hover
         sx={{
@@ -84,9 +87,10 @@ const CourseVideos = () => {
         }}
           >
           <TableCell align="center">
-            <iframe src={v} title="Youtube Video allowfullscreen"></iframe>
-            </TableCell>
+          {e.Question}
+           </TableCell>
         </TableRow>
+        ))
       ))}
       
     </TableBody>
@@ -94,24 +98,42 @@ const CourseVideos = () => {
 </TableContainer>
 
 
-{/* 
-  <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-        <Typography component="h1" variant="h5" style={{marginTop:20}}>
-Course Videos
-</Typography>
-            </Box>
-            </Container>
-            </ThemeProvider> */}
+
+
+      <TableContainer component={Paper}>
+  <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+    <TableHead>
+      <TableRow>
+        <StyledTableCell align="center">Exercises Answers</StyledTableCell>
+      </TableRow>
+    </TableHead>
+
+    <TableBody>
+      {exercises.map((ex) => (
+        ex.map((e)=>(
+        <TableRow
+        hover
+        sx={{
+            "&:hover":{
+            cursor: "pointer",
+            backgroundColor: "#f5f5f5",
+            width: "100%",
+            }
+        }}
+          >
+          <TableCell align="center">
+          {e.Answer}
+           </TableCell>
+        </TableRow>
+        ))
+      ))}
+      
+    </TableBody>
+  </Table>
+</TableContainer>
+
+
+
           
                 </div>
     
@@ -119,4 +141,4 @@ Course Videos
 
     )
 }
-export default CourseVideos;
+export default CourseExercises;

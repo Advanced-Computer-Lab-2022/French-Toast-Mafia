@@ -42,7 +42,8 @@ import PopUp from './Components/PopUp';
 import InstrCourses from './Components/InstrCourses';
 import AddExam from './Components/addExam';
 import ViewExam from './Components/ViewExam';
-
+import CourseVideos from './Pages/CourseVideos';
+import CourseExercises from './Pages/CourseExercises';
 function App(){
   const newAdmin = (admin) => {
     console.log(admin);
@@ -89,7 +90,9 @@ function App(){
 =======
     <Route path="/CourseInstructor" element={<CourseInstructor/>}/>
     <Route path="/CourseRate" element={<CourseRate/>}/>
-    <Route path="/addExam" element={<AddExam/>}/>
+    <Route path="/CourseVideos" element={<CourseVideos/>}/>
+    <Route path="/CourseExercises" element={<CourseExercises/>}/>
+        <Route path="/addExam" element={<AddExam/>}/>
     <Route path="/ViewExam" element={<ViewExam/>}/>
 
     <Route path="/Contract" element={<Contract/>}/>

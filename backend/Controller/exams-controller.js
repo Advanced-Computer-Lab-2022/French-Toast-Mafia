@@ -22,4 +22,5 @@ const createExam = async (req,res) =>{
  
 }
 
+
 module.exports= {getAllExams, createExam};
