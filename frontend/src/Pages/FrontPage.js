@@ -6,6 +6,10 @@ import React, {useState,useEffect} from 'react';
 import ViewAllCoursesButton from '../Components/ViewAllCoursesButton'
 import CountriesDropdown from '../Components/CountriesDropdown'
 // import StarRating from '../Components/StarRating';
+import ViewExam from '../Components/ViewExam';
+
+
+
 const FrontPage = () => {
     
   
@@ -20,6 +24,8 @@ const FrontPage = () => {
           <header className='app'>
 
           <CountriesDropdown/>
+         //<ViewExam/>
+
           </header>
          
           </div>

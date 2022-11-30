@@ -3,6 +3,7 @@ import React, {useState,useEffect} from 'react';
 import './App.css';
 import axios from 'axios';
 
+
 import Navbar from './Components/Navbar';
 import FrontPage from './Pages/FrontPage';
 import Courses from './Pages/Courses';
@@ -27,9 +28,6 @@ import ForgotPassword from './Pages/ForgotPassword';
 import ChangePassword from './Pages/ChangePassword';
 import InstrRating from './Pages/InstrRating';
 import MyCourses from './Components/MyCourses';
-<<<<<<< HEAD
-import CoursePromotion from './Pages/CoursePromotion';
-=======
 import AllUsers from './Components/AllUsers';
 import UserCoursePage from './Pages/UserCoursePage';
 import ViewCourseSubtitle from './Pages/ViewCourseSubtitles'
@@ -37,7 +35,8 @@ import ViewCourseExam from './Pages/ViewCourseExam'
 import CourseInstructor from './Pages/CourseInstructor';
 import StarRating from './Components/StarRating';
 import CourseRate from './Pages/CourseRate';
->>>>>>> 3b407d250fe1f868cb0d1ca8dbc65936a0327660
+import AddExam from './Components/addExam';
+import ViewExam from './Components/ViewExam';
 
 function App(){
   const newAdmin = (admin) => {
@@ -78,13 +77,10 @@ function App(){
     <Route path="/AllUsers" element={ <AllUsers/>} />
     <Route path="/UserCoursePage" element={ <UserCoursePage/>} />
     <Route path="/InstrRating" element={<InstrRating/>}/>
-<<<<<<< HEAD
-    <Route path="/CoursePromotion" element={<CoursePromotion/>}/>
-
-=======
     <Route path="/CourseInstructor" element={<CourseInstructor/>}/>
     <Route path="/CourseRate" element={<CourseRate/>}/>
->>>>>>> 3b407d250fe1f868cb0d1ca8dbc65936a0327660
+    <Route path="/addExam" element={<AddExam/>}/>
+    <Route path="/ViewExam" element={<ViewExam/>}/>
 
 
    </Routes>
