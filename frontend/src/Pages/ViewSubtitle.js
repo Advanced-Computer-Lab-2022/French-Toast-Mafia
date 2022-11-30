@@ -29,7 +29,7 @@ const getCellData = (obj) =>{
 
   if(typeof(obj[1])!="object"){
   
-   if(obj[0] == "Preview" || obj[0] == "Video"){
+   if(obj[0] == "Preview"){
     if(obj[1] == "" || obj[1]  == " "){
       return <TableCell>
       Null</TableCell>
@@ -57,15 +57,27 @@ const getCellData = (obj) =>{
         >View Exercises</Button> 
     </TableCell>
     }
-    // else if(nextPage === "Video"){
-    //   return <TableCell>
-    //   <Button variant="contained"
-    //     margin="normal"
-    //     // onClick={() => window.location.href=`/ViewCourse/Subtitle?courseId=${courseId}`}
-    //     padding="normal"
-    //     >View Videos</Button> 
-    // </TableCell>
-    // }
+    else if(nextPage === "Video"){
+        const vid = obj[1]
+        if(Object.values(vid[0])[0] === " " || Object.values(vid[0])[0] === ""){
+            console.log(Object.values(vid[0])[0])
+            return <TableCell>
+        {Object.keys(vid[0])[0]}: Null
+             <font style={{ color: 'white'}}>.............</font>{Object.keys(vid[0])[1]}:  {Object.values(vid[0])[1]}
+             </TableCell>
+        }
+        else{
+            return <TableCell>
+            {Object.keys(vid[0])[0]}: <a href= {Object.values(vid[0])[0]} >Watch Video</a> 
+                 <font style={{ color: 'white'}}>.............</font>{Object.keys(vid[0])[1]}:  {Object.values(vid[0])[1]}
+                 </TableCell>
+        
+          
+        }
+        //  console.log(Object.keys(vid[0]))
+
+     
+    }
     }
    
   }

@@ -15,7 +15,7 @@ const queryParameters = new URLSearchParams(window.location.search)
 const subId = queryParameters.get("id")
 
 const newData = {};
-const promo = {};
+const vid = {};
 
 const handleSubmit = async(req , res) => {
 
@@ -43,9 +43,9 @@ const handleEditExercise = () => {
 
 const handleChange = (event) => {
   const attr = event.target.id
-  if(attr == "Amount" || attr == "End"){
-    promo[attr] = event.target.value
-    newData["Promotion"] = promo
+  if(attr == "Link" || attr == "Description"){
+    vid[attr] = event.target.value
+    newData["Video"] = vid
   }
   else{
     newData[attr] = event.target.value
@@ -121,14 +121,36 @@ const getCellData = (obj) =>{
         
     </TableCell>
     }
-   
-    //   return <TableCell>
-    //   <Button variant="contained"
-    //     margin="normal"
-    //     onClick={() => window.location.href=`/ViewCourse/Exam?courseId=${courseId}`}
-    //     padding="normal"
-    //     >View Exam</Button> 
-    // </TableCell>
+    else if(nextPage === "Video"){
+        const vid = obj[1]
+        return <TableCell>
+          <Box
+        component="form"
+        sx={{
+          '& .MuiTextField-root': { m: 1, width: '25ch' },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <div>
+          <TextField
+            id={Object.keys(vid[0])[0]}
+            label="Video link"
+            onChange={handleChange}
+            defaultValue={Object.values(vid[0])[0]}
+            size="small"
+          />  <TextField
+          id={Object.keys(vid[0])[1]}
+          label="Description"
+          onChange={handleChange}
+          defaultValue= {Object.values(vid[0])[1]}
+          size="small"
+        /> 
+        </div>
+      </Box>
+      </TableCell>
+
+      }
     }
   
 }
