@@ -353,12 +353,32 @@ const createExam = async (req,res) => {
 // }
 // }
 
+// find mcq by exam id 
+const getAllMcq = async (req,res) => {
+    const instrId= req.query.id;
+    const allMcq=[];
+        if (instrId){
+            try{
+                const resInstr= await instructor.findOne({_id:mongoose.Types.ObjectId(instrId)} );
+                if (resInstr){
+                    const resExam= await Exams.findOne({_id:mongoose.Types.ObjectId(resInstr.Exam)} );
+                    if (resExam){
+                        allMcq.push(resExam.mcq);
+                    }
+                 }
+                 res.status(200).json(allMcq);
+            }catch {
+            res.status(400).json({error:error.message})
+            }
+    }
+};
+
+
 const addMCQ = async (req,res) => {
-    const ExamId= req.params.ExamId;
+    const ExamId= req.params.id;
     await exam.updateOne(
         {_id: ExamId},
-        {
-            $push: {
+        {   $push: {
                 mcq: {
                     question: req.body.question,
                      choice1: req.body.choice1,
@@ -372,7 +392,6 @@ const addMCQ = async (req,res) => {
     );
     res.status(200).send('your question has been added');
 }
-
 
  //edit email/ biography req 29
  const editBiography = async (req,res) => {
@@ -425,21 +444,6 @@ const ViewMyReview = async (req , res) => {
     }
 }
 
-// define promotion/discount for the course req 30 
-// const defineDiscount = async (req,res) => {
-//     const courseID=req.params.id;
-//     const {discount, durationDiscount}= req.body;
-//         try {
-//             const newDiscount= await course.findOneAndUpdate()
-//             res.status(200).json(newDiscount);
-
-//         } catch {
-
-//         }
-
-
-
-// }
 
 const deleteInstrRating = async(req , res) => {
     const instrId=req.query.id;
@@ -504,5 +508,5 @@ module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      filterCourseSubjcet , filterCourseCost , ViewMyCourses
       , SearchCourse, viewInstrInfo, 
     editBiography, editEmail,ViewMyRatings , ViewMyReview, addInstrRating ,calculateInstrRating,
-    deleteInstrRating, createExam, addMCQ ,addExamId};
+    deleteInstrRating, createExam, addMCQ, getAllMcq};
    

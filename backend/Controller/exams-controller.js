@@ -10,9 +10,6 @@ const getAllExams= async (req, res) =>{
 };
 
 
-
-
-
 const createExam = async (req,res) =>{
     const newExam= new Exam ({
         Course: req.body.Course,
