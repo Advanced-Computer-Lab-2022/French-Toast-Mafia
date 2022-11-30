@@ -59,7 +59,7 @@ const instructorSchema = new Schema({
     },
     Exam: {
       type: mongoose.Types.ObjectId,
-      ref:'Exam',
+      ref:'Exams',
       required: false
     }
     

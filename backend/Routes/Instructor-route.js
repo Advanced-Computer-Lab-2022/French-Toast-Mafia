@@ -29,6 +29,8 @@ router.post('/addExam', createExam);
 
 router.post ('/addMCQ',addMCQ);
 
+router.post('/addExamId',addExamId);
+
 router.put('/editInstrBiography/:id', editBiography);
 
 router.put('/editInstrEmail/:id', editEmail);
@@ -53,7 +55,6 @@ router.put('/addInstrRating',addInstrRating);
 
 router.get('/calculateInstrRating',calculateInstrRating);
 
-router.post('/addExamId',addExamId);
 
 
 
