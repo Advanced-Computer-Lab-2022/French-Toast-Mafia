@@ -56,10 +56,4 @@ router.get('/calculateInstrRating',calculateInstrRating);
 router.get('/getAllMcq',getAllMcq);
 
 
-
-
-
-
-
-
 module.exports=router;

@@ -353,7 +353,7 @@ const createExam = async (req,res) => {
 // }
 // }
 
-// find mcq by exam id 
+// find mcq by instructor id 
 const getAllMcq = async (req,res) => {
     const instrId= req.query.id;
     const allMcq=[];
