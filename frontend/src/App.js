@@ -3,6 +3,7 @@ import React, {useState,useEffect} from 'react';
 import './App.css';
 import axios from 'axios';
 
+
 import Navbar from './Components/Navbar';
 import FrontPage from './Pages/FrontPage';
 import Courses from './Pages/Courses';
@@ -39,6 +40,8 @@ import CourseRate from './Pages/CourseRate';
 import Contract from './Pages/Contract';
 import PopUp from './Components/PopUp';
 import InstrCourses from './Components/InstrCourses';
+import AddExam from './Components/addExam';
+import ViewExam from './Components/ViewExam';
 
 function App(){
   const newAdmin = (admin) => {
@@ -80,10 +83,14 @@ function App(){
     <Route path="/AllUsers" element={ <AllUsers/>} />
     <Route path="/AllInstructors" element={ <AllInstructors/>} />
     <Route path="/UserCoursePage" element={ <UserCoursePage/>} />
+<<<<<<< HEAD
     <Route path="/CoursePromotion" element={<CoursePromotion/>}/>
 
+=======
     <Route path="/CourseInstructor" element={<CourseInstructor/>}/>
     <Route path="/CourseRate" element={<CourseRate/>}/>
+    <Route path="/addExam" element={<AddExam/>}/>
+    <Route path="/ViewExam" element={<ViewExam/>}/>
 
     <Route path="/Contract" element={<Contract/>}/>
     <Route path="/PopUp" element={<PopUp/>}/>
