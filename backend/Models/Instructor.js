@@ -57,6 +57,11 @@ const instructorSchema = new Schema({
       type: Array,
       required: false
     },
+    Exam: {
+      type: mongoose.Types.ObjectId,
+      ref:'Exams',
+      required: false
+    }
     
   }, { timestamps: true });
   

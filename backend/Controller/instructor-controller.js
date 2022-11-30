@@ -65,7 +65,7 @@ const addCourse = async(req , res) => {
 
             //Uncomment this block to delete a course
             /*
-            course.deleteOne({ NameOfCourse: 'ARCH 205' }, function (err) {
+            course.deleteOne({ NameOfCourse: 'DMET 401' }, function (err) {
                 if(err) console.log(err);
                 console.log("Successful deletion");
               });
@@ -98,7 +98,7 @@ const addCourse = async(req , res) => {
                 EndDatePromotion,
                 Preview});
     
-            // //adds the course id to the instructor's courses given array
+            //adds the course id to the instructor's courses given array
             await instructor.findByIdAndUpdate(instructorId,{$push:{CourseGiven: createdCourse._id}});
              
             res.status(200).json(createdCourse);
@@ -316,6 +316,7 @@ else{
 
 //instructor create an exam req 26
 const createExam = async (req,res) => {
+    const instrId=req.query.id;
     const mcq = [
         {
         question: req.body.question,
@@ -332,7 +333,25 @@ const createExam = async (req,res) => {
         mcq: mcq,
     });
     newExam.save().then((result) => res.status(200).send(result));
+
+    instructor.findOneAndUpdate({_id:mongoose.Types.ObjectId(instrId)}, { Exam: newExam._id }, { new: true });
+            
 }
+
+//add exam id into instructor schema
+// const addExamId = async (req,res) => {
+//     const instrId=req.query.id;
+//     const examId= req.body;
+
+//     if (instrId){
+//         try{
+//             const result = await instructor.findOneAndUpdate({_id:mongoose.Types.ObjectId(instrId)}, { Exam: mongoose.Types.ObjectId(examId) }, { new: true });
+//             res.status(200).json(result);
+//         }catch(error){
+//             res.status(400).json({error:error.message})
+//         }
+// }
+// }
 
 const addMCQ = async (req,res) => {
     const ExamId= req.params.ExamId;
@@ -353,7 +372,6 @@ const addMCQ = async (req,res) => {
     );
     res.status(200).send('your question has been added');
 }
-
 
 
  //edit email/ biography req 29
@@ -486,5 +504,5 @@ module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      filterCourseSubjcet , filterCourseCost , ViewMyCourses
       , SearchCourse, viewInstrInfo, 
     editBiography, editEmail,ViewMyRatings , ViewMyReview, addInstrRating ,calculateInstrRating,
-    deleteInstrRating, createExam, addMCQ };
+    deleteInstrRating, createExam, addMCQ ,addExamId};
    

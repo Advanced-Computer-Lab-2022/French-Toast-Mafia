@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import Table from '@mui/material/Table';
@@ -10,7 +9,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { getFormControlUtilityClasses } from '@mui/material';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -21,62 +19,71 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
       fontSize: 14,
     },
   }));
+  
 const { useState } = require("react");
 
 
-const InstructorCourseList = () => { 
-    const [course,setICourses] = useState([]);
+const AllInstructors = () => { 
+    const [instructors,setInstructors] = useState([]);
     
-    const getCourses =  async () => {
-        const queryParameters = new URLSearchParams(window.location.search)
-        const Id = queryParameters.get("Id")
-        console.log(Id)
-       await axios.get(`http://localhost:5000/Instructor/ViewMyCourses?instructorId=${Id}`).then(
+    const getInstructors =  async () => {
+         await axios.get('http://localhost:5000/Instructor/getAllInstructors').then(
         (res) => { 
-            const courses = res.data
-            // console.log(courses)
-            setICourses(courses)
+            const instructors = res.data
+            console.log(instructors)
+            setInstructors(instructors)
+            
         }
          );
+       
     
 
     }
     return(
+
         // visualize authors in a table map over authors
-        <div className="CourseList" key = {course._id} >
-              <Box sx={{marginBottom: 2}}>
+        <div className="InstructorsList">
+            <Box sx={{marginBottom: 2}}>
             <Button variant="contained"
-            onClick={getCourses}
+            style={{width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
+            onClick={getInstructors}
             margin="normal"
             padding="normal"
-            >Load Courses</Button>
+            >Load Instructors</Button>
             {/* margin */}
             </Box>
+            
         
         
             
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table" >
-        <TableHead>
+      <Table sx={{ minWidth: 50 }} size="small" aria-label="a dense table"  style={{ backgroundColor: '#FFFFFF', color:'#1aac83'}}>
+        <TableHead >
           <TableRow>
-            <StyledTableCell align="center"> Course Title</StyledTableCell>
+            <StyledTableCell align="center"   style={{ backgroundColor: '#2D8668', color:'#FFFFFF'}} >Name</StyledTableCell>
+            <StyledTableCell align="center" style={{ backgroundColor: '#2D8668', color:'#FFFFFF'}} >Email</StyledTableCell>
+
           </TableRow>
         </TableHead>
         <TableBody>
-          {course.map((course) => (
+          { instructors.map((instructor) => (
             <TableRow
             hover
             sx={{
                 "&:hover":{
                 cursor: "pointer",
-                backgroundColor: "#f5f5f5",
-                width: "100%"
+                backgroundColor: "#1aac83",
+                width: "20%"
                 }
             }}
-            onClick={() => window.location.href=`/viewCourse?courseId=${course._id}`}
-            key={course._id}
-            >
-              <TableCell align="center">{course.NameOfCourse}</TableCell>
+            onClick={() => window.location.href=`/InstrCourses?instructorId=${instructor._id}`}
+              key={instructor._id}
+
+              >
+              <TableCell align="center"  style ={{color:'#1aac83'}}>{instructor.InstrName}</TableCell>
+              <TableCell align="center" style ={{color:'#1aac83'}}>{instructor.InstrEmail}</TableCell>
+
+
             </TableRow>
           ))}
         </TableBody>
@@ -88,5 +95,4 @@ const InstructorCourseList = () => {
 
     )
 }
-
-export default InstructorCourseList;
+export default AllInstructors;

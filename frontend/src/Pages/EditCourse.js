@@ -18,6 +18,45 @@ const { useState } = require("react");
 const queryParameters = new URLSearchParams(window.location.search)
 const courseId = queryParameters.get("courseId")
 
+const newData = {};
+const promo = {};
+
+const handleSubmit = async(req , res) => {
+
+        console.log(newData)
+        const response =  await fetch(`http://localhost:5000/Course/editCourse?id=${courseId}`,{
+          method: 'POST',
+          body: JSON.stringify(newData),
+          headers : {
+              'Content-Type':'application/json'
+          }
+      })
+      const json = await response.json();
+      if (!response.ok){
+        console.log('Something wrong happened')
+    }
+    if (response.ok){
+        console.log('Course Updated');
+        window.location.href=`/viewCourse?courseId=${courseId}`
+    }
+}
+
+const handleEditSubtitle = () => {
+  console.log("Pressed Edit Subtitle")
+}
+
+const handleChange = (event) => {
+  const attr = event.target.id
+  if(attr == "Amount" || attr == "End"){
+    promo[attr] = event.target.value
+    newData["Promotion"] = promo
+  }
+  else{
+    newData[attr] = event.target.value
+  }
+}
+
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.common.black,
@@ -30,41 +69,90 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 
 const getCellData = (obj) =>{
-
   if(typeof(obj[1])!="object"){
-  
-   if(obj[0] == "Preview"){
-    if(obj[1] == ""){
+    if(obj[0]=="_id" || obj[0] == "Instructor" || obj[0] == "createdAt" || obj[0] == "updatedAt" || obj[0] == "__v"){
       return <TableCell>
-      Null</TableCell>
+      <Box
+        component="form"
+        sx={{
+          '& .MuiTextField-root': { m: 1, width: '25ch' },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <div>
+          <TextField
+            disabled
+            id={obj[0]}
+            onChange={handleChange}
+            defaultValue={obj[1]}
+            size="small"
+          />
+        </div>
+      </Box>
+      </TableCell>
     }
-    else{
-      return <TableCell> <a href= {obj[1]} >View Preview</a></TableCell>
-   
-    }
-   }
-   else{
-    return <TableCell>
-      {obj[1]}</TableCell>
-   }
-     
+      return <TableCell>
+    <Box
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <div>
+        <TextField
+          id={obj[0]}
+          onChange={handleChange}
+          defaultValue={obj[1]}
+          size="small"
+        />
+      </div>
+    </Box>
+    </TableCell>
   }
-    
+
   else{
     const nextPage = Object.values(Object.values(obj))[0];
     if(nextPage == "CourseSubtitle"){
       return <TableCell>
       <Button variant="contained"
         margin="normal"
-        onClick={() => window.location.href=`/ViewCourse/Subtitle?courseId=${courseId}`}
+        onClick={handleEditSubtitle}
         padding="normal"
-        >View Subtitles</Button> 
+        >Edit Subtitles</Button> 
+        
     </TableCell>
     }
     else if(nextPage === "Promotion"){
       const prom = obj[1]
-      return <TableCell>{Object.values(prom[0])[0]}<font style={{ color: 'lightgray'}}> <font style={{ color: 'white'}}>.............</font>Ends on {Object.values(prom[0])[1]}</font></TableCell>
-     
+      return <TableCell>
+        <Box
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <div>
+        <TextField
+          id={Object.keys(prom[0])[0]}
+          onChange={handleChange}
+          defaultValue={Object.values(prom[0])[0]}
+          size="small"
+        />  <TextField
+        id={Object.keys(prom[0])[1]}
+        label="Ends on:"
+        type="date"
+        onChange={handleChange}
+        defaultValue= {Object.values(prom[0])[1]}
+        size="small"
+      /> 
+      </div>
+    </Box>
+    </TableCell>
     //   return <TableCell>
     //   <Button variant="contained"
     //     margin="normal"
@@ -80,7 +168,7 @@ const getCellData = (obj) =>{
 }
 
 
-const ViewCourse = () => { 
+const EditCourse = () => { 
     const [course,setCourse] = useState([]);
     const getCourse =  async () => {
        
@@ -100,13 +188,14 @@ const ViewCourse = () => {
             onClick={getCourse}
             margin="normal"
             padding="normal"
-            >Load Course</Button>
+            >Load Data</Button>
             {/* margin */}
+
             <Button variant="contained"
-            onClick={() => window.location.href=`/Instructor/EditCourse?courseId=${courseId}`}
+            onClick={handleSubmit}
             margin="normal"
             padding="normal"
-            >Edit Course</Button>
+            >Submit</Button>
 
             </Box> 
 
@@ -128,4 +217,4 @@ const ViewCourse = () => {
     )
 }
 
-export default ViewCourse;
+export default EditCourse;
