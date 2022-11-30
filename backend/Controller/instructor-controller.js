@@ -353,7 +353,7 @@ const createExam = async (req,res) => {
 // }
 // }
 
-// find mcq by exam id 
+// find mcq by instructor id 
 const getAllMcq = async (req,res) => {
     const instrId= req.query.id;
     const allMcq=[];
@@ -361,7 +361,7 @@ const getAllMcq = async (req,res) => {
             try{
                 const resInstr= await instructor.findOne({_id:mongoose.Types.ObjectId(instrId)} );
                 if (resInstr){
-                    const resExam= await Exams.findOne({_id:mongoose.Types.ObjectId(resInstr.Exam)} );
+                    const resExam= await exam.findOne({_id:mongoose.Types.ObjectId(resInstr.Exam)} );
                     if (resExam){
                         allMcq.push(resExam.mcq);
                     }
