@@ -15,7 +15,7 @@ const queryParameters = new URLSearchParams(window.location.search)
 const subId = queryParameters.get("id")
 
 const newData = {};
-const vid = {};
+const vid = [];
 
 const handleSubmit = async(req , res) => {
 
@@ -43,7 +43,7 @@ const handleEditExercise = () => {
 
 const handleChange = (event) => {
   const attr = event.target.id
-  if(attr == "Link" || attr == "Description"){
+  if(attr == 0 || attr == 1){
     vid[attr] = event.target.value
     newData["Video"] = vid
   }
@@ -134,16 +134,16 @@ const getCellData = (obj) =>{
       >
         <div>
           <TextField
-            id={Object.keys(vid[0])[0]}
+            id={0}
             label="Video link"
             onChange={handleChange}
-            defaultValue={Object.values(vid[0])[0]}
+            defaultValue={vid[0]}
             size="small"
           />  <TextField
-          id={Object.keys(vid[0])[1]}
+          id={1}
           label="Description"
           onChange={handleChange}
-          defaultValue= {Object.values(vid[0])[1]}
+          defaultValue= {vid[1]}
           size="small"
         /> 
         </div>

@@ -5,7 +5,7 @@ const {getAllCourse , viewCourse,viewCourseInstructor, createCourse, editCourse,
 
 const router = express.Router();
 
-router.get("/",getAllCourse );
+router.get("/getAllCourse",getAllCourse );
 
 router.get('/viewCourse',viewCourse);
 
