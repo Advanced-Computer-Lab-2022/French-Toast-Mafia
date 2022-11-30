@@ -1,5 +1,5 @@
 const express= require("express");
-const {getAllCourse , viewCourse,viewCourseInstructor, createCourse, editCourse, viewCourseSubtitle,
+const {getAllCourse , viewCourse,viewCourseInstructor, createCourse, editCourse, viewCourseSubtitles,
      viewCourseExam,viewUserCourse,deleteCourseRating,addCourseRating,calculateCourseRating}= require ("../Controller/course-controllers");
 
 
@@ -11,7 +11,7 @@ router.get('/viewCourse',viewCourse);
 
 router.get('/viewCourseInstructor',viewCourseInstructor);
 
-router.get('/viewCourseSubtitle',viewCourseSubtitle);
+router.get('/viewCourseSubtitles',viewCourseSubtitles);
 
 router.get('/viewCourseExam',viewCourseExam);
 

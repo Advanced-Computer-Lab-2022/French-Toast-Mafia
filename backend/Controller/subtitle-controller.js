@@ -11,12 +11,13 @@ function getAllSubtitles (req,res) {
 
 //add subtitle
 function addSubtitle (req,res) {
+    const courseId = req.query.id;
     const {Course,Title,Question,Answer,Video,Duration,Preview} = req.body;
     const newExcercise={Question,Answer};
     const newSubtitle = new Subtitle({
-        Course,
+        Course : courseId,
         Title,
-        Exercise:newExcercise,
+        Exercise : newExcercise,
         Video,
         Duration,
         Preview
@@ -24,7 +25,7 @@ function addSubtitle (req,res) {
     newSubtitle.save();
     //add subtitle to course
     course.findOneAndUpdate({_id:
-        mongoose.Types.ObjectId(Course)},{$push:{CourseSubtitle:newSubtitle._id}})
+        mongoose.Types.ObjectId(courseId)},{$push:{CourseSubtitle:newSubtitle._id}})
         .then(function (course) {
         res.status(200).json(course)
     });
@@ -51,6 +52,19 @@ function deleteSubtitleFromCourse (req,res) {
 };
 
 //find subtitle by id
+const viewSubtitle = async(req , res) => {
+    const subId = req.query.id;
+    try{
+        const subtitleToView = await Subtitle.findOne({_id:mongoose.Types.ObjectId(subId)});
+        // get the details of the course 
+        if (subtitleToView != null){
+            res.status(200).json(subtitleToView);
+        }        
+    
+    }catch(error){
+        res.status(400).json({error:error.message})
+    }
+}
 // function findSubtitleByCourse (req,res) {
 //     const courseId = req.query.id;
 //     const resCourse =  Course.findOne({_id:mongoose.Types.ObjectId(courseId)});
@@ -124,7 +138,19 @@ const getCourseSubtitlesExcercises = async (req,res) => {
     res.status(200).json(resExcercises);
 };
 
+const editSubtitle = async(req, res) => {
+    const subId = req.query.id;
+    if (subId){
+        try{
+            const updatedSub = await Subtitle.findByIdAndUpdate(subId , req.body);  
+            res.status(200).json(updatedSub);
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }   
+    }
+}
+
     
 
-module.exports = {getAllSubtitles,addSubtitle,addExcercise,deleteExcercise,removeAllExcercises,
+module.exports = {getAllSubtitles,addSubtitle, editSubtitle, addExcercise,deleteExcercise,removeAllExcercises, viewSubtitle,
     deleteSubtitle,deleteSubtitleFromCourse,removeAllSubtitles,getCourseSubtitlesVideos,getCourseSubtitlesExcercises};

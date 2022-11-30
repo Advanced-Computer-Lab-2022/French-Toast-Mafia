@@ -3,6 +3,7 @@ const express= require("express");
 
 const {createInstructor, getAllInstructors,
         selectCountryInstructor, addCourse ,
+        deleteCourse,
         filterCourseSubjcet ,
         filterCourseCost ,
         ViewMyCourses ,
@@ -17,9 +18,11 @@ const {createInstructor, getAllInstructors,
 const router = express.Router();
 
 
-router.get('/getAllInstructors',getAllInstructors );
+router.get('/',getAllInstructors );
 
 router.post('/addCourse', addCourse);
+
+router.get('/deleteCourse', deleteCourse);
 
 router.post('/createInstructor', createInstructor);
 

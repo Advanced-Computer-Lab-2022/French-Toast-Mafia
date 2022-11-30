@@ -1,6 +1,7 @@
 const instructor=require("../Models/Instructor");
 const course=require("../Models/Course");
 const exam = require("../Models/Exams");
+const subtitle = require("../Models/Subtitle");
 var mongoose = require('mongoose');
 
 function getAllInstructors (req,res) {
@@ -52,6 +53,7 @@ const selectCountryInstructor = async (req, res) => {
     return newCountry;
 };
 
+
 //Requirement 23 --> add a new course
 const addCourse = async(req , res) => {
     //fill in all the required course details (that an instructor should fill when creating it)
@@ -79,6 +81,7 @@ const addCourse = async(req , res) => {
                 Subject,
                 LevelOfCourse,
                 Cost,
+                ExamCourse,
                 CourseCurrency,
                 Promotion,
                 Preview} = req.body;
@@ -94,8 +97,6 @@ const addCourse = async(req , res) => {
                 Cost , CourseCurrency,
                 ExamCourse,
                 Promotion,
-                StartDatePromotion,
-                EndDatePromotion,
                 Preview});
     
             //adds the course id to the instructor's courses given array
@@ -112,6 +113,27 @@ const addCourse = async(req , res) => {
     res.status(400).json({error:"Please enter a valid Instructor Id"});
 }
     
+}
+
+const deleteCourse = async (req, res) => {
+    const courseId = req.query.id;
+    console.log(courseId)
+    //Delete the course
+    const c = await course.findOneAndDelete({_id:mongoose.Types.ObjectId(courseId)})
+        if (c != null){
+            console.log(c)
+        //remove course from instructor's courses
+        await instructor.findByIdAndUpdate({_id:mongoose.Types.ObjectId(c.Instructor)},{$pull: { CourseGiven: courseId }});
+        //remove all subtitles that belong to the course
+        console.log(c.CourseSubtitle)
+        c.CourseSubtitle.forEach((item, index) => {
+            subtitle.findOneAndDelete({_id:mongoose.Types.ObjectId(item)})
+          })
+        }
+       
+        res.status(200).json(c)
+    
+   
 }
 
 //filter courses based on subject
@@ -507,7 +529,7 @@ const calculateInstrRating = async(req , res) => {
 
 
 module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
-     addCourse , filterCost, filterRating, filterSubject, 
+     addCourse , deleteCourse, filterCost, filterRating, filterSubject, 
      filterCourseSubjcet , filterCourseCost , ViewMyCourses
       , SearchCourse, viewInstrInfo, 
     editBiography, editEmail,ViewMyRatings , ViewMyReview, addInstrRating ,calculateInstrRating,

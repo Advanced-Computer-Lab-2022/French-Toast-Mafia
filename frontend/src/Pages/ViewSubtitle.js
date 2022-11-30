@@ -12,7 +12,7 @@ import Paper from '@mui/material/Paper';
 const { useState } = require("react");
 
 const queryParameters = new URLSearchParams(window.location.search)
-const courseId = queryParameters.get("courseId")
+const subId = queryParameters.get("subId")
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -29,8 +29,8 @@ const getCellData = (obj) =>{
 
   if(typeof(obj[1])!="object"){
   
-   if(obj[0] == "Preview"){
-    if(obj[1] == ""){
+   if(obj[0] == "Preview" || obj[0] == "Video"){
+    if(obj[1] == "" || obj[1]  == " "){
       return <TableCell>
       Null</TableCell>
     }
@@ -48,58 +48,38 @@ const getCellData = (obj) =>{
     
   else{
     const nextPage = Object.values(Object.values(obj))[0];
-    if(nextPage == "CourseSubtitle"){
+    if(nextPage == "Exercise"){
       return <TableCell>
       <Button variant="contained"
         margin="normal"
-        onClick={() => window.location.href=`/ViewCourse/Subtitles?courseId=${courseId}`}
+        // onClick={() => window.location.href=`/ViewCourse/Subtitle?courseId=${courseId}`}
         padding="normal"
-        >View Subtitles</Button> 
+        >View Exercises</Button> 
     </TableCell>
     }
-    else if(nextPage === "Promotion"){
-      const prom = obj[1]
-      return <TableCell>{Object.values(prom[0])[0]}<font style={{ color: 'lightgray'}}> <font style={{ color: 'white'}}>.............</font>Ends on {Object.values(prom[0])[1]}</font></TableCell>
-    } 
-    else if(nextPage === "Rating"){
-      return <TableCell>
-      <Button variant="contained"
-        margin="normal"
-        onClick={() => window.location.href=`/ViewCourse/Subtitle?courseId=${courseId}`}
-        padding="normal"
-        >View Ratings</Button> 
-    </TableCell>
-    }
-
-    else if(nextPage === "ExamCourse"){
-      return <TableCell>
-      <Button variant="contained"
-        margin="normal"
-        onClick={() => window.location.href=`/ViewCourse/Subtitle?courseId=${courseId}`}
-        padding="normal"
-        >View Exam</Button> 
-    </TableCell>
-    }
+    // else if(nextPage === "Video"){
     //   return <TableCell>
     //   <Button variant="contained"
     //     margin="normal"
-    //     onClick={() => window.location.href=`/ViewCourse/Exam?courseId=${courseId}`}
+    //     // onClick={() => window.location.href=`/ViewCourse/Subtitle?courseId=${courseId}`}
     //     padding="normal"
-    //     >View Exam</Button> 
+    //     >View Videos</Button> 
     // </TableCell>
+    // }
     }
    
   }
 
 
-const ViewCourse = () => { 
-    const [course,setCourse] = useState([]);
-    const getCourse =  async () => {
+const ViewSubtitle = () => { 
+    const [subtitle,setSubtitle] = useState([]);
+
+    const getSubtitle =  async () => {
        
-       await axios.get(`http://localhost:5000/Course/ViewCourse?id=${courseId}`).then(
+       await axios.get(`http://localhost:5000/Subtitle/viewSubtitle?id=${subId}`).then(
         (res) => { 
-            const resCourse = res.data
-            setCourse(resCourse)
+            const resSubtitle = res.data
+            setSubtitle(resSubtitle)
         }
          )
     }
@@ -109,23 +89,23 @@ const ViewCourse = () => {
         <div className="CourseAttributes">
             <Box sx={{marginBottom: 2}}>
             <Button variant="contained"
-            onClick={getCourse}
+            onClick={getSubtitle}
             margin="normal"
             padding="normal"
-            >Load Course</Button>
+            >Load Subtitle</Button>
             {/* margin */}
             <Button variant="contained"
-            onClick={() => window.location.href=`/Instructor/EditCourse?courseId=${courseId}`}
+            onClick={() => window.location.href=`/editSubtitle?id=${subId}`}
             margin="normal"
             padding="normal"
-            >Edit Course</Button>
+            >Edit Subtitle</Button>
 
             </Box> 
 
 
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-        {Object.entries(course).map((c) => (
+        {Object.entries(subtitle).map((c) => (
           <TableRow  className='row-style' key={c[0]}>
               <StyledTableCell variant="head" width="75">{c[0]}</StyledTableCell>
               {getCellData(c)}
@@ -140,4 +120,4 @@ const ViewCourse = () => {
     )
 }
 
-export default ViewCourse;
+export default ViewSubtitle;

@@ -2,6 +2,7 @@ const course= require("../Models/Course");
 const instructor= require("../Models/Instructor");
 const user = require("../Models/User");
 const mongoose = require('mongoose');
+const Subtitle = require("../Models/Subtitle");
 
 function getAllCourse (req,res) {
     course.find({}).then (function (course) {
@@ -95,18 +96,16 @@ const viewCourseInstructor = async(req , res) => {
 
 }
 
-const viewCourseSubtitle = async(req , res) => {
+const viewCourseSubtitles = async(req , res) => {
     const courseId = req.query.id;
-
-    try{
-        const courseToView = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
-        // get the subtitles of the course 
-        const courseSubs = courseToView.CourseSubtitle
-            
-        res.status(200).json(courseSubs);
-    
-    }catch(error){
-        res.status(400).json({error:error.message})
+    console.log("course id: " + courseId)
+    const sub = await Subtitle.find({Course:courseId }, {Title:1,_id:1});
+    // console.log(sub)
+    if (sub == null) {
+        res.status(404).send('no subtitles available');
+    }
+    else {
+        res.json(sub);
     }
 
 }
@@ -223,5 +222,5 @@ const editCourse = async(req, res) => {
 
 
 module.exports={getAllCourse , viewCourse, createCourse, editCourse, viewCourseInstructor,
-     viewCourseSubtitle, viewCourseExam, viewUserCourse,deleteCourseRating,addCourseRating,calculateCourseRating};
+     viewCourseSubtitles, viewCourseExam, viewUserCourse,deleteCourseRating,addCourseRating,calculateCourseRating};
    
