@@ -40,7 +40,8 @@ import CourseRate from './Pages/CourseRate';
 import Contract from './Pages/Contract';
 import PopUp from './Components/PopUp';
 import InstrCourses from './Components/InstrCourses';
-
+import CourseVideos from './Pages/CourseVideos';
+import CourseExercises from './Pages/CourseExercises';
 function App(){
   const newAdmin = (admin) => {
     console.log(admin);
@@ -86,7 +87,9 @@ function App(){
 
     <Route path="/CourseInstructor" element={<CourseInstructor/>}/>
     <Route path="/CourseRate" element={<CourseRate/>}/>
-
+    <Route path="/CourseVideos" element={<CourseVideos/>}/>
+    <Route path="/CourseExercises" element={<CourseExercises/>}/>
+    
     <Route path="/Contract" element={<Contract/>}/>
     <Route path="/PopUp" element={<PopUp/>}/>
     <Route path="/InstrCourses" element={ <InstrCourses/>} />
