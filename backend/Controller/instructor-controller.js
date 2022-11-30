@@ -361,7 +361,7 @@ const getAllMcq = async (req,res) => {
             try{
                 const resInstr= await instructor.findOne({_id:mongoose.Types.ObjectId(instrId)} );
                 if (resInstr){
-                    const resExam= await Exams.findOne({_id:mongoose.Types.ObjectId(resInstr.Exam)} );
+                    const resExam= await exam.findOne({_id:mongoose.Types.ObjectId(resInstr.Exam)} );
                     if (resExam){
                         allMcq.push(resExam.mcq);
                     }
@@ -375,22 +375,25 @@ const getAllMcq = async (req,res) => {
 
 
 const addMCQ = async (req,res) => {
-    const ExamId= req.params.id;
-    await exam.updateOne(
-        {_id: ExamId},
-        {   $push: {
-                mcq: {
-                    question: req.body.question,
-                     choice1: req.body.choice1,
-                     choice2: req.body.choice2,
-                     choice3: req.body.choice3,
-                     choice4: req.body.choice4,
-                     correct: req.body.correct,
-                },
-            },
+    const ExamId= req.query.id;
+   if (ExamId){
+    const mcq = [
+        {
+        question: req.body.question,
+        choice1: req.body.choice1,
+        choice2: req.body.choice2,
+        choice3: req.body.choice3,
+        choice4: req.body.choice4,
+        correct: req.body.correct,
         }
-    );
-    res.status(200).send('your question has been added');
+    ];
+   const result= await exam.findByIdAndUpdate(ExamId, { $push: { mcq: mcq } }, { new: true });
+   res.status(200).send('your question has been added');
+}
+else{
+    res.status(400).json({error:"Please provide the exam id"});
+}
+    
 }
 
  //edit email/ biography req 29
