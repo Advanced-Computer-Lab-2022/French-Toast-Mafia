@@ -19,6 +19,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
       fontSize: 14,
     },
   }));
+  
 const { useState } = require("react");
 
 
@@ -26,7 +27,7 @@ const AllInstructors = () => {
     const [instructors,setInstructors] = useState([]);
     
     const getInstructors =  async () => {
-         await axios.get('http://localhost:5000/Instructor/').then(
+         await axios.get('http://localhost:5000/Instructor/getAllInstructors').then(
         (res) => { 
             const instructors = res.data
             console.log(instructors)
@@ -56,11 +57,11 @@ const AllInstructors = () => {
         
             
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table"  style={{ backgroundColor:' yellow', color:'#FFF'}}>
-        <TableHead>
+      <Table sx={{ minWidth: 50 }} size="small" aria-label="a dense table"  style={{ backgroundColor: '#FFFFFF', color:'#1aac83'}}>
+        <TableHead >
           <TableRow>
-            <StyledTableCell align="center">Name</StyledTableCell>
-            <StyledTableCell align="center">Email</StyledTableCell>
+            <StyledTableCell align="center"   style={{ backgroundColor: '#2D8668', color:'#FFFFFF'}} >Name</StyledTableCell>
+            <StyledTableCell align="center" style={{ backgroundColor: '#2D8668', color:'#FFFFFF'}} >Email</StyledTableCell>
 
           </TableRow>
         </TableHead>
@@ -71,16 +72,16 @@ const AllInstructors = () => {
             sx={{
                 "&:hover":{
                 cursor: "pointer",
-                backgroundColor: "#f5f5f5",
-                width: "100%"
+                backgroundColor: "#1aac83",
+                width: "20%"
                 }
             }}
             onClick={() => window.location.href=`/InstrCourses?instructorId=${instructor._id}`}
               key={instructor._id}
 
               >
-              <TableCell align="center">{instructor.InstrName}</TableCell>
-              <TableCell align="center">{instructor.InstrEmail}</TableCell>
+              <TableCell align="center"  style ={{color:'#1aac83'}}>{instructor.InstrName}</TableCell>
+              <TableCell align="center" style ={{color:'#1aac83'}}>{instructor.InstrEmail}</TableCell>
 
 
             </TableRow>

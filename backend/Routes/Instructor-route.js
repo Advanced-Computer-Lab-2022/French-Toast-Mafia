@@ -17,7 +17,7 @@ const {createInstructor, getAllInstructors,
 const router = express.Router();
 
 
-router.get("/",getAllInstructors );
+router.get('/getAllInstructors',getAllInstructors );
 
 router.post('/addCourse', addCourse);
 
@@ -33,7 +33,7 @@ router.put('/editInstrBiography/:id', editBiography);
 
 router.put('/editInstrEmail/:id', editEmail);
 
-router.get ('/ViewMyCourses/:id',ViewMyCourses);
+router.get ('/ViewMyCourses',ViewMyCourses);
 
 router.get ('/ViewMyRatings',ViewMyRatings);
 
