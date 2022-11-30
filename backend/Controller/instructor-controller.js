@@ -395,7 +395,6 @@ const getAllMcq = async (req,res) => {
     }
 };
 
-
 const addMCQ = async (req,res) => {
     const ExamId= req.query.id;
    if (ExamId){

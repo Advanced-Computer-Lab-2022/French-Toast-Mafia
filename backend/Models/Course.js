@@ -40,15 +40,15 @@ const courseSchema = new Schema({
       type: Number,
       required: false
     },
-    Promotion: {
+    Promotion: {           //percent el 3adeya 
       type: Array,
       required: false
     },
-    StartDatePromotion: {
-      type: Date,
-      required: false
-    }, 
-    EndDatePromotion: {
+    // StartDatePromotion: {     
+    //   type: Date,
+    //   required: false
+    // }, 
+    EndDatePromotion: {     //don't need start
       type: Date,
       required: false
     }, 
