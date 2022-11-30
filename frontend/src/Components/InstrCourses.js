@@ -11,6 +11,8 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Courses from '../Pages/Courses';
 import withStyles from '@mui/material/styles';
+import PopUp from './PopUp';
+
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -20,6 +22,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
+    
     },
   }));
 
@@ -32,6 +35,7 @@ const InstrCourses = () => {
     const instructorId = params.get('instructorId');
     console.log(instructorId);
     const [Instrcourse,setInstrCourses] = useState([]);
+    const [Instrrating,setInstrrating] = useState([]);
 
     const getInstrCourses =  async () => {
          await axios.get(`http://localhost:5000/Instructor/ViewMyCourses?instructorId=${instructorId}`).then(
@@ -47,6 +51,19 @@ const InstrCourses = () => {
     
 
     }
+    const getInstrRating =  async () => {
+      await axios.get(`http://localhost:5000/Instructor/calculateInstrRating?id=${instructorId}`).then(
+     (res) => { 
+         const Instrrating= res.data
+         console.log(Instrrating)
+         setInstrrating(Instrrating)
+         
+     }
+      );
+    
+ 
+
+ }
   
     return(
 
@@ -59,21 +76,30 @@ const InstrCourses = () => {
             padding="normal"
             >Load courses</Button>
             </Box>
+
+            <Box sx={{marginBottom: 2}}>
+            <Button variant="contained"
+            style={{width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
+            onClick={getInstrRating}
+            margin="normal"
+            padding="normal"
+            >View My Rating</Button>
+            </Box>
             
-        
-        
+      
             
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table"  style={{ backgroundColor:'yellow', color:'#FFF'}} >
+      <Table sx={{ minWidth: 100 }} size="small" aria-label="a dense table"  style={{ backgroundColor:'yellow', color:'#FFF'}} >
         <TableHead  sx={{
               backgroundColor: "black",
               borderColor: "white",
               borderWidth: "2px",
               borderStyle: "solid",
               padding: "4px",
+      
             }} >
           <TableRow>
-            <StyledTableCell align="center" >Name of the registered courses</StyledTableCell>
+            <StyledTableCell align="center" style={{width:"5px"}}  >Name of the courses given</StyledTableCell>
 
 
           </TableRow>
@@ -86,7 +112,7 @@ const InstrCourses = () => {
                 "&:hover":{
                 cursor: "pointer",
                 backgroundColor: "#f5f5f5",
-                width: "100%"
+                width: "100"
                 }
             }}
             
@@ -99,6 +125,37 @@ const InstrCourses = () => {
 
             </TableRow>
           ))}
+        </TableBody>
+      </Table>
+
+      <Table sx={{ minWidth: 100 }} size="small" aria-label="a dense table"  style={{ backgroundColor:'yellow', color:'#FFF'}} >
+        <TableHead  sx={{
+              backgroundColor: "black",
+              borderColor: "white",
+              borderWidth: "2px",
+              borderStyle: "solid",
+              padding: "4px",
+      
+            }} >
+          <TableRow>
+            <StyledTableCell align="center" style={{width:"5px"}}  >Rating</StyledTableCell>
+
+
+          </TableRow>
+        </TableHead   >
+        <TableBody>
+            <TableRow
+            hover
+            sx={{
+                "&:hover":{
+                cursor: "pointer",
+                backgroundColor: "#f5f5f5",
+                width: "100"
+                }
+            }}
+              >
+              <TableCell align="center">{Instrrating}</TableCell>
+            </TableRow>
         </TableBody>
       </Table>
     </TableContainer>

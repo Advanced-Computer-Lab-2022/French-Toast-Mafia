@@ -156,37 +156,25 @@ const filterSubject = async (req,res) => {
   
   }
 
-    const ViewMyCourses = async (req , res) => {
-    const instructorId = req.query.instructorId;
-    if (instructorId ){
-    const a = await course.find({Instructor:mongoose.Types.ObjectId(instructorId)}).populate('Instructor');
-    res.status(200).json(a)
-     } else{
-    res.status(400).json({error:"InstructorId is required"})
-}
-   
-
-}
-
-//   const ViewMyCourses = async (req , res) => {
-//     const instructorId = req.query.instructorId;
-//     const a = await course.find({Instructor:mongoose.Types.ObjectId(instructorId)}, {NameOfCourse:1,_id:1,  Duration: 1, Rating: 1,Cost:1});
-//         // res.json(a);
-//         // console.log(a);
+  const ViewMyCourses = async (req , res) => {
+    const w = req.params.id;
+    const a = await course.find({instructor:w }, {NameOfCourse:1,_id:1});
+        // res.json(a);
+        // console.log(a);
     
-//     if (a == null) {
-//         res.status(404).send('no courses available');
-//     }
-//     else {
-//         res.json(a);
-//         //let x= Object.values(a);
-//         //console.log(x);
-//         //let result = x.map(a => a.NameOfCourse);
-//         // console.log(result);
+    if (a == null) {
+        res.status(404).send('no courses available');
+    }
+    else {
+        res.json(a);
+        //let x= Object.values(a);
+        //console.log(x);
+        //let result = x.map(a => a.NameOfCourse);
+        // console.log(result);
         
-//     }
+    }
 
-// }
+}
 
 const SearchCourse = async (req,res) => {
     const w = req.params.id;
@@ -328,6 +316,7 @@ else{
 
 //instructor create an exam req 26
 const createExam = async (req,res) => {
+    const instrId=req.query.id;
     const mcq = [
         {
         question: req.body.question,
@@ -344,14 +333,52 @@ const createExam = async (req,res) => {
         mcq: mcq,
     });
     newExam.save().then((result) => res.status(200).send(result));
+
+    instructor.findOneAndUpdate({_id:mongoose.Types.ObjectId(instrId)}, { Exam: newExam._id }, { new: true });
+            
 }
 
+//add exam id into instructor schema
+// const addExamId = async (req,res) => {
+//     const instrId=req.query.id;
+//     const examId= req.body;
+
+//     if (instrId){
+//         try{
+//             const result = await instructor.findOneAndUpdate({_id:mongoose.Types.ObjectId(instrId)}, { Exam: mongoose.Types.ObjectId(examId) }, { new: true });
+//             res.status(200).json(result);
+//         }catch(error){
+//             res.status(400).json({error:error.message})
+//         }
+// }
+// }
+
+// find mcq by exam id 
+const getAllMcq = async (req,res) => {
+    const instrId= req.query.id;
+    const allMcq=[];
+        if (instrId){
+            try{
+                const resInstr= await instructor.findOne({_id:mongoose.Types.ObjectId(instrId)} );
+                if (resInstr){
+                    const resExam= await Exams.findOne({_id:mongoose.Types.ObjectId(resInstr.Exam)} );
+                    if (resExam){
+                        allMcq.push(resExam.mcq);
+                    }
+                 }
+                 res.status(200).json(allMcq);
+            }catch {
+            res.status(400).json({error:error.message})
+            }
+    }
+};
+
+
 const addMCQ = async (req,res) => {
-    const ExamId= req.params.ExamId;
+    const ExamId= req.params.id;
     await exam.updateOne(
         {_id: ExamId},
-        {
-            $push: {
+        {   $push: {
                 mcq: {
                     question: req.body.question,
                      choice1: req.body.choice1,
@@ -365,8 +392,6 @@ const addMCQ = async (req,res) => {
     );
     res.status(200).send('your question has been added');
 }
-
-
 
  //edit email/ biography req 29
  const editBiography = async (req,res) => {
@@ -419,21 +444,6 @@ const ViewMyReview = async (req , res) => {
     }
 }
 
-// define promotion/discount for the course req 30 
-// const defineDiscount = async (req,res) => {
-//     const courseID=req.params.id;
-//     const {discount, durationDiscount}= req.body;
-//         try {
-//             const newDiscount= await course.findOneAndUpdate()
-//             res.status(200).json(newDiscount);
-
-//         } catch {
-
-//         }
-
-
-
-// }
 
 const deleteInstrRating = async(req , res) => {
     const instrId=req.query.id;
@@ -498,5 +508,5 @@ module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      filterCourseSubjcet , filterCourseCost , ViewMyCourses
       , SearchCourse, viewInstrInfo, 
     editBiography, editEmail,ViewMyRatings , ViewMyReview, addInstrRating ,calculateInstrRating,
-    deleteInstrRating, createExam, addMCQ };
+    deleteInstrRating, createExam, addMCQ, getAllMcq};
    

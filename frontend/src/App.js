@@ -3,6 +3,7 @@ import React, {useState,useEffect} from 'react';
 import './App.css';
 import axios from 'axios';
 
+
 import Navbar from './Components/Navbar';
 import FrontPage from './Pages/FrontPage';
 import Courses from './Pages/Courses';
@@ -26,7 +27,6 @@ import AddCourse from './Components/AddCourse';
 import Profile from './Pages/Profile';
 import ForgotPassword from './Pages/ForgotPassword';
 import ChangePassword from './Pages/ChangePassword';
-import InstrRating from './Pages/InstrRating';
 import MyCourses from './Components/MyCourses';
 import CoursePromotion from './Pages/CoursePromotion';
 import AllUsers from './Components/AllUsers';
@@ -40,6 +40,8 @@ import CourseRate from './Pages/CourseRate';
 import Contract from './Pages/Contract';
 import PopUp from './Components/PopUp';
 import InstrCourses from './Components/InstrCourses';
+import AddExam from './Components/addExam';
+import ViewExam from './Components/ViewExam';
 import CourseVideos from './Pages/CourseVideos';
 import CourseExercises from './Pages/CourseExercises';
 function App(){
@@ -82,14 +84,17 @@ function App(){
     <Route path="/AllUsers" element={ <AllUsers/>} />
     <Route path="/AllInstructors" element={ <AllInstructors/>} />
     <Route path="/UserCoursePage" element={ <UserCoursePage/>} />
-    <Route path="/InstrRating" element={<InstrRating/>}/>
+<<<<<<< HEAD
     <Route path="/CoursePromotion" element={<CoursePromotion/>}/>
 
+=======
     <Route path="/CourseInstructor" element={<CourseInstructor/>}/>
     <Route path="/CourseRate" element={<CourseRate/>}/>
     <Route path="/CourseVideos" element={<CourseVideos/>}/>
     <Route path="/CourseExercises" element={<CourseExercises/>}/>
-    
+        <Route path="/addExam" element={<AddExam/>}/>
+    <Route path="/ViewExam" element={<ViewExam/>}/>
+
     <Route path="/Contract" element={<Contract/>}/>
     <Route path="/PopUp" element={<PopUp/>}/>
     <Route path="/InstrCourses" element={ <InstrCourses/>} />
