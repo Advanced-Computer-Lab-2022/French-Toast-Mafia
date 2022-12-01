@@ -94,10 +94,7 @@ function App(){
     <Route path="/AllInstructors" element={ <AllInstructors/>} />
     <Route path="/UserCoursePage" element={ <UserCoursePage/>} />
     <Route path="/CoursePromotion" element={<CoursePromotion/>}/>
-<<<<<<< HEAD
 
-=======
->>>>>>> 0aba50724b7ad8afd38663570cbaa824e2198eb7
     <Route path="/CourseInstructor" element={<CourseInstructor/>}/>
     <Route path="/CourseRate" element={<CourseRate/>}/>
     <Route path="/CourseVideos" element={<CourseVideos/>}/>
