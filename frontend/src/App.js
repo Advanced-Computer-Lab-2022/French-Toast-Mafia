@@ -44,6 +44,11 @@ import AddExam from './Components/addExam';
 import ViewExam from './Components/ViewExam';
 import CourseVideos from './Pages/CourseVideos';
 import CourseExercises from './Pages/CourseExercises';
+import ViewExamAnswer from './Components/ViewExamAnswer';
+import ViewExamButton from './Components/ViewExamButton';
+import ExamIsDone from './Components/ExamIsDone';
+
+
 function App(){
   const newAdmin = (admin) => {
     console.log(admin);
@@ -84,10 +89,8 @@ function App(){
     <Route path="/AllUsers" element={ <AllUsers/>} />
     <Route path="/AllInstructors" element={ <AllInstructors/>} />
     <Route path="/UserCoursePage" element={ <UserCoursePage/>} />
-<<<<<<< HEAD
     <Route path="/CoursePromotion" element={<CoursePromotion/>}/>
 
-=======
     <Route path="/CourseInstructor" element={<CourseInstructor/>}/>
     <Route path="/CourseRate" element={<CourseRate/>}/>
     <Route path="/CourseVideos" element={<CourseVideos/>}/>
@@ -98,6 +101,11 @@ function App(){
     <Route path="/Contract" element={<Contract/>}/>
     <Route path="/PopUp" element={<PopUp/>}/>
     <Route path="/InstrCourses" element={ <InstrCourses/>} />
+    <Route path="/ViewExamAnswer" element={ <ViewExamAnswer/>} />
+    <Route path="/ViewExamButton" element={ <ViewExamButton/>} />
+    <Route path="/ExamIsDone" element={ <ExamIsDone/>} />
+
+
 
    </Routes>
    </div>
