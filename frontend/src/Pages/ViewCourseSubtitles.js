@@ -10,6 +10,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.common.black,
@@ -21,49 +22,33 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   }));
 const { useState } = require("react");
 
-const queryParameters = new URLSearchParams(window.location.search)
-const courseId = queryParameters.get("courseId")
-console.log(courseId)
 
-
-const preview = (p) => {
-    if(p == " "){
-        return "Null"
-    }
-    else{
-        return <a href= {p} >View Preview</a>
-    }
-}
-
-
-const SubtitleList = () => { 
+const ViewCourseSubtitles = () => { 
     const [subtitles,setSubtitles] = useState([]);
     
-    const getSubs =  async () => {
-         await axios.get(`http://localhost:5000/Course/viewCourseSubtitle?id=${courseId}`).then(
+    const getSubtitles =  async () => {
+        const queryParameters = new URLSearchParams(window.location.search)
+        const courseId = queryParameters.get("courseId")
+       await axios.get(`http://localhost:5000/Course/ViewCourseSubtitles?id=${courseId}`).then(
         (res) => { 
             const subs = res.data
-            console.log(subs)
             setSubtitles(subs)
-            
         }
          );
     
 
     }
     return(
-
         // visualize authors in a table map over authors
-        <div className="Subtitles">
-            <Box sx={{marginBottom: 2}}>
+        <div className="CourseList">
+              <Box sx={{marginBottom: 2}}>
             <Button variant="contained"
-            onClick={getSubs}
+            onClick={getSubtitles}
             margin="normal"
             padding="normal"
             >Load Subtitles</Button>
             {/* margin */}
             </Box>
-            
         
         
             
@@ -72,28 +57,23 @@ const SubtitleList = () => {
         <TableHead>
           <TableRow>
             <StyledTableCell align="center">Title</StyledTableCell>
-            <StyledTableCell align="center">Exercise</StyledTableCell>
-            <StyledTableCell align="center">Duration</StyledTableCell>
-            <StyledTableCell align="center">Preview</StyledTableCell>
-
-            
           </TableRow>
         </TableHead>
-        <TableBody >
-          {subtitles.map((s) => (
-            <TableRow  hover
+        <TableBody>
+          {subtitles.map((subtitle) => (
+            <TableRow
+            hover
             sx={{
                 "&:hover":{
                 cursor: "pointer",
                 backgroundColor: "#f5f5f5",
                 width: "100%"
                 }
-            }} key={s[0]}>
-              <TableCell align="center" onClick={()=> console.log("clicky clicky")}>{s.Title}</TableCell>
-              <TableCell align="center">{s.Exercises}</TableCell>
-              <TableCell align="center">{s.Duration}</TableCell>
-              <TableCell align="center">{preview(s.Preview)}</TableCell>
-
+            }}
+            onClick={() => window.location.href=`/viewSubtitle?subId=${subtitle._id}`}
+            key={subtitle._id}
+            >
+              <TableCell align="center">{subtitle.Title}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -105,4 +85,5 @@ const SubtitleList = () => {
 
     )
 }
-export default SubtitleList;
+
+export default ViewCourseSubtitles;

@@ -32,7 +32,9 @@ import CoursePromotion from './Pages/CoursePromotion';
 import AllUsers from './Components/AllUsers';
 import AllInstructors from './Components/AllInstructors';
 import UserCoursePage from './Pages/UserCoursePage';
-import ViewCourseSubtitle from './Pages/ViewCourseSubtitles'
+import ViewCourseSubtitles from './Pages/ViewCourseSubtitles'
+import ViewSubtitle from './Pages/ViewSubtitle';
+import EditSubtitle from './Pages/EditSubtitle';
 import ViewCourseExam from './Pages/ViewCourseExam'
 import CourseInstructor from './Pages/CourseInstructor';
 import StarRating from './Components/StarRating';
@@ -40,7 +42,7 @@ import CourseRate from './Pages/CourseRate';
 import Contract from './Pages/Contract';
 import PopUp from './Components/PopUp';
 import InstrCourses from './Components/InstrCourses';
-import AddExam from './Components/addExam';
+// import AddExam from './Components/addExam';
 import ViewExam from './Components/ViewExam';
 import CourseVideos from './Pages/CourseVideos';
 import CourseExercises from './Pages/CourseExercises';
@@ -74,7 +76,9 @@ function App(){
     <Route path="/adduser" element={ <Add1/>} />
     {/* <Route path="/rate" element={ <StarRating/>} /> */}
     <Route path="/viewCourse" element={<ViewCourse/>} />
-    <Route path="/viewCourse/Subtitle" element={<ViewCourseSubtitle/>} />
+    <Route path="/viewCourse/Subtitles" element={<ViewCourseSubtitles/>} />
+    <Route path="/viewSubtitle" element={<ViewSubtitle/>} />
+    <Route path="/editSubtitle" element={<EditSubtitle/>}/>
     <Route path="/viewCourse/Exam" element={<ViewCourseExam/>} />
     <Route path="/Instructor/viewMyCourses" element = {<ViewMyCoursesInstructor/>} />
     <Route path="/Instructor/EditCourse" element = {<EditCourse/>}/>
@@ -90,12 +94,15 @@ function App(){
     <Route path="/AllInstructors" element={ <AllInstructors/>} />
     <Route path="/UserCoursePage" element={ <UserCoursePage/>} />
     <Route path="/CoursePromotion" element={<CoursePromotion/>}/>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0aba50724b7ad8afd38663570cbaa824e2198eb7
     <Route path="/CourseInstructor" element={<CourseInstructor/>}/>
     <Route path="/CourseRate" element={<CourseRate/>}/>
     <Route path="/CourseVideos" element={<CourseVideos/>}/>
     <Route path="/CourseExercises" element={<CourseExercises/>}/>
-        <Route path="/addExam" element={<AddExam/>}/>
+    {/* <Route path="/addExam" element={<AddExam/>}/> */}
     <Route path="/ViewExam" element={<ViewExam/>}/>
 
     <Route path="/Contract" element={<Contract/>}/>

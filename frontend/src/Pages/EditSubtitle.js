@@ -3,7 +3,7 @@ import Button from '@mui/material/Button';
 import Table from '@mui/material/Table';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';  
-import TableCell, {tableCellClasses } from '@mui/material/TableCell';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TextField from '@mui/material/TextField';
 import TableRow from '@mui/material/TableRow';
@@ -12,17 +12,15 @@ import Paper from '@mui/material/Paper';
 const { useState } = require("react");
 
 const queryParameters = new URLSearchParams(window.location.search)
-const courseId = queryParameters.get("courseId")
+const subId = queryParameters.get("id")
 
 const newData = {};
-const promo = {};
-
-let editSub = false;
+const vid = [];
 
 const handleSubmit = async(req , res) => {
 
         console.log(newData)
-        const response =  await fetch(`http://localhost:5000/Course/editCourse?id=${courseId}`,{
+        const response =  await fetch(`http://localhost:5000/Subtitle/editSubtitle?id=${subId}`,{
           method: 'POST',
           body: JSON.stringify(newData),
           headers : {
@@ -34,24 +32,20 @@ const handleSubmit = async(req , res) => {
         console.log('Something wrong happened')
     }
     if (response.ok){
-        console.log('Course Updated');
-        if(!editSub)
-          window.location.href=`/viewCourse?courseId=${courseId}`
+        console.log('Subtitle Updated');
+        window.location.href=`/viewSubtitle?subId=${subId}`
     }
 }
 
-const handleEditSubtitle = async() => {
-  editSub = true;
-  await handleSubmit()
-  editSub = false;
-  window.location.href=`/viewCourse/Subtitles?courseId=${courseId}`
+const handleEditExercise = () => {
+  console.log("Pressed Edit Exercise")
 }
 
 const handleChange = (event) => {
   const attr = event.target.id
-  if(attr == "Amount" || attr == "End"){
-    promo[attr] = event.target.value
-    newData["Promotion"] = promo
+  if(attr == 0 || attr == 1){
+    vid[attr] = event.target.value
+    newData["Video"] = vid
   }
   else{
     newData[attr] = event.target.value
@@ -72,7 +66,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 const getCellData = (obj) =>{
   if(typeof(obj[1])!="object"){
-    if(obj[0]=="_id" || obj[0] == "Instructor" || obj[0] == "createdAt" || obj[0] == "updatedAt" || obj[0] == "__v"){
+    if(obj[0]=="_id" || obj[0] == "Course" || obj[0] == "createdAt" || obj[0] == "updatedAt" || obj[0] == "__v"){
       return <TableCell>
       <Box
         component="form"
@@ -117,55 +111,47 @@ const getCellData = (obj) =>{
 
   else{
     const nextPage = Object.values(Object.values(obj))[0];
-    if(nextPage == "CourseSubtitle"){
+    if(nextPage == "Exercise"){
       return <TableCell>
       <Button variant="contained"
         margin="normal"
-        onClick={handleEditSubtitle}
+        onClick={handleEditExercise}
         padding="normal"
-        >Edit Subtitles</Button> 
+        >Edit Exercises</Button> 
         
     </TableCell>
     }
-    else if(nextPage === "Promotion"){
-      const prom = obj[1]
-      return <TableCell>
-        <Box
-      component="form"
-      sx={{
-        '& .MuiTextField-root': { m: 1, width: '25ch' },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <div>
-        <TextField
-          id={Object.keys(prom[0])[0]}
+    else if(nextPage === "Video"){
+        const vid = obj[1]
+        return <TableCell>
+          <Box
+        component="form"
+        sx={{
+          '& .MuiTextField-root': { m: 1, width: '25ch' },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <div>
+          <TextField
+            id={0}
+            label="Video link"
+            onChange={handleChange}
+            defaultValue={vid[0]}
+            size="small"
+          />  <TextField
+          id={1}
+          label="Description"
           onChange={handleChange}
-          defaultValue={Object.values(prom[0])[0]}
+          defaultValue= {vid[1]}
           size="small"
-        />  <TextField
-        id={Object.keys(prom[0])[1]}
-        label="Ends on:"
-        type="date"
-        onChange={handleChange}
-        defaultValue= {Object.values(prom[0])[1]}
-        size="small"
-      /> 
-      </div>
-    </Box>
-    </TableCell>
-    //   return <TableCell>
-    //   <Button variant="contained"
-    //     margin="normal"
-    //     onClick={() => window.location.href=`/ViewCourse/Exam?courseId=${courseId}`}
-    //     padding="normal"
-    //     >View Exam</Button> 
-    // </TableCell>
-    }
-   
-  }
+        /> 
+        </div>
+      </Box>
+      </TableCell>
 
+      }
+    }
   
 }
 
@@ -174,7 +160,7 @@ const EditCourse = () => {
     const [course,setCourse] = useState([]);
     const getCourse =  async () => {
        
-       await axios.get(`http://localhost:5000/Course/ViewCourse?id=${courseId}`).then(
+       await axios.get(`http://localhost:5000/Subtitle/ViewSubtitle?id=${subId}`).then(
         (res) => { 
             const resCourse = res.data
             setCourse(resCourse)
@@ -183,7 +169,6 @@ const EditCourse = () => {
     }
 
     return(
-        // {getCourse},
         <div className="CourseAttributes">
             <Box sx={{marginBottom: 2}}>
             <Button variant="contained"
@@ -192,7 +177,6 @@ const EditCourse = () => {
             padding="normal"
             >Load Data</Button>
             {/* margin */}
-
             <Button variant="contained"
             onClick={handleSubmit}
             margin="normal"
