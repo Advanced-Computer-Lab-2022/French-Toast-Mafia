@@ -3,7 +3,8 @@ const express= require("express");
 const router = express.Router();
 
 const {getAllSubtitles,addSubtitle, editSubtitle, addExcercise,deleteExcercise,removeAllExcercises, viewSubtitle,
-    deleteSubtitle,deleteSubtitleFromCourse,removeAllSubtitles,getCourseSubtitlesVideos,getCourseSubtitlesExcercises} = require('../Controller/subtitle-controller');
+    deleteSubtitle,deleteSubtitleFromCourse,removeAllSubtitles,getCourseSubtitlesVideos,getCourseSubtitlesExcercises,
+    addVideoDescription,emptySubtitlesArray} = require('../Controller/subtitle-controller');
 
 router.get('/',getAllSubtitles);
 
@@ -28,5 +29,9 @@ router.get('/removeAllSubtitles',removeAllSubtitles);
 router.get('/getCourseSubtitlesVideos',getCourseSubtitlesVideos);
 
 router.get('/getCourseSubtitlesExcercises',getCourseSubtitlesExcercises);
+
+router.post('/addVideoDescription',addVideoDescription);
+
+router.get('/emptySubtitlesArray',emptySubtitlesArray);
 
 module.exports=router;

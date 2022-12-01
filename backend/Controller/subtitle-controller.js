@@ -12,15 +12,15 @@ function getAllSubtitles (req,res) {
 //add subtitle
 function addSubtitle (req,res) {
     const courseId = req.query.id;
-    const {Course,Title,Question,Answer,Video,Duration,Preview} = req.body;
+    const {Course,Title,Question,Answer,Video,Description,Duration} = req.body;
     const newExcercise={Question,Answer};
     const newSubtitle = new Subtitle({
         Course : courseId,
         Title,
         Exercise : newExcercise,
         Video,
-        Duration,
-        Preview
+        Description,
+        Duration
     }); 
     newSubtitle.save();
     //add subtitle to course
@@ -40,16 +40,23 @@ function deleteSubtitle (req,res) {
 };
 
 //delete subtitle from course
-function deleteSubtitleFromCourse (req,res) {
+const deleteSubtitleFromCourse= async (req,res) =>{
     const subId = req.query.id;
-    const courseId = req.query.courseId;
-    Subtitle.findOneAndDelete({_id:mongoose.Types.ObjectId(subId)}).then(function (Subtitle) {
-        course.findOneAndUpdate({_id:mongoose.Types.ObjectId(courseId)},{$pull:{CourseSubtitle:subId}})
-        .then(function (course) {
-        res.status(200).json(course)
-    });
-    });
+    // const courseId = req.query.courseId;
+    if (subId){
+        const subRes= await Subtitle.findOne({_id:mongoose.Types.ObjectId(subId)});
+        const courseId = subRes.Course;
+        try{
+            const courseRes= await course.findOneAndUpdate({_id:mongoose.Types.ObjectId(courseId)},{$pull:{CourseSubtitle:mongoose.Types.ObjectId(subId)}});
+            const subRes= await Subtitle.findOneAndDelete({_id:mongoose.Types.ObjectId(subId)});
+            res.status(200).json(subRes);
+    }
+    catch(err){
+        res.status(500).json(err);
+    }
+    }
 };
+
 
 //find subtitle by id
 const viewSubtitle = async(req , res) => {
@@ -65,11 +72,6 @@ const viewSubtitle = async(req , res) => {
         res.status(400).json({error:error.message})
     }
 }
-// function findSubtitleByCourse (req,res) {
-//     const courseId = req.query.id;
-//     const resCourse =  Course.findOne({_id:mongoose.Types.ObjectId(courseId)});
-
-// };
 
 //add excercise
 function addExcercise (req,res) {
@@ -150,7 +152,29 @@ const editSubtitle = async(req, res) => {
     }
 }
 
+//add video description
+function addVideoDescription (req,res) {
+    const subId=req.query.id;
+    const {Description} = req.body;
+    Subtitle.findOneAndUpdate({_id:
+        subId},{$set:{Description:Description}})
+        .then(function (Subtitle) {
+        res.status(200).json(Subtitle)
+    });
+};
+
+//empty subtitles array in course
+function emptySubtitlesArray (req,res) {
+    const courseId=req.query.id;
+    course.findOneAndUpdate({_id:
+        courseId},{$set:{CourseSubtitle:[]}})
+        .then(function (course) {
+        res.status(200).json(course)
+    });
+};
+
     
 
 module.exports = {getAllSubtitles,addSubtitle, editSubtitle, addExcercise,deleteExcercise,removeAllExcercises, viewSubtitle,
-    deleteSubtitle,deleteSubtitleFromCourse,removeAllSubtitles,getCourseSubtitlesVideos,getCourseSubtitlesExcercises};
+    deleteSubtitle,deleteSubtitleFromCourse,removeAllSubtitles,getCourseSubtitlesVideos,
+    getCourseSubtitlesExcercises,addVideoDescription,emptySubtitlesArray};
