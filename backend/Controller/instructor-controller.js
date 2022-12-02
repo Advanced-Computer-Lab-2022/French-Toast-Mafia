@@ -10,6 +10,7 @@ function getAllInstructors (req,res) {
 };
 
 
+
 const createInstructor = async(req,res) => {
     const newInstructor = new instructor ({
         InstrName: req.body.InstrName,
@@ -311,7 +312,10 @@ if (instrId) {
         const instructorDetails = 
             {"Name": result.InstrName,
             "Email":result.InstrEmail,
-            "Password": result.InstrPassword}
+            "Country": result.InstrCountry,
+            "Biography":result.Biography,
+            "Review":result.InstrReview,
+        }
 
         res.status(200).json(instructorDetails);
         
@@ -370,21 +374,21 @@ const addMCQ = async (req,res) => {
 
  //edit email/ biography req 29
  const editBiography = async (req,res) => {
-        const instructorId= req.params.id;
-        const {Biography}= req.body;
+        const w= req.query.id;
         try{
-            const newBio= await instructor.findByIdAndUpdate(instructorId, {Biography:Biography}, {new:true});
+            const newBio= await instructor.findByIdAndUpdate({_id:mongoose.Types.ObjectId(w)}, {Biography:req.body.Biography}, {new:true});
             res.status(200).json(newBio)
         }
         catch(error){
             res.status(400).json({error:error.message})
         }
  }
+
+ 
  const editEmail = async (req,res) => {
-    const instructorId= req.params.id;
-    const {InstrEmail}= req.body;
+    const w= req.query.id;
     try{
-        const newEmail= await instructor.findByIdAndUpdate(instructorId, {InstrEmail:InstrEmail}, {new:true});
+        const newEmail= await instructor.findByIdAndUpdate({_id:mongoose.Types.ObjectId(w)}, {InstrEmail:req.body.InstrEmail}, {new:true});
         res.status(200).json(newEmail)
     }
     catch(error){
@@ -408,8 +412,8 @@ const ViewMyRatings = async (req , res) => {
 } 
 // View Instructor reviews
 const ViewMyReview = async (req , res) => {
-    const w = req.params.id;
-    const a = await instructor.find({instructor:w }, {InstrReview:1,_id:1});
+    const w = req.query.id;
+    const a = await instructor.findOne({_id:mongoose.Types.ObjectId(w)}, {InstrReview:1,_id:0 });
    
     if (a == null) {
         res.status(404).send('no instructors available');

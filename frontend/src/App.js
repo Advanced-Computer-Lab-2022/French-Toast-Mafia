@@ -37,8 +37,10 @@ import CourseInstructor from './Pages/CourseInstructor';
 import StarRating from './Components/StarRating';
 import CourseRate from './Pages/CourseRate';
 import Contract from './Pages/Contract';
-import PopUp from './Components/PopUp';
 import InstrCourses from './Components/InstrCourses';
+import EditInfo from './Pages/EditInfo';
+import InstrInfo from './Pages/InstrInfo';
+import EditBiography from './Pages/EditBiography';
 
 function App(){
   const newAdmin = (admin) => {
@@ -86,8 +88,10 @@ function App(){
     <Route path="/CourseRate" element={<CourseRate/>}/>
 
     <Route path="/Contract" element={<Contract/>}/>
-    <Route path="/PopUp" element={<PopUp/>}/>
     <Route path="/InstrCourses" element={ <InstrCourses/>} />
+    <Route path="/EditInfo" element={ <EditInfo/>} />
+    <Route path="/InstrInfo" element={ <InstrInfo/>} />
+    <Route path="/EditBiography" element={ <EditBiography/>} />
 
    </Routes>
    </div>

@@ -15,7 +15,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 import {Link} from 'react-router-dom';
 
 const pages = ['Courses', 'SignUp'];
-const settings = ['Profile', 'AllUsers','ForgotPassword', 'Logout'];
+const settings = ['Profile', 'AllUsers','AllInstructors','ForgotPassword', 'Logout'];
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
