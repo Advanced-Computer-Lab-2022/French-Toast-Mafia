@@ -44,11 +44,11 @@ const courseSchema = new Schema({
       type: Array,
       required: false
     },
-    // StartDatePromotion: {     
-    //   type: Date,
-    //   required: false
-    // }, 
-    EndDatePromotion: {     //don't need start
+    StartDatePromotion: {     
+      type: Date,
+      required: false
+    }, 
+    EndDatePromotion: {     
       type: Date,
       required: false
     }, 
