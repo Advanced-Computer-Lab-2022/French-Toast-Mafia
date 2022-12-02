@@ -3,6 +3,8 @@ const course=require("../Models/Course");
 const exam = require("../Models/Exams");
 const subtitle = require("../Models/Subtitle");
 var mongoose = require('mongoose');
+const moment = require("moment");
+
 
 function getAllInstructors (req,res) {
     instructor.find({}).then (function (instructor) {
@@ -413,23 +415,61 @@ else{
 }
 
 //add promotion for a course
+// const addPromotion = async (req, res) => {
+//     const courseId= req.query.id;
+//     const {Promotion, StartDatePromotion ,EndDatePromotion} = req.body;
+//     if (Promotion && StartDatePromotion && EndDatePromotion) {
+//         try {
+//             const {Price} = await course.findOne({_id: courseId}).select("Cost").exec();
+//             const Cost=Price;
+//             const discount= Promotion/100;
+//             const discountedPrice= Cost * discount;
+//             const newPrice= Cost-discountedPrice;
+//             const endDate= new Date (EndDatePromotion);
+//             let currentDate = new Date.getTime();
+//             const startDate = new Date (StartDatePromotion);
+//             console.log(endDate,startDate);
+//             course.findOne({courseId}).exec(Cost) 
+
+//                 if (endDate >= currentDate >= startDate){
+
+
+//                 }
+
+//         } catch (error){
+//             res.status(400).json({error:error.message});
+//         }
+//     }
+// }
 const addPromotion = async (req, res) => {
-    const instrId= req.query.id;
-    // const courseId= req.body;
-    const found = await course.findOne({_id:mongoose.Types.ObjectId(instrId)});
-    //found instrcutor 
-    // if (found !==null){
-    //     try {
-    //         const {Promotion, StartDatePromotion, EndDatePromotion} = req.body;
-    //         const promotion = await course.create ({Promotion, StartDatePromotion, EndDatePromotion});
-
-    //     } catch {
-
-    //     }
-    // } 
-
-
-
+    const courseId= req.query.id;
+    const {Promotion, StartDatePromotion ,EndDatePromotion} = req.body;
+    if (Promotion && StartDatePromotion && EndDatePromotion) {
+        try {
+            const CurrentPrice = await course.findOne({_id: courseId}).populate("Cost").select("Cost");
+            console.log(CurrentPrice.Cost);
+            const Cost=CurrentPrice.Cost;
+            const discount= Promotion/100;
+            const discountedPrice= Cost * discount;
+            const newPrice= Cost-discountedPrice;
+            console.log(newPrice);
+            //const endDate= new Date (EndDatePromotion);
+            let currentDate = new Date();
+            console.log(currentDate);
+            console.log(StartDatePromotion);
+            console.log(EndDatePromotion);
+           // const startDate = new Date (StartDatePromotion);
+           // console.log(endDate,startDate);
+           console.log("heeeeeeeeeeeeeeeee");
+            if ( (EndDatePromotion >= currentDate) && (currentDate >= StartDatePromotion)) {
+                console.log('yyyyyy');
+                 const result = await course.findByIdAndUpdate({_id: courseId},{Cost:newPrice, Promotion:req.body.Promotion},{new:true});    
+                    res.result(200).json(result);
+                }
+        } catch (error){
+            res.status(400).json({error:error.message});
+        }
+    }
 }
 
  //edit email/ biography req 29
@@ -548,7 +588,7 @@ module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      addCourse , deleteCourse, filterCost, filterRating, filterSubject, 
      filterCourseSubjcet , filterCourseCost , ViewMyCourses
       , SearchCourse, viewInstrInfo, 
-    editBiography, editEmail,ViewMyRatings , ViewMyReview, 
+      editBiography, editEmail,ViewMyRatings , ViewMyReview, 
     addInstrRating ,calculateInstrRating,
     deleteInstrRating, createExam, addMCQ, 
     getAllMcq, addPromotion};

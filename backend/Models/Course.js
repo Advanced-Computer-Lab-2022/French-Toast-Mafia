@@ -41,14 +41,14 @@ const courseSchema = new Schema({
       required: false
     },
     Promotion: {           //percent el 3adeya 
-      type: Array,
+      type: Number,
       required: false
     },
-    StartDatePromotion: {     
+    StartDatePromotion: {   // we'll use the predifined current time instead
       type: Date,
       required: false
     }, 
-    EndDatePromotion: {     
+    EndDatePromotion: {     //expiration date 
       type: Date,
       required: false
     }, 
