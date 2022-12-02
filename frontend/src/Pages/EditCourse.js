@@ -141,12 +141,13 @@ const getCellData = (obj) =>{
       <div>
         <TextField
           id={Object.keys(prom[0])[0]}
+          label="Percentage"
           onChange={handleChange}
           defaultValue={Object.values(prom[0])[0]}
           size="small"
         />  <TextField
         id={Object.keys(prom[0])[1]}
-        label="Ends on:"
+        label="Ends on"
         type="date"
         onChange={handleChange}
         defaultValue= {Object.values(prom[0])[1]}

@@ -29,13 +29,13 @@ const getCellData = (obj) =>{
 
   if(typeof(obj[1])!="object"){
   
-   if(obj[0] == "Preview"){
+   if(obj[0] == "Video"){
     if(obj[1] == "" || obj[1]  == " "){
       return <TableCell>
       Null</TableCell>
     }
     else{
-      return <TableCell> <a href= {obj[1]} >View Preview</a></TableCell>
+      return <TableCell> <a href= {obj[1]} >Watch Video</a></TableCell>
    
     }
    }
@@ -56,27 +56,7 @@ const getCellData = (obj) =>{
         padding="normal"
         >View Exercises</Button> 
     </TableCell>
-    }
-    else if(nextPage === "Video"){
-        const vid = obj[1]
-        if(vid[0] === " " || vid[0] === ""){
-            return <TableCell>
-            Link: Null
-             <font style={{ color: 'white'}}>.............</font>Description:  {vid[1]}
-             </TableCell>
-        }
-        else{
-            return <TableCell>
-            Link: <a href= {vid[0]} >Watch Video</a> 
-                 <font style={{ color: 'white'}}>.............</font>Description:  {vid[1]}
-                 </TableCell>
-        
-          
-        }
-        //  console.log(Object.keys(vid[0]))
-
-     
-    }
+      }
     }
    
   }

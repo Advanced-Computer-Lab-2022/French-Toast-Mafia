@@ -189,6 +189,7 @@ const addCourseRating = async(req , res) => {
     }
 }
 
+
 //calculate rating function
 const calculateCourseRating = async(req , res) => {
     const courseId=req.query.id;
@@ -201,6 +202,18 @@ const calculateCourseRating = async(req , res) => {
             }
             const avg=sum/result.Rating.length;
             res.status(200).json(avg);
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }   
+    }
+}
+
+const viewCourseRating = async(req, res) => {
+    const courseId=req.query.id;
+    if (courseId){
+        try{
+            const result = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+            res.status(200).json(result.Rating);
         }catch(error){
             res.status(400).json({error:error.message})
         }   
@@ -352,7 +365,11 @@ const calculateCourseDuration = async(req , res) => {
 
 
 
-module.exports={getAllCourse , viewCourse, createCourse, editCourse, viewCourseInstructor,
+
+
+
+
+module.exports={getAllCourse , viewCourse, createCourse, editCourse, viewCourseInstructor, 
      viewCourseSubtitles, viewCourseExam, viewUserCourse,deleteCourseRating,addCourseRating,calculateCourseRating,
-     emptyCourseList,registerCourseToUser,viewCourseDetails,calculateCourseDuration};
+     viewCourseRating,emptyCourseList,registerCourseToUser,viewCourseDetails,calculateCourseDuration};
    
