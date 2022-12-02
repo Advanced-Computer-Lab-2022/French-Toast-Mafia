@@ -12,11 +12,17 @@ const {createInstructor, getAllInstructors,
         ViewMyRatings, ViewMyReview,
         createExam,
         addMCQ,
+<<<<<<< HEAD
         deleteInstrRating,addInstrRating,calculateInstrRating,
          getAllMcq, addPromotion}= require ("../Controller/instructor-controller");
+=======
+        deleteInstrRating,addInstrRating,calculateInstrRating, getAllMcq, addPromotion}= require ("../Controller/instructor-controller");
+>>>>>>> 44804e06866041af7772d29bf67caf4cc73f4de8
 
 
 const router = express.Router();
+
+router.put('/addPromotion', addPromotion);
 
 
 router.get('/',getAllInstructors );

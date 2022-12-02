@@ -4,7 +4,10 @@ const exam = require("../Models/Exams");
 const subtitle = require("../Models/Subtitle");
 var mongoose = require('mongoose');
 const moment = require("moment");
+<<<<<<< HEAD
 
+=======
+>>>>>>> 44804e06866041af7772d29bf67caf4cc73f4de8
 
 function getAllInstructors (req,res) {
     instructor.find({}).then (function (instructor) {
@@ -446,31 +449,33 @@ const addPromotion = async (req, res) => {
     const {Promotion, StartDatePromotion ,EndDatePromotion} = req.body;
     if (Promotion && StartDatePromotion && EndDatePromotion) {
         try {
-            const CurrentPrice = await course.findOne({_id: courseId}).populate("Cost").select("Cost");
+            const CurrentPrice = await course.findOne({_id:mongoose.Types.ObjectId(courseId)}).populate("Cost").select("Cost");
             console.log(CurrentPrice.Cost);
-            const Cost=CurrentPrice.Cost;
+            const C=CurrentPrice.Cost;
             const discount= Promotion/100;
-            const discountedPrice= Cost * discount;
-            const newPrice= Cost-discountedPrice;
+            const discountedPrice= C * discount;
+            const newPrice= C-discountedPrice;
             console.log(newPrice);
-            //const endDate= new Date (EndDatePromotion);
+            const endDate= new Date (EndDatePromotion);
             let currentDate = new Date();
             console.log(currentDate);
-            console.log(StartDatePromotion);
-            console.log(EndDatePromotion);
-           // const startDate = new Date (StartDatePromotion);
-           // console.log(endDate,startDate);
-           console.log("heeeeeeeeeeeeeeeee");
-            if ( (EndDatePromotion >= currentDate) && (currentDate >= StartDatePromotion)) {
-                console.log('yyyyyy');
-                 const result = await course.findByIdAndUpdate({_id: courseId},{Cost:newPrice, Promotion:req.body.Promotion},{new:true});    
-                    res.result(200).json(result);
+            const startDate = new Date (StartDatePromotion);
+            if ( (endDate >= currentDate) && (currentDate >= startDate)) {
+                 const result = await course.findByIdAndUpdate({_id:mongoose.Types.ObjectId(courseId)},{Cost:newPrice, Promotion:req.body.Promotion,StartDatePromotion:req.body.StartDatePromotion,EndDatePromotion:req.body.EndDatePromotion },{new:true});    
+                 res.status(200).json(result);
+                }
+                else {
+                    const result = await course.findByIdAndUpdate({_id:mongoose.Types.ObjectId(courseId)},{Cost:C,Promotion:req.body.Promotion,StartDatePromotion:req.body.StartDatePromotion,EndDatePromotion:req.body.EndDatePromotion},{new:true});
+                    res.status(200).json(result);
                 }
         } catch (error){
             res.status(400).json({error:error.message});
         }
     }
+
+
 }
+
 
  //edit email/ biography req 29
  const editBiography = async (req,res) => {
