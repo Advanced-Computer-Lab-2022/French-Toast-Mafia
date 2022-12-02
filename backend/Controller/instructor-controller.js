@@ -421,6 +421,26 @@ else{
     
 }
 
+//add promotion for a course
+const addPromotion = async (req, res) => {
+    const instrId= req.query.id;
+    // const courseId= req.body;
+    const found = await course.findOne({_id:mongoose.Types.ObjectId(instrId)});
+    //found instrcutor 
+    // if (found !==null){
+    //     try {
+    //         const {Promotion, StartDatePromotion, EndDatePromotion} = req.body;
+    //         const promotion = await course.create ({Promotion, StartDatePromotion, EndDatePromotion});
+
+    //     } catch {
+
+    //     }
+    // } 
+
+
+
+}
+
  //edit email/ biography req 29
  const editBiography = async (req,res) => {
         const w= req.query.id;
@@ -531,10 +551,14 @@ const calculateInstrRating = async(req , res) => {
 }
 
 
+
+
 module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      addCourse , deleteCourse, filterCost, filterRating, filterSubject, 
      filterCourseSubjcet , filterCourseCost , ViewMyCourses
       , SearchCourse, viewInstrInfo, 
-    editBiography, editEmail,ViewMyRatings , ViewMyReview, addInstrRating ,calculateInstrRating,
-    deleteInstrRating, createExam, addMCQ, getAllMcq};
+    editBiography, editEmail,ViewMyRatings , ViewMyReview, 
+    addInstrRating ,calculateInstrRating,
+    deleteInstrRating, createExam, addMCQ, 
+    getAllMcq, addPromotion};
    
