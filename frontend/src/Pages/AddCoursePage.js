@@ -1,7 +1,11 @@
 import { useState } from "react";
 
+const queryParameters = new URLSearchParams(window.location.search)
+const instructorId = queryParameters.get("id")
+
+
 const AddCoursePage = () =>{
-    const [name , setName] = useState('')
+    const [title , setTitle] = useState('')
     const [instructor , setInstructor] = useState('')
     const [level , setLevel] = useState('')
     const [summary , setSummary] = useState('')
@@ -65,7 +69,7 @@ const AddCoursePage = () =>{
         ]
 
         const course = {
-            "NameOfCourse":name,
+            "NameOfCourse":title,
             "LevelOfCourse":level,
             "CourseSubtitle": courseSub,
             "Summary": summary,
@@ -86,7 +90,7 @@ const AddCoursePage = () =>{
             setError(json.error)
         }
         if (response.ok){
-            setName('')
+            setTitle('')
             setLevel('')
             setSummary('')
             setSubject('')
@@ -105,8 +109,8 @@ const AddCoursePage = () =>{
             <br />
             <input
                 type="text"
-                onChange={(e) => setName(e.target.value)}
-                value = {name}
+                onChange={(e) => setTitle(e.target.value)}
+                value = {title}
             />
             <br />
             <label>Instructor:</label>

@@ -40,13 +40,12 @@ const InstrCourses = () => {
     const [Instrreview,setInstrreview]= useState([]);
 
     const getInstrCourses =  async () => {
-         await axios.get(`http://localhost:5000/Instructor/ViewMyCourses?instructorId=${instructorId}`).then(
+         await axios.get(`http://localhost:5000/Instructor/ViewMyCourses?id=${instructorId}`).then(
 
         (res) => { 
             const Instrcourse = res.data
             console.log(Instrcourse)
-            setInstrCourses(Instrcourse)
-            
+            setInstrCourses(Instrcourse)      
         }
          );
        
@@ -112,13 +111,21 @@ const navigateToInstrInfo= () => {
             margin="normal"
             padding="normal"
             >View My Info </Button>
-            {/* </Box> */}
+
+
+            <Button variant="contained"
+            style={{bottom:20, left:250,width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
+            onClick={() => window.location.href=`/AddCourse?id=${instructorId}`}
+            margin="normal"
+            padding="normal"
+            > Add Course </Button>
+           
             
             
       
             
     {/* <TableContainer component={Paper}> */}
-      <Table sx={{ minWidth: 100 }} size="small" aria-label="a dense table"  style={{ backgroundColor:'yellow', color:'#FFF'}} >
+      <Table sx={{ minWidth: 50 }} size="small" aria-label="a dense table"  style={{ backgroundColor:'#FFFFFF', color:'#1aac83'}} >
         <TableHead  sx={{
               backgroundColor: "black",
               borderColor: "white",
@@ -128,7 +135,7 @@ const navigateToInstrInfo= () => {
       
             }} >
           <TableRow>
-            <StyledTableCell align="center" style={{width:"5px"}}  >Name of the courses given</StyledTableCell>
+            <StyledTableCell align="center" style={{width:"5px",backgroundColor:'#2D8668', color:'#FFFFFF'}}  >Name of the courses given</StyledTableCell>
 
 
           </TableRow>
@@ -145,7 +152,7 @@ const navigateToInstrInfo= () => {
                 }
             }}
             
-            onClick={() => window.location.href=`/UserCoursePage?courseId=${Courses._id}&userId=${params.get('userId')}`}
+            onClick={() => window.location.href=`/viewCourse?courseId=${Courses._id}`}
               key={Courses._id}
 
               >
@@ -157,7 +164,7 @@ const navigateToInstrInfo= () => {
         </TableBody>
       </Table>
 
-      <Table sx={{ minWidth: 100 }} size="small" aria-label="a dense table"  style={{ backgroundColor:'yellow', color:'#FFF'}} >
+      <Table sx={{ minWidth: 100 }} size="small" aria-label="a dense table"  style={{ backgroundColor:'#FFFFFF', color:'#1aac83'}} >
         <TableHead  sx={{
               backgroundColor: "black",
               borderColor: "white",
@@ -167,7 +174,7 @@ const navigateToInstrInfo= () => {
       
             }} >
           <TableRow>
-            <StyledTableCell align="center" style={{width:"5px"}}  >Rating</StyledTableCell>
+            <StyledTableCell align="center" style={{width:"5px",backgroundColor:'#2D8668', color:'#FFFFFF'}}  >Rating</StyledTableCell>
 
 
           </TableRow>
