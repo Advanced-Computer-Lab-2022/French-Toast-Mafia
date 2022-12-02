@@ -8,6 +8,7 @@ import TableCell, {tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useNavigate } from 'react-router-dom';
 
 const { useState } = require("react");
 
@@ -89,6 +90,7 @@ const getCellData = (obj) =>{
 
 
 const ViewCourse = () => { 
+  const navigate = useNavigate();
     const [course,setCourse] = useState([]);
     const getCourse =  async () => {
        
@@ -98,7 +100,12 @@ const ViewCourse = () => {
             setCourse(resCourse)
         }
          )
+
     }
+    const navigateToPromotion= () => {
+      // 
+      navigate(`/CoursePromotion?id=${courseId}`);
+    };
 
     return(
         // {getCourse},
@@ -117,6 +124,12 @@ const ViewCourse = () => {
             margin="normal"
             padding="normal"
             >Edit Course</Button>
+              <Button variant="contained"
+            style={{height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
+            onClick={() => window.location.href=`/CoursePromotion/?id=${courseId}`}
+            margin="normal"
+            padding="normal"
+            >Set Course Promotion</Button>
 
             </Box> 
 

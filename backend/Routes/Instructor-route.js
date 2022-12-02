@@ -12,10 +12,12 @@ const {createInstructor, getAllInstructors,
         ViewMyRatings, ViewMyReview,
         createExam,
         addMCQ,
-        deleteInstrRating,addInstrRating,calculateInstrRating, getAllMcq}= require ("../Controller/instructor-controller");
+        deleteInstrRating,addInstrRating,calculateInstrRating, getAllMcq, addPromotion}= require ("../Controller/instructor-controller");
 
 
 const router = express.Router();
+
+router.put('/addPromotion', addPromotion);
 
 
 router.get('/',getAllInstructors );
