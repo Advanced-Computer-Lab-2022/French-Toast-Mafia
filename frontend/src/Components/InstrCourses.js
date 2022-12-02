@@ -45,8 +45,7 @@ const InstrCourses = () => {
         (res) => { 
             const Instrcourse = res.data
             console.log(Instrcourse)
-            setInstrCourses(Instrcourse)
-            
+            setInstrCourses(Instrcourse)      
         }
          );
        
@@ -126,7 +125,7 @@ const navigateToInstrInfo= () => {
       
             
     {/* <TableContainer component={Paper}> */}
-      <Table sx={{ minWidth: 100 }} size="small" aria-label="a dense table"  style={{ backgroundColor:'yellow', color:'#FFF'}} >
+      <Table sx={{ minWidth: 50 }} size="small" aria-label="a dense table"  style={{ backgroundColor:'yellow', color:'#FFF'}} >
         <TableHead  sx={{
               backgroundColor: "black",
               borderColor: "white",
