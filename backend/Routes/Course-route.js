@@ -1,17 +1,18 @@
 const express= require("express");
-const {getAllCourse , viewCourse,viewCourseInstructor, createCourse, editCourse, viewCourseSubtitle,
-     viewCourseExam,viewUserCourse,deleteCourseRating,addCourseRating,calculateCourseRating}= require ("../Controller/course-controllers");
+const {getAllCourse , viewCourse,viewCourseInstructor, createCourse, editCourse, viewCourseSubtitles,
+     viewCourseExam,viewUserCourse,deleteCourseRating,addCourseRating, viewCourseRating, calculateCourseRating,
+emptyCourseList,registerCourseToUser,viewCourseDetails,calculateCourseDuration}= require ("../Controller/course-controllers");
 
 
 const router = express.Router();
 
-router.get("/",getAllCourse );
+router.get("/getAllCourse",getAllCourse );
 
 router.get('/viewCourse',viewCourse);
 
 router.get('/viewCourseInstructor',viewCourseInstructor);
 
-router.get('/viewCourseSubtitle',viewCourseSubtitle);
+router.get('/viewCourseSubtitles',viewCourseSubtitles);
 
 router.get('/viewCourseExam',viewCourseExam);
 
@@ -25,7 +26,19 @@ router.put('/deleteCourseRating',deleteCourseRating);
 
 router.put('/addCourseRating',addCourseRating);
 
+router.get('/viewCourseRating',viewCourseRating);
+
 router.get('/calculateCourseRating',calculateCourseRating);
+
+router.get('/emptyCourseList',emptyCourseList);
+
+router.post('/registerCourseToUser',registerCourseToUser);
+
+router.get('/viewCourseDetails',viewCourseDetails);
+
+router.get('/calculateCourseDuration',calculateCourseDuration);
+
+
 
 
 

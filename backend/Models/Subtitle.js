@@ -19,14 +19,15 @@ const SubtitleSchema = new Schema({
         type: String,
         required: false
     },
-    Duration: {
+    Description:{
         type: String,
+        required: false
+
+    },
+    Duration: {
+        type: Number,
         required: false
     },
-    Preview: {
-        type: String,
-        required: false
-    }
 
 }, { timestamps: true });
 const Subtitle = mongoose.model('Subtitle', SubtitleSchema);

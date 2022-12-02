@@ -3,6 +3,7 @@ const express= require("express");
 
 const {createInstructor, getAllInstructors,
         selectCountryInstructor, addCourse ,
+        deleteCourse,
         filterCourseSubjcet ,
         filterCourseCost ,
         ViewMyCourses ,
@@ -11,15 +12,17 @@ const {createInstructor, getAllInstructors,
         ViewMyRatings, ViewMyReview,
         createExam,
         addMCQ,
-        deleteInstrRating,addInstrRating,calculateInstrRating}= require ("../Controller/instructor-controller");
+        deleteInstrRating,addInstrRating,calculateInstrRating, getAllMcq}= require ("../Controller/instructor-controller");
 
 
 const router = express.Router();
 
 
-router.get('/getAllInstructors',getAllInstructors );
+router.get('/',getAllInstructors );
 
 router.post('/addCourse', addCourse);
+
+router.get('/deleteCourse', deleteCourse);
 
 router.post('/createInstructor', createInstructor);
 
@@ -53,10 +56,7 @@ router.put('/addInstrRating',addInstrRating);
 
 router.get('/calculateInstrRating',calculateInstrRating);
 
-
-
-
-
+router.get('/getAllMcq',getAllMcq);
 
 
 module.exports=router;

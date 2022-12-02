@@ -23,16 +23,16 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 const { useState } = require("react");
 
 
-const ViewCourseSubtitles = () => { 
-    const [subtitles,setSubtitles] = useState([]);
+const ViewCourseRating = () => { 
+    const [ratings,setRatings] = useState([]);
     
-    const getSubtitles =  async () => {
+    const getRatings =  async () => {
         const queryParameters = new URLSearchParams(window.location.search)
         const courseId = queryParameters.get("courseId")
-       await axios.get(`http://localhost:5000/Course/ViewCourseSubtitles?id=${courseId}`).then(
+       await axios.get(`http://localhost:5000/Course/ViewCourseRating?id=${courseId}`).then(
         (res) => { 
-            const subs = res.data
-            setSubtitles(subs)
+            const r = res.data
+            setRatings(r)
         }
          );
     
@@ -40,13 +40,13 @@ const ViewCourseSubtitles = () => {
     }
     return(
         // visualize authors in a table map over authors
-        <div className="CourseList">
+        <div className="RatingsList">
               <Box sx={{marginBottom: 2}}>
             <Button variant="contained"
-            onClick={getSubtitles}
+            onClick={getRatings}
             margin="normal"
             padding="normal"
-            >Load Subtitles</Button>
+            >Load Ratings</Button>
             {/* margin */}
             </Box>
         
@@ -56,11 +56,12 @@ const ViewCourseSubtitles = () => {
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table" >
         <TableHead>
           <TableRow>
-            <StyledTableCell align="center">Title</StyledTableCell>
+            <StyledTableCell align="center">User</StyledTableCell>
+            <StyledTableCell align="center">Rating</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {subtitles.map((subtitle) => (
+          {ratings.map((rating) => (
             <TableRow
             hover
             sx={{
@@ -70,10 +71,11 @@ const ViewCourseSubtitles = () => {
                 width: "100%"
                 }
             }}
-            onClick={() => window.location.href=`/viewSubtitle?subId=${subtitle._id}`}
-            key={subtitle._id}
+            key={rating.uId}
             >
-              <TableCell align="center">{subtitle.Title}</TableCell>
+              <TableCell align="center">{rating.uId}</TableCell>
+              <TableCell align="center">{rating.rating}</TableCell>
+              
             </TableRow>
           ))}
         </TableBody>
@@ -86,4 +88,4 @@ const ViewCourseSubtitles = () => {
     )
 }
 
-export default ViewCourseSubtitles;
+export default ViewCourseRating;

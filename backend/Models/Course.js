@@ -17,7 +17,7 @@ const courseSchema = new Schema({
       required: true
     },
     Duration: {
-      type: String,
+      type: Number,
       required: false
     },
     LevelOfCourse: {
@@ -40,15 +40,15 @@ const courseSchema = new Schema({
       type: Number,
       required: false
     },
-    Promotion: {
+    Promotion: {           //percent el 3adeya 
       type: Array,
       required: false
     },
-    StartDatePromotion: {
-      type: Date,
-      required: false
-    }, 
-    EndDatePromotion: {
+    // StartDatePromotion: {     
+    //   type: Date,
+    //   required: false
+    // }, 
+    EndDatePromotion: {     //don't need start
       type: Date,
       required: false
     }, 
@@ -61,7 +61,7 @@ const courseSchema = new Schema({
         required: true
       },
     CourseCurrency: {
-        type: Number,
+        type: String,
         required: false
     },
     Preview: {

@@ -9,6 +9,7 @@ const getAllExams= async (req, res) =>{
         });
 };
 
+
 const createExam = async (req,res) =>{
     const newExam= new Exam ({
         Course: req.body.Course,
@@ -20,5 +21,6 @@ const createExam = async (req,res) =>{
     .then (result => res.status(200).send(result))
  
 }
+
 
 module.exports= {getAllExams, createExam};
