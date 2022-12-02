@@ -11,7 +11,7 @@ import ViewMyCoursesInstructor from './Pages/ViewMyCoursesInstructor';
 import EditCourse from './Pages/EditCourse';
 import ViewCourse from './Pages/ViewCourse';
 import CoursePricePage from './Pages/CoursePricePage';
-import AddCoursePage from './Pages/AddCoursePage';
+import AddCourse from './Pages/AddCourse';
 import Add from './Components/Add'
 import Home from './Components/Home'
 import Add1 from './Components/Add1'
@@ -23,7 +23,7 @@ import { Router,Link  } from "react-router-dom";
 import UserAdded from './Components/UserAdded';
 import AdminAdded from './Components/AdminAdded';
 import InstrAdded from './Components/InstrAdded';
-import AddCourse from './Components/AddCourse';
+// import AddCourse from './Components/AddCourse';
 import Profile from './Pages/Profile';
 import ForgotPassword from './Pages/ForgotPassword';
 import ChangePassword from './Pages/ChangePassword';
@@ -71,7 +71,7 @@ function App(){
     <Route exact path='/' element={<FrontPage/>}/>
     <Route exact path='/Courses' element={<Courses/>}/>
     <Route exact path='/CoursePricePage' element={<CoursePricePage/>}/>
-    <Route exact path='/AddCoursePage' element={<AddCoursePage/>}/>
+    <Route exact path='/AddCourse' element={<AddCourse/>}/>
     <Route exact path='/SignUp' element={<SignUp/>}/>
     <Route exact path='/Home' element={<Home/>}/>
     <Route path="/addadmin" element={ <Add2/>} />
@@ -89,7 +89,7 @@ function App(){
     <Route path="/UserAdded" element={ <UserAdded/>} />
     <Route path="/AdminAdded" element={ <AdminAdded/>} />
     <Route path="/InstrAdded" element={ <InstrAdded/>} />
-    <Route path="/AddCourse" element={ <AddCourse/>} />
+    {/* <Route path="/AddCourse" element={ <AddCourse/>} /> */}
     <Route path="/Profile" element={<Profile/>}/>
     <Route path="/ForgotPassword" element={<ForgotPassword/>}/>
     <Route path="/ChangePassword" element={<ChangePassword/>}/>
