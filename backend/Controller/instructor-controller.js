@@ -179,24 +179,16 @@ const filterSubject = async (req,res) => {
   }
 
   const ViewMyCourses = async (req , res) => {
-    const w = req.params.id;
-    const a = await course.find({instructor:w }, {NameOfCourse:1,_id:1});
-        // res.json(a);
-        // console.log(a);
-    
-    if (a == null) {
-        res.status(404).send('no courses available');
+    const w = req.query.id;
+    if(w){
+    const result = await course.find({Instructor:mongoose.Types.ObjectId(w)}).populate('Instructor');
+    res.status(200).json(result)
     }
-    else {
-        res.json(a);
-        //let x= Object.values(a);
-        //console.log(x);
-        //let result = x.map(a => a.NameOfCourse);
-        // console.log(result);
-        
+    else{
+        res.status(400).json({error:"Instructor Id is required"})
     }
-
 }
+
 
 const SearchCourse = async (req,res) => {
     const w = req.params.id;

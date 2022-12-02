@@ -45,8 +45,7 @@ const InstrCourses = () => {
         (res) => { 
             const Instrcourse = res.data
             console.log(Instrcourse)
-            setInstrCourses(Instrcourse)
-            
+            setInstrCourses(Instrcourse)      
         }
          );
        
@@ -126,7 +125,7 @@ const navigateToInstrInfo= () => {
       
             
     {/* <TableContainer component={Paper}> */}
-      <Table sx={{ minWidth: 100 }} size="small" aria-label="a dense table"  style={{ backgroundColor:'yellow', color:'#FFF'}} >
+      <Table sx={{ minWidth: 50 }} size="small" aria-label="a dense table"  style={{ backgroundColor:'#FFFFFF', color:'#1aac83'}} >
         <TableHead  sx={{
               backgroundColor: "black",
               borderColor: "white",
@@ -136,7 +135,7 @@ const navigateToInstrInfo= () => {
       
             }} >
           <TableRow>
-            <StyledTableCell align="center" style={{width:"5px"}}  >Name of the courses given</StyledTableCell>
+            <StyledTableCell align="center" style={{width:"5px",backgroundColor:'#2D8668', color:'#FFFFFF'}}  >Name of the courses given</StyledTableCell>
 
 
           </TableRow>
@@ -153,7 +152,7 @@ const navigateToInstrInfo= () => {
                 }
             }}
             
-            onClick={() => window.location.href=`viewCourse?courseId=${Courses._id}`}
+            onClick={() => window.location.href=`/viewCourse?courseId=${Courses._id}`}
               key={Courses._id}
 
               >
@@ -165,7 +164,7 @@ const navigateToInstrInfo= () => {
         </TableBody>
       </Table>
 
-      <Table sx={{ minWidth: 100 }} size="small" aria-label="a dense table"  style={{ backgroundColor:'yellow', color:'#FFF'}} >
+      <Table sx={{ minWidth: 100 }} size="small" aria-label="a dense table"  style={{ backgroundColor:'#FFFFFF', color:'#1aac83'}} >
         <TableHead  sx={{
               backgroundColor: "black",
               borderColor: "white",
@@ -175,7 +174,7 @@ const navigateToInstrInfo= () => {
       
             }} >
           <TableRow>
-            <StyledTableCell align="center" style={{width:"5px"}}  >Rating</StyledTableCell>
+            <StyledTableCell align="center" style={{width:"5px",backgroundColor:'#2D8668', color:'#FFFFFF'}}  >Rating</StyledTableCell>
 
 
           </TableRow>
