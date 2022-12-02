@@ -41,11 +41,9 @@ import StarRating from './Components/StarRating';
 import CourseRate from './Pages/CourseRate';
 import Contract from './Pages/Contract';
 import InstrCourses from './Components/InstrCourses';
-<<<<<<< HEAD
 import EditInfo from './Pages/EditInfo';
 import InstrInfo from './Pages/InstrInfo';
 import EditBiography from './Pages/EditBiography';
-=======
 // import AddExam from './Components/addExam';
 import ViewExam from './Components/ViewExam';
 import CourseVideos from './Pages/CourseVideos';
@@ -55,7 +53,6 @@ import ViewExamButton from './Components/ViewExam';
 import ExamIsDone from './Components/ExamIsDone';
 import CourseInfoAllUsers from './Pages/CourseInfoAllUsers';
 import ViewCourseRating from './Pages/viewCourseRatings';
->>>>>>> 22832a1925517c347561fb00f014a0470fd96874
 
 function App(){
   const newAdmin = (admin) => {
