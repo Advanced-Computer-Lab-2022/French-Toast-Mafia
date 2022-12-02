@@ -30,7 +30,7 @@ const getCellData = (obj) =>{
   if(typeof(obj[1])!="object"){
   
    if(obj[0] == "Preview"){
-    if(obj[1] == ""){
+    if(obj[1] === "" || obj[1] === " "){
       return <TableCell>
       Null</TableCell>
     }
@@ -52,6 +52,7 @@ const getCellData = (obj) =>{
       return <TableCell>
       <Button variant="contained"
         margin="normal"
+        style={{width:175}}
         onClick={() => window.location.href=`/ViewCourse/Subtitles?courseId=${courseId}`}
         padding="normal"
         >View Subtitles</Button> 
@@ -59,13 +60,14 @@ const getCellData = (obj) =>{
     }
     else if(nextPage === "Promotion"){
       const prom = obj[1]
-      return <TableCell>{Object.values(prom[0])[0]}<font style={{ color: 'lightgray'}}> <font style={{ color: 'white'}}>.............</font>Ends on {Object.values(prom[0])[1]}</font></TableCell>
+      return <TableCell>{Object.values(prom[0])[0]}%<font style={{ color: 'lightgray'}}> <font style={{ color: 'white'}}>.............</font>Ends on {Object.values(prom[0])[1]}</font></TableCell>
     } 
     else if(nextPage === "Rating"){
       return <TableCell>
       <Button variant="contained"
+        style={{width:175}}
         margin="normal"
-        onClick={() => window.location.href=`/ViewCourse/Subtitle?courseId=${courseId}`}
+        onClick={() => window.location.href=`/ViewCourse/Rating?courseId=${courseId}`}
         padding="normal"
         >View Ratings</Button> 
     </TableCell>
@@ -75,18 +77,12 @@ const getCellData = (obj) =>{
       return <TableCell>
       <Button variant="contained"
         margin="normal"
+        style={{width:175}}
         onClick={() => window.location.href=`/ViewCourse/Subtitle?courseId=${courseId}`}
         padding="normal"
         >View Exam</Button> 
     </TableCell>
     }
-    //   return <TableCell>
-    //   <Button variant="contained"
-    //     margin="normal"
-    //     onClick={() => window.location.href=`/ViewCourse/Exam?courseId=${courseId}`}
-    //     padding="normal"
-    //     >View Exam</Button> 
-    // </TableCell>
     }
    
   }
@@ -109,12 +105,14 @@ const ViewCourse = () => {
         <div className="CourseAttributes">
             <Box sx={{marginBottom: 2}}>
             <Button variant="contained"
+            style={{height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
             onClick={getCourse}
             margin="normal"
             padding="normal"
             >Load Course</Button>
             {/* margin */}
             <Button variant="contained"
+            style={{height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
             onClick={() => window.location.href=`/Instructor/EditCourse?courseId=${courseId}`}
             margin="normal"
             padding="normal"

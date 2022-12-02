@@ -50,7 +50,7 @@ import ViewExamAnswer from './Components/ViewExamAnswer';
 import ViewExamButton from './Components/ViewExam';
 import ExamIsDone from './Components/ExamIsDone';
 import CourseInfoAllUsers from './Pages/CourseInfoAllUsers';
-
+import ViewCourseRating from './Pages/viewCourseRatings';
 
 function App(){
   const newAdmin = (admin) => {
@@ -81,6 +81,7 @@ function App(){
     <Route path="/viewSubtitle" element={<ViewSubtitle/>} />
     <Route path="/editSubtitle" element={<EditSubtitle/>}/>
     <Route path="/viewCourse/Exam" element={<ViewCourseExam/>} />
+    <Route path="/viewCourse/Rating" element={<ViewCourseRating/>} />
     <Route path="/Instructor/viewMyCourses" element = {<ViewMyCoursesInstructor/>} />
     <Route path="/Instructor/EditCourse" element = {<EditCourse/>}/>
     <Route path="/UserAdded" element={ <UserAdded/>} />
@@ -95,7 +96,6 @@ function App(){
     <Route path="/AllInstructors" element={ <AllInstructors/>} />
     <Route path="/UserCoursePage" element={ <UserCoursePage/>} />
     <Route path="/CoursePromotion" element={<CoursePromotion/>}/>
-
     <Route path="/CourseInstructor" element={<CourseInstructor/>}/>
     <Route path="/CourseRate" element={<CourseRate/>}/>
     <Route path="/CourseVideos" element={<CourseVideos/>}/>
