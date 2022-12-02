@@ -40,8 +40,10 @@ import CourseInstructor from './Pages/CourseInstructor';
 import StarRating from './Components/StarRating';
 import CourseRate from './Pages/CourseRate';
 import Contract from './Pages/Contract';
-import PopUp from './Components/PopUp';
 import InstrCourses from './Components/InstrCourses';
+import EditInfo from './Pages/EditInfo';
+import InstrInfo from './Pages/InstrInfo';
+import EditBiography from './Pages/EditBiography';
 // import AddExam from './Components/addExam';
 import ViewExam from './Components/ViewExam';
 import CourseVideos from './Pages/CourseVideos';
@@ -104,8 +106,10 @@ function App(){
     <Route path="/ViewExam" element={<ViewExam/>}/>
 
     <Route path="/Contract" element={<Contract/>}/>
-    <Route path="/PopUp" element={<PopUp/>}/>
     <Route path="/InstrCourses" element={ <InstrCourses/>} />
+    <Route path="/EditInfo" element={ <EditInfo/>} />
+    <Route path="/InstrInfo" element={ <InstrInfo/>} />
+    <Route path="/EditBiography" element={ <EditBiography/>} />
     <Route path="/ViewExamAnswer" element={ <ViewExamAnswer/>} />
     <Route path="/ViewExamButton" element={ <ViewExamButton/>} />
     <Route path="/ExamIsDone" element={ <ExamIsDone/>} />

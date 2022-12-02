@@ -27,7 +27,7 @@ const AllInstructors = () => {
     const [instructors,setInstructors] = useState([]);
     
     const getInstructors =  async () => {
-         await axios.get('http://localhost:5000/Instructor/getAllInstructors').then(
+         await axios.get('http://localhost:5000/Instructor//').then(
         (res) => { 
             const instructors = res.data
             console.log(instructors)
@@ -36,7 +36,6 @@ const AllInstructors = () => {
         }
          );
        
-    
 
     }
     return(
