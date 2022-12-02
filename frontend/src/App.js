@@ -47,8 +47,9 @@ import ViewExam from './Components/ViewExam';
 import CourseVideos from './Pages/CourseVideos';
 import CourseExercises from './Pages/CourseExercises';
 import ViewExamAnswer from './Components/ViewExamAnswer';
-import ViewExamButton from './Components/ViewExamButton';
+import ViewExamButton from './Components/ViewExam';
 import ExamIsDone from './Components/ExamIsDone';
+import CourseInfoAllUsers from './Pages/CourseInfoAllUsers';
 
 
 function App(){
@@ -109,6 +110,7 @@ function App(){
     <Route path="/ViewExamButton" element={ <ViewExamButton/>} />
     <Route path="/ExamIsDone" element={ <ExamIsDone/>} />
 
+    <Route path="/CourseInfoAllUsers" element={ <CourseInfoAllUsers/>} />
 
 
    </Routes>

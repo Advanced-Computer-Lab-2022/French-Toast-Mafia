@@ -173,8 +173,36 @@ function emptySubtitlesArray (req,res) {
     });
 };
 
+//get excercises questions
+const getExcercisesQuestions = async (req,res) => {
+    const courseId=req.query.id;
+    const resSubtitle = await Subtitle.find({Course:courseId});
+    resExcercises=[];
+    for (let i=0;i<resSubtitle.length;i++){
+        for (let j=0;j<resSubtitle[i].Exercise.length;j++){
+            resExcercises.push(resSubtitle[i].Exercise[j].Question);
+        }
+    }
+    res.status(200).json(resExcercises);
+};
+
+//get excercises answers
+const getExcercisesAnswers = async (req,res) => {
+    const courseId=req.query.id;
+    const resSubtitle = await Subtitle.find({Course:courseId});
+    resExcercises=[];
+    for (let i=0;i<resSubtitle.length;i++){
+        for (let j=0;j<resSubtitle[i].Exercise.length;j++){
+            resExcercises.push(resSubtitle[i].Exercise[j].Answer);
+        }
+    }
+    res.status(200).json(resExcercises);
+};
+
+
+
     
 
 module.exports = {getAllSubtitles,addSubtitle, editSubtitle, addExcercise,deleteExcercise,removeAllExcercises, viewSubtitle,
     deleteSubtitle,deleteSubtitleFromCourse,removeAllSubtitles,getCourseSubtitlesVideos,
-    getCourseSubtitlesExcercises,addVideoDescription,emptySubtitlesArray};
+    getCourseSubtitlesExcercises,addVideoDescription,emptySubtitlesArray,getExcercisesQuestions,getExcercisesAnswers};

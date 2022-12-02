@@ -34,7 +34,7 @@ const MyCourses = () => {
     const [course,setCourses] = useState([]);
 
     const getCourses =  async () => {
-         await axios.get(`http://localhost:5000/user/viewcoursetitlehoursrating`).then(
+         await axios.get(`http://localhost:5000/User/ViewMyCourses?id=${params.get('userId')}`).then(
 
         (res) => { 
             const course = res.data
@@ -90,11 +90,11 @@ const MyCourses = () => {
                 }
             }}
             
-            onClick={() => window.location.href=`/UserCoursePage?courseId=${Courses._id}&userId=${params.get('userId')}`}
+            onClick={() => window.location.href=`/UserCoursePage?courseId=${Courses.id}&userId=${params.get('userId')}`}
               key={Courses._id}
 
               >
-              <TableCell align="center">{Courses.NameOfCourse}</TableCell>
+              <TableCell align="center">{Courses.Name}</TableCell>
 
 
             </TableRow>
