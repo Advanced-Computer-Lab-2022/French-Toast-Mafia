@@ -24,7 +24,6 @@ const FrontPage = () => {
           <header className='app'>
 
           <CountriesDropdown/>
-         //<ViewExam/>
 
           </header>
          
