@@ -76,7 +76,6 @@ const addCourse = async(req , res) => {
             // get the details from the body of the request
 
             const{NameOfCourse,
-                CourseSubtitle,
                 Summary,
                 Subject,
                 LevelOfCourse,
