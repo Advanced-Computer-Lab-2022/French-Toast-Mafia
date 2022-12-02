@@ -29,7 +29,7 @@ const AllCoursesInfo = ({course}) => {
             View Course Details
           </Button>
         </Box>
-                {/* <ViewCoursePriceButton price={course.Cost}/> */}
+                {/* { <ViewCoursePriceButton price={course.Cost}/> } */}
                    </div>
     )
 }

@@ -25,7 +25,7 @@ const SubtitleSchema = new Schema({
 
     },
     Duration: {
-        type: String,
+        type: Number,
         required: false
     },
 

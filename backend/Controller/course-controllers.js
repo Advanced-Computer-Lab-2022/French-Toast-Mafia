@@ -341,7 +341,9 @@ const calculateCourseDuration = async(req , res) => {
                 const subtitleToView = await Subtitle.findOne({_id:mongoose.Types.ObjectId(result.CourseSubtitle[i])});
                 sum+=parseInt(subtitleToView.Duration);
             }
-            res.status(200).json(sum);
+        const resCourse= await course.findByIdAndUpdate(courseId , {Duration:sum}, { new: true });
+        
+            res.status(200).json(resCourse);
         }catch(error){
             res.status(400).json({error:error.message})
         }
@@ -350,11 +352,7 @@ const calculateCourseDuration = async(req , res) => {
 
 
 
-
-
-
-
 module.exports={getAllCourse , viewCourse, createCourse, editCourse, viewCourseInstructor,
      viewCourseSubtitles, viewCourseExam, viewUserCourse,deleteCourseRating,addCourseRating,calculateCourseRating,
-     emptyCourseList,registerCourseToUser,viewCourseDetails};
+     emptyCourseList,registerCourseToUser,viewCourseDetails,calculateCourseDuration};
    
