@@ -46,7 +46,8 @@ display: flex;
 
 
 header {
-  background: rgb(241,241,241);
+  background-color: white;
+  /* background: rgb(241,241,241); */
 }
 header .container {
   max-width: 1400px;
@@ -70,6 +71,7 @@ header a {
 .home {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  background-color: white;
   gap: 0px;
   margin-inline-start: 45%;
 }
@@ -102,6 +104,13 @@ header a {
   font-size:19px;
 
   
+}
+.vertical-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 .viewPrice{

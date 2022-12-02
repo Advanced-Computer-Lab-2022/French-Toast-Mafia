@@ -1,6 +1,7 @@
 const instructor=require("../Models/Instructor");
 const course=require("../Models/Course");
 const exam = require("../Models/Exams");
+const subtitle = require("../Models/Subtitle");
 var mongoose = require('mongoose');
 
 function getAllInstructors (req,res) {
@@ -8,6 +9,7 @@ function getAllInstructors (req,res) {
     res.send(instructor);
     });
 };
+
 
 
 const createInstructor = async(req,res) => {
@@ -52,6 +54,7 @@ const selectCountryInstructor = async (req, res) => {
     return newCountry;
 };
 
+
 //Requirement 23 --> add a new course
 const addCourse = async(req , res) => {
     //fill in all the required course details (that an instructor should fill when creating it)
@@ -79,6 +82,7 @@ const addCourse = async(req , res) => {
                 Subject,
                 LevelOfCourse,
                 Cost,
+                ExamCourse,
                 CourseCurrency,
                 Promotion,
                 Preview} = req.body;
@@ -94,8 +98,6 @@ const addCourse = async(req , res) => {
                 Cost , CourseCurrency,
                 ExamCourse,
                 Promotion,
-                StartDatePromotion,
-                EndDatePromotion,
                 Preview});
     
             //adds the course id to the instructor's courses given array
@@ -112,6 +114,27 @@ const addCourse = async(req , res) => {
     res.status(400).json({error:"Please enter a valid Instructor Id"});
 }
     
+}
+
+const deleteCourse = async (req, res) => {
+    const courseId = req.query.id;
+    console.log(courseId)
+    //Delete the course
+    const c = await course.findOneAndDelete({_id:mongoose.Types.ObjectId(courseId)})
+        if (c != null){
+            console.log(c)
+        //remove course from instructor's courses
+        await instructor.findByIdAndUpdate({_id:mongoose.Types.ObjectId(c.Instructor)},{$pull: { CourseGiven: courseId }});
+        //remove all subtitles that belong to the course
+        console.log(c.CourseSubtitle)
+        c.CourseSubtitle.forEach((item, index) => {
+            subtitle.findOneAndDelete({_id:mongoose.Types.ObjectId(item)})
+          })
+        }
+       
+        res.status(200).json(c)
+    
+   
 }
 
 //filter courses based on subject
@@ -299,7 +322,10 @@ if (instrId) {
         const instructorDetails = 
             {"Name": result.InstrName,
             "Email":result.InstrEmail,
-            "Password": result.InstrPassword}
+            "Country": result.InstrCountry,
+            "Biography":result.Biography,
+            "Review":result.InstrReview,
+        }
 
         res.status(200).json(instructorDetails);
         
@@ -417,21 +443,21 @@ const addPromotion = async (req, res) => {
 
  //edit email/ biography req 29
  const editBiography = async (req,res) => {
-        const instructorId= req.params.id;
-        const {Biography}= req.body;
+        const w= req.query.id;
         try{
-            const newBio= await instructor.findByIdAndUpdate(instructorId, {Biography:Biography}, {new:true});
+            const newBio= await instructor.findByIdAndUpdate({_id:mongoose.Types.ObjectId(w)}, {Biography:req.body.Biography}, {new:true});
             res.status(200).json(newBio)
         }
         catch(error){
             res.status(400).json({error:error.message})
         }
  }
+
+ 
  const editEmail = async (req,res) => {
-    const instructorId= req.params.id;
-    const {InstrEmail}= req.body;
+    const w= req.query.id;
     try{
-        const newEmail= await instructor.findByIdAndUpdate(instructorId, {InstrEmail:InstrEmail}, {new:true});
+        const newEmail= await instructor.findByIdAndUpdate({_id:mongoose.Types.ObjectId(w)}, {InstrEmail:req.body.InstrEmail}, {new:true});
         res.status(200).json(newEmail)
     }
     catch(error){
@@ -455,8 +481,8 @@ const ViewMyRatings = async (req , res) => {
 } 
 // View Instructor reviews
 const ViewMyReview = async (req , res) => {
-    const w = req.params.id;
-    const a = await instructor.find({instructor:w }, {InstrReview:1,_id:1});
+    const w = req.query.id;
+    const a = await instructor.findOne({_id:mongoose.Types.ObjectId(w)}, {InstrReview:1,_id:0 });
    
     if (a == null) {
         res.status(404).send('no instructors available');
@@ -528,7 +554,7 @@ const calculateInstrRating = async(req , res) => {
 
 
 module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
-     addCourse , filterCost, filterRating, filterSubject, 
+     addCourse , deleteCourse, filterCost, filterRating, filterSubject, 
      filterCourseSubjcet , filterCourseCost , ViewMyCourses
       , SearchCourse, viewInstrInfo, 
     editBiography, editEmail,ViewMyRatings , ViewMyReview, 

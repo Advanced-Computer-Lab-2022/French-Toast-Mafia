@@ -19,6 +19,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.common.black,
@@ -32,8 +33,7 @@ const { useState } = require("react");
 
 
 const ViewExam = () => { 
-    const [title,setTitle] = useState('');
-    const [description ,setDescription] =useState('');
+   
     const [ Mcqs ,setMcq ] = useState([])
     const navigate = useNavigate();
 
@@ -66,16 +66,16 @@ const ViewExam = () => {
         <div className="UsersList">
             <Box sx={{marginBottom: 2}}>
             <Button variant="contained"
-            style={{width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
+            style={{width:250, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
             onClick={getMcqs}
             margin="normal"
             padding="normal"
-            >Start Your Exam</Button>
+            >Display Exam Answers</Button>
             </Box>
 
            
             <ul>
-            <label className='App-text' >  welcome to your exam!    </label>  
+            <label className='App-text' >  Exam Solutions!    </label>  
             
             { Mcqs.map((Exams,i) => {
               return(
@@ -88,26 +88,30 @@ const ViewExam = () => {
 
                 <div className="question-card">
                 <h112   className="question-text" > 1- { Exams.mcq[i].question}</h112>
-            <FormControlLabel value="first choice" label={Exams.mcq[i].choice1} control={<Radio />} />
-            <FormControlLabel value="second choice" label={Exams.mcq[i].choice2} control={<Radio />} /> 
-            <FormControlLabel value="third choice" label={Exams.mcq[i].choice3} control={<Radio />} />
-            <FormControlLabel value="fourth choice" label={Exams.mcq[i].choice4} control={<Radio />} />
+            <FormControlLabel value="first choice" label={Exams.mcq[i].choice1} checked={true} control={<Radio />} />
+            <FormControlLabel value="second choice"  label={Exams.mcq[i].choice2} disabled={true} control={<Radio />} /> 
+            <FormControlLabel value="third choice" label={Exams.mcq[i].choice3} disabled={true} control={<Radio />} />
+            <FormControlLabel value="fourth choice" label={Exams.mcq[i].choice4} disabled={true} control={<Radio />} />
+            <label value="correct" className='answer-text'>Correct Answer: {Exams.mcq[i].correct}</label>
+
+
             </div>
 
             <h1></h1>
 
             <div className="question-card">
+                <h112   className="question-text" > 1- { Exams.mcq[i+1].question}</h112>
+            <FormControlLabel value="1st choice" label={Exams.mcq[i+1].choice1} disabled={true} control={<Radio />} />
+            <FormControlLabel value="2nd choice"  label={Exams.mcq[i+1].choice2} disabled={true} control={<Radio />} /> 
+            <FormControlLabel value="3rd choice" label={Exams.mcq[i+1].choice3} disabled={true} control={<Radio />} />
+            <FormControlLabel value="4th choice" label={Exams.mcq[i+1].choice4} checked={true} control={<Radio />} />
+            <label value="correct1" className='answer-text'>Correct Answer: {Exams.mcq[i+1].correct}</label>
 
-            <h112  className="question-text" > 2- { Exams.mcq[i+1].question}</h112>
-            <FormControlLabel value= "1st choice" label={Exams.mcq[i+1].choice1} control={<Radio />} />
-            <FormControlLabel value="2nd choice" label={Exams.mcq[i+1].choice2} control={<Radio />} />
-            <FormControlLabel value="3rd choice" label={Exams.mcq[i+1].choice3} control={<Radio />} />
-            <FormControlLabel value="4th choice" label={Exams.mcq[i+1].choice4} control={<Radio />} /> 
             </div>
             <Button 
             style={{display:'flex', width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 ,borderBlockColor:'#1aac83',borderTop:'#1aac83',borderBottom:'#1aac83',borderRight:'#1aac83',borderLeft:'#1aac83'}}
                 
-              onClick={ () => { navigate("/ExamIsDone") } } > Submit </Button>
+              onClick={ () => { navigate("/") } } > Done </Button>
 
             </RadioGroup>
             </div>
@@ -115,11 +119,11 @@ const ViewExam = () => {
             
          ) }) }
             
-
+          
           </ul>  
 
 
-           
+                       
             
          </div>
   )

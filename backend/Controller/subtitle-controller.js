@@ -11,20 +11,21 @@ function getAllSubtitles (req,res) {
 
 //add subtitle
 function addSubtitle (req,res) {
-    const {Course,Title,Question,Answer,Video,Duration,Preview} = req.body;
+    const courseId = req.query.id;
+    const {Course,Title,Question,Answer,Video,Description,Duration} = req.body;
     const newExcercise={Question,Answer};
     const newSubtitle = new Subtitle({
-        Course,
+        Course : courseId,
         Title,
-        Exercise:newExcercise,
+        Exercise : newExcercise,
         Video,
-        Duration,
-        Preview
+        Description,
+        Duration
     }); 
     newSubtitle.save();
     //add subtitle to course
     course.findOneAndUpdate({_id:
-        mongoose.Types.ObjectId(Course)},{$push:{CourseSubtitle:newSubtitle._id}})
+        mongoose.Types.ObjectId(courseId)},{$push:{CourseSubtitle:newSubtitle._id}})
         .then(function (course) {
         res.status(200).json(course)
     });
@@ -39,23 +40,38 @@ function deleteSubtitle (req,res) {
 };
 
 //delete subtitle from course
-function deleteSubtitleFromCourse (req,res) {
+const deleteSubtitleFromCourse= async (req,res) =>{
     const subId = req.query.id;
-    const courseId = req.query.courseId;
-    Subtitle.findOneAndDelete({_id:mongoose.Types.ObjectId(subId)}).then(function (Subtitle) {
-        course.findOneAndUpdate({_id:mongoose.Types.ObjectId(courseId)},{$pull:{CourseSubtitle:subId}})
-        .then(function (course) {
-        res.status(200).json(course)
-    });
-    });
+    // const courseId = req.query.courseId;
+    if (subId){
+        const subRes= await Subtitle.findOne({_id:mongoose.Types.ObjectId(subId)});
+        const courseId = subRes.Course;
+        try{
+            const courseRes= await course.findOneAndUpdate({_id:mongoose.Types.ObjectId(courseId)},{$pull:{CourseSubtitle:mongoose.Types.ObjectId(subId)}});
+            const subRes= await Subtitle.findOneAndDelete({_id:mongoose.Types.ObjectId(subId)});
+            res.status(200).json(subRes);
+    }
+    catch(err){
+        res.status(500).json(err);
+    }
+    }
 };
 
-//find subtitle by id
-// function findSubtitleByCourse (req,res) {
-//     const courseId = req.query.id;
-//     const resCourse =  Course.findOne({_id:mongoose.Types.ObjectId(courseId)});
 
-// };
+//find subtitle by id
+const viewSubtitle = async(req , res) => {
+    const subId = req.query.id;
+    try{
+        const subtitleToView = await Subtitle.findOne({_id:mongoose.Types.ObjectId(subId)});
+        // get the details of the course 
+        if (subtitleToView != null){
+            res.status(200).json(subtitleToView);
+        }        
+    
+    }catch(error){
+        res.status(400).json({error:error.message})
+    }
+}
 
 //add excercise
 function addExcercise (req,res) {
@@ -124,7 +140,69 @@ const getCourseSubtitlesExcercises = async (req,res) => {
     res.status(200).json(resExcercises);
 };
 
+const editSubtitle = async(req, res) => {
+    const subId = req.query.id;
+    if (subId){
+        try{
+            const updatedSub = await Subtitle.findByIdAndUpdate(subId , req.body);  
+            res.status(200).json(updatedSub);
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }   
+    }
+}
+
+//add video description
+function addVideoDescription (req,res) {
+    const subId=req.query.id;
+    const {Description} = req.body;
+    Subtitle.findOneAndUpdate({_id:
+        subId},{$set:{Description:Description}})
+        .then(function (Subtitle) {
+        res.status(200).json(Subtitle)
+    });
+};
+
+//empty subtitles array in course
+function emptySubtitlesArray (req,res) {
+    const courseId=req.query.id;
+    course.findOneAndUpdate({_id:
+        courseId},{$set:{CourseSubtitle:[]}})
+        .then(function (course) {
+        res.status(200).json(course)
+    });
+};
+
+//get excercises questions
+const getExcercisesQuestions = async (req,res) => {
+    const courseId=req.query.id;
+    const resSubtitle = await Subtitle.find({Course:courseId});
+    resExcercises=[];
+    for (let i=0;i<resSubtitle.length;i++){
+        for (let j=0;j<resSubtitle[i].Exercise.length;j++){
+            resExcercises.push(resSubtitle[i].Exercise[j].Question);
+        }
+    }
+    res.status(200).json(resExcercises);
+};
+
+//get excercises answers
+const getExcercisesAnswers = async (req,res) => {
+    const courseId=req.query.id;
+    const resSubtitle = await Subtitle.find({Course:courseId});
+    resExcercises=[];
+    for (let i=0;i<resSubtitle.length;i++){
+        for (let j=0;j<resSubtitle[i].Exercise.length;j++){
+            resExcercises.push(resSubtitle[i].Exercise[j].Answer);
+        }
+    }
+    res.status(200).json(resExcercises);
+};
+
+
+
     
 
-module.exports = {getAllSubtitles,addSubtitle,addExcercise,deleteExcercise,removeAllExcercises,
-    deleteSubtitle,deleteSubtitleFromCourse,removeAllSubtitles,getCourseSubtitlesVideos,getCourseSubtitlesExcercises};
+module.exports = {getAllSubtitles,addSubtitle, editSubtitle, addExcercise,deleteExcercise,removeAllExcercises, viewSubtitle,
+    deleteSubtitle,deleteSubtitleFromCourse,removeAllSubtitles,getCourseSubtitlesVideos,
+    getCourseSubtitlesExcercises,addVideoDescription,emptySubtitlesArray,getExcercisesQuestions,getExcercisesAnswers};

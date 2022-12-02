@@ -17,7 +17,7 @@ const courseSchema = new Schema({
       required: true
     },
     Duration: {
-      type: String,
+      type: Number,
       required: false
     },
     LevelOfCourse: {
@@ -61,7 +61,7 @@ const courseSchema = new Schema({
         required: true
       },
     CourseCurrency: {
-        type: Number,
+        type: String,
         required: false
     },
     Preview: {

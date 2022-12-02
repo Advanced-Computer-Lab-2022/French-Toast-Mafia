@@ -32,18 +32,28 @@ import CoursePromotion from './Pages/CoursePromotion';
 import AllUsers from './Components/AllUsers';
 import AllInstructors from './Components/AllInstructors';
 import UserCoursePage from './Pages/UserCoursePage';
-import ViewCourseSubtitle from './Pages/ViewCourseSubtitles'
+import ViewCourseSubtitles from './Pages/ViewCourseSubtitles'
+import ViewSubtitle from './Pages/ViewSubtitle';
+import EditSubtitle from './Pages/EditSubtitle';
 import ViewCourseExam from './Pages/ViewCourseExam'
 import CourseInstructor from './Pages/CourseInstructor';
 import StarRating from './Components/StarRating';
 import CourseRate from './Pages/CourseRate';
 import Contract from './Pages/Contract';
-import PopUp from './Components/PopUp';
 import InstrCourses from './Components/InstrCourses';
-import AddExam from './Components/addExam';
+import EditInfo from './Pages/EditInfo';
+import InstrInfo from './Pages/InstrInfo';
+import EditBiography from './Pages/EditBiography';
+// import AddExam from './Components/addExam';
 import ViewExam from './Components/ViewExam';
 import CourseVideos from './Pages/CourseVideos';
 import CourseExercises from './Pages/CourseExercises';
+import ViewExamAnswer from './Components/ViewExamAnswer';
+import ViewExamButton from './Components/ViewExam';
+import ExamIsDone from './Components/ExamIsDone';
+import CourseInfoAllUsers from './Pages/CourseInfoAllUsers';
+import ViewCourseRating from './Pages/viewCourseRatings';
+
 function App(){
   const newAdmin = (admin) => {
     console.log(admin);
@@ -69,8 +79,11 @@ function App(){
     <Route path="/adduser" element={ <Add1/>} />
     {/* <Route path="/rate" element={ <StarRating/>} /> */}
     <Route path="/viewCourse" element={<ViewCourse/>} />
-    <Route path="/viewCourse/Subtitle" element={<ViewCourseSubtitle/>} />
+    <Route path="/viewCourse/Subtitles" element={<ViewCourseSubtitles/>} />
+    <Route path="/viewSubtitle" element={<ViewSubtitle/>} />
+    <Route path="/editSubtitle" element={<EditSubtitle/>}/>
     <Route path="/viewCourse/Exam" element={<ViewCourseExam/>} />
+    <Route path="/viewCourse/Rating" element={<ViewCourseRating/>} />
     <Route path="/Instructor/viewMyCourses" element = {<ViewMyCoursesInstructor/>} />
     <Route path="/Instructor/EditCourse" element = {<EditCourse/>}/>
     <Route path="/UserAdded" element={ <UserAdded/>} />
@@ -84,20 +97,25 @@ function App(){
     <Route path="/AllUsers" element={ <AllUsers/>} />
     <Route path="/AllInstructors" element={ <AllInstructors/>} />
     <Route path="/UserCoursePage" element={ <UserCoursePage/>} />
-<<<<<<< HEAD
     <Route path="/CoursePromotion" element={<CoursePromotion/>}/>
-
-=======
     <Route path="/CourseInstructor" element={<CourseInstructor/>}/>
     <Route path="/CourseRate" element={<CourseRate/>}/>
     <Route path="/CourseVideos" element={<CourseVideos/>}/>
     <Route path="/CourseExercises" element={<CourseExercises/>}/>
-        <Route path="/addExam" element={<AddExam/>}/>
+    {/* <Route path="/addExam" element={<AddExam/>}/> */}
     <Route path="/ViewExam" element={<ViewExam/>}/>
 
     <Route path="/Contract" element={<Contract/>}/>
-    <Route path="/PopUp" element={<PopUp/>}/>
     <Route path="/InstrCourses" element={ <InstrCourses/>} />
+    <Route path="/EditInfo" element={ <EditInfo/>} />
+    <Route path="/InstrInfo" element={ <InstrInfo/>} />
+    <Route path="/EditBiography" element={ <EditBiography/>} />
+    <Route path="/ViewExamAnswer" element={ <ViewExamAnswer/>} />
+    <Route path="/ViewExamButton" element={ <ViewExamButton/>} />
+    <Route path="/ExamIsDone" element={ <ExamIsDone/>} />
+
+    <Route path="/CourseInfoAllUsers" element={ <CourseInfoAllUsers/>} />
+
 
    </Routes>
    </div>

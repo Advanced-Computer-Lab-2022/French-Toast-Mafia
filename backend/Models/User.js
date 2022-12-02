@@ -61,7 +61,7 @@ const userSchema = new Schema({
         required: false
     },
     UserCurrency : {
-      type: Number,
+      type: String,
       required: false
   },
    Courses:
