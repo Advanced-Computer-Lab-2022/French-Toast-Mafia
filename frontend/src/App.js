@@ -89,7 +89,6 @@ function App(){
     <Route path="/UserAdded" element={ <UserAdded/>} />
     <Route path="/AdminAdded" element={ <AdminAdded/>} />
     <Route path="/InstrAdded" element={ <InstrAdded/>} />
-    {/* <Route path="/AddCourse" element={ <AddCourse/>} /> */}
     <Route path="/Profile" element={<Profile/>}/>
     <Route path="/ForgotPassword" element={<ForgotPassword/>}/>
     <Route path="/ChangePassword" element={<ChangePassword/>}/>

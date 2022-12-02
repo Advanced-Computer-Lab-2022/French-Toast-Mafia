@@ -116,7 +116,7 @@ const navigateToInstrInfo= () => {
 
             <Button variant="contained"
             style={{bottom:20, left:250,width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
-            onClick={navigateToInstrInfo}
+            onClick={() => window.location.href=`/AddCourse?id=${instructorId}`}
             margin="normal"
             padding="normal"
             > Add Course </Button>
@@ -153,7 +153,7 @@ const navigateToInstrInfo= () => {
                 }
             }}
             
-            onClick={() => window.location.href=`/UserCoursePage?courseId=${Courses._id}&userId=${params.get('userId')}`}
+            onClick={() => window.location.href=`viewCourse?courseId=${Courses._id}`}
               key={Courses._id}
 
               >
