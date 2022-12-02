@@ -40,7 +40,7 @@ const InstrCourses = () => {
     const [Instrreview,setInstrreview]= useState([]);
 
     const getInstrCourses =  async () => {
-         await axios.get(`http://localhost:5000/Instructor/ViewMyCourses?instructorId=${instructorId}`).then(
+         await axios.get(`http://localhost:5000/Instructor/ViewMyCourses?id=${instructorId}`).then(
 
         (res) => { 
             const Instrcourse = res.data
@@ -112,7 +112,15 @@ const navigateToInstrInfo= () => {
             margin="normal"
             padding="normal"
             >View My Info </Button>
-            {/* </Box> */}
+
+
+            <Button variant="contained"
+            style={{bottom:20, left:250,width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
+            onClick={navigateToInstrInfo}
+            margin="normal"
+            padding="normal"
+            > Add Course </Button>
+           
             
             
       
