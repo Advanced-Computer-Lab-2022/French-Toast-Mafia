@@ -4,10 +4,6 @@ const exam = require("../Models/Exams");
 const subtitle = require("../Models/Subtitle");
 var mongoose = require('mongoose');
 const moment = require("moment");
-<<<<<<< HEAD
-
-=======
->>>>>>> 44804e06866041af7772d29bf67caf4cc73f4de8
 
 function getAllInstructors (req,res) {
     instructor.find({}).then (function (instructor) {
@@ -472,8 +468,6 @@ const addPromotion = async (req, res) => {
             res.status(400).json({error:error.message});
         }
     }
-
-
 }
 
 
