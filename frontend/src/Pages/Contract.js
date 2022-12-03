@@ -18,15 +18,22 @@ import { useState, useEffect } from 'react';
 
 
 
-// const navigateToSignUp= () => {
-//   // const navigate = useNavigate();
+
+const Contract= () => {
+
+  const navigate = useNavigate();
 
   
-//   navigate(`/addinstr`);
-// };
-// addinstr
+const navigateToHome= () => {
+   
+  navigate('/Home');
+};
 
-function Contract () {
+  
+const navigateToSignUp= () => {
+   
+  navigate('/addInstr');
+};
 
     return (
      <>
@@ -71,7 +78,7 @@ function Contract () {
         
       </div>
 
-      <Button variant="contained"
+      <Button variant="contained" onClick={navigateToSignUp}
             style={{ bottom:-80, left:400, width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
             // onClick={navigateToSignUp}
             margin="normal"
@@ -79,7 +86,7 @@ function Contract () {
             > Accept Contract
        </Button>
 
-       <Button variant="contained"
+       <Button variant="contained" onClick={navigateToHome}
             style={{ bottom:-80, left:500, width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
             // onClick={navigateToSignUp}
             margin="normal"
