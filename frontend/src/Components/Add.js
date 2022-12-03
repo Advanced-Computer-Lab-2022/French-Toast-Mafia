@@ -116,7 +116,7 @@ const Add = () => {
          <Button 
          style={{width:300, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 , left:'550px' ,bottom:'50px'}}
           variant="contained "> 
-          onClick= { () => { navigate ("/contactAgree") }};
+          onClick= { () => { navigate ("/Contract") }};
          <h1  > View Contract </h1>
 
          </Button>

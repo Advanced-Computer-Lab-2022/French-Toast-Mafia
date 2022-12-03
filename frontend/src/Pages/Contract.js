@@ -16,43 +16,83 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-} 
-const Contract = () => {
-const navigate = useNavigate();
-const Accept = () => {
-    // 👇️ navigate to /Contract
-    navigate('/SignUp');
-  };
-
-  const Reject = () => {
-    // 👇️ navigate to /Contract
-    navigate('/');
-  };
 
 
+// const navigateToSignUp= () => {
+//   // const navigate = useNavigate();
 
-return 
-<Box display='flex' flexDirection={"column "} width='100%' height = "100%" >
-< Box display='flex' margin='auto' padding={2} >
-
-</Box>
   
+//   navigate(`/addinstr`);
+// };
+// addinstr
+
+function Contract () {
+
+    return (
+     <>
+      <div>
+           Please read your contract carefully!
+      </div>
+      <div>
+          you're here accepting your assigned percent (20%) of total profit of your posted materials,
+          this percent is defined per course therefore for each course you'll be given 20% of which
+          you'll decide to be placed in your wallet or the entered bank account, whatever will be choosen will 
+          be recorded in your wallet status for extra security. There are some things that need to be considered
+          before posting.
+      </div>
+          *For Videos:
+      <div>
+      1-Cannot contain any un useful information of any kind 
+      </div>
+      <div>
+      2-Cannot contain any abusive words 
+      </div>
+      3-Cannot contain any harmful actions nor 
+      <div>
+      4-Cannot contain false information
+      </div>
+          *For Materials:
+      <div>
+        1-Need to be direct and staright forward for all users within website 
+      </div>
+        2-No unauthorized sales once user registered for course then he has access to all material related
+        to this course  
+      <div>
+        3-Avoid copying materials from other Instructors within workplace otherwise account reported and
+        closed immediately!
+      </div>
+        4-Materials need to be relevant and appropriate for users 
+      <div>
+        
+      </div>
+      You need to note that you cannot signUp without accepting our terms and conditions anything other than
+      accepting will return to you to same page.
+      <div>
+        
+      </div>
+
+      <Button variant="contained"
+            style={{ bottom:-80, left:400, width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
+            // onClick={navigateToSignUp}
+            margin="normal"
+            padding="normal"
+            > Accept Contract
+       </Button>
+
+       <Button variant="contained"
+            style={{ bottom:-80, left:500, width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
+            // onClick={navigateToSignUp}
+            margin="normal"
+            padding="normal"
+            > Reject Contract
+       </Button>
 
 
 
+     </>
+     
 
-  </Box>
+    )
 
 
 }
