@@ -67,14 +67,6 @@ const addCourse = async(req , res) => {
    if(result !== null){
         try{
 
-            //Uncomment this block to delete a course
-            /*
-            course.deleteOne({ NameOfCourse: 'DMET 401' }, function (err) {
-                if(err) console.log(err);
-                console.log("Successful deletion");
-              });
-            await instructor.findByIdAndUpdate(instructorId,{$pop: { CourseGiven: 1 }});
-            */
             // get the details from the body of the request
 
             const{NameOfCourse,
@@ -82,36 +74,36 @@ const addCourse = async(req , res) => {
                 Subject,
                 LevelOfCourse,
                 Cost,
-                ExamCourse,
-                CourseCurrency,
-                Promotion,
+                //ExamCourse,
+                //CourseCurrency,
+                //Promotion,
                 Preview} = req.body;
 
             //create the course
             const createdCourse = await course.create(
                 {NameOfCourse,
-                CourseSubtitle,
+                //CourseSubtitle,
                 Instructor: instructorId,
                 LevelOfCourse,
                 Summary,
                 Subject,
-                Cost , CourseCurrency,
-                ExamCourse,
-                Promotion,
+                Cost , //CourseCurrency,
+                //ExamCourse,
+                //Promotion,
                 Preview});
     
             //adds the course id to the instructor's courses given array
             await instructor.findByIdAndUpdate(instructorId,{$push:{CourseGiven: createdCourse._id}});
              
             res.status(200).json(createdCourse);
-            
+            return createdCourse
         
         }catch(error){
             res.status(400).json({error:error.message})
         }
 
-   } else{
-    res.status(400).json({error:"Please enter a valid Instructor Id"});
+//    } else{
+//     res.status(400).json({error:"Please enter a valid Instructor Id"});
 }
     
 }
@@ -124,7 +116,8 @@ const deleteCourse = async (req, res) => {
         if (c != null){
             console.log(c)
         //remove course from instructor's courses
-        await instructor.findByIdAndUpdate({_id:mongoose.Types.ObjectId(c.Instructor)},{$pull: { CourseGiven: courseId }});
+        console.log(c.Instructor)
+        await instructor.findByIdAndUpdate({_id: c.Instructor},{$pull: { CourseGiven: mongoose.Types.ObjectId(courseId) }});
         //remove all subtitles that belong to the course
         console.log(c.CourseSubtitle)
         c.CourseSubtitle.forEach((item, index) => {
@@ -134,7 +127,6 @@ const deleteCourse = async (req, res) => {
        
         res.status(200).json(c)
     
-   
 }
 
 //filter courses based on subject
@@ -189,6 +181,8 @@ const filterSubject = async (req,res) => {
         res.status(400).json({error:"Instructor Id is required"})
     }
 }
+
+
 
 
 const SearchCourse = async (req,res) => {

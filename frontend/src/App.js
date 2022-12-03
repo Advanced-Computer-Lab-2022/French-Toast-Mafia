@@ -53,6 +53,7 @@ import ViewExamButton from './Components/ViewExam';
 import ExamIsDone from './Components/ExamIsDone';
 import CourseInfoAllUsers from './Pages/CourseInfoAllUsers';
 import ViewCourseRating from './Pages/viewCourseRatings';
+import AddSubtitle from './Pages/AddSubtitle';
 
 function App(){
   const newAdmin = (admin) => {
@@ -72,6 +73,7 @@ function App(){
     <Route exact path='/Courses' element={<Courses/>}/>
     <Route exact path='/CoursePricePage' element={<CoursePricePage/>}/>
     <Route exact path='/AddCourse' element={<AddCourse/>}/>
+    <Route exact path='/AddSubtitle' element={<AddSubtitle/>}/>
     <Route exact path='/SignUp' element={<SignUp/>}/>
     <Route exact path='/Home' element={<Home/>}/>
     <Route path="/addadmin" element={ <Add2/>} />

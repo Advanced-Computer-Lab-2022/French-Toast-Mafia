@@ -12,7 +12,7 @@ function getAllSubtitles (req,res) {
 //add subtitle
 function addSubtitle (req,res) {
     const courseId = req.query.id;
-    const {Course,Title,Question,Answer,Video,Description,Duration} = req.body;
+    const {Title,Question,Answer,Video,Description,Duration} = req.body;
     const newExcercise={Question,Answer};
     const newSubtitle = new Subtitle({
         Course : courseId,
