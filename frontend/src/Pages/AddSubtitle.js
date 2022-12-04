@@ -13,11 +13,11 @@ const queryParameters = new URLSearchParams(window.location.search)
 const courseId = queryParameters.get("id")
 
 const newData = {};
-
+const Exercise = {};
 
 const handleSubmit = async(req , res) => {
-        newData["Course"] = courseId
-
+        newData["Course"] = courseId;
+        // newData["Exercise"] = Exercise;
         console.log(newData)
         const response =  await fetch(`http://localhost:5000/Subtitle/addSubtitle?id=${courseId}`,{
           method: 'POST',
@@ -43,7 +43,13 @@ const handleChange = (event) => {
     const attr = event.target.id
     console.log(attr)
     console.log(event.target.value)
-    newData[attr] = event.target.value
+    // if(attr == "Question" || attr == "Answer"){
+    //   Exercise[attr] = event.target.value
+    // }
+    // else{
+      newData[attr] = event.target.value
+    // }
+  
   }
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -81,6 +87,32 @@ const addInputField = (str) =>{
     </div>
   </Box>
   </TableCell>
+    }
+    else if(label === "Exercise"){
+      return <TableCell>
+        <Box
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <div>
+        <TextField
+          id={"Question"}
+          label="Question"
+          onChange={handleChange}
+          size="small"
+        />  <TextField
+        id={"Answer"}
+        label="Answer"
+        onChange={handleChange}
+        size="small"
+      /> 
+      </div>
+    </Box>
+    </TableCell>
     }
     else{
       return <TableCell>
@@ -125,6 +157,10 @@ const AddSubtitle = () => {
           <TableRow  className='row-style'>
               <StyledTableCell variant="head" width="75">Duration</StyledTableCell>
               {addInputField("Duration")}
+          </TableRow>
+          <TableRow  className='row-style'>
+              <StyledTableCell variant="head" width="75">Exercise</StyledTableCell>
+              {addInputField("Exercise")}
           </TableRow>
           <TableRow  className='row-style'>
               <StyledTableCell variant="head" width="75">Description</StyledTableCell>

@@ -49,13 +49,16 @@ const getCellData = (obj) =>{
   else{
     const nextPage = Object.values(Object.values(obj))[0];
     if(nextPage == "Exercise"){
-      return <TableCell>
-      <Button variant="contained"
-        margin="normal"
-        // onClick={() => window.location.href=`/ViewCourse/Subtitle?courseId=${courseId}`}
-        padding="normal"
-        >View Exercises</Button> 
-    </TableCell>
+        const ex = obj[1]
+        return <TableCell>{Object.values(ex[0])[0]}</TableCell>
+
+    //   return <TableCell>
+    //   <Button variant="contained"
+    //     margin="normal"
+    //     // onClick={() => window.location.href=`/ViewCourse/Subtitle?courseId=${courseId}`}
+    //     padding="normal"
+    //     >View Exercises</Button> 
+    // </TableCell>
       }
     }
    
