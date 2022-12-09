@@ -363,13 +363,19 @@ const calculateCourseDuration = async(req , res) => {
     }
 }
 
+const getMaxPrice = async(req, res) => {
+    course.find({}).then (function (course) {
+        res.status(200).json(course)
+        });
+}
 
 
 
 
 
 
-module.exports={getAllCourse , viewCourse, createCourse, editCourse, viewCourseInstructor, 
+
+module.exports={getAllCourse , viewCourse, createCourse, editCourse, viewCourseInstructor, getMaxPrice, 
      viewCourseSubtitles, viewCourseExam, viewUserCourse,deleteCourseRating,addCourseRating,calculateCourseRating,
      viewCourseRating,emptyCourseList,registerCourseToUser,viewCourseDetails,calculateCourseDuration};
    
