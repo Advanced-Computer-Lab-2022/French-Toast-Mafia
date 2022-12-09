@@ -15,3 +15,8 @@ export const getCourseInstructor = async(id) =>{
     //console.log(response.data)
     return response.data
 }
+
+export const getMaxCoursePrice = async() =>{
+    const response = await axios.get("http://localhost:5000/Course/getMaxPrice")
+    return response.data
+}

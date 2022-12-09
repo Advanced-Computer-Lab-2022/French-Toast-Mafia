@@ -1,17 +1,29 @@
 import * as React from 'react';
 import Slider from '@mui/material/Slider';
+import { getMaxCoursePrice } from "../../api/axios";
+import {useState, useEffect} from 'react';
+
 
 function valuetext(value) {
   return `${value}°C`;
 }
 
-const minDistance = 10;
+const minDistance = 5;
 
-export default function MinimumDistanceSlider() {
- 
-  const [value2, setValue2] = React.useState([20, 37]);
+const MinimumDistanceSlider = ({setPriceRange, handlePriceChange}) => {
 
-  const handleChange2 = (event, newValue, activeThumb) => {
+const [initMaxPrice,setInitMaxPrice] = useState([]);
+const [value, setValue] = React.useState([]);
+
+useEffect(() => {
+    getMaxCoursePrice().then(json => {
+      setInitMaxPrice(json)
+      setValue([0,json])
+    })
+  }, []);
+
+const handleChange = (event, newValue, activeThumb) => {
+
     if (!Array.isArray(newValue)) {
       return;
     }
@@ -19,24 +31,37 @@ export default function MinimumDistanceSlider() {
     if (newValue[1] - newValue[0] < minDistance) {
       if (activeThumb === 0) {
         const clamped = Math.min(newValue[0], 100 - minDistance);
-        setValue2([clamped, clamped + minDistance]);
+        setValue([clamped, clamped + minDistance]);
+        setPriceRange(value)
+        return handlePriceChange();
       } else {
         const clamped = Math.max(newValue[1], minDistance);
-        setValue2([clamped - minDistance, clamped]);
+        setValue([clamped - minDistance, clamped]);
+        setPriceRange(value)
+        return handlePriceChange();
+
+
       }
     } else {
-      setValue2(newValue);
+      setValue(newValue);
+      setPriceRange(value);
+      return handlePriceChange();
+
     }
+  
   };
 
   return (
       <Slider
         getAriaLabel={() => 'Minimum distance shift'}
-        value={value2}
-        onChange={handleChange2}
-        valueLabelDisplay="auto"
+        value={value}
+        onChange={handleChange}
+        max={initMaxPrice}
+        valueLabelDisplay="on"
         getAriaValueText={valuetext}
         disableSwap
       />
   );
 }
+
+export default MinimumDistanceSlider;
