@@ -1,5 +1,8 @@
 const course= require("../Models/Course");
+const instructor= require("../Models/Instructor");
+const user = require("../Models/User");
 const mongoose = require('mongoose');
+const Subtitle = require("../Models/Subtitle");
 
 function getAllCourse (req,res) {
     course.find({}).then (function (course) {
@@ -9,22 +12,26 @@ function getAllCourse (req,res) {
 
 
 const viewCourse = async(req , res) => {
-    const courseId = req.params.id;
+    const courseId = req.query.id;
 
     try{
         const courseToView = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
         // get the details of the course 
-        const courseDetails = 
-            {"Course Name": courseToView.NameOfCourse,
-            "Course Subtitles":courseToView.CourseSubtitle,
-            "Course Summary": courseToView.Summary,
-            "Course Subject": courseToView.Subject,
-            "Course Duration": courseToView.Duration,
-            "Course Level" : courseToView.LevelOfCourse,
-            "Course Price": courseToView.Cost}
+        if (courseToView != null){
+            // const courseDetails = 
+            // {"Title": courseToView.NameOfCourse,
+            // "Subtitles":courseToView.CourseSubtitle,
+            // "Summary": courseToView.Summary,
+            // "Subject": courseToView.Subject,
+            // "Duration": courseToView.Duration,
+            // "Level" : courseToView.LevelOfCourse,
+            // "Exams" : courseToView.Exams,
+            // "Discount": courseToView.Discount
+            // "Price": courseToView.Cost,}
+            // res.status(200).json(courseDetails);
+            res.status(200).json(courseToView);
 
-        res.status(200).json(courseDetails);
-        
+        }        
     
     }catch(error){
         res.status(400).json({error:error.message})
@@ -33,7 +40,7 @@ const viewCourse = async(req , res) => {
 }
 
 const createCourse = async(req,res) => {
-    const newCourse = new course ({
+       const newCourse = new course ({
         NameOfCourse: req.body.NameOfCourse,
         CourseSubtitle: req.body.CourseSubtitle, 
         Instructor: req.body.Instructor, 
@@ -43,8 +50,11 @@ const createCourse = async(req,res) => {
         Subject: req.body.Subject, 
         Rating: req.body.Rating, 
         NoOfViews: req.body.NoOfViews,
-        Discount: req.body.Discount,
-        Cost: req.body.Cost
+        Promotion: req.body.Promotion,
+        Cost: req.body.Cost,
+        CourseCurrency:req.body.CourseCurrency,
+        Preview:req.body.Preview,
+
     }) 
    
         newCourse.save()
@@ -59,8 +69,307 @@ function getAllCourse (req,res) {
     });
 };
 
+const viewCourseInstructor = async(req , res) => {
+    const courseId = req.query.id;
+
+    try{
+        const courseToView = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+        // get the details of the course 
+        const courseDetails = 
+            {"Course Instructor": courseToView.Instructor}
+
+        const InstructorToView = await instructor.
+        findOne({_id:mongoose.Types.ObjectId(courseToView.Instructor)});
+      // console.log(InstructorToView);
+        const InstructorDetails =
+            {"InstrId": InstructorToView._id,
+                "InstructorName": InstructorToView.InstrName,
+            "InstructorEmail": InstructorToView.InstrEmail}
+            const result = [];
+            result.push(InstructorDetails);
+        res.status(200).json(result);
+        
+    
+    }catch(error){
+        res.status(400).json({error:error.message})
+    }
+
+}
+
+const viewCourseSubtitles = async(req , res) => {
+    const courseId = req.query.id;
+    console.log("course id: " + courseId)
+    const sub = await Subtitle.find({Course:courseId }, {Title:1,_id:1});
+    // console.log(sub)
+    if (sub == null) {
+        res.status(404).send('no subtitles available');
+    }
+    else {
+        res.json(sub);
+    }
+
+}
+
+
+const viewCourseExam = async(req , res) => {
+    const courseId = req.query.id;
+
+    try{
+        const courseToView = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+        // get the subtitles of the course 
+        const courseExam = courseToView.Exams
+            
+        res.status(200).json(courseExam);
+    
+    }catch(error){
+        res.status(400).json({error:error.message})
+    }
+
+}
+
+const viewUserCourse = async(req , res) => {
+    const userId = req.query.id;
+    const resultCourses = [];
+if (userId){
+    try{
+        const result = await user.findOne({_id:mongoose.Types.ObjectId(userId)});
+        //get each user course details
+        for (let i = 0; i < result.Courses.length; i++) {
+            const courseToView = await course.findOne({_id:mongoose.Types.ObjectId(result.Courses[i])});
+            resultCourses.push(courseToView);
+        }
+        res.status(200).json(resultCourses);
+        
+    }catch(error){
+        res.status(400).json({error:error.message})
+    }
+}
+else{
+    res.status(404).send('User not found');
+}
+}
+
+//delete course rating function
+const deleteCourseRating = async(req , res) => {
+    const courseId=req.query.id;
+    const emp=[];
+    if (courseId){
+        try{
+            const result = await course.findOneAndUpdate({_id:mongoose.Types.ObjectId(courseId)}, { Rating: emp }, { new: true });
+            res.status(200).json(result);
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }
+    }
+}
+
+//add course rating function
+const addCourseRating = async(req , res) => {
+    const courseId=req.query.id;
+    const userId=req.body.id;
+    const rating=req.body.rating;
+    const uId=mongoose.Types.ObjectId(userId);
+    const tuple={uId,rating};
+    if (courseId){
+        try{
+            //check if the user has already rated the course
+            const check = await course.findOne({_id:mongoose.Types.ObjectId(courseId), Rating:{$elemMatch:{uId:uId}}});
+            if (!check){
+            const resCourse = await course.findOneAndUpdate({_id:mongoose.Types.ObjectId(courseId)}, { $push: { Rating: tuple } }, { new: true });
+            res.status(200).json(resCourse);
+            }
+            else{
+                res.status(400).json({error:"User has already rated this course"});
+            }
+
+        }
+        catch(error){
+            res.status(400).json({error:error.message})
+        }
+    }
+}
+
+
+//calculate rating function
+const calculateCourseRating = async(req , res) => {
+    const courseId=req.query.id;
+    if (courseId){
+        try{
+            const result = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+            var sum=0;
+            for (let i = 0; i < result.Rating.length; i++) {
+                sum+=parseInt(result.Rating[i].rating);
+            }
+            const avg=sum/result.Rating.length;
+            res.status(200).json(avg);
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }   
+    }
+}
+
+const viewCourseRating = async(req, res) => {
+    const courseId=req.query.id;
+    if (courseId){
+        try{
+            const result = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+            res.status(200).json(result.Rating);
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }   
+    }
+}
+
+const editCourse = async(req, res) => {
+    const courseId = req.query.id;
+    if (courseId){
+        try{
+            const editCourse = await course.findByIdAndUpdate(courseId , req.body);  
+            res.status(200).json(editCourse);
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }   
+    }
+}
+
+//empty course list from user
+const emptyCourseList = async(req , res) => {
+    const userId=req.query.id;
+    const emp=[];
+    if (userId){
+        try{
+            const result = await user.findOneAndUpdate({_id:mongoose.Types.ObjectId(userId)}, { Courses: emp }, { new: true });
+            res.status(200).json(result);
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }
+    }
+}
+
+//add course to user
+const registerCourseToUser = async(req , res) => {
+    const userId=req.query.id;
+    const courseId=req.body.id;
+    const cId=mongoose.Types.ObjectId(courseId);
+    if (userId){
+        try{
+            //check if the user has already enrolled in the course
+            const check = await user.findOne({_id:mongoose.Types.ObjectId(userId), Courses:{$elemMatch:{cId:cId}}});
+            if (!check){
+            const resUser = await user.findOneAndUpdate({_id:mongoose.Types.ObjectId(userId)}, { $push: { Courses: cId } }, { new: true });
+            res.status(200).json(resUser);
+            }
+            else{
+                res.status(400).json({error:"User has already enrolled in this course"});
+            }
+
+        }
+        catch(error){
+            res.status(400).json({error:error.message})
+        }
+    }
+}
+
+//requirement (12) choose a course from the results and view (but not open) its details including course subtitles, 
+//excercises , total hours of each subtitle, total hours of the course and price 
+//(including % discount if applicable) according to the country selected
+const viewCourseDetails = async(req , res) => {
+    const courseId = req.query.id;
+    const country = req.query.country;
+    const resultCourses = [];
+    const resSubtitles = [];
+    const resSubtitlesDetails = [];
+    const resTitles = [];
+    const resHours=[]  
+    const resExercises = [];
+    const resQuestions = [];
+    if (courseId){
+        try{
+        const result = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+        //get subtitles of the course
+        for (let i = 0; i < result.CourseSubtitle.length; i++) {
+            const subtitleToView = await Subtitle.findOne({_id:mongoose.Types.ObjectId(result.CourseSubtitle[i])});
+            resSubtitles.push(subtitleToView);
+        }
+
+        //get each subtitle details
+        for (let i = 0; i < resSubtitles.length; i++) {
+            const subtitleToView = await
+            Subtitle.findOne({_id:mongoose.Types.ObjectId(resSubtitles[i])});
+            resSubtitlesDetails.push(subtitleToView);
+        }
+        //get each subtitle titles
+        for (let i = 0; i < resSubtitlesDetails.length; i++) {
+            resTitles.push(resSubtitlesDetails[i].Title);
+        }
+         //get each subtitle excercises
+         for (let i = 0; i < resSubtitlesDetails.length; i++) {
+            resExercises.push(resSubtitlesDetails[i].Exercise);
+        }
+        //get each excercise question
+        for (let i = 0; i < resExercises.length; i++) {
+            for (let j = 0; j < resExercises[i].length; j++) {
+                resQuestions.push(resExercises[i][j].Question);
+            }
+        }
+            
+        //get total hours of each subtitle
+        for (let i = 0; i < resSubtitlesDetails.length; i++) {
+            const subtitleHours = await
+            Subtitle.findOne({_id:mongoose.Types.ObjectId(resSubtitlesDetails[i]._id)});
+            resHours.push(subtitleHours.Duration);
+        }
+        //get total hours of the course
+        const totalHours = result.Duration;
+        //get course price
+        const coursePrice = result.Cost;
+ 
+        const resCourse = {
+            "SubtitlesTitles":resTitles,
+            "Excercises":resQuestions,
+            "SubtitlesHours":resHours,
+            "TotalHours":totalHours,
+            "CoursePrice":coursePrice
+        }
+        resultCourses.push(resCourse);
+        res.status(200).json(resultCourses);
+
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }
+    }
+    else{
+        res.status(404).send('Course not found');
+    }
+}
+
+//calculate total duration of the course from subtitles duration
+const calculateCourseDuration = async(req , res) => {
+    const courseId=req.query.id;
+    if (courseId){
+        try{
+            const result = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+            var sum=0;
+            for (let i = 0; i < result.CourseSubtitle.length; i++) {
+                const subtitleToView = await Subtitle.findOne({_id:mongoose.Types.ObjectId(result.CourseSubtitle[i])});
+                sum+=parseInt(subtitleToView.Duration);
+            }
+        const resCourse= await course.findByIdAndUpdate(courseId , {Duration:sum}, { new: true });
+        
+            res.status(200).json(resCourse);
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }
+    }
+}
 
 
 
-module.exports={getAllCourse , viewCourse, createCourse};
+
+
+
+
+module.exports={getAllCourse , viewCourse, createCourse, editCourse, viewCourseInstructor, 
+     viewCourseSubtitles, viewCourseExam, viewUserCourse,deleteCourseRating,addCourseRating,calculateCourseRating,
+     viewCourseRating,emptyCourseList,registerCourseToUser,viewCourseDetails,calculateCourseDuration};
    

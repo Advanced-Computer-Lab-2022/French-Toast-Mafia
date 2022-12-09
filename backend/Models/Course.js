@@ -9,7 +9,7 @@ const courseSchema = new Schema({
     },
     CourseSubtitle: {
       type: Array,
-      required: true
+      required: false
     },
     Instructor: {
       type: mongoose.Types.ObjectId,
@@ -17,7 +17,7 @@ const courseSchema = new Schema({
       required: true
     },
     Duration: {
-      type: String,
+      type: Number,
       required: false
     },
     LevelOfCourse: {
@@ -33,15 +33,27 @@ const courseSchema = new Schema({
       required: true
     },
     Rating: {
-      type: String,
+      type: Array,
       required: false
     },
     NoOfViews: {
       type: Number,
       required: false
     },
-    Discount: {
+    Promotion: {           //percent el 3adeya 
       type: Number,
+      required: false
+    },
+    StartDatePromotion: {   // we'll use the predifined current time instead
+      type: Date,
+      required: false
+    }, 
+    EndDatePromotion: {     //expiration date 
+      type: Date,
+      required: false
+    }, 
+    ExamCourse: {
+      type: Array,
       required: false
     },
     Cost: {
@@ -49,9 +61,13 @@ const courseSchema = new Schema({
         required: true
       },
     CourseCurrency: {
-        type: Number,
+        type: String,
         required: false
-    }
+    },
+    Preview: {
+      type: String,
+      required: false
+    },
     
   }, { timestamps: true });
   

@@ -61,8 +61,17 @@ const userSchema = new Schema({
         required: false
     },
     UserCurrency : {
-      type: Number,
+      type: String,
       required: false
+  },
+   Courses:
+  {
+    type: Array,
+    items: {
+      type: mongoose.Types.ObjectId,
+      ref: 'Course',
+      required: false
+    }
   }
   }, { timestamps: true });
   

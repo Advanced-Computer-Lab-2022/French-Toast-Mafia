@@ -1,8 +1,13 @@
 const Instructor = require("../Models/Instructor");
 const user=require("../Models/User");
 const Course = require ("../Models/Course")
+var mongoose = require('mongoose');
 const userFilterSubj= require ("../Controller/instructor-controller")
 const userFilterRate= require ("../Controller/instructor-controller")
+const courseController = require("../Controller/course-controllers")
+var mongoose = require('mongoose');
+const nodemailer = require('nodemailer')
+const sendgridTransport = require('nodemailer-sendgrid-transport')
 
 
 //creatig user 
@@ -177,11 +182,6 @@ module.exports={getAllUser, createUser,filterCostUser,SearchCourse };
        
     // }
 
-module.exports=getAllUser;
-
-       
-   
-
 
 //maryam functions
 const axios = require("axios");
@@ -259,7 +259,162 @@ const viewCourseTitleHoursRating = async (req, res) => {
         }
     };
 
+    const viewMyInfo = async(req , res) => {
+        const userId = req.query.id;
+    if (userId){
+        try{
+            const result = await user.findOne({_id:mongoose.Types.ObjectId(userId)});
+            const userDetails = 
+                {"Name": result.Name,
+                "Email":result.Email,
+                "Password": result.Password}
+    
+            res.status(200).json(userDetails);
+            
+        
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }
+    }
+    else{
+        res.status(404).send('User not found');
+    }
+    
+    }
 
-module.exports = {getAllUser,viewCourseTitleHoursRating,viewCoursePrice,selectCountryUser,ChangeCurrencyUser};
+    const ViewMyCourses = async(req , res) => {
+        const userId = req.query.id;
+        const resultCourses = [];
+    if (userId){
+        try{
+            const result = await user.findOne({_id:mongoose.Types.ObjectId(userId)}); 
+            const courses = result.Courses;
+            for (let i = 0; i < courses.length; i++) {
+                const c1 = courses[i];
+                const c = await Course.findById(c1);
+                const courseDetails =
+                    {   "id":c._id,
+                        "Name": c.NameOfCourse}
+                resultCourses.push(courseDetails);
+            }
+            res.status(200).json(resultCourses);
+            
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }
+    }
+    else{
+        res.status(404).send('User not found');
+    }
+}
 
 
+    const changePassword = async(req, res) => {
+        let x = { Email: req.body.Email }
+        const userPassword = await user.findOneAndUpdate(x, { Password: req.body.Password }, { new: true });
+        if (userPassword) {
+            res.status(200).json(userPassword)
+        }
+        else {
+            const instrPassword = await Instructor.findOneAndUpdate(x, { InstrPassword: req.body.Password }, { new: true });
+            if (instrPassword) {
+                res.status(200).json(instrPassword)
+            }
+            else {
+                res.status(404).send('User not found');
+            }
+        }
+
+    }
+ 
+    const sendPassChangeMail = async(req, res) => {
+
+        return new Promise((resolve, reject) => {
+        const transporter = nodemailer.createTransport({
+            service: 'Gmail',
+            secure: false,
+            auth: { 
+                user: "frenchtoastmafia404@gmail.com",
+                pass: "rovgchcnlyjqkpxm"
+    
+            },
+            tls: {
+                rejectUnauthorized: false
+              }
+        });    
+       
+        //send email to the user with link to change password
+        const {Email}=req.body.Email;
+        let x={Email: req.body.Email}
+
+            transporter.sendMail({
+                from: 'frenchtoastmafia404@gmail.com',
+                  to: x.Email.toString(),
+                  subject: 'Password Change Request',
+                  text: 'Click on the link to change your password',
+                  html: '<a href="http://localhost:3000/changePassword">Click here to change your password</a>'
+                });
+            
+            });
+
+    }
+
+  
+    const addCourse = async(req , res) => {
+        const userId = req.query.id;
+        const courseId=req.body;
+      
+       const resultUser = await user.findOne({_id:mongoose.Types.ObjectId(userId)});
+       const resultCourse = await Course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+
+         if (resultUser){
+            if (resultCourse){
+            try{
+
+                await user.findByIdAndUpdate(userId,{$push:{Courses: resultCourse._id}});  
+                res.status(200).json(resultCourse);
+
+            }catch(error){
+                res.status(400).json({error:error.message})
+            }}
+            else{
+                res.status(404).send('Course not found');
+            }
+       } else{
+        res.status(400).json({error:"Please enter a valid userId"});
+    }
+        
+}
+
+const removeCourse = async(req , res) => {
+    const userId = req.query.id;
+    const courseId=req.body;
+  
+   const resultUser = await user.findOne({_id:mongoose.Types.ObjectId(userId)});
+   const resultCourse = mongoose.Types.ObjectId(courseId);
+
+     if (resultUser){
+        if (resultCourse){
+        try{
+
+            await user.findByIdAndUpdate(userId,{$pull:{Courses: resultCourse._id}});  
+            res.status(200).json(resultCourse);
+
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }}
+        else{
+            res.status(404).send('Course not found');
+        }
+   } else{
+    res.status(400).json({error:"Please enter a valid userId"});
+}
+    
+}
+
+
+
+module.exports = {getAllUser,
+    viewCourseTitleHoursRating,viewCoursePrice,
+    selectCountryUser,ChangeCurrencyUser,addCourse,
+    viewMyInfo,ViewMyCourses,changePassword,sendPassChangeMail,removeCourse};

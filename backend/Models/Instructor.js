@@ -30,7 +30,7 @@ const instructorSchema = new Schema({
       required: false
     },
     CourseGiven: {
-      type: String,
+      type: Array,
       required: false
     },
     ProfileViews: {
@@ -47,6 +47,19 @@ const instructorSchema = new Schema({
     },
     Currency: {
       type: String,
+      required: false
+    },
+    InstrReview: {
+      type: String,
+      required: false
+    },
+    InstrRating: {
+      type: Array,
+      required: false
+    },
+    Exam: {
+      type: mongoose.Types.ObjectId,
+      ref:'Exams',
       required: false
     }
     
