@@ -4,33 +4,30 @@ import {
     FormGroup,
     Label,
     Input,
+    Col,
     FormText,
+    CardText,
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
     Dropdown,
   } from "reactstrap";
 
+  import Slider from "../dashboard/Slider";
   import {useState} from 'react';
 
 const SearchBar = ({courses, setSearchResults}) =>{
   
-
-  const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [filter, setFilter] = useState("NameOfCourse");
+  const [minPrice,setMinPrice] = useState(0);
+  const [maxPrice,setMaxPrice] = useState([]);
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
-  const Handletoggle = () => {
-    setIsOpen(!isOpen);
-  };
-
-
+ 
     const handleSubmit = (e) => e.preventDefault()
 
     const handleFilter = (e) => {
-      // console.log(e.target.id)
-      //console.log(typeof(e.target.id))
       setFilter(e.target.id)
     }
 
@@ -67,6 +64,13 @@ const SearchBar = ({courses, setSearchResults}) =>{
                   <i class="bi bi-funnel"></i>&nbsp;Filter
                 </Button> */}
                 </div>
+                <div className="input-group mb-3" style={{ display: "flex", justifyContent: 'flex-start'}}>
+                <CardText className="fw-light card-text">Price Range:&nbsp;&nbsp;&nbsp;</CardText>
+                <Col lg="3">
+                  <Slider/>
+                  </Col>
+                </div>
+               
               </FormGroup>
               </Form>
         </header>
