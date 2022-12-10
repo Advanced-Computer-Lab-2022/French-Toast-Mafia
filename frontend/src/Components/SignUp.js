@@ -56,14 +56,7 @@ const SignUp = () => {
        variant="contained ">  
        <h4  > User </h4>
       </Button>
-      <Button 
-        style={{width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
-        type='submit'
-        LinkComponent={Link} to ="/AllUsers"
-        //color="purple" sx={{ width:"50%", margin:"auto ", mt: "2", borderRadius: 7}} 
-        variant="contained "> 
-        <h4 > temp </h4> 
-        </Button>
+      
 
 
 
