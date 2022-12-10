@@ -15,6 +15,7 @@ const queryParameters = new URLSearchParams(window.location.search)
 const subId = queryParameters.get("id")
 
 const newData = {};
+const ex = {};
 
 const handleSubmit = async(req , res) => {
 
@@ -42,7 +43,14 @@ const handleEditExercise = () => {
 
 const handleChange = (event) => {
   const attr = event.target.id
+  if(attr == "Question" || attr == "Answer"){
+    ex[attr] = event.target.value
+    newData["Exercise"] = ex
+  }
+  else{
     newData[attr] = event.target.value
+  }
+    
 }
 
 
@@ -105,13 +113,32 @@ const getCellData = (obj) =>{
   else{
     const nextPage = Object.values(Object.values(obj))[0];
     if(nextPage == "Exercise"){
+      const ex = obj[1]
       return <TableCell>
-      <Button variant="contained"
-        margin="normal"
-        onClick={handleEditExercise}
-        padding="normal"
-        >Edit Exercises</Button> 
-        
+        <Box
+      component="form"
+      sx={{
+        '& .MuiTextField-root': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <div>
+        <TextField
+          id={Object.keys(ex[0])[0]}
+          label="Question"
+          onChange={handleChange}
+          defaultValue={Object.values(ex[0])[0]}
+          size="small"
+        />  <TextField
+        id={Object.keys(ex[0])[1]}
+        label="Answer"
+        onChange={handleChange}
+        defaultValue= {Object.values(ex[0])[1]}
+        size="small"
+      /> 
+      </div>
+    </Box>
     </TableCell>
     }
     else if(nextPage === "Video"){

@@ -103,21 +103,21 @@ const Add = () => {
         
 
         <Button 
-        style={{width:250, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
+        style={{ bottom:-45, left:40, width:150, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
 
         type='submit'
          //color="purple" sx={{ width:"50%", margin:"auto ", mt: "2", borderRadius: 7}}
           variant="contained "> 
-         <h1  > Add </h1>
+         <h3  > Add </h3>
 
          </Button>
 
 
-         <Button 
-         style={{width:300, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 , left:'550px' ,bottom:'50px'}}
+         <Button  onClick= { () => { navigate ("/Contract") }}
+          style={{ bottom:-2, left:500, width:250, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
           variant="contained "> 
-          onClick= { () => { navigate ("/contactAgree") }};
-         <h1  > View Contract </h1>
+         
+         <h4  > View Contract </h4>
 
          </Button>
     

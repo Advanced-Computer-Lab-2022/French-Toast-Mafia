@@ -33,14 +33,35 @@ const handleSubmit = async(req , res) => {
         console.log(response)
     }
     if (response.ok){
-    <alert>New Course Added</alert>    }
+    <alert>New Course Added</alert>
+    return response._id
+  }
 }
 
 
+const handleAddSubtitle = async() => {
+  await handleSubmit()
+  await axios.get(`http://localhost:5000/Instructor/ViewMyCourses?id=${instructorId}`).then(
+        (res) => { 
+            const Instrcourse = res.data
+            // console.log(Instrcourse)
+            const courseId = Instrcourse[Object.keys(Instrcourse)[Object.keys(Instrcourse).length - 1]]._id
+               window.location.href=`/AddSubtitle?id=${courseId}`
+
+        }
+    );
+
+  // if(courseId != null){
+  //   console.log(courseId)
+  //   window.location.href=`/AddSubtitle?id=${courseId}`
+  // }
+ 
+}
+
 const handleChange = (event) => {
   const attr = event.target.id
-  console.log(attr)
-  console.log(event.target.value)
+  // console.log(attr)
+  // console.log(event.target.value)
   if(attr == "Amount" || attr == "End"){
     promo[attr] = event.target.value
     newData["Promotion"] = promo
@@ -181,10 +202,6 @@ const AddCourse = () => {
               {addInputField("Subject")}
           </TableRow>
           <TableRow  className='row-style'>
-              <StyledTableCell variant="head" width="75">Promotion</StyledTableCell>
-              {addInputField("Promotion")}
-          </TableRow>
-          <TableRow  className='row-style'>
               <StyledTableCell variant="head" width="75">Cost</StyledTableCell>
               {addInputField("Cost")}
           </TableRow>
@@ -202,7 +219,7 @@ const AddCourse = () => {
     <Box sx={{marginBottom: 2}}>
 
     <Button variant="contained"
-            onClick={handleSubmit}
+            onClick={handleAddSubtitle}
             margin="normal"
             padding="normal"
             >Add Subtitle</Button>

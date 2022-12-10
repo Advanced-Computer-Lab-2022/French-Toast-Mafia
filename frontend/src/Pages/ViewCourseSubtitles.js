@@ -10,6 +10,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+const queryParameters = new URLSearchParams(window.location.search)
+const courseId = queryParameters.get("courseId")
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -27,8 +29,7 @@ const ViewCourseSubtitles = () => {
     const [subtitles,setSubtitles] = useState([]);
     
     const getSubtitles =  async () => {
-        const queryParameters = new URLSearchParams(window.location.search)
-        const courseId = queryParameters.get("courseId")
+        
        await axios.get(`http://localhost:5000/Course/ViewCourseSubtitles?id=${courseId}`).then(
         (res) => { 
             const subs = res.data
@@ -47,6 +48,12 @@ const ViewCourseSubtitles = () => {
             margin="normal"
             padding="normal"
             >Load Subtitles</Button>
+            {/* margin */}
+            <Button variant="contained"
+            onClick={() => window.location.href=`/AddSubtitle?id=${courseId}`}
+            margin="normal"
+            padding="normal"
+            >Add New Subtitle</Button>
             {/* margin */}
             </Box>
         

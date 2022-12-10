@@ -36,7 +36,7 @@ const SignUp = () => {
         LinkComponent={Link} to ="/addadmin"
         //color="purple" sx={{ width:"50%", margin:"auto ", mt: "2", borderRadius: 7}} 
         variant="contained "> 
-        <h1 > Admin </h1> 
+        <h4 > Admin </h4> 
         </Button>
 
      <Button
@@ -45,7 +45,7 @@ const SignUp = () => {
      LinkComponent={Link} to ="/addinstr"
       //color="purple" sx={{ width:"50%", margin:"auto ", mt: "2", borderRadius: 7}} 
      variant="contained ">  
-    <h1  > Instructor </h1> 
+    <h4  > Instructor </h4> 
       
     </Button>
    
@@ -54,7 +54,7 @@ const SignUp = () => {
         type='submit'
        LinkComponent={Link} to ="/adduser"
        variant="contained ">  
-       <h1  > User </h1>
+       <h4  > User </h4>
       </Button>
       <Button 
         style={{width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
@@ -62,7 +62,7 @@ const SignUp = () => {
         LinkComponent={Link} to ="/AllUsers"
         //color="purple" sx={{ width:"50%", margin:"auto ", mt: "2", borderRadius: 7}} 
         variant="contained "> 
-        <h1 > temp </h1> 
+        <h4 > temp </h4> 
         </Button>
 
 

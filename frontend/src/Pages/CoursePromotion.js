@@ -16,25 +16,16 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const theme = createTheme();
 
 const CoursePromotion = () => {
-    const[NameOfCourse , setNameOfCourse] = useState('')
-    const[Discount , setDiscount] = useState('')
-    const[DurationDiscount , setDuartionDiscount] = useState('')
+
+   const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    const[Promotion , setPromotion] = useState('')
+    const[StartDatePromotion , setStartDatePromotion] = useState('')
+    const[EndDatePromotion , setEndDatePromotion] = useState('')
     const[err , setErr] = useState(null)
     const navigate = useNavigate();
     
@@ -42,16 +33,14 @@ const CoursePromotion = () => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    axios.put('http://localhost:5000/Instructor/setPromotion', { 
-        NameOfCourse: data.get('name'),
-        Discount: data.get('discount'),
-        DurationDiscount: data.get('discountduration'),
-    })
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    axios.put(`http://localhost:5000/Instructor/addPromotion?id=${id}`, { 
+      id:params.get('id'),
+      Promotion: data.get('Promotion'),
+      StartDatePromotion: data.get('StartDatePromotion'),
+      EndDatePromotion: data.get('EndDatePromotion'),
 
+    })
+    console.log("heeeeeeeeeeeeeee");
 
   };
 
@@ -76,30 +65,30 @@ const CoursePromotion = () => {
               margin="normal"
               required
               fullWidth
-              id="name"
-              label="Course Name"
-              name="name"
-              autoComplete="name"
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="discount"
-              label="discount"
-              type="discount"
-              id="disount"
+              name="Promotion"
+              label="Promotion"
+              type="Promotion"
+              id="Promotion"
             />
              <TextField
               margin="normal"
               required
               fullWidth
-              name="discountduration"
-              label="Discount Duration"
-              type="discountduration"
-              id="discountduration"
+              name="StartDatePromotion"
+              label="Discount start date"
+              type="StartDatePromotion"
+              id="StartDatePromotion"
             />
-            <Button
+             <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="EndDatePromotion"
+              label="Discount end date"
+              type="EndDatePromotion"
+              id="EndDatePromotion"
+            />
+            <Button 
               type="submit"
               fullWidth
               variant="contained"
@@ -109,7 +98,6 @@ const CoursePromotion = () => {
             </Button>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );
