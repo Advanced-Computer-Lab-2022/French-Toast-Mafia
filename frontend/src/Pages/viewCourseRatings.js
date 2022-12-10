@@ -10,6 +10,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: theme.palette.common.black,
@@ -19,70 +20,62 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
       fontSize: 14,
     },
   }));
-  
 const { useState } = require("react");
 
 
-const AllInstructors = () => { 
-    const [instructors,setInstructors] = useState([]);
+const ViewCourseRating = () => { 
+    const [ratings,setRatings] = useState([]);
     
-    const getInstructors =  async () => {
-         await axios.get('http://localhost:5000/Instructor//').then(
+    const getRatings =  async () => {
+        const queryParameters = new URLSearchParams(window.location.search)
+        const courseId = queryParameters.get("courseId")
+       await axios.get(`http://localhost:5000/Course/ViewCourseRating?id=${courseId}`).then(
         (res) => { 
-            const instructors = res.data
-            console.log(instructors)
-            setInstructors(instructors)
-            
+            const r = res.data
+            setRatings(r)
         }
          );
-       
+    
 
     }
     return(
-
         // visualize authors in a table map over authors
-        <div className="InstructorsList">
-            <Box sx={{marginBottom: 2}}>
+        <div className="RatingsList">
+              <Box sx={{marginBottom: 2}}>
             <Button variant="contained"
-            style={{width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
-            onClick={getInstructors}
+            onClick={getRatings}
             margin="normal"
             padding="normal"
-            >Load Instructors</Button>
+            >Load Ratings</Button>
             {/* margin */}
             </Box>
-            
         
         
             
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 50 }} size="small" aria-label="a dense table"  style={{ backgroundColor: '#FFFFFF', color:'#1aac83'}}>
-        <TableHead >
+      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table" >
+        <TableHead>
           <TableRow>
-            <StyledTableCell align="center"   style={{ backgroundColor: '#2D8668', color:'#FFFFFF'}} >Name</StyledTableCell>
-            <StyledTableCell align="center" style={{ backgroundColor: '#2D8668', color:'#FFFFFF'}} >Email</StyledTableCell>
-
+            <StyledTableCell align="center">User</StyledTableCell>
+            <StyledTableCell align="center">Rating</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          { instructors.map((instructor) => (
+          {ratings.map((rating) => (
             <TableRow
             hover
             sx={{
                 "&:hover":{
                 cursor: "pointer",
-                backgroundColor: "#1aac83",
-                width: "20%"
+                backgroundColor: "#f5f5f5",
+                width: "100%"
                 }
             }}
-            onClick={() => window.location.href=`/InstrCourses?instructorId=${instructor._id}`}
-              key={instructor._id}
-
-              >
-              <TableCell align="center"  style ={{color:'#1aac83'}}>{instructor.InstrName}</TableCell>
-              <TableCell align="center" style ={{color:'#1aac83'}}>{instructor.InstrEmail}</TableCell>
-
-
+            key={rating.uId}
+            >
+              <TableCell align="center">{rating.uId}</TableCell>
+              <TableCell align="center">{rating.rating}</TableCell>
+              
             </TableRow>
           ))}
         </TableBody>
@@ -94,4 +87,5 @@ const AllInstructors = () => {
 
     )
 }
-export default AllInstructors;
+
+export default ViewCourseRating;

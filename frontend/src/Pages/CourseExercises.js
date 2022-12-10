@@ -35,15 +35,26 @@ const { useState } = require("react");
 
 const CourseExercises = () => { 
 
-    const [exercises,setExercises] = useState([]);
+    const [questions,setQuestions] = useState([]);
     const params = new URLSearchParams(window.location.search);
 
-    const getExcercises = async () => {
-        await axios.get(`http://localhost:5000/Subtitle/getCourseSubtitlesExcercises?id=${params.get('courseId')}`).then(
+    const getQuestions = async () => {
+        await axios.get(`http://localhost:5000/Subtitle/getExcercisesQuestions?id=${params.get('courseId')}`).then(
             (res) => {
-                const resExcercises = res.data
-                console.log(resExcercises)
-                setExercises(resExcercises)
+                const resQuestions = res.data
+                console.log(resQuestions)
+                setQuestions(resQuestions)
+            }
+        );
+    }
+
+    const [answers,setAnswers] = useState([]);
+    const getAnswers = async () => {
+        await axios.get(`http://localhost:5000/Subtitle/getExcercisesAnswers?id=${params.get('courseId')}`).then(
+            (res) => {
+                const resAnswers = res.data
+                console.log(resAnswers)
+                setAnswers(resAnswers)
             }
         );
     }
@@ -56,10 +67,10 @@ const CourseExercises = () => {
       <Box sx={{marginBottom: 2}}>
       <Button variant="contained"
       style={{width:300, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10,marginRight:10}}
-      onClick={getExcercises}
+      onClick={getQuestions}
       margin="normal"
       padding="normal"
-      >Load Course Exercises</Button>
+      >View Course Exercises</Button>
       {/* margin */}
       </Box>
       </Box>
@@ -74,8 +85,7 @@ const CourseExercises = () => {
     </TableHead>
 
     <TableBody>
-      {exercises.map((ex) => (
-        ex.map((e)=>(
+      {questions.map((q) => (
         <TableRow
         hover
         sx={{
@@ -87,17 +97,28 @@ const CourseExercises = () => {
         }}
           >
           <TableCell align="center">
-          {e.Question}
+          {q}
            </TableCell>
         </TableRow>
         ))
-      ))}
+      }
+      
       
     </TableBody>
   </Table>
 </TableContainer>
 
-
+<Box  display='flex' flexDirection= {"row"}>
+      <Box sx={{marginBottom: 2}}>
+      <Button variant="contained"
+      style={{width:300, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10,marginRight:10}}
+      onClick={getAnswers}
+      margin="normal"
+      padding="normal"
+      >View Exercises Answers</Button>
+      {/* margin */}
+      </Box>
+      </Box>
 
 
       <TableContainer component={Paper}>
@@ -108,9 +129,9 @@ const CourseExercises = () => {
       </TableRow>
     </TableHead>
 
+
     <TableBody>
-      {exercises.map((ex) => (
-        ex.map((e)=>(
+      {answers.map((a) => (
         <TableRow
         hover
         sx={{
@@ -122,11 +143,11 @@ const CourseExercises = () => {
         }}
           >
           <TableCell align="center">
-          {e.Answer}
+          {a}
            </TableCell>
         </TableRow>
         ))
-      ))}
+      }
       
     </TableBody>
   </Table>

@@ -4,8 +4,6 @@ import {Box, Typography } from '@mui/material'
 import { FormLabel } from '@mui/material';
 import { TextField } from '@mui/material';
 import { Button } from '@mui/material';
-import PopUp from "./PopUp"; 
-import PopUpW from './PopUpW';
 //import {MenuItem, Select, InputLabel} from '@mui/material';
 //import { purple } from '@mui/material/colors';
 //import addAdministrator from '../api-helpers/helpers'
@@ -117,9 +115,8 @@ const Add = () => {
 
          <Button 
          style={{width:300, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 , left:'550px' ,bottom:'50px'}}
-        // onClick={togglePopup}
           variant="contained "> 
-        
+          onClick= { () => { navigate ("/contactAgree") }};
          <h1  > View Contract </h1>
 
          </Button>

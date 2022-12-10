@@ -11,6 +11,7 @@ function getAllInstructors (req,res) {
 };
 
 
+
 const createInstructor = async(req,res) => {
     const newInstructor = new instructor ({
         InstrName: req.body.InstrName,
@@ -76,7 +77,6 @@ const addCourse = async(req , res) => {
             // get the details from the body of the request
 
             const{NameOfCourse,
-                CourseSubtitle,
                 Summary,
                 Subject,
                 LevelOfCourse,
@@ -179,24 +179,16 @@ const filterSubject = async (req,res) => {
   }
 
   const ViewMyCourses = async (req , res) => {
-    const w = req.params.id;
-    const a = await course.find({instructor:w }, {NameOfCourse:1,_id:1});
-        // res.json(a);
-        // console.log(a);
-    
-    if (a == null) {
-        res.status(404).send('no courses available');
+    const w = req.query.id;
+    if(w){
+    const result = await course.find({Instructor:mongoose.Types.ObjectId(w)}).populate('Instructor');
+    res.status(200).json(result)
     }
-    else {
-        res.json(a);
-        //let x= Object.values(a);
-        //console.log(x);
-        //let result = x.map(a => a.NameOfCourse);
-        // console.log(result);
-        
+    else{
+        res.status(400).json({error:"Instructor Id is required"})
     }
-
 }
+
 
 const SearchCourse = async (req,res) => {
     const w = req.params.id;
@@ -321,7 +313,10 @@ if (instrId) {
         const instructorDetails = 
             {"Name": result.InstrName,
             "Email":result.InstrEmail,
-            "Password": result.InstrPassword}
+            "Country": result.InstrCountry,
+            "Biography":result.Biography,
+            "Review":result.InstrReview,
+        }
 
         res.status(200).json(instructorDetails);
         
@@ -417,23 +412,43 @@ else{
     
 }
 
+//add promotion for a course
+const addPromotion = async (req, res) => {
+    const instrId= req.query.id;
+    // const courseId= req.body;
+    const found = await course.findOne({_id:mongoose.Types.ObjectId(instrId)});
+    //found instrcutor 
+    // if (found !==null){
+    //     try {
+    //         const {Promotion, StartDatePromotion, EndDatePromotion} = req.body;
+    //         const promotion = await course.create ({Promotion, StartDatePromotion, EndDatePromotion});
+
+    //     } catch {
+
+    //     }
+    // } 
+
+
+
+}
+
  //edit email/ biography req 29
  const editBiography = async (req,res) => {
-        const instructorId= req.params.id;
-        const {Biography}= req.body;
+        const w= req.query.id;
         try{
-            const newBio= await instructor.findByIdAndUpdate(instructorId, {Biography:Biography}, {new:true});
+            const newBio= await instructor.findByIdAndUpdate({_id:mongoose.Types.ObjectId(w)}, {Biography:req.body.Biography}, {new:true});
             res.status(200).json(newBio)
         }
         catch(error){
             res.status(400).json({error:error.message})
         }
  }
+
+ 
  const editEmail = async (req,res) => {
-    const instructorId= req.params.id;
-    const {InstrEmail}= req.body;
+    const w= req.query.id;
     try{
-        const newEmail= await instructor.findByIdAndUpdate(instructorId, {InstrEmail:InstrEmail}, {new:true});
+        const newEmail= await instructor.findByIdAndUpdate({_id:mongoose.Types.ObjectId(w)}, {InstrEmail:req.body.InstrEmail}, {new:true});
         res.status(200).json(newEmail)
     }
     catch(error){
@@ -457,8 +472,8 @@ const ViewMyRatings = async (req , res) => {
 } 
 // View Instructor reviews
 const ViewMyReview = async (req , res) => {
-    const w = req.params.id;
-    const a = await instructor.find({instructor:w }, {InstrReview:1,_id:1});
+    const w = req.query.id;
+    const a = await instructor.findOne({_id:mongoose.Types.ObjectId(w)}, {InstrReview:1,_id:0 });
    
     if (a == null) {
         res.status(404).send('no instructors available');
@@ -527,10 +542,14 @@ const calculateInstrRating = async(req , res) => {
 }
 
 
+
+
 module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      addCourse , deleteCourse, filterCost, filterRating, filterSubject, 
      filterCourseSubjcet , filterCourseCost , ViewMyCourses
       , SearchCourse, viewInstrInfo, 
-    editBiography, editEmail,ViewMyRatings , ViewMyReview, addInstrRating ,calculateInstrRating,
-    deleteInstrRating, createExam, addMCQ, getAllMcq};
+    editBiography, editEmail,ViewMyRatings , ViewMyReview, 
+    addInstrRating ,calculateInstrRating,
+    deleteInstrRating, createExam, addMCQ, 
+    getAllMcq, addPromotion};
    

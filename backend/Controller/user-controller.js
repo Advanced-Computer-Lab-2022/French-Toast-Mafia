@@ -288,7 +288,16 @@ const viewCourseTitleHoursRating = async (req, res) => {
     if (userId){
         try{
             const result = await user.findOne({_id:mongoose.Types.ObjectId(userId)}); 
-            res.status(200).json(result.Courses);
+            const courses = result.Courses;
+            for (let i = 0; i < courses.length; i++) {
+                const c1 = courses[i];
+                const c = await Course.findById(c1);
+                const courseDetails =
+                    {   "id":c._id,
+                        "Name": c.NameOfCourse}
+                resultCourses.push(courseDetails);
+            }
+            res.status(200).json(resultCourses);
             
         }catch(error){
             res.status(400).json({error:error.message})

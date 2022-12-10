@@ -11,7 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Courses from '../Pages/Courses';
 import withStyles from '@mui/material/styles';
-import PopUp from './PopUp';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -31,20 +31,21 @@ const { useState } = require("react");
 
 
 const InstrCourses = () => { 
+  const navigate = useNavigate();
     const params = new URLSearchParams(window.location.search);
     const instructorId = params.get('instructorId');
     console.log(instructorId);
     const [Instrcourse,setInstrCourses] = useState([]);
     const [Instrrating,setInstrrating] = useState([]);
+    const [Instrreview,setInstrreview]= useState([]);
 
     const getInstrCourses =  async () => {
-         await axios.get(`http://localhost:5000/Instructor/ViewMyCourses?instructorId=${instructorId}`).then(
+         await axios.get(`http://localhost:5000/Instructor/ViewMyCourses?id=${instructorId}`).then(
 
         (res) => { 
             const Instrcourse = res.data
             console.log(Instrcourse)
-            setInstrCourses(Instrcourse)
-            
+            setInstrCourses(Instrcourse)      
         }
          );
        
@@ -60,36 +61,71 @@ const InstrCourses = () => {
          
      }
       );
-    
- 
 
  }
+
+    const getInstrReview =  async () => {
+  await axios.get(`http://localhost:5000/Instructor/ViewMyReview?id=${instructorId}`).then(
+ (res) => { 
+     console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhh');
+     const Instrreview= res.data
+     console.log(Instrreview)
+     setInstrreview(Instrreview)
+     
+ }
+  );
+
+}
+
+const navigateToInstrInfo= () => {
+  // 
+  navigate(`/InstrInfo?id=${instructorId}`);
+};
   
     return(
 
         <div className="InstrCourses"   >
-            <Box sx={{marginBottom: 2}}>
+            {/* <Box sx={{marginBottom: 2}}> */}
             <Button variant="contained"
-            style={{width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
+            style={{bottom:20 , left:5 ,width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
             onClick={getInstrCourses}
             margin="normal"
             padding="normal"
             >Load courses</Button>
-            </Box>
+            {/* </Box> */}
 
-            <Box sx={{marginBottom: 2}}>
+            {/* <Box sx={{marginBottom: 2}}> */}
             <Button variant="contained"
-            style={{width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
+            style={{ bottom: 20, left: 100 , width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
             onClick={getInstrRating}
             margin="normal"
             padding="normal"
             >View My Rating</Button>
-            </Box>
+          
+            
+
+            {/* <Box sx={{marginBottom: 2}}> */}
+            <Button variant="contained"
+            style={{bottom:20, left:200,width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
+            onClick={navigateToInstrInfo}
+            margin="normal"
+            padding="normal"
+            >View My Info </Button>
+
+
+            <Button variant="contained"
+            style={{bottom:20, left:250,width:200, height:40  ,backgroundColor:' #1aac83', color:'#FFF' ,marginTop:10 }}
+            onClick={() => window.location.href=`/AddCourse?id=${instructorId}`}
+            margin="normal"
+            padding="normal"
+            > Add Course </Button>
+           
+            
             
       
             
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 100 }} size="small" aria-label="a dense table"  style={{ backgroundColor:'yellow', color:'#FFF'}} >
+    {/* <TableContainer component={Paper}> */}
+      <Table sx={{ minWidth: 50 }} size="small" aria-label="a dense table"  style={{ backgroundColor:'#FFFFFF', color:'#1aac83'}} >
         <TableHead  sx={{
               backgroundColor: "black",
               borderColor: "white",
@@ -99,7 +135,7 @@ const InstrCourses = () => {
       
             }} >
           <TableRow>
-            <StyledTableCell align="center" style={{width:"5px"}}  >Name of the courses given</StyledTableCell>
+            <StyledTableCell align="center" style={{width:"5px",backgroundColor:'#2D8668', color:'#FFFFFF'}}  >Name of the courses given</StyledTableCell>
 
 
           </TableRow>
@@ -116,7 +152,7 @@ const InstrCourses = () => {
                 }
             }}
             
-            onClick={() => window.location.href=`/UserCoursePage?courseId=${Courses._id}&userId=${params.get('userId')}`}
+            onClick={() => window.location.href=`/viewCourse?courseId=${Courses._id}`}
               key={Courses._id}
 
               >
@@ -128,7 +164,7 @@ const InstrCourses = () => {
         </TableBody>
       </Table>
 
-      <Table sx={{ minWidth: 100 }} size="small" aria-label="a dense table"  style={{ backgroundColor:'yellow', color:'#FFF'}} >
+      <Table sx={{ minWidth: 100 }} size="small" aria-label="a dense table"  style={{ backgroundColor:'#FFFFFF', color:'#1aac83'}} >
         <TableHead  sx={{
               backgroundColor: "black",
               borderColor: "white",
@@ -138,7 +174,7 @@ const InstrCourses = () => {
       
             }} >
           <TableRow>
-            <StyledTableCell align="center" style={{width:"5px"}}  >Rating</StyledTableCell>
+            <StyledTableCell align="center" style={{width:"5px",backgroundColor:'#2D8668', color:'#FFFFFF'}}  >Rating</StyledTableCell>
 
 
           </TableRow>
@@ -158,7 +194,44 @@ const InstrCourses = () => {
             </TableRow>
         </TableBody>
       </Table>
-    </TableContainer>
+
+      {/* <Table sx={{ minWidth: 100 }} size="small" aria-label="a dense table"  style={{ backgroundColor:'yellow', color:'#FFF'}} >
+        <TableHead  sx={{
+              backgroundColor: "black",
+              borderColor: "white",
+              borderWidth: "2px",
+              borderStyle: "solid",
+              padding: "4px",
+      
+            }} >
+          <TableRow>
+            <StyledTableCell align="center" style={{width:"5px"}}  > Review </StyledTableCell>
+
+
+          </TableRow>
+        </TableHead   >
+        <TableBody>
+       
+            <TableRow
+            hover
+            sx={{
+                "&:hover":{
+                cursor: "pointer",
+                backgroundColor: "#f5f5f5",
+                width: "100"
+                }
+            }}
+
+
+              >
+              <TableCell align="center">{Instrreview.InstrReview}</TableCell>
+
+
+            </TableRow>
+        </TableBody>
+      </Table> */}
+      
+    {/* </TableContainer> */}
           
         </div>
                 

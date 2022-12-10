@@ -17,13 +17,14 @@ const FrontPage = () => {
   return (
       <div>
         
-          <header className='home'>
+          <header className='home' >
               <ViewAllCoursesButton/>
            
           </header>
           <header className='app'>
 
           <CountriesDropdown/>
+         {/* <ViewExam/> */}
 
           </header>
          

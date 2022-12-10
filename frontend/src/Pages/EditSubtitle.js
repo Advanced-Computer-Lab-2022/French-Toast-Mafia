@@ -15,7 +15,6 @@ const queryParameters = new URLSearchParams(window.location.search)
 const subId = queryParameters.get("id")
 
 const newData = {};
-const vid = [];
 
 const handleSubmit = async(req , res) => {
 
@@ -43,13 +42,7 @@ const handleEditExercise = () => {
 
 const handleChange = (event) => {
   const attr = event.target.id
-  if(attr == 0 || attr == 1){
-    vid[attr] = event.target.value
-    newData["Video"] = vid
-  }
-  else{
     newData[attr] = event.target.value
-  }
 }
 
 
