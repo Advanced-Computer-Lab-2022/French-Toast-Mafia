@@ -16,13 +16,13 @@ import {
   import Slider from "../dashboard/Slider";
   import {useState} from 'react';
 
+  let s = "";
 const SearchBar = ({courses, setSearchResults}) =>{
   
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [filter, setFilter] = useState("NameOfCourse");
-  const [minPrice,setMinPrice] = useState(0);
-  const [maxPrice,setMaxPrice] = useState([]);
-
+  const [priceRange, setPriceRange] = useState([]);
+  
   const toggle = () => setDropdownOpen((prevState) => !prevState);
  
     const handleSubmit = (e) => e.preventDefault()
@@ -31,11 +31,28 @@ const SearchBar = ({courses, setSearchResults}) =>{
       setFilter(e.target.id)
     }
 
+    const handlePriceChange = () => {
+      console.log(s)
+      const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(s.toLowerCase())
+      && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
+     setSearchResults(resultsArray)
+    }
+    
     const handleSearchChange = (e) => {
-        if (!e.target.value) return setSearchResults(courses)
-        
-        const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(e.target.value.toLowerCase()))
-        setSearchResults(resultsArray)
+        if (!e.target.value){
+          s = e.target.value
+          const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(s.toLowerCase())
+          && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
+         setSearchResults(resultsArray)
+        } 
+        else{
+          s = e.target.value
+          const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(s.toLowerCase())
+           && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
+          setSearchResults(resultsArray)
+          
+        }
+       
     }
     return (
 
@@ -64,10 +81,11 @@ const SearchBar = ({courses, setSearchResults}) =>{
                   <i class="bi bi-funnel"></i>&nbsp;Filter
                 </Button> */}
                 </div>
+                <br/>
                 <div className="input-group mb-3" style={{ display: "flex", justifyContent: 'flex-start'}}>
-                <CardText className="fw-light card-text">Price Range:&nbsp;&nbsp;&nbsp;</CardText>
-                <Col lg="3">
-                  <Slider/>
+                <CardText className="fw-light card-text">Price Range:&nbsp;&nbsp;&nbsp;&nbsp;</CardText>
+                <Col lg="8">
+                  <Slider setPriceRange={setPriceRange} handlePriceChange={handlePriceChange}/>
                   </Col>
                 </div>
                
