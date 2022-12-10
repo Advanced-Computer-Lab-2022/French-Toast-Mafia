@@ -83,7 +83,7 @@ const addCourse = async(req , res) => {
             const createdCourse = await course.create(
                 {NameOfCourse,
                 //CourseSubtitle,
-                Instructor: instructorId,
+                Instructor: [instructorId, result.InstrName],
                 LevelOfCourse,
                 Summary,
                 Subject,
@@ -106,6 +106,14 @@ const addCourse = async(req , res) => {
 //     res.status(400).json({error:"Please enter a valid Instructor Id"});
 }
     
+}
+
+const addInstructorName = async(req, res) =>{
+    const courseId = req.query.id;
+    instId = "638406b772a816f9a6130b87";
+    instName = "Sara sherif";
+    c = await course.findByIdAndUpdate({_id: courseId},{Instructor: [mongoose.Types.ObjectId(instId), instName]});
+    res.status(200).json(c);
 }
 
 const deleteCourse = async (req, res) => {
@@ -578,7 +586,7 @@ const calculateInstrRating = async(req , res) => {
 
 
 module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
-     addCourse , deleteCourse, filterCost, filterRating, filterSubject, 
+     addCourse , addInstructorName, deleteCourse, filterCost, filterRating, filterSubject, 
      filterCourseSubjcet , filterCourseCost , ViewMyCourses
       , SearchCourse, viewInstrInfo, 
       editBiography, editEmail,ViewMyRatings , ViewMyReview, 

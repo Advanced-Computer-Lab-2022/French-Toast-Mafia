@@ -33,24 +33,46 @@ const SearchBar = ({courses, setSearchResults}) =>{
 
     const handlePriceChange = () => {
       console.log(s)
-      const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(s.toLowerCase())
-      && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
-     setSearchResults(resultsArray)
+      if(filter == "Instructor"){
+        const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(s.toLowerCase())
+        && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
+       setSearchResults(resultsArray)
+      }
+      else{
+        const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(s.toLowerCase())
+        && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
+       setSearchResults(resultsArray)
+      }
+   
     }
     
     const handleSearchChange = (e) => {
         if (!e.target.value){
           s = e.target.value
-          const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(s.toLowerCase())
-          && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
-         setSearchResults(resultsArray)
+          if(filter == "Instructor"){
+            const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(s.toLowerCase())
+            && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
+           setSearchResults(resultsArray)
+          }
+          else{
+            const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(s.toLowerCase())
+            && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
+           setSearchResults(resultsArray)
+          }
+        
         } 
         else{
           s = e.target.value
+          if(filter == "Instructor"){
+            const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(s.toLowerCase())
+            && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
+           setSearchResults(resultsArray)
+          }
+          else{
           const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(s.toLowerCase())
            && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
           setSearchResults(resultsArray)
-          
+          }
         }
        
     }
@@ -73,7 +95,7 @@ const SearchBar = ({courses, setSearchResults}) =>{
                   <DropdownMenu>
                     <DropdownItem header>Filter by:</DropdownItem>
                     <DropdownItem id="NameOfCourse" onClick={handleFilter}>Course Name</DropdownItem>
-                    <DropdownItem onClick={handleFilter}>Instructor Name</DropdownItem>
+                    <DropdownItem id="Instructor" onClick={handleFilter}>Instructor Name</DropdownItem>
                     <DropdownItem id="Subject" onClick={handleFilter}>Subject</DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
