@@ -14,7 +14,8 @@ import {
   import {useState, useEffect} from 'react';
   import { getAvailableSubjects } from "../../api/axios";
 
-let s = "";
+let search = "";
+
 const SearchBar = ({courses, setSearchResults}) =>{
   
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -28,8 +29,38 @@ const SearchBar = ({courses, setSearchResults}) =>{
   useEffect(() => {
     getAvailableSubjects().then(json => {
       setAvSubjects(json)
+      setSubject("All")
     })
   }, []);
+  
+  useEffect(() => {
+    if(filter == "Instructor"){
+        if(subject !== "All"){
+          const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+          && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
+          setSearchResults(resultsArray)
+        }
+        else{
+          const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+          && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1])
+          setSearchResults(resultsArray)
+        }
+       
+      }
+      else{
+        if(subject !== "All"){
+          const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+          && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
+          setSearchResults(resultsArray)
+        }
+        else{
+          const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+          && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
+          setSearchResults(resultsArray)
+        }
+       
+      }
+  }, [subject]);
   
 
 
@@ -44,52 +75,96 @@ const SearchBar = ({courses, setSearchResults}) =>{
     }
 
     const handleSubject = (e) => {
-      console.log(e.target.id)
-      setSubject(e.target.id)
+    setSubject(e.target.id)
     }
 
     const handlePriceChange = () => {
       if(filter == "Instructor"){
-        const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(s.toLowerCase())
-        && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
-       setSearchResults(resultsArray)
+        if(subject !== "All"){
+          const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+          && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
+          setSearchResults(resultsArray)
+        }
+        else{
+          const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+          && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1])
+          setSearchResults(resultsArray)
+        }
+       
       }
       else{
-        const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(s.toLowerCase())
-        && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
-       setSearchResults(resultsArray)
+        if(subject !== "All"){
+          const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+          && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
+          setSearchResults(resultsArray)
+        }
+        else{
+          const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+          && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
+          setSearchResults(resultsArray)
+        }
+       
       }
-   
     }
     
     const handleSearchChange = (e) => {
-      s = e.target.value
-      
+      search = e.target.value
         if (!e.target.value){
         
-          if(filter === "Instructor"){
-            const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(s.toLowerCase())
-            && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
-           setSearchResults(resultsArray)
+          if(filter == "Instructor"){
+            if(subject !== "All"){
+              const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+              && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
+              setSearchResults(resultsArray)
+            }
+            else{
+              const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+              && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1])
+              setSearchResults(resultsArray)
+            }
+           
           }
           else{
-            const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(s.toLowerCase())
-            && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
-           setSearchResults(resultsArray)
+            if(subject !== "All"){
+              const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+              && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
+              setSearchResults(resultsArray)
+            }
+            else{
+              const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+              && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
+              setSearchResults(resultsArray)
+            }
+           
           }
-        
         } 
         else{
           
-          if(filter === "Instructor"){
-            const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(s.toLowerCase())
-            && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
-           setSearchResults(resultsArray)
+          if(filter == "Instructor"){
+            if(subject !== "All"){
+              const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+              && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
+              setSearchResults(resultsArray)
+            }
+            else{
+              const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+              && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1])
+              setSearchResults(resultsArray)
+            }
+           
           }
           else{
-          const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(s.toLowerCase())
-           && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
-          setSearchResults(resultsArray)
+            if(subject !== "All"){
+              const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+              && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
+              setSearchResults(resultsArray)
+            }
+            else{
+              const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+              && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
+              setSearchResults(resultsArray)
+            }
+           
           }
         }
        
