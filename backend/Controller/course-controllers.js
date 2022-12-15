@@ -69,6 +69,17 @@ function getAllCourse (req,res) {
     });
 };
 
+const getSubjects = async(req, res) => {
+   const Subjects = [];
+    course.find({}).then (courses => {
+        for(let i = 0 ; i < courses.length ; i++){
+            if(!Subjects.includes(courses[i].Subject))
+                Subjects.push(courses[i].Subject)
+        }
+        res.status(200).json(Subjects)
+        });
+}
+
 const viewCourseInstructor = async(req , res) => {
     const courseId = req.query.id;
 
@@ -280,7 +291,7 @@ const viewCourseDetails = async(req , res) => {
     const resSubtitles = [];
     const resSubtitlesDetails = [];
     const resTitles = [];
-    const resHours=[]  
+    const resHours=[];
     const resExercises = [];
     const resQuestions = [];
     if (courseId){
@@ -364,8 +375,16 @@ const calculateCourseDuration = async(req , res) => {
 }
 
 const getMaxPrice = async(req, res) => {
-    course.find({}).then (function (course) {
-        res.status(200).json(course)
+    let max = 0;
+    course.find({}).then (courses => {
+        for(let i = 0 ; i < courses.length ; i++){
+            if (max < courses[i].Cost)
+                max = courses[i].Cost
+        }
+        // courses.forEach((item, index) => {
+        //     console.log(Object.keys(courses))
+        //   })
+        res.status(200).json(max)
         });
 }
 
@@ -375,7 +394,7 @@ const getMaxPrice = async(req, res) => {
 
 
 
-module.exports={getAllCourse , viewCourse, createCourse, editCourse, viewCourseInstructor, getMaxPrice, 
+module.exports={getAllCourse , viewCourse, createCourse, editCourse, viewCourseInstructor, getMaxPrice, getSubjects,
      viewCourseSubtitles, viewCourseExam, viewUserCourse,deleteCourseRating,addCourseRating,calculateCourseRating,
      viewCourseRating,emptyCourseList,registerCourseToUser,viewCourseDetails,calculateCourseDuration};
    

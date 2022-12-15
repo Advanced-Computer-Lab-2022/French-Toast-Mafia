@@ -3,7 +3,7 @@ const express= require("express");
 
 const {createInstructor, getAllInstructors,
         selectCountryInstructor, addCourse ,
-        deleteCourse,
+        deleteCourse, addInstructorName,
         filterCourseSubjcet ,
         filterCourseCost ,
         ViewMyCourses ,
@@ -26,6 +26,8 @@ router.get('/',getAllInstructors );
 router.post('/addCourse', addCourse);
 
 router.get('/deleteCourse', deleteCourse);
+
+router.get('/addInstructorName', addInstructorName);
 
 router.post('/createInstructor', createInstructor);
 

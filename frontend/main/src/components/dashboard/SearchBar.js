@@ -1,11 +1,8 @@
 import {
-    Button,
     Form,
     FormGroup,
-    Label,
     Input,
     Col,
-    FormText,
     CardText,
     DropdownToggle,
     DropdownMenu,
@@ -14,28 +11,163 @@ import {
   } from "reactstrap";
 
   import Slider from "../dashboard/Slider";
-  import {useState} from 'react';
+  import {useState, useEffect} from 'react';
+  import { getAvailableSubjects } from "../../api/axios";
+
+let search = "";
 
 const SearchBar = ({courses, setSearchResults}) =>{
   
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [courseDropdown, setCourseDropdown] = useState(false);
   const [filter, setFilter] = useState("NameOfCourse");
-  const [minPrice,setMinPrice] = useState(0);
-  const [maxPrice,setMaxPrice] = useState([]);
+  const [priceRange, setPriceRange] = useState([0,5000]);
+  const [subject, setSubject] = useState("All");
+  const [avSubjects, setAvSubjects] = useState([]);
+
+
+  useEffect(() => {
+    getAvailableSubjects().then(json => {
+      setAvSubjects(json)
+      setSubject("All")
+    })
+  }, []);
+  
+  useEffect(() => {
+    if(filter == "Instructor"){
+        if(subject !== "All"){
+          const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+          && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
+          setSearchResults(resultsArray)
+        }
+        else{
+          const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+          && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1])
+          setSearchResults(resultsArray)
+        }
+       
+      }
+      else{
+        if(subject !== "All"){
+          const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+          && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
+          setSearchResults(resultsArray)
+        }
+        else{
+          const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+          && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
+          setSearchResults(resultsArray)
+        }
+       
+      }
+  }, [subject]);
+  
+
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
  
+  const toggleCourse = () => setCourseDropdown((prevState) => !prevState);
+
     const handleSubmit = (e) => e.preventDefault()
 
     const handleFilter = (e) => {
       setFilter(e.target.id)
     }
 
+    const handleSubject = (e) => {
+    setSubject(e.target.id)
+    }
+
+    const handlePriceChange = () => {
+      if(filter == "Instructor"){
+        if(subject !== "All"){
+          const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+          && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
+          setSearchResults(resultsArray)
+        }
+        else{
+          const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+          && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1])
+          setSearchResults(resultsArray)
+        }
+       
+      }
+      else{
+        if(subject !== "All"){
+          const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+          && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
+          setSearchResults(resultsArray)
+        }
+        else{
+          const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+          && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
+          setSearchResults(resultsArray)
+        }
+       
+      }
+    }
+    
     const handleSearchChange = (e) => {
-        if (!e.target.value) return setSearchResults(courses)
+      search = e.target.value
+        if (!e.target.value){
         
-        const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(e.target.value.toLowerCase()))
-        setSearchResults(resultsArray)
+          if(filter == "Instructor"){
+            if(subject !== "All"){
+              const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+              && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
+              setSearchResults(resultsArray)
+            }
+            else{
+              const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+              && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1])
+              setSearchResults(resultsArray)
+            }
+           
+          }
+          else{
+            if(subject !== "All"){
+              const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+              && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
+              setSearchResults(resultsArray)
+            }
+            else{
+              const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+              && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
+              setSearchResults(resultsArray)
+            }
+           
+          }
+        } 
+        else{
+          
+          if(filter == "Instructor"){
+            if(subject !== "All"){
+              const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+              && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
+              setSearchResults(resultsArray)
+            }
+            else{
+              const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+              && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1])
+              setSearchResults(resultsArray)
+            }
+           
+          }
+          else{
+            if(subject !== "All"){
+              const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+              && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
+              setSearchResults(resultsArray)
+            }
+            else{
+              const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+              && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
+              setSearchResults(resultsArray)
+            }
+           
+          }
+        }
+       
     }
     return (
 
@@ -50,24 +182,33 @@ const SearchBar = ({courses, setSearchResults}) =>{
                   onChange={handleSearchChange}
                 />
                  <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-                  <DropdownToggle className="btn" outline color="primary">
-                  <i class="bi bi-funnel"></i>&nbsp;Filter: {filter}
+                  <DropdownToggle className="btn" outline color="primary" >
+                  <i class="bi bi-search"></i>&nbsp;Search by: {filter}
                   </DropdownToggle>
                   <DropdownMenu>
-                    <DropdownItem header>Filter by:</DropdownItem>
+                    <DropdownItem header>Search by:</DropdownItem>
                     <DropdownItem id="NameOfCourse" onClick={handleFilter}>Course Name</DropdownItem>
-                    <DropdownItem onClick={handleFilter}>Instructor Name</DropdownItem>
+                    <DropdownItem id="Instructor" onClick={handleFilter}>Instructor Name</DropdownItem>
                     <DropdownItem id="Subject" onClick={handleFilter}>Subject</DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
-                  {/* <Button className="btn" outline color="primary">
-                  <i class="bi bi-funnel"></i>&nbsp;Filter
-                </Button> */}
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <Dropdown isOpen={courseDropdown} toggle={toggleCourse}>
+                  <DropdownToggle className="btn" outline color="primary">
+                  <i class="bi bi-funnel"></i>&nbsp;Subject: {subject}
+                  </DropdownToggle>
+                  <DropdownMenu>
+                    <DropdownItem header>Select subject:</DropdownItem>
+                    <DropdownItem id="All" onClick={handleSubject}>All</DropdownItem>
+                    {avSubjects.map(subject =>  <DropdownItem id={subject} onClick={handleSubject}>{subject}</DropdownItem>)}
+                  </DropdownMenu>
+                </Dropdown>
                 </div>
+                <br/>
                 <div className="input-group mb-3" style={{ display: "flex", justifyContent: 'flex-start'}}>
-                <CardText className="fw-light card-text">Price Range:&nbsp;&nbsp;&nbsp;</CardText>
-                <Col lg="3">
-                  <Slider/>
+                <CardText className="fw-light card-text">Price Range:&nbsp;&nbsp;&nbsp;&nbsp;</CardText>
+                <Col lg="8">
+                  <Slider setPriceRange={setPriceRange} handlePriceChange={handlePriceChange}/>
                   </Col>
                 </div>
                
