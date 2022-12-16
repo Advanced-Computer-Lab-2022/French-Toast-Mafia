@@ -3,7 +3,7 @@ const { getAllExams , createExam} = require("../Controller/exams-controller");
 
 const router = express.Router();
 
-router.get("/",getAllExams);
+router.get("/getAllExams",getAllExams);
 
 router.post("/createExam", createExam);
 
