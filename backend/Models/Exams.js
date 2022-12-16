@@ -4,7 +4,12 @@ const {ObjectId} = mongoose.Schema;
 
 
 const examSchema = new Schema ({
-    title: {
+      courseId: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Course',
+        required: true
+      },
+      title: {
         type: String,
         required: true
       }, 
@@ -13,32 +18,34 @@ const examSchema = new Schema ({
         required: false,
       },
       mcq: [{
-          question: {
-            type: String,
-            required: true
-          },
-          choice1: {
-            type: String,
-            required: true
-          },
-          choice2: {
-            type: String,
-            required: true
-          },
-          choice3: {
-            type: String,
-            required: true
-          },
-          choice4: {
-            type: String,
-            required: true
-          },
-          correct: {
-            type: String,
-            required: true
-          },
-      }
-    ]
+        question: {
+          type: String,
+          required: true
+        },
+        choice1: {
+          type: String,
+          required: true
+        },
+        choice2: {
+          type: String,
+          required: true
+        },
+        choice3: {
+          type: String,
+          required: true
+        },
+        choice4: {
+          type: String,
+          required: true
+        },
+        correct: {
+          type: String,
+          required: true
+        },
+    }
+  ]
+     
+
       
 }, { timestamps: true });
 

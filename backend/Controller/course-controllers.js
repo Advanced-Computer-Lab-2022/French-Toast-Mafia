@@ -69,6 +69,17 @@ function getAllCourse (req,res) {
     });
 };
 
+const getSubjects = async(req, res) => {
+   const Subjects = [];
+    course.find({}).then (courses => {
+        for(let i = 0 ; i < courses.length ; i++){
+            if(!Subjects.includes(courses[i].Subject))
+                Subjects.push(courses[i].Subject)
+        }
+        res.status(200).json(Subjects)
+        });
+}
+
 const viewCourseInstructor = async(req , res) => {
     const courseId = req.query.id;
 
@@ -163,13 +174,23 @@ const deleteCourseRating = async(req , res) => {
     }
 }
 
+const removeCourseRating = async(req, res) =>{
+    const courseId = req.query.id;
+    const resCourse = await course.findOneAndUpdate({_id:mongoose.Types.ObjectId(courseId)}, { $pop: { Rating: tuple } }, { new: true });
+    res.status(200).json(resCourse);
+
+}
+
 //add course rating function
 const addCourseRating = async(req , res) => {
     const courseId=req.query.id;
     const userId=req.body.id;
     const rating=req.body.rating;
+    const review=req.body.review;
+    const u = await user.findOne({_id:mongoose.Types.ObjectId(userId)});
+    const username = u.Name;
     const uId=mongoose.Types.ObjectId(userId);
-    const tuple={uId,rating};
+    const tuple={uId,rating,review,username};
     if (courseId){
         try{
             //check if the user has already rated the course
@@ -202,6 +223,7 @@ const calculateCourseRating = async(req , res) => {
             }
             const avg=sum/result.Rating.length;
             res.status(200).json(avg);
+            return avg;
         }catch(error){
             res.status(400).json({error:error.message})
         }   
@@ -383,7 +405,7 @@ const getMaxPrice = async(req, res) => {
 
 
 
-module.exports={getAllCourse , viewCourse, createCourse, editCourse, viewCourseInstructor, getMaxPrice, 
+module.exports={getAllCourse , viewCourse, createCourse, editCourse, viewCourseInstructor, getMaxPrice, getSubjects,
      viewCourseSubtitles, viewCourseExam, viewUserCourse,deleteCourseRating,addCourseRating,calculateCourseRating,
      viewCourseRating,emptyCourseList,registerCourseToUser,viewCourseDetails,calculateCourseDuration};
    

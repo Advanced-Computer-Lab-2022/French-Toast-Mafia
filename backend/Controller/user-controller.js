@@ -406,7 +406,7 @@ const viewCourseTitleHoursRating = async (req, res) => {
                   to: x.Email.toString(),
                   subject: 'Password Change Request',
                   text: 'Click on the link to change your password',
-                  html: '<a href="http://localhost:3000/changePassword">Click here to change your password</a>'
+                  html: '<a href="http://localhost:3000/#/changePassword">Click here to change your password</a>'
                 });
             
             });
