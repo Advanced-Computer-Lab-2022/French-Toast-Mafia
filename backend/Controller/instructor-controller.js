@@ -4,6 +4,10 @@ const exam = require("../Models/Exams");
 const subtitle = require("../Models/Subtitle");
 var mongoose = require('mongoose');
 const moment = require("moment");
+const instrlogin = require("../Controller/user-controller");
+const instrlogout = require("../Controller/user-controller");
+
+
 
 function getAllInstructors (req,res) {
     instructor.find({}).then (function (instructor) {

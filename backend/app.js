@@ -2,6 +2,9 @@ const express= require("express");
 const mongoose= require ("mongoose");
 const MongoURI='mongodb+srv://admin:Mayar2611@db.ntawmzm.mongodb.net/?retryWrites=true&w=majority';
 const cors=require('cors');
+const cookieParser = require('cookie-parser');
+
+
 
 const app= express();
 const port= process.env.PORT || "5000" ;
