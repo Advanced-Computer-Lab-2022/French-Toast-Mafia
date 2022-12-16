@@ -72,18 +72,6 @@ const Header = () => {
                 placeholder="Create Password"
                 autoFocus
               />
-               <Form.Label>First Name</Form.Label>
-              <Form.Control
-                type="First Name"
-                placeholder="Enter your first name"
-                autoFocus
-              />
-               <Form.Label>Last Name</Form.Label>
-              <Form.Control
-                type="Last Name"
-                placeholder="Enter your last name"
-                autoFocus
-              />
                  <Form.Label>Gender </Form.Label>
               <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
