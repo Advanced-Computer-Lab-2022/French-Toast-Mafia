@@ -45,6 +45,7 @@ const createToken = (Name) => {
     });
 };
 
+
 //user signing up 
 const signUp = async (req, res) => {
     const { Name, Email, Password, Type } = req.body;
