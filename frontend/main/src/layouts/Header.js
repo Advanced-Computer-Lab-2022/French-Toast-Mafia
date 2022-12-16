@@ -1,5 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Modal from "react-bootstrap/Modal";
+import { useState } from "react";
+import { Form, FormControl , FormLabel } from "react-bootstrap";
+import RadioGroup from '@mui/material/RadioGroup';
+import { Radio } from "@mui/material";
+import FormControlLabel from '@mui/material/FormControlLabel';
+
+
 import {
   Navbar,
   Collapse,
@@ -18,7 +26,13 @@ import { ReactComponent as LogoWhite } from "../assets/images/logos/materialprow
 import user1 from "../assets/images/users/user4.jpg";
 
 const Header = () => {
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const [isOpen, setIsOpen] = React.useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
 
@@ -30,6 +44,70 @@ const Header = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
   return (
+
+    <div>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Sign Up</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>User Name</Form.Label>
+              <Form.Control
+                type="name"
+                placeholder="Enter your user name"
+                autoFocus
+              />
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="name@example.com"
+                autoFocus
+              />
+               <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Create Password"
+                autoFocus
+              />
+               <Form.Label>First Name</Form.Label>
+              <Form.Control
+                type="First Name"
+                placeholder="Enter your first name"
+                autoFocus
+              />
+               <Form.Label>Last Name</Form.Label>
+              <Form.Control
+                type="Last Name"
+                placeholder="Enter your last name"
+                autoFocus
+              />
+                 <Form.Label>Gender </Form.Label>
+              <RadioGroup
+                    aria-labelledby="demo-radio-buttons-group-label"
+                    defaultValue="female"
+                   name="radio-buttons-group"
+  >
+             <FormControlLabel value="female" control={<Radio />} label="Female" />
+             <FormControlLabel value="male" control={<Radio />} label="Male" />
+                </RadioGroup>
+       
+             
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose} >
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Sign Up
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    
     <Navbar color="primary" dark expand="md" className="fix-header">
       <div className="d-flex align-items-center">
         <div className="d-lg-block d-none me-5 pe-3">
@@ -60,14 +138,16 @@ const Header = () => {
           )}
         </Button>
       </div>
+      
 
       <Collapse navbar isOpen={isOpen}>
         <Nav className="me-auto" navbar>
           <NavItem>
-            <Link to="/starter" className="nav-link">
-              Starter
-            </Link>
-          </NavItem>
+            < Button    onClick={handleShow}  color="Transparent" >
+              Sign Up
+              </Button>
+              {/* // {modalOpen && <Modal setOpenModal={setModalOpen} backdrop={true}/>} */}
+                    </NavItem>
           <NavItem>
             <Link to="/about" className="nav-link">
               About
@@ -106,6 +186,7 @@ const Header = () => {
         </Dropdown>
       </Collapse>
     </Navbar>
+    </div>
   );
 };
 
