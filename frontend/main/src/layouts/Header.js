@@ -181,6 +181,18 @@ const Header = () => {
             <DropdownItem divider />
             <DropdownItem>My Balance</DropdownItem>
             <DropdownItem>Inbox</DropdownItem>
+          
+            <DropdownItem >
+              <Link to="/Users">
+              Users
+              </Link>
+              </DropdownItem>
+              
+            <DropdownItem >
+              <Link to="/forgotPass">
+              Forgot Password
+              </Link>
+              </DropdownItem>
             <DropdownItem>Logout</DropdownItem>
           </DropdownMenu>
         </Dropdown>
