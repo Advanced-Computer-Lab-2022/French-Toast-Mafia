@@ -48,11 +48,11 @@ const createToken = (Name) => {
 
 //user signing up 
 const signUp = async (req, res) => {
-    const { Name, Email, Password, Type } = req.body;
+    const { Name, Email, Password, Type, Gender } = req.body;
     try {
         const salt = await bcrypt.genSalt();        //hash password beha 
         const hashedPassword = await bcrypt.hash(Password, salt);       
-        const newuser = await user.create({ Name: Name, Email: Email, Password: hashedPassword, Type: Type});
+        const newuser = await user.create({ Name: Name, Email: Email, Password: hashedPassword, Type: Type, Gender: Gender});
         const token = createToken(newuser.Name);
 
         res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
