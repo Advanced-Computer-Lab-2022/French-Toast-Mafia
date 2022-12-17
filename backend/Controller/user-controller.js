@@ -8,6 +8,9 @@ const courseController = require("../Controller/course-controllers")
 var mongoose = require('mongoose');
 const nodemailer = require('nodemailer')
 const sendgridTransport = require('nodemailer-sendgrid-transport')
+const express = require("express");
+const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken');
 
 
 //creatig user 
@@ -33,6 +36,64 @@ const createUser = async(req,res) => {
         .then (result => res.status(200).send(result))
      
     }
+
+// create json web token
+const maxAge = 3 * 24 * 60 * 60;
+const createToken = (Name) => {
+    return jwt.sign({ Name }, 'supersecret', {
+        expiresIn: maxAge
+    });
+};
+
+
+//user signing up 
+const signUp = async (req, res) => {
+    const { Name, Email, Password, Type, Gender } = req.body;
+    try {
+        const salt = await bcrypt.genSalt();        //hash password beha 
+        const hashedPassword = await bcrypt.hash(Password, salt);       
+        const newuser = await user.create({ Name: Name, Email: Email, Password: hashedPassword, Type: Type, Gender: Gender});
+        const token = createToken(newuser.Name);
+
+        res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+        res.status(200).json(newuser)
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
+//user login   
+const login = async (req, res) => {
+    const {Name, Email, Password} = req.body;
+
+    try {
+        const inuser = await user.findOne({ Name: req.body.Name , Email: req.body.Email });
+        console.log(inuser);
+        if (inuser) {
+          const hash = await bcrypt.compare(req.body.Password, inuser.Password);
+          if (hash) {
+            //   ..... further code to maintain authentication like jwt or sessions
+            res.send("Auth Successful");
+          } else {
+            res.send("One of the entered fields are wrong please try again.");
+          }
+        } else {
+          res.send("One of the entered fields are wrong please try again.");
+        }
+      } catch (error) {
+        console.log(error);
+        res.status(500).send(" error occured ");
+      }
+}
+
+//user logout
+const logout = (req, res) => {
+    res.cookie('jwt', '', { maxAge: 1 });
+    res.redirect('/');
+
+}
+
+
 
 //get all users 
 function getAllUser (req,res) {
@@ -319,4 +380,5 @@ const removeCourse = async(req , res) => {
 module.exports = {getAllUser,
     viewCourseTitleHoursRating,viewCoursePrice,
     selectCountryUser,ChangeCurrencyUser,addCourse,
-    viewMyInfo,ViewMyCourses,changePassword,sendPassChangeMail,removeCourse};
+    viewMyInfo,ViewMyCourses,changePassword,sendPassChangeMail,
+    removeCourse, signUp, login, logout};
