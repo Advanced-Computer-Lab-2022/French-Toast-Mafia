@@ -10,7 +10,7 @@ const {getAllUser,
 
 const router = express.Router();
 
-router.get("/",getAllUser );
+router.get("/getAllUser",getAllUser );
 
 router.get('/viewcoursetitlehoursrating',viewCourseTitleHoursRating);
 

@@ -19,6 +19,10 @@ const SubtitleSchema = new Schema({
         type: String,
         required: false
     },
+    Notes:{
+        type: String,
+        required: false
+    },
     Description:{
         type: String,
         required: false
@@ -27,6 +31,11 @@ const SubtitleSchema = new Schema({
     Duration: {
         type: Number,
         required: false
+    },
+    isCompleted: {
+        type: Boolean,
+        required: false,
+        default: false
     },
 
 }, { timestamps: true });

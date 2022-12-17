@@ -199,10 +199,43 @@ const getExcercisesAnswers = async (req,res) => {
     res.status(200).json(resExcercises);
 };
 
+//add notes
+function addNotes (req,res) {
+    const subId=req.query.id;
+    const {Notes} = req.body;
+    Subtitle.findOneAndUpdate({_id:
+        subId},{$set:{Notes:Notes}})
+        .then(function (Subtitle) {
+        res.status(200).json(Subtitle)
+    });
+};
 
+//view all course subtitles
+const viewAllCourseSubtitles = async (req,res) => {
+    const courseId=req.query.id;
+    const resSubtitle = await Subtitle.find({Course:courseId});
+    res.status(200).json(resSubtitle);
+};
+
+//get Subtitle Video
+const viewSubtitleVideo = async (req,res) => {
+    const subId=req.query.id;
+  //  const resSubtitle = await Subtitle.findOne({_id:subId}).select('Video');
+    const resSubtitle = await Subtitle.findById(subId, { _id:0, Video: 1, Description: 1 });
+    res.status(200).json(resSubtitle);
+};
+
+//get subtitle notes
+const viewSubtitleNotes = async (req,res) => {
+    const subId=req.query.id;
+    const resSubtitle = await Subtitle
+    .findById(subId, { _id:0, Notes: 1 });
+    res.status(200).json(resSubtitle);
+};
 
     
 
 module.exports = {getAllSubtitles,addSubtitle, editSubtitle, addExcercise,deleteExcercise,removeAllExcercises, viewSubtitle,
     deleteSubtitle,deleteSubtitleFromCourse,removeAllSubtitles,getCourseSubtitlesVideos,
-    getCourseSubtitlesExcercises,addVideoDescription,emptySubtitlesArray,getExcercisesQuestions,getExcercisesAnswers};
+    getCourseSubtitlesExcercises,addVideoDescription,emptySubtitlesArray,getExcercisesQuestions,
+    getExcercisesAnswers,addNotes,viewAllCourseSubtitles,viewSubtitleVideo,viewSubtitleNotes};
