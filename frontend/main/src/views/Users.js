@@ -29,7 +29,7 @@ const Users = () => {
     const [users,setUsers] = useState([]);
     
     const getUsers =  async () => {
-         await axios.get('http://localhost:5000/user/').then(
+         await axios.get('http://localhost:5000/user/getAllUser').then(
         (res) => { 
             const users = res.data
             console.log(users)
@@ -37,9 +37,6 @@ const Users = () => {
             
         }
          );
-       
-    
-
     }
     return(
 
@@ -64,7 +61,6 @@ const Users = () => {
           <TableRow>
             <StyledTableCell align="center">Name</StyledTableCell>
             <StyledTableCell align="center">Email</StyledTableCell>
-            <StyledTableCell align="center">Password</StyledTableCell>
             <StyledTableCell align="center">Type</StyledTableCell>
 
           </TableRow>
@@ -89,7 +85,6 @@ const Users = () => {
               >
               <TableCell align="center">{user.Name}</TableCell>
               <TableCell align="center">{user.Email}</TableCell>
-              <TableCell align="center">{user.Password}</TableCell>
               <TableCell align="center">{user.Type}</TableCell>
 
 

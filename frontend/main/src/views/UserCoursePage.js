@@ -73,7 +73,7 @@ const UserCoursePage = () => {
         <StyledTableCell align="center">Level</StyledTableCell>
         <StyledTableCell align="center">Subject</StyledTableCell>
         <StyledTableCell align="center">Instructor Info</StyledTableCell>
-        <StyledTableCell align="center">Videos</StyledTableCell>
+        <StyledTableCell align="center">Chapters</StyledTableCell>
         <StyledTableCell align="center">Exercises</StyledTableCell>
         <StyledTableCell align="center">Rate Course</StyledTableCell>
       </TableRow>
@@ -109,7 +109,7 @@ const UserCoursePage = () => {
           </TableCell>
 
           <TableCell align="center">
-          <Box sx={{marginBottom: 2}}>
+          {/* <Box sx={{marginBottom: 2}}>
             <Button variant="contained"
               style={{ width:150, height: 40,  color: '#FFF', marginTop: 10 }}
               onClick={() => 
@@ -119,7 +119,19 @@ const UserCoursePage = () => {
               margin="normal"
               padding="normal"
             >Watch Videos</Button>
-            </Box>
+            </Box> */}
+            <Box sx={{marginBottom: 2}}>
+            <Button variant="contained"
+              style={{ width:150, height: 40,  color: '#FFF', marginTop: 10 }}
+              onClick={() => 
+                //window.location.href=`/CourseVideos?courseId=${courseId}&userId=${userId}`
+                navigate(`/CourseSubtitles?courseId=${courseId}`)
+            }
+              margin="normal"
+              padding="normal"
+            >View Chapters</Button>
+            </Box> 
+
           </TableCell>
 
           <TableCell align="center">
