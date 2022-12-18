@@ -17,3 +17,7 @@ export const getMaxCoursePrice = async() =>{
     const response = await axios.get("http://localhost:5000/Course/getMaxPrice")
     return response.data
 }
+export const getPreviewVideo = async() =>{
+    const response = await axios.get("http://localhost:5000/Course/getCoursePreviewVideos")
+    return response.data
+}

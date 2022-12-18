@@ -7,28 +7,32 @@ import {
     CardTitle,
     Button,
   } from "reactstrap";
-  
+  import { useNavigate } from "react-router-dom";
 
-  import bg1 from "../../assets/images/bg/bg1.jpg";
+
 
   const Course = (course) => {
-  
+    const navigate = useNavigate();
+
     const c = Object.values(course)[0]
 
     const handleClick = () =>{
-      console.log("clicked")
+      navigate(`/CreditCardss`)
     }
     
     return (
-      <Card>
+      <Card >
         <div style={{ display: "flex", justifyContent: 'flex-end'}}>
-        <CardImg style={{width:"42%", height:"42%"}} alt="Card image cap" src={bg1} />
+        <iframe style={{width:"42%"}} src={c.Preview} title="YouTube video" allowFullScreen autoplay={"false"}  ></iframe>
+
         <CardBody className="p-4">
           <CardTitle tag="h5">{c.NameOfCourse}</CardTitle>
           <CardSubtitle className="mb-2 text-muted" tag="h6">{c.Summary}</CardSubtitle>
           <CardText className="fw-light">{c.Instructor[1]}</CardText>
           <CardText className="mt-3">Rating: {0}<br/> Subject: {c.Subject}<br/> Price: {c.Cost}</CardText>
-          <Button color="primary" onClick={handleClick}>View Course</Button>
+          <Button color="primary" onClick={handleClick}  
+          >View Course
+          </Button>
         </CardBody>
         </div>
       </Card>
