@@ -11,7 +11,6 @@ import {
 
   import {getCourseRating } from "../../api/axios";
   import {useState, useEffect} from "react";
-  import { useNavigate } from "react-router-dom";
 
   const Course = (course) => {
 
