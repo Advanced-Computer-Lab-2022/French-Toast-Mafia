@@ -11,7 +11,6 @@ import {
 
   import {getCourseRating } from "../../api/axios";
   import {useState, useEffect} from "react";
-  import { useNavigate } from "react-router-dom";
 
   const Course = (course) => {
 
@@ -37,11 +36,13 @@ import {
           <CardTitle tag="h5">{c.NameOfCourse}</CardTitle>
           <CardSubtitle className="mb-2 text-muted" tag="h6">{c.Summary}</CardSubtitle>
           <CardText className="fw-light">{c.Instructor[1]}</CardText>
-          <CardText className="mt-3">Rating: {rating}<br/> Subject: {c.Subject}<br/> Price: {c.Cost}</CardText>
-          <Button color="primary" onClick={() => 
-                     navigate(`/viewCourse?id=${cId}`)}>View Course</Button>
+          <CardText className="mt-3">Rating: {rating}<br/> Subject: {c.Subject}</CardText>
+          <CardTitle tag="h5">Price: {c.Cost} EGP</CardTitle>
+          <Button color="primary" onClick={() => navigate(`/viewCourse?id=${cId}`)}>View Course</Button>        
+
         </CardBody>
         </div>
+       
       </Card>
     );
   };
