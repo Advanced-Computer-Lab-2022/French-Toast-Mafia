@@ -58,8 +58,7 @@ const instructorSchema = new Schema({
       required: false
     },
     Exam: {
-      type: mongoose.Types.ObjectId,
-      ref:'Exams',
+      type: Array,
       required: false
     },
 

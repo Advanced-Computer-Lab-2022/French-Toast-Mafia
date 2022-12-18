@@ -9,6 +9,15 @@ const examSchema = new Schema ({
         ref: 'Course',
         required: true
       },
+      instrId:{
+        type: mongoose.Types.ObjectId,
+        ref: 'Instructor',
+        required: true
+      },
+      users:{
+        type:Array,
+        required: false
+      },
       title: {
         type: String,
         required: true
@@ -17,7 +26,7 @@ const examSchema = new Schema ({
         type: String,
         required: false,
       },
-      mcq: [{
+      mcq:  [{
         question: {
           type: String,
           required: true
@@ -45,8 +54,6 @@ const examSchema = new Schema ({
     }
   ]
      
-
-      
 }, { timestamps: true });
 
 const Exams = mongoose.model('Exams', examSchema);

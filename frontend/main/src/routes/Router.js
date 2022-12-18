@@ -33,6 +33,15 @@ const CourseExercises= lazy(() => import('../views/CourseExercises.js'));
 const CourseRate= lazy(() => import('../views/CourseRate.js'));
 const CourseSubtitles= lazy(() => import('../views/CourseSubtitles.js'));
 
+
+const Instructors= lazy(() => import('../views/Instructors.js'));
+const InstructorCourses= lazy(() => import('../views/InstructorCourses.js'));
+const InstructorCoursePage= lazy(() => import('../views/InstructorCoursePage.js'));
+
+const ViewExam= lazy(() => import('../views/ViewExam.js'));
+const ViewExamAnswer= lazy(() => import('../views/ViewExamAnswer.js'));
+const ExamIsDone= lazy(() => import('../views/ExamIsDone.js'));
+
 // /*****Routes******/
 
 const ThemeRoutes = [
@@ -63,6 +72,13 @@ const ThemeRoutes = [
       { path: "/CourseRate", exact: false, element: <CourseRate /> },
       { path: "/CourseSubtitles", exact: false, element: <CourseSubtitles /> },
       { path: "/CourseVideos", exact: false, element: <CourseVideos /> },
+
+      { path: "/Instructors", exact: true, element: <Instructors /> },
+      { path: "/InstructorCourses", exact: false, element: <InstructorCourses /> },
+      { path: "/InstructorCoursePage", exact: false, element: <InstructorCoursePage /> },
+      { path: "/ViewExam", exact: false, element: <ViewExam /> },
+      { path: "/ViewExamAnswer", exact: false, element: <ViewExamAnswer /> },
+      { path: "/ExamIsDone", exact: false, element: <ExamIsDone /> },
 
 
     ],
