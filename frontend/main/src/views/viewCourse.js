@@ -63,6 +63,7 @@ const ViewCourse = () => {
       <Reviews reviews={Rating} />
     
       </Row>
+
     </div>
   );
 };

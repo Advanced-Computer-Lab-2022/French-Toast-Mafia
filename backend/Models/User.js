@@ -64,6 +64,10 @@ const userSchema = new Schema({
       type: String,
       required: false
   },
+    Wallet: {
+    type: Number,
+    required: false
+  },
    Courses:
   {
     type: Array,
