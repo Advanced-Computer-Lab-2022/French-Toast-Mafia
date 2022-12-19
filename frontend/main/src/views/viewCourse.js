@@ -9,6 +9,7 @@ import {useState, useEffect} from 'react';
 import CourseInfo from "../components/dashboard/CourseInfo";
 import Reviews from "../components/dashboard/CourseReviews";
 import CourseSubtitles from "../components/dashboard/CourseSubtitles";
+import CoursePreview from "../components/dashboard/CoursePreview";
 import bg1 from "../assets/images/bg/bg1.jpg";
 import bg2 from "../assets/images/bg/bg2.jpg";
 import bg3 from "../assets/images/bg/bg3.jpg";
@@ -24,9 +25,8 @@ const ViewCourse = () => {
     const[instructor, setInstructor] = useState([])
     const[Rating, setRating] = useState([])
     const[subtitles, setSubtitles] = useState([])
-
     const[preview, setPreview] = useState([])
-
+    const [price, setPrice] = useState([])
 
     useEffect(() => {
         viewCourse(cId).then(json => {
@@ -34,8 +34,8 @@ const ViewCourse = () => {
         setInstructor(json.Instructor[1])
         setRating(json.Rating)
         setSubtitles(json.CourseSubtitle)
-        //setPreview(json.Preview)
-
+        setPreview(json.Preview)
+        setPrice(json.Cost)
         })
       }, []);
 
@@ -45,11 +45,11 @@ const ViewCourse = () => {
 
       {/***Sales & Feed***/}
       <Row>
-        <Col sm="6" lg="6" xl="7" xxl="8">
-          <CourseInfo course={course} instructor={instructor} />
+        <Col sm="6" lg="6" xl="7" xxl="7">
+          <CourseInfo course={course} instructor={instructor}/>
         </Col>
-        <Col sm="6" lg="6" xl="5" xxl="4">
-          <Feeds />
+        <Col sm="6" lg="6" xl="5" xxl="5">
+          <CoursePreview preview = {preview} price = {price} />
         </Col>
       </Row>
       {/***Table ***/}
