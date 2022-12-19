@@ -222,6 +222,7 @@ const calculateCourseRating = async(req , res) => {
                 sum+=parseInt(result.Rating[i].rating);
             }
             const avg=sum/result.Rating.length;
+            await course.findByIdAndUpdate(courseId , {avgRating:avg}, { new: true });
             res.status(200).json(avg);
             return avg;
         }catch(error){
@@ -376,9 +377,10 @@ const calculateCourseDuration = async(req , res) => {
                 const subtitleToView = await Subtitle.findOne({_id:mongoose.Types.ObjectId(result.CourseSubtitle[i])});
                 sum+=parseInt(subtitleToView.Duration);
             }
-        const resCourse= await course.findByIdAndUpdate(courseId , {Duration:sum}, { new: true });
-        
-            res.status(200).json(resCourse);
+            await course.findByIdAndUpdate(courseId , {Duration:sum}, { new: true });
+            res.status(200).json(sum);
+            return sum;
+            
         }catch(error){
             res.status(400).json({error:error.message})
         }
