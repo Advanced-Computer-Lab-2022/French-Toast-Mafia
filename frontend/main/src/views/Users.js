@@ -63,6 +63,7 @@ const Users = () => {
             <StyledTableCell align="center">Email</StyledTableCell>
             <StyledTableCell align="center">Type</StyledTableCell>
 
+
           </TableRow>
         </TableHead>
         <TableBody>

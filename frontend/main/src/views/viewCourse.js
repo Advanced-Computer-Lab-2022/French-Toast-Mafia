@@ -25,12 +25,17 @@ const ViewCourse = () => {
     const[Rating, setRating] = useState([])
     const[subtitles, setSubtitles] = useState([])
 
+    const[preview, setPreview] = useState([])
+
+
     useEffect(() => {
         viewCourse(cId).then(json => {
         setCourse(json)
         setInstructor(json.Instructor[1])
         setRating(json.Rating)
         setSubtitles(json.CourseSubtitle)
+        //setPreview(json.Preview)
+
         })
       }, []);
 
@@ -41,7 +46,7 @@ const ViewCourse = () => {
       {/***Sales & Feed***/}
       <Row>
         <Col sm="6" lg="6" xl="7" xxl="8">
-          <CourseInfo course={course} instructor={instructor}/>
+          <CourseInfo course={course} instructor={instructor} />
         </Col>
         <Col sm="6" lg="6" xl="5" xxl="4">
           <Feeds />
@@ -58,6 +63,7 @@ const ViewCourse = () => {
       <Reviews reviews={Rating} />
     
       </Row>
+
     </div>
   );
 };

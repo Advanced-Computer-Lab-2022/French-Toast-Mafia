@@ -230,7 +230,10 @@ const viewCourseTitleHoursRating = async (req, res) => {
             const userDetails = 
                 {"Name": result.Name,
                 "Email":result.Email,
-                "Password": result.Password}
+                "Password": result.Password,
+                "Wallet" : result.Wallet
+            }
+
     
             res.status(200).json(userDetails);
             
