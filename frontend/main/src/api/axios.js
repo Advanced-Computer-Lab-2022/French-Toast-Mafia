@@ -27,3 +27,8 @@ export const getCourseRating = async(id) =>{
     const response = await axios.get(`http://localhost:5000/Course/calculateCourseRating?id=${id}`)
     return response.data
 }
+
+export const viewSubtitle = async(id) =>{
+    const response = await axios.get(`http://localhost:5000/Subtitle/viewSubtitle?id=${id}`)
+    return response.data
+}

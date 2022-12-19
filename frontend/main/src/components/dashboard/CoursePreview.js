@@ -52,7 +52,7 @@ const CoursePreview = ({preview, price}) => {
   return (
     <Card>
       <CardBody className="text-center">
-        <CardTitle tag="h6">Course Preview</CardTitle>
+        <CardTitle tag="h6" className="text-muted">Watch Preview</CardTitle>
         <iframe style={{width:"100%" ,height:"95%"}} src={preview} title="YouTube video" allowFullScreen autoplay={"false"}  ></iframe>
         <br/><br/><br/><br/><br/>
 

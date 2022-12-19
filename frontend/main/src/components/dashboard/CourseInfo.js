@@ -11,10 +11,18 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 const CourseInfo = ({course,instructor}) => {
   const [show, setShow] = useState(false);
 
+  let stars = [];
+  for (var i = 0; i < course.avgRating; i++) {
+      stars.push( <i className="bi bi-star-fill"style={{ color: "rgb(255, 210, 48)"}}></i>);
+  }
+
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);     
-
-
+  const handleShow = () => setShow(true);  
+  
+  
+  const handleRegister = () =>{
+    console.log("Register Clicked!");
+  }
   
   return (
       <div>
@@ -74,15 +82,15 @@ const CourseInfo = ({course,instructor}) => {
         <Row>
         <Col lg>
         <CardText>Difficulty: {course.LevelOfCourse}</CardText>
-        <CardText>Rating: {5} </CardText>
-        <CardText>Subject: {course.Subject}</CardText>
-        <CardText>Created by: {instructor} </CardText>
+        <CardText className="mt-3 text-muted">{stars}&nbsp;({course.Rating.length}) </CardText>
+        <CardText> <CardText tag="h6"><span class="bi bi-clock"></span> &nbsp;{course.Duration} hours</CardText></CardText>
+        <CardText><span class="bi bi-person"></span>&nbsp; {instructor} </CardText>
         <CardText className="text-muted">Last updated on: {course.updatedAt}</CardText>
         </Col>
         <Col className="text-end">
           <br/><br/><br/><br/><br/>
           <CardTitle tag="h4" className="text-primary">Price: {course.Cost} EGP</CardTitle>
-          <Button className="btn" color="primary" size="lg" onClick={handleShow}>Register for Course</Button>   
+          <Button className="btn" color="primary" size="lg" onClick={handleRegister}>Register for Course</Button>   
           </Col>
         </Row>
      
