@@ -43,6 +43,7 @@ const theme = createTheme();
 export default function ForgotPassword() {
   const [errorMessage, setErrorMessage] = useState('');
     const [open, setOpen] = React.useState(false);
+  
     const handleSubmit = (event) => {
     setOpen(true);
     event.preventDefault();
