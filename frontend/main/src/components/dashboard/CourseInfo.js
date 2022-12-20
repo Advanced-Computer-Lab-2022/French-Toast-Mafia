@@ -12,9 +12,13 @@ const CourseInfo = ({course,instructor}) => {
   const [show, setShow] = useState(false);
 
   let stars = [];
-  for (var i = 0; i < course.avgRating; i++) {
-      stars.push( <i className="bi bi-star-fill"style={{ color: "rgb(255, 210, 48)"}}></i>);
-  }
+
+  for (var i = 0; i < parseInt(course.avgRating); i++) {
+    stars.push( <i className="bi bi-star-fill"style={{ color: "rgb(255, 210, 48)"}}></i>);
+    if (((course.avgRating)-parseInt(course.avgRating)) >0){
+      stars.push( <i className="bi bi-star-half"style={{ color: "rgb(255, 210, 48)"}}></i>);
+    }
+}
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);  

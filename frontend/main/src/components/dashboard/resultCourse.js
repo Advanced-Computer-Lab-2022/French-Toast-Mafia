@@ -19,8 +19,12 @@ import {
     const cId = c._id;
     
     let stars = [];
-    for (var i = 0; i < c.avgRating; i++) {
+   
+    for (var i = 0; i < parseInt(c.avgRating); i++) {
         stars.push( <i className="bi bi-star-fill"style={{ color: "rgb(255, 210, 48)"}}></i>);
+        if (((c.avgRating)-parseInt(c.avgRating)) >0){
+          stars.push( <i className="bi bi-star-half"style={{ color: "rgb(255, 210, 48)"}}></i>);
+        }
     }
 
     return (
