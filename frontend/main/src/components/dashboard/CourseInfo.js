@@ -1,7 +1,14 @@
-import { Card, CardBody, CardSubtitle, CardText, CardImg, CardTitle, Button, Row, Col } from "reactstrap";
+import { Card, CardBody, CardSubtitle, CardText, CardTitle, Button, Row, Col,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Dropdown,
+  Input,
+  Alert
+  } from "reactstrap";
 import {useState, useEffect} from 'react';
 import Modal from "react-bootstrap/Modal";
-import { Form, FormControl , FormLabel } from "react-bootstrap";
+import { Form, FormControl , FormLabel,  } from "react-bootstrap";
 import RadioGroup from '@mui/material/RadioGroup';
 import { Radio } from "@mui/material";
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -11,36 +18,30 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import 'react-credit-cards/es/styles-compiled.css';
 import Cards from 'react-credit-cards';
-import { alignProperty } from "@mui/material/styles/cssUtils";
-import { deepPurple, lightGreen } from "@mui/material/colors";
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import { useNavigate } from 'react-router-dom';
-import {
-  Alert,
-  UncontrolledAlert,
-} from "reactstrap";
-
-
-
-
-
-
 
 
 // import Chart from "react-apexcharts";
 
-const CourseInfo = ({course,instructor,ratingLength}) => {
+const CourseInfo = ({cId,course,instructor,ratingLength,setReportAlert}) => {
 
   const [show, setShow] = useState(false);
   const [okay, setOkay] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [problemType, setProblemType] = useState("Technical");
+  const [description, setDescription] = useState("");
+  const [reportedBy ,setReportedBy] = useState("");
 
 
+  const reportData = {};
 
-  console.log(ratingLength);
+  const toggle = () => setDropdownOpen((prevState) => !prevState);
 
+  const viewReports = () => console.log("view reports!");
+
+ 
   let stars = [];
 
   for (var i = 0; i < parseInt(course.avgRating); i++) {
@@ -49,13 +50,6 @@ const CourseInfo = ({course,instructor,ratingLength}) => {
       stars.push( <i className="bi bi-star-half"style={{ color: "rgb(255, 210, 48)"}}></i>);
     }
 }
-
-  
-  const [visible, setVisible] = useState(true);
-
-  const onDismiss = () => {
-    setVisible(false);
-  };
 
   const handleClose = () => setShow(false);
   const handleClose1 = () => setOkay(false);
@@ -84,6 +78,26 @@ const CourseInfo = ({course,instructor,ratingLength}) => {
 
   const[done , setDone] = useState(false);
 
+
+  const handleReportSubmit = async(req , res) => {
+    reportData["type"] = problemType;
+    reportData["description"] = description;
+    reportData["reported_by"] = reportedBy;
+
+    console.log(reportData)
+
+  await fetch(`http://localhost:5000/Report/addReport?id=${cId}`,{
+      method: 'POST',
+      body: JSON.stringify(reportData),
+      headers : {
+          'Content-Type':'application/json'
+      }
+  }).then(json =>{
+   handleClose()
+  return setReportAlert(true)
+  })
+
+}
 
 
   const handleSubmit = async (e) => {
@@ -122,14 +136,10 @@ const CourseInfo = ({course,instructor,ratingLength}) => {
     }
 }
   
-  const handleRegister = () =>{
-    console.log("Register Clicked!");
-  }
-
-  
+ 
   return (
       <div>
-        
+     
     <div>
       <Modal show={show}  onHide={handleClose}>
         <Modal.Header closeButton>
@@ -137,20 +147,29 @@ const CourseInfo = ({course,instructor,ratingLength}) => {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Group className="mb-3" controlId="problemReport">
+              <Form.Label>Reporter id:</Form.Label>
+              <br/>
+              <Input
+                      id="reported_by"
+                      onChange={(e) => setReportedBy(e.target.value)}
+                    />
+              <br/>
             <Form.Label>Problem Type:</Form.Label>
             <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="technical"
+                defaultValue="Technical"
                 name="radio-buttons-group"
   >
-              <FormControlLabel value="technical" control={<Radio />} label="Technical" />
-              <FormControlLabel value="financial" control={<Radio />} label="Financial" />
-              <FormControlLabel value="other" control={<Radio />} label="Other" />
+              <FormControlLabel value="Technical" control={<Radio />} label="Technical" onChange={(e) => setProblemType("Technical")} />
+              <FormControlLabel value="Financial" control={<Radio />} label="Financial" onChange={(e) => setProblemType("Financial")}/>
+              <FormControlLabel value="Other" control={<Radio />} label="Other" onChange={(e) => setProblemType("Other")}/>
             </RadioGroup>
               <br/>
               <Form.Label>Problem Description: </Form.Label>
-              <textarea class="form-control" id="Description" rows="3" required="true"></textarea>
+              <Input
+              type="textarea"
+              id="description" rows="3" required="true" onChange={(e) => setDescription(e.target.value)}/>
               <br/>
              
             </Form.Group>
@@ -160,7 +179,7 @@ const CourseInfo = ({course,instructor,ratingLength}) => {
           <Button outline color="danger"onClick={handleClose} >
             Close
           </Button>
-          <Button color="primary" onClick={handleClose}>
+          <Button color="primary" onClick={handleReportSubmit}>
             Submit
           </Button>
         </Modal.Footer>
@@ -182,7 +201,14 @@ const CourseInfo = ({course,instructor,ratingLength}) => {
             <CardSubtitle className="text-muted" tag="h6"> {course.Summary}</CardSubtitle>
           </Col>
           <Col className="text-end">
-            <Button className="btn" outline color="danger" onClick={handleShow}>Report Problem</Button>   
+        
+          <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+
+          <DropdownToggle className="btn btn dropdown-toggle dropdown-toggle-split" outline color="danger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Report&nbsp;&nbsp;&nbsp;</DropdownToggle>
+          <DropdownMenu>
+          <DropdownItem id="ReportProblem" onClick={handleShow}>Report Problem</DropdownItem>
+          <DropdownItem id="viewReports" onClick={viewReports}>View Course Reports</DropdownItem>
+          </DropdownMenu> </Dropdown>
           </Col>
         </Row>
        
