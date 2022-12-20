@@ -324,47 +324,7 @@ const createExam = async (req,res) => {
 }
 
 
-// find mcq by instructor id 
-const getAllMcq = async (req,res) => {
-    const instrId= req.query.id;
-    const allMcq=[];
-        if (instrId){
-            try{
-                const resInstr= await instructor.findOne({_id:mongoose.Types.ObjectId(instrId)} );
-                if (resInstr){
-                    const resExam= await exam.findOne({_id:mongoose.Types.ObjectId(resInstr.Exam)} );
-                    if (resExam){
-                        allMcq.push(resExam.mcq);
-                    }
-                 }
-                 res.status(200).json(allMcq);
-            }catch {
-            res.status(400).json({error:error.message})
-            }
-    }
-};
 
-const addMCQ = async (req,res) => {
-    const ExamId= req.query.id;
-   if (ExamId){
-    const mcq = [
-        {
-        question: req.body.question,
-        choice1: req.body.choice1,
-        choice2: req.body.choice2,
-        choice3: req.body.choice3,
-        choice4: req.body.choice4,
-        correct: req.body.correct,
-        }
-    ];
-   const result= await exam.findByIdAndUpdate(ExamId, { $push: { mcq: mcq } }, { new: true });
-   res.status(200).send('your question has been added');
-}
-else{
-    res.status(400).json({error:"Please provide the exam id"});
-}
-    
-}
 
 
 const addPromotion = async (req, res) => {
@@ -540,6 +500,5 @@ module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
       , SearchCourse, viewInstrInfo, 
       editBiography, editEmail,ViewMyRatings , ViewMyReview, 
     addInstrRating ,calculateInstrRating,
-    deleteInstrRating, createExam, addMCQ, 
-    getAllMcq, addPromotion,viewInstrCourse};
+    deleteInstrRating, createExam, addPromotion,viewInstrCourse};
    
