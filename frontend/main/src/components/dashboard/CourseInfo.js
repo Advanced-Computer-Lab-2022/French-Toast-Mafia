@@ -8,13 +8,20 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 // import Chart from "react-apexcharts";
 
-const CourseInfo = ({course,instructor}) => {
+const CourseInfo = ({course,instructor,ratingLength}) => {
   const [show, setShow] = useState(false);
 
+
+  console.log(ratingLength);
+
   let stars = [];
-  for (var i = 0; i < course.avgRating; i++) {
-      stars.push( <i className="bi bi-star-fill"style={{ color: "rgb(255, 210, 48)"}}></i>);
-  }
+
+  for (var i = 0; i < parseInt(course.avgRating); i++) {
+    stars.push( <i className="bi bi-star-fill"style={{ color: "rgb(255, 210, 48)"}}></i>);
+    if (((course.avgRating)-parseInt(course.avgRating)) >0){
+      stars.push( <i className="bi bi-star-half"style={{ color: "rgb(255, 210, 48)"}}></i>);
+    }
+}
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);  
@@ -82,7 +89,7 @@ const CourseInfo = ({course,instructor}) => {
         <Row>
         <Col lg>
         <CardText>Difficulty: {course.LevelOfCourse}</CardText>
-        <CardText className="mt-3 text-muted">{stars}&nbsp;({course.Rating.length}) </CardText>
+        <CardText className="mt-3 text-muted">{stars}&nbsp;({ratingLength}) </CardText>
         <CardText> <CardText tag="h6"><span class="bi bi-clock"></span> &nbsp;{course.Duration} hours</CardText></CardText>
         <CardText><span class="bi bi-person"></span>&nbsp; {instructor} </CardText>
         <CardText className="text-muted">Last updated on: {course.updatedAt}</CardText>

@@ -19,7 +19,6 @@ const handleClick = (e) => {
     return(setRating(e.target.id))
     
   };
-
   return (
     <header>
         <div className="input-group mb-3" style={{ display: "flex", justifyContent: 'flex-start'}}>

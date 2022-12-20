@@ -1,8 +1,6 @@
  import { lazy } from "react";
  import { Navigate } from "react-router-dom";
 // import { browserHistory } from 'react-router';
-
-import {BrowserRouter,Routes,Route} from 'react-router-dom';
 import React from 'react';
 /****Layouts*****/
 const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
@@ -42,6 +40,10 @@ const ViewCourse = lazy(() => import("../views/viewCourse.js"));
 const Instructors= lazy(() => import('../views/Instructors.js'));
 const InstructorCourses= lazy(() => import('../views/InstructorCourses.js'));
 const InstructorCoursePage= lazy(() => import('../views/InstructorCoursePage.js'));
+
+const CreateExam= lazy(() => import('../views/CreateExam.js'));
+const InstrExamPage= lazy(() => import('../views/InstrExamPage.js'));
+const AddMcq= lazy(() => import('../views/AddMcq.js'));
 
 const ViewExam= lazy(() => import('../views/ViewExam.js'));
 const ViewExamAnswer= lazy(() => import('../views/ViewExamAnswer.js'));
@@ -84,6 +86,11 @@ const ThemeRoutes = [
       { path: "/Instructors", exact: true, element: <Instructors /> },
       { path: "/InstructorCourses", exact: false, element: <InstructorCourses /> },
       { path: "/InstructorCoursePage", exact: false, element: <InstructorCoursePage /> },
+
+      { path: "/CreateExam", exact: false, element: <CreateExam />},
+      { path: "/InstrExamPage", exact: false, element: <InstrExamPage /> },
+      { path: "/AddMcq", exact: false, element: <AddMcq /> },
+
       { path: "/ViewExam", exact: false, element: <ViewExam /> },
       { path: "/ViewExamAnswer", exact: false, element: <ViewExamAnswer /> },
       { path: "/ExamIsDone", exact: false, element: <ExamIsDone /> }

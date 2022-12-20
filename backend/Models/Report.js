@@ -30,7 +30,7 @@ const reportSchema = new Schema({
     },
 
     status: {
-        type: String,
+        type: String, "enum": ["Unseen","Pending","Resolved"],
         default: "Unseen"
 
     }
