@@ -1,3 +1,4 @@
+import { CardMedia } from "@mui/material";
 import React from "react";
 import {
   Card,
@@ -50,11 +51,11 @@ const FeedData = [
 
 const CoursePreview = ({preview, price}) => {
   return (
-    <Card>
-      <CardBody className="text-center">
+    <Card   >
+      <CardBody className="text-center" >
         <CardTitle tag="h6" className="text-muted">Watch Preview</CardTitle>
-        <iframe style={{width:"100%" ,height:"95%"}} src={preview} title="YouTube video" allowFullScreen autoplay={"false"}  ></iframe>
-        <br/><br/><br/><br/><br/>
+       <CardMedia   class="ratio ratio-16x9">
+    <iframe src={preview}  title="YouTube video" allowFullScreen autoplay={"false"}  ></iframe> </CardMedia>
 
 
       </CardBody>
