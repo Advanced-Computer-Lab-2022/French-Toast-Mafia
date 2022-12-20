@@ -8,8 +8,11 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 
 // import Chart from "react-apexcharts";
 
-const CourseInfo = ({course,instructor}) => {
+const CourseInfo = ({course,instructor,ratingLength}) => {
   const [show, setShow] = useState(false);
+
+
+  console.log(ratingLength);
 
   let stars = [];
 
@@ -86,7 +89,7 @@ const CourseInfo = ({course,instructor}) => {
         <Row>
         <Col lg>
         <CardText>Difficulty: {course.LevelOfCourse}</CardText>
-        <CardText className="mt-3 text-muted">{stars}&nbsp;({course.Rating.length}) </CardText>
+        <CardText className="mt-3 text-muted">{stars}&nbsp;({ratingLength}) </CardText>
         <CardText> <CardText tag="h6"><span class="bi bi-clock"></span> &nbsp;{course.Duration} hours</CardText></CardText>
         <CardText><span class="bi bi-person"></span>&nbsp; {instructor} </CardText>
         <CardText className="text-muted">Last updated on: {course.updatedAt}</CardText>
