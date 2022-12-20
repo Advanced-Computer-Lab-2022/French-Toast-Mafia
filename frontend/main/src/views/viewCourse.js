@@ -1,7 +1,5 @@
 import { Col, Row } from "reactstrap";
-import SalesChart from "../components/dashboard/SalesChart";
-import Feeds from "../components/dashboard/Feeds";
-import ProjectTables from "../components/dashboard/ProjectTable";
+
 import { useLocation } from 'react-router-dom';
 import { viewCourse } from "../api/axios";
 import {useState, useEffect} from 'react';

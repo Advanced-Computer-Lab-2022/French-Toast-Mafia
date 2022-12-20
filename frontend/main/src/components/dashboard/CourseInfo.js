@@ -1,4 +1,4 @@
-import { CardBody, CardSubtitle, CardText, CardImg, CardTitle, Button, Row, Col } from "reactstrap";
+import { Card, CardBody, CardSubtitle, CardText, CardImg, CardTitle, Button, Row, Col } from "reactstrap";
 import {useState, useEffect} from 'react';
 import Modal from "react-bootstrap/Modal";
 import { Form, FormControl , FormLabel } from "react-bootstrap";
@@ -12,7 +12,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import 'react-credit-cards/es/styles-compiled.css';
 import Cards from 'react-credit-cards';
 import { alignProperty } from "@mui/material/styles/cssUtils";
-import { Card } from '@mui/material';
 import { deepPurple, lightGreen } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
@@ -219,7 +218,7 @@ const CourseInfo = ({course,instructor,ratingLength}) => {
    
 
 
-<Card className="final-results"  >
+{/* <Card className="final-results"  > */}
 
 <h2 className="text-center" > </h2>
 
@@ -325,15 +324,15 @@ const CourseInfo = ({course,instructor,ratingLength}) => {
 
 </form>
 
-</Card>
+{/* </Card> */}
 
  </Modal.Body>
   <Modal.Footer>
-    <Button variant="secondary" onClick={handleClose1} >
+    <Button color="secondary" onClick={handleClose1} >
       Close
     </Button>
 
-    <Button variant="primary"  type='submit' onClick={handleSubmit}>
+    <Button color="primary"  type='submit' onClick={handleSubmit}>
       Pay {course.Cost} EGP
     </Button>
 
