@@ -277,16 +277,27 @@ const viewInstrInfo = async(req , res) => {
 if (instrId) {
     try{
         const result = await instructor.findOne({_id:mongoose.Types.ObjectId(instrId)});
-        // get the details of the course 
-        const instructorDetails = 
-            {"Name": result.InstrName,
-            "Email":result.InstrEmail,
-            "Country": result.InstrCountry,
-            "Biography":result.Biography,
-            "Review":result.InstrReview,
-        }
+        if (result != null){
+            // const courseDetails = 
+            // {"Title": courseToView.NameOfCourse,
+            // "Subtitles":courseToView.CourseSubtitle,
+            // "Summary": courseToView.Summary,
+            // "Subject": courseToView.Subject,
+            // "Duration": courseToView.Duration,
+            // "Level" : courseToView.LevelOfCourse,
+            // "Exams" : courseToView.Exams,
+            // "Discount": courseToView.Discount
+            // "Price": courseToView.Cost,}
+            // res.status(200).json(courseDetails);
+            res.status(200).json(result);
 
-        res.status(200).json(instructorDetails);
+        // const instructorDetails = 
+        //     {"Name": result.InstrName,
+        //     "Email":result.InstrEmail,
+        //     "Country": result.InstrCountry,
+        //     "Biography":result.Biography,
+        //     "Review":result.InstrReview,
+        }
         
     
     }catch(error){
