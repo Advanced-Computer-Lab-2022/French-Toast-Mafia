@@ -222,6 +222,7 @@ const calculateCourseRating = async(req , res) => {
                 sum+=parseInt(result.Rating[i].rating);
             }
             const avg=sum/result.Rating.length;
+            await course.findByIdAndUpdate(courseId , {avgRating:avg}, { new: true });
             res.status(200).json(avg);
             return avg;
         }catch(error){
@@ -376,9 +377,10 @@ const calculateCourseDuration = async(req , res) => {
                 const subtitleToView = await Subtitle.findOne({_id:mongoose.Types.ObjectId(result.CourseSubtitle[i])});
                 sum+=parseInt(subtitleToView.Duration);
             }
-        const resCourse= await course.findByIdAndUpdate(courseId , {Duration:sum}, { new: true });
-        
-            res.status(200).json(resCourse);
+            await course.findByIdAndUpdate(courseId , {Duration:sum}, { new: true });
+            res.status(200).json(sum);
+            return sum;
+            
         }catch(error){
             res.status(400).json({error:error.message})
         }
@@ -399,6 +401,20 @@ const getMaxPrice = async(req, res) => {
         });
 }
 
+//get course's preview' videos
+const getCoursePreviewVideos = async (req,res) => {
+
+    course.find({}).then (courses => {
+    resVideos=[];
+    for (let i=0;i<courses.length;i++){
+        resVideos.push(courses[i].Preview);
+    }
+     res.status(200).json(resVideos);
+ 
+ });
+}
+
+
 
 
 
@@ -407,5 +423,5 @@ const getMaxPrice = async(req, res) => {
 
 module.exports={getAllCourse , viewCourse, createCourse, editCourse, viewCourseInstructor, getMaxPrice, getSubjects,
      viewCourseSubtitles, viewCourseExam, viewUserCourse,deleteCourseRating,addCourseRating,calculateCourseRating,
-     viewCourseRating,emptyCourseList,registerCourseToUser,viewCourseDetails,calculateCourseDuration};
+     viewCourseRating,emptyCourseList,registerCourseToUser,viewCourseDetails,calculateCourseDuration , getCoursePreviewVideos };
    

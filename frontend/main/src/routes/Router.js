@@ -1,8 +1,6 @@
  import { lazy } from "react";
  import { Navigate } from "react-router-dom";
 // import { browserHistory } from 'react-router';
-
-import {BrowserRouter,Routes,Route} from 'react-router-dom';
 import React from 'react';
 /****Layouts*****/
 const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
@@ -31,8 +29,30 @@ const CourseInstructor= lazy(() => import('../views/CourseInstructor.js'));
 const CourseVideos= lazy(() => import('../views/CourseVideos.js'));
 const CourseExercises= lazy(() => import('../views/CourseExercises.js'));
 const CourseRate= lazy(() => import('../views/CourseRate.js'));
+const CreditCardss= lazy(() => import('../views/CreditCardss.js'));
+
+
+
 const CourseSubtitles= lazy(() => import('../views/CourseSubtitles.js'));
+<<<<<<< HEAD
 const Contract = lazy (() => import ('../views/ui/Contract.js'));
+=======
+const ViewCourse = lazy(() => import("../views/viewCourse.js"));
+
+
+const Instructors= lazy(() => import('../views/Instructors.js'));
+const InstructorCourses= lazy(() => import('../views/InstructorCourses.js'));
+const InstructorCoursePage= lazy(() => import('../views/InstructorCoursePage.js'));
+
+const CreateExam= lazy(() => import('../views/CreateExam.js'));
+const InstrExamPage= lazy(() => import('../views/InstrExamPage.js'));
+const AddMcq= lazy(() => import('../views/AddMcq.js'));
+
+const ViewExam= lazy(() => import('../views/ViewExam.js'));
+const ViewExamAnswer= lazy(() => import('../views/ViewExamAnswer.js'));
+const ExamIsDone= lazy(() => import('../views/ExamIsDone.js'));
+
+>>>>>>> 4a00fe9a724855752b01a75a94f1ba749cf5d542
 
 // /*****Routes******/
 
@@ -60,11 +80,25 @@ const ThemeRoutes = [
       { path: "/MyCourses", exact: false, element: <MyCourses /> },
       { path: "/UserCoursePage", exact: false, element: <UserCoursePage /> },
       { path: "/CourseInstructor", exact: false, element: <CourseInstructor /> },
+      { path: "/viewCourse", exact: true, element: <ViewCourse /> },
       { path: "/CourseExercises", exact: false, element: <CourseExercises /> },
       { path: "/CourseRate", exact: false, element: <CourseRate /> },
+      { path: "/CreditCardss", exact: false, element: <CreditCardss /> },
       { path: "/CourseSubtitles", exact: false, element: <CourseSubtitles /> },
       { path: "/CourseVideos", exact: false, element: <CourseVideos /> },
       { path: "/Contract", exact: true, element: <Contract /> },
+
+      { path: "/Instructors", exact: true, element: <Instructors /> },
+      { path: "/InstructorCourses", exact: false, element: <InstructorCourses /> },
+      { path: "/InstructorCoursePage", exact: false, element: <InstructorCoursePage /> },
+
+      { path: "/CreateExam", exact: false, element: <CreateExam />},
+      { path: "/InstrExamPage", exact: false, element: <InstrExamPage /> },
+      { path: "/AddMcq", exact: false, element: <AddMcq /> },
+
+      { path: "/ViewExam", exact: false, element: <ViewExam /> },
+      { path: "/ViewExamAnswer", exact: false, element: <ViewExamAnswer /> },
+      { path: "/ExamIsDone", exact: false, element: <ExamIsDone /> }
 
 
     ],

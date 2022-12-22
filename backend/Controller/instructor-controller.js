@@ -269,45 +269,6 @@ const filterCourseCost = async (req,res) => {
        
     }
 }
-// const filteByPrice = async (req,res)=>
-// {try{
-//     const priceRange = await courses.find({ 
-//         minPrice: { $lte: {price: req.body.price}}, 
-//         maxPrice: { $gte: {price: req.body.price} }
-//      })
-//      res.status(200).json(priceRange)
-//     }
-//     catch(error){ 
-//         res.status(400).json({error:error.me})
-//     }
-// }
-// const filterCourseSubjcet = async (req,res) => {
-//     let filtersubject={};
-//     if (req.params.Subject) {
-//         filtersubject= { Subjcet : req.params.Subject}
-
-//    }
-
-//    const subjectlist = await Course.find (filtersubject).populate('Subject');
-//    if (!subjectlist){
-//     res.status(404).json({success:false})
-// }
-// res.send(subjectlist);
-// }
-
-
-//     const SearchCourse= async (req,res) => {
-//         const w = req.params.id;
-//         let searchList= await Course.find(
-//             {Instructor:w}, 
-        // {$or: [
-        //         { NameOfCourse:{'$regex': req.body.NameOfCourse } },
-        //         { Subject: {'$regex': req.body.Subject} }
-        //     ] })
-
-//                 res.send(searchList);
-// }
-
 
 
 
@@ -362,90 +323,10 @@ const createExam = async (req,res) => {
             
 }
 
-//add exam id into instructor schema
-// const addExamId = async (req,res) => {
-//     const instrId=req.query.id;
-//     const examId= req.body;
-
-//     if (instrId){
-//         try{
-//             const result = await instructor.findOneAndUpdate({_id:mongoose.Types.ObjectId(instrId)}, { Exam: mongoose.Types.ObjectId(examId) }, { new: true });
-//             res.status(200).json(result);
-//         }catch(error){
-//             res.status(400).json({error:error.message})
-//         }
-// }
-// }
-
-// find mcq by instructor id 
-const getAllMcq = async (req,res) => {
-    const instrId= req.query.id;
-    const allMcq=[];
-        if (instrId){
-            try{
-                const resInstr= await instructor.findOne({_id:mongoose.Types.ObjectId(instrId)} );
-                if (resInstr){
-                    const resExam= await exam.findOne({_id:mongoose.Types.ObjectId(resInstr.Exam)} );
-                    if (resExam){
-                        allMcq.push(resExam.mcq);
-                    }
-                 }
-                 res.status(200).json(allMcq);
-            }catch {
-            res.status(400).json({error:error.message})
-            }
-    }
-};
-
-const addMCQ = async (req,res) => {
-    const ExamId= req.query.id;
-   if (ExamId){
-    const mcq = [
-        {
-        question: req.body.question,
-        choice1: req.body.choice1,
-        choice2: req.body.choice2,
-        choice3: req.body.choice3,
-        choice4: req.body.choice4,
-        correct: req.body.correct,
-        }
-    ];
-   const result= await exam.findByIdAndUpdate(ExamId, { $push: { mcq: mcq } }, { new: true });
-   res.status(200).send('your question has been added');
-}
-else{
-    res.status(400).json({error:"Please provide the exam id"});
-}
-    
-}
-
-//add promotion for a course
-// const addPromotion = async (req, res) => {
-//     const courseId= req.query.id;
-//     const {Promotion, StartDatePromotion ,EndDatePromotion} = req.body;
-//     if (Promotion && StartDatePromotion && EndDatePromotion) {
-//         try {
-//             const {Price} = await course.findOne({_id: courseId}).select("Cost").exec();
-//             const Cost=Price;
-//             const discount= Promotion/100;
-//             const discountedPrice= Cost * discount;
-//             const newPrice= Cost-discountedPrice;
-//             const endDate= new Date (EndDatePromotion);
-//             let currentDate = new Date.getTime();
-//             const startDate = new Date (StartDatePromotion);
-//             console.log(endDate,startDate);
-//             course.findOne({courseId}).exec(Cost) 
-
-//                 if (endDate >= currentDate >= startDate){
 
 
-//                 }
 
-//         } catch (error){
-//             res.status(400).json({error:error.message});
-//         }
-//     }
-// }
+
 const addPromotion = async (req, res) => {
     const courseId= req.query.id;
     const {Promotion, StartDatePromotion ,EndDatePromotion} = req.body;
@@ -586,8 +467,32 @@ const calculateInstrRating = async(req , res) => {
     }
 }
 
-
-
+//get instructor course
+const viewInstrCourse = async (req , res) => {
+    const instrId = req.query.id;
+    const resultCourses = [];
+if (instrId){
+    try{
+        const result = await instructor.findOne({_id:mongoose.Types.ObjectId(instrId)}); 
+        const courses = result.CourseGiven;
+        for (let i = 0; i < courses.length; i++) {
+            const c1 = courses[i];
+            const c = await course.findById(c1);
+            const courseDetails =
+                {   "id":c._id,
+                    "Name": c.NameOfCourse}
+            resultCourses.push(courseDetails);
+        }
+        res.status(200).json(resultCourses);
+        
+    }catch(error){
+        res.status(400).json({error:error.message})
+    }
+}
+else{
+    res.status(404).send('Instructor not found');
+}
+}
 
 module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      addCourse , addInstructorName, deleteCourse, filterCost, filterRating, filterSubject, 
@@ -595,6 +500,5 @@ module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
       , SearchCourse, viewInstrInfo, 
       editBiography, editEmail,ViewMyRatings , ViewMyReview, 
     addInstrRating ,calculateInstrRating,
-    deleteInstrRating, createExam, addMCQ, 
-    getAllMcq, addPromotion};
+    deleteInstrRating, createExam, addPromotion,viewInstrCourse};
    

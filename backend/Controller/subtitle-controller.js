@@ -1,7 +1,7 @@
 const Subtitle = require("../Models/Subtitle");
 const course= require("../Models/Course");
 const mongoose = require('mongoose');
-
+const calculateCourseDuration = require('./course-controllers')
 
 function getAllSubtitles (req,res) {
     Subtitle.find({}).then (function (Subtitle) {

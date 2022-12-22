@@ -13,6 +13,7 @@ import {
   import Slider from "../dashboard/Slider";
   import {useState, useEffect} from 'react';
   import { getAvailableSubjects } from "../../api/axios";
+  import Rating from "./rating";
 
 let search = "";
 
@@ -24,7 +25,7 @@ const SearchBar = ({courses, setSearchResults}) =>{
   const [priceRange, setPriceRange] = useState([0,5000]);
   const [subject, setSubject] = useState("All");
   const [avSubjects, setAvSubjects] = useState([]);
-
+  const [rating, setRating] = useState([]);
 
   useEffect(() => {
     getAvailableSubjects().then(json => {
@@ -62,14 +63,71 @@ const SearchBar = ({courses, setSearchResults}) =>{
       }
   }, [subject]);
   
+  useEffect(() => {
+    console.log(rating)
+    if(filter == "Instructor"){
+      if(subject !== "All"){
+        if(rating !="All"){
+          const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+          && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject && courses.avgRating >= rating)
+          setSearchResults(resultsArray)
+      }
+      else{
+        const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+        && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
+        setSearchResults(resultsArray)
+        }
+      }
+      else{
+        if(rating !="All"){
+          const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+          && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.avgRating >= rating)
+          setSearchResults(resultsArray)
+      }
+      else{
+        const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+        && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1])
+        setSearchResults(resultsArray)
+      }
+       
+      }
+     
+    }
+    else{
+      if(subject !== "All"){
+        if(rating !="All"){
+          const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+          && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject && courses.avgRating >= rating)
+          setSearchResults(resultsArray)
+      }
+      else{
+        const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+        && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
+        setSearchResults(resultsArray)
+        }
+      }
+      else{
+        if(rating !="All"){
+          const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+          && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.avgRating >= rating)
+          setSearchResults(resultsArray)
+      }
+      else{
+        const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+        && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
+        setSearchResults(resultsArray)
+        }
+      }
+     
+    }
+  }, [rating]);
 
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
  
   const toggleCourse = () => setCourseDropdown((prevState) => !prevState);
 
-    const handleSubmit = (e) => e.preventDefault()
-
+    
     const handleFilter = (e) => {
       setFilter(e.target.id)
     }
@@ -78,30 +136,60 @@ const SearchBar = ({courses, setSearchResults}) =>{
     setSubject(e.target.id)
     }
 
+  
     const handlePriceChange = () => {
       if(filter == "Instructor"){
         if(subject !== "All"){
+          if(rating !="All"){
+            const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+            && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject && courses.avgRating >= rating)
+            setSearchResults(resultsArray)
+        }
+        else{
           const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
           && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
           setSearchResults(resultsArray)
+          }
+        }
+        else{
+          if(rating !="All"){
+            const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+            && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.avgRating >= rating)
+            setSearchResults(resultsArray)
         }
         else{
           const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
           && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1])
           setSearchResults(resultsArray)
         }
+         
+        }
        
       }
       else{
         if(subject !== "All"){
+          if(rating !="All"){
+            const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+            && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject && courses.avgRating >= rating)
+            setSearchResults(resultsArray)
+        }
+        else{
           const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
           && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
           setSearchResults(resultsArray)
+          }
+        }
+        else{
+          if(rating !="All"){
+            const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+            && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.avgRating >= rating)
+            setSearchResults(resultsArray)
         }
         else{
           const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
           && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
           setSearchResults(resultsArray)
+          }
         }
        
       }
@@ -113,27 +201,56 @@ const SearchBar = ({courses, setSearchResults}) =>{
         
           if(filter == "Instructor"){
             if(subject !== "All"){
+              if(rating !="All"){
+                const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+                && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject && courses.avgRating >= rating)
+                setSearchResults(resultsArray)
+            }
+            else{
               const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
               && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
               setSearchResults(resultsArray)
+              }
+            }
+            else{
+              if(rating !="All"){
+                const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+                && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.avgRating >= rating)
+                setSearchResults(resultsArray)
             }
             else{
               const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
               && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1])
               setSearchResults(resultsArray)
             }
+             
+            }
            
           }
           else{
             if(subject !== "All"){
+              if(rating !="All"){
+                const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+                && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject && courses.avgRating >= rating)
+                setSearchResults(resultsArray)
+            }
+            else{
               const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
               && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
               setSearchResults(resultsArray)
+              }
+            }
+            else{
+              if(rating !="All"){
+                const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+                && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.avgRating >= rating)
+                setSearchResults(resultsArray)
             }
             else{
               const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
               && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
               setSearchResults(resultsArray)
+              }
             }
            
           }
@@ -142,27 +259,56 @@ const SearchBar = ({courses, setSearchResults}) =>{
           
           if(filter == "Instructor"){
             if(subject !== "All"){
+              if(rating !="All"){
+                const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+                && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject && courses.avgRating >= rating)
+                setSearchResults(resultsArray)
+            }
+            else{
               const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
               && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
               setSearchResults(resultsArray)
+              }
+            }
+            else{
+              if(rating !="All"){
+                const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
+                && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.avgRating >= rating)
+                setSearchResults(resultsArray)
             }
             else{
               const resultsArray = courses.filter(courses => courses[filter][1].toLowerCase().includes(search.toLowerCase())
               && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1])
               setSearchResults(resultsArray)
             }
+             
+            }
            
           }
           else{
             if(subject !== "All"){
+              if(rating !="All"){
+                const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+                && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject && courses.avgRating >= rating)
+                setSearchResults(resultsArray)
+            }
+            else{
               const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
               && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.Subject === subject)
               setSearchResults(resultsArray)
+              }
+            }
+            else{
+              if(rating !="All"){
+                const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
+                && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] && courses.avgRating >= rating)
+                setSearchResults(resultsArray)
             }
             else{
               const resultsArray = courses.filter(courses => courses[filter].toLowerCase().includes(search.toLowerCase())
               && courses.Cost >= priceRange[0] && courses.Cost <= priceRange[1] )
               setSearchResults(resultsArray)
+              }
             }
            
           }
@@ -170,17 +316,15 @@ const SearchBar = ({courses, setSearchResults}) =>{
        
     }
     return (
-
       
         <header>
-            <Form onSubmit = {handleSubmit}>
               <FormGroup>
-              <div className="input-group mb-3" style={{ display: "flex", justifyContent: 'flex-end'}}>
-                <Input
-                  id="Search"
-                  placeholder="Ex. Python Crash Course"
-                  onChange={handleSearchChange}
-                />
+                <div className="input-group mb-3" style={{ display: "flex", justifyContent: 'flex-end'}}>
+                    <Input
+                      id="Search"
+                      placeholder="Ex. Python Crash Course"
+                      onChange={handleSearchChange}
+                    />
                  <Dropdown isOpen={dropdownOpen} toggle={toggle}>
                   <DropdownToggle className="btn" outline color="primary" >
                   <i class="bi bi-search"></i>&nbsp;Search by: {filter}
@@ -192,7 +336,7 @@ const SearchBar = ({courses, setSearchResults}) =>{
                     <DropdownItem id="Subject" onClick={handleFilter}>Subject</DropdownItem>
                   </DropdownMenu>
                 </Dropdown>
-                &nbsp;&nbsp;&nbsp;&nbsp;
+               &nbsp;
                 <Dropdown isOpen={courseDropdown} toggle={toggleCourse}>
                   <DropdownToggle className="btn" outline color="primary">
                   <i class="bi bi-funnel"></i>&nbsp;Subject: {subject}
@@ -203,17 +347,20 @@ const SearchBar = ({courses, setSearchResults}) =>{
                     {avSubjects.map(subject =>  <DropdownItem id={subject} onClick={handleSubject}>{subject}</DropdownItem>)}
                   </DropdownMenu>
                 </Dropdown>
-                </div>
+            
+                </div>    
                 <br/>
                 <div className="input-group mb-3" style={{ display: "flex", justifyContent: 'flex-start'}}>
                 <CardText className="fw-light card-text">Price Range:&nbsp;&nbsp;&nbsp;&nbsp;</CardText>
-                <Col lg="8">
+                <Col lg="10">
                   <Slider setPriceRange={setPriceRange} handlePriceChange={handlePriceChange}/>
                   </Col>
                 </div>
-               
-              </FormGroup>
-              </Form>
+                <div className="input-group mb-3" style={{ display: "flex", justifyContent: 'flex-start'}}>
+                <CardText className="fw-light card-text">Rating:&nbsp;&nbsp;&nbsp;&nbsp;</CardText>
+                  <Rating setRating={setRating}/>
+                </div>
+                </FormGroup>
         </header>
    
     )

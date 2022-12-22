@@ -9,65 +9,86 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import withStyles from '@mui/material/styles';
+import { useLocation } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+
+
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
+      //backgroundColor: theme.palette.common.black,
       color: theme.palette.common.white,
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
     },
   }));
+
+
 const { useState } = require("react");
 
 
-const Users = () => { 
+const InstructorCourses = () => { 
   const navigate = useNavigate();
-    const [users,setUsers] = useState([]);
+  
+    const params = new URLSearchParams(window.location.search);
+    //const id = params.get('userId');
+
+    const search=useLocation().search;
+    const id=new URLSearchParams(search).get('instrId');
     
-    const getUsers =  async () => {
-         await axios.get('http://localhost:5000/user/getAllUser').then(
+    console.log(id);
+    const [course,setCourses] = useState([]);
+
+    const getCourses =  async () => {
+         await axios.get(`http://localhost:5000/Instructor/viewInstrCourse?id=${id}`).then(
+
         (res) => { 
-            const users = res.data
-            console.log(users)
-            setUsers(users)
+            const course = res.data
+            console.log(course)
+            setCourses(course)
             
         }
          );
+       
+    
+
     }
+  
     return(
 
-        // visualize authors in a table map over authors
-        <div className="UsersList">
+        <div className="UserCourses"   >
             <Box sx={{marginBottom: 2}}>
             <Button variant="contained"
             style={{width:200, height:40 , color:'#FFF' ,marginTop:10 }}
-            onClick={getUsers}
+            onClick={getCourses}
             margin="normal"
             padding="normal"
-            >Load Users</Button>
-            {/* margin */}
+            >Load courses</Button>
             </Box>
             
         
         
             
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table"  style={{ color:'#FFF'}}>
-        <TableHead>
+      <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table"  style={{ color:'#FFF'}} >
+        <TableHead  sx={{
+              backgroundColor: "black",
+              borderColor: "white",
+              borderWidth: "2px",
+              borderStyle: "solid",
+              padding: "4px",
+            }} >
           <TableRow>
-            <StyledTableCell align="center">Name</StyledTableCell>
-            <StyledTableCell align="center">Email</StyledTableCell>
-            <StyledTableCell align="center">Type</StyledTableCell>
+            <StyledTableCell align="center" >Course Title</StyledTableCell>
 
 
           </TableRow>
-        </TableHead>
+        </TableHead   >
         <TableBody>
-          { users.map((user) => (
+          {course.map((Courses) =>(
             <TableRow
             hover
             sx={{
@@ -77,16 +98,15 @@ const Users = () => {
                 width: "100%"
                 }
             }}
+            
             onClick={() => 
-              // window.location.href=`MyCourses?userId=${user._id}`
-              navigate(`/MyCourses?userId=${user._id}`)
-          }
-              key={user._id}
+              // window.location.href=`/UserCoursePage?courseId=${Courses.id}&userId=${params.get('userId')}`
+              navigate(`/InstructorCoursePage?courseId=${Courses.id}&instrId=${id}`)
+            }
+              key={Courses._id}
 
               >
-              <TableCell align="center">{user.Name}</TableCell>
-              <TableCell align="center">{user.Email}</TableCell>
-              <TableCell align="center">{user.Type}</TableCell>
+              <TableCell align="center">{Courses.Name}</TableCell>
 
 
             </TableRow>
@@ -100,4 +120,5 @@ const Users = () => {
 
     )
 }
-export default Users;
+export default InstructorCourses;
+

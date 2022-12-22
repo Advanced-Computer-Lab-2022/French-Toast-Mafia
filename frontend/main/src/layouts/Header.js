@@ -185,7 +185,13 @@ const Header = () => {
               Users
               </Link>
               </DropdownItem>
-              
+
+              <DropdownItem >
+              <Link to="/Instructors">
+              Instructors
+              </Link>
+              </DropdownItem>
+
             <DropdownItem >
               <Link to="/forgotPass">
               Forgot Password

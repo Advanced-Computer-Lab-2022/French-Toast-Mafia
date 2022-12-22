@@ -24,16 +24,16 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 const { useState } = require("react");
 
 
-const Users = () => { 
+const Instructors = () => { 
   const navigate = useNavigate();
-    const [users,setUsers] = useState([]);
+    const [instructors,setInstructors] = useState([]);
     
-    const getUsers =  async () => {
-         await axios.get('http://localhost:5000/user/getAllUser').then(
+    const getInstructors =  async () => {
+         await axios.get('http://localhost:5000/Instructor/getAllInstructors').then(
         (res) => { 
-            const users = res.data
-            console.log(users)
-            setUsers(users)
+            const instructors = res.data
+            console.log(instructors)
+            setInstructors(instructors)
             
         }
          );
@@ -45,10 +45,10 @@ const Users = () => {
             <Box sx={{marginBottom: 2}}>
             <Button variant="contained"
             style={{width:200, height:40 , color:'#FFF' ,marginTop:10 }}
-            onClick={getUsers}
+            onClick={getInstructors}
             margin="normal"
             padding="normal"
-            >Load Users</Button>
+            >Load Instructors</Button>
             {/* margin */}
             </Box>
             
@@ -61,13 +61,11 @@ const Users = () => {
           <TableRow>
             <StyledTableCell align="center">Name</StyledTableCell>
             <StyledTableCell align="center">Email</StyledTableCell>
-            <StyledTableCell align="center">Type</StyledTableCell>
-
 
           </TableRow>
         </TableHead>
         <TableBody>
-          { users.map((user) => (
+          { instructors.map((instr) => (
             <TableRow
             hover
             sx={{
@@ -79,14 +77,13 @@ const Users = () => {
             }}
             onClick={() => 
               // window.location.href=`MyCourses?userId=${user._id}`
-              navigate(`/MyCourses?userId=${user._id}`)
+              navigate(`/InstructorCourses?instrId=${instr._id}`)
           }
-              key={user._id}
+              key={instr._id}
 
               >
-              <TableCell align="center">{user.Name}</TableCell>
-              <TableCell align="center">{user.Email}</TableCell>
-              <TableCell align="center">{user.Type}</TableCell>
+              <TableCell align="center">{instr.InstrName}</TableCell>
+              <TableCell align="center">{instr.InstrEmail}</TableCell>
 
 
             </TableRow>
@@ -100,4 +97,4 @@ const Users = () => {
 
     )
 }
-export default Users;
+export default Instructors;

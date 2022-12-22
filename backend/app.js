@@ -24,6 +24,8 @@ const courseRoute = require('./Routes/Course-route');
 const examRoute = require ('./Routes/Exams-route');
 const subtitleRoute = require ('./Routes/Subtitle-route');
 const reportRoute = require('./Routes/Report-route');
+const cardRoute = require ('./Routes/Card-route');
+
 
 mongoose.connect(MongoURI)
     .then(() => {
@@ -55,6 +57,9 @@ mongoose.connect(MongoURI)
     app.use('/Exams',examRoute);
         
     app.use('/Report',reportRoute);
+
+    app.use('/Card',cardRoute);
+
 
     app.use(express.json())
 
