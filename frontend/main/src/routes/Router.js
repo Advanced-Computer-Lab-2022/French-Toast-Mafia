@@ -32,6 +32,7 @@ const CourseVideos= lazy(() => import('../views/CourseVideos.js'));
 const CourseExercises= lazy(() => import('../views/CourseExercises.js'));
 const CourseRate= lazy(() => import('../views/CourseRate.js'));
 const CourseSubtitles= lazy(() => import('../views/CourseSubtitles.js'));
+const Contract = lazy (() => import ('../views/ui/Contract.js'));
 
 // /*****Routes******/
 
@@ -63,6 +64,7 @@ const ThemeRoutes = [
       { path: "/CourseRate", exact: false, element: <CourseRate /> },
       { path: "/CourseSubtitles", exact: false, element: <CourseSubtitles /> },
       { path: "/CourseVideos", exact: false, element: <CourseVideos /> },
+      { path: "/Contract", exact: true, element: <Contract /> },
 
 
     ],

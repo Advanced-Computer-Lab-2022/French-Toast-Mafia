@@ -8,6 +8,7 @@ import { Radio } from "@mui/material";
 import FormControlLabel from '@mui/material/FormControlLabel';
 
 
+
 import {
   Navbar,
   Collapse,
@@ -24,8 +25,11 @@ import {
 import Logo from "./Logo";
 import { ReactComponent as LogoWhite } from "../assets/images/logos/materialprowhite.svg";
 import user1 from "../assets/images/users/user4.jpg";
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+  
+  const navigate = useNavigate();
 
   const [show, setShow] = useState(false);
 
@@ -43,6 +47,7 @@ const Header = () => {
   const showMobilemenu = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
+ 
   return (
 
     <div>
@@ -82,15 +87,20 @@ const Header = () => {
              <FormControlLabel value="male" control={<Radio />} label="Male" />
                 </RadioGroup>
        
-             
+         
             </Form.Group>
           </Form>
+         
+
         </Modal.Body>
+        
         <Modal.Footer>
+        <h6>I accept website's<Link to="/Contract" className="nav-link"   onClick={handleClose}>Terms of Use</Link> and Privacy Notice.</h6>
           <Button variant="secondary" onClick={handleClose} >
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+
+          <Button variant="primary"  onClick={handleClose}>
             Sign Up
           </Button>
         </Modal.Footer>
