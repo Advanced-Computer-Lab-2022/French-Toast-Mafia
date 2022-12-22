@@ -11,7 +11,7 @@ const {createInstructor, getAllInstructors,
         editBiography, editEmail ,
         ViewMyRatings, ViewMyReview,
         createExam,
-        deleteInstrRating,addInstrRating,calculateInstrRating, addPromotion,viewInstrCourse}= require ("../Controller/instructor-controller");
+        deleteInstrRating,addInstrRating,calculateInstrRating, addPromotion,viewInstrCourse, calculateMoney}= require ("../Controller/instructor-controller");
 
 
 const router = express.Router();
@@ -59,6 +59,8 @@ router.put('/addInstrRating',addInstrRating);
 router.get('/calculateInstrRating',calculateInstrRating);
 
 router.get('/viewInstrCourse',viewInstrCourse);
+
+router.get('/calculateMoney',calculateMoney);
 
 
 module.exports=router;

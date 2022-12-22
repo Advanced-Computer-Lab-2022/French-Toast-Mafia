@@ -185,7 +185,13 @@ const Header = () => {
               Users
               </Link>
               </DropdownItem>
-
+              
+            <DropdownItem >
+              <Link to="/InstructorProfile">
+              Instructor Profile
+              </Link>
+              </DropdownItem>
+              
               <DropdownItem >
               <Link to="/Instructors">
               Instructors
