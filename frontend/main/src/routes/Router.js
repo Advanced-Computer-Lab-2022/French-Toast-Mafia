@@ -34,9 +34,7 @@ const CreditCardss= lazy(() => import('../views/CreditCardss.js'));
 
 
 const CourseSubtitles= lazy(() => import('../views/CourseSubtitles.js'));
-<<<<<<< HEAD
 const Contract = lazy (() => import ('../views/ui/Contract.js'));
-=======
 const ViewCourse = lazy(() => import("../views/viewCourse.js"));
 
 
@@ -52,7 +50,6 @@ const ViewExam= lazy(() => import('../views/ViewExam.js'));
 const ViewExamAnswer= lazy(() => import('../views/ViewExamAnswer.js'));
 const ExamIsDone= lazy(() => import('../views/ExamIsDone.js'));
 
->>>>>>> 4a00fe9a724855752b01a75a94f1ba749cf5d542
 
 // /*****Routes******/
 

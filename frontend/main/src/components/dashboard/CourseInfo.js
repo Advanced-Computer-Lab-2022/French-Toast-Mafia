@@ -130,7 +130,7 @@ const CourseInfo = ({cId,course,instructor,ratingLength,setReportAlert}) => {
         setCvc('')
 
 
-        setErr(false)
+          setErr(false)
           console.log('new card added', json)
           setDone(true);
     }
