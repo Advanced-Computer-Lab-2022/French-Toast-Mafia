@@ -49,8 +49,12 @@ const AddMcq= lazy(() => import('../views/AddMcq.js'));
 const ViewExam= lazy(() => import('../views/ViewExam.js'));
 const ViewExamAnswer= lazy(() => import('../views/ViewExamAnswer.js'));
 const ExamIsDone= lazy(() => import('../views/ExamIsDone.js'));
+
+
+
 const InstructorProfile= lazy(() => import('../views/InstructorProfile.js'));
 const InstructorInfo= lazy(() => import('../views/InstructorInfo.js'));
+
 
 // /*****Routes******/
 
