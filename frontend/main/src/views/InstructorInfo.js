@@ -26,7 +26,7 @@ const InstructorInfo =()=> {
     const InstrId = new URLSearchParams(search).get('instrId');
     const [Info, setInfo] = useState([]);
     const [rate, setRate] = useState([]);
-    const [Email, setEmail] = useState('');
+    const [InstrEmail, setEmail] = useState('');
     const[err , setErr] = useState(null)
 
     const[done , setDone] = useState(false);
@@ -36,7 +36,7 @@ const InstructorInfo =()=> {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const Test = {Email}
+        const Test = {InstrEmail}
         const response = await fetch(`http://localhost:5000/Instructor/editInstrEmail?id=${InstrId}` , {
             method : 'POST' ,
             body : JSON.stringify(Test) , 
@@ -90,19 +90,20 @@ const InstructorInfo =()=> {
           <Modal.Title>Edit Email </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>   
+          <Form onSubmit={ handleSubmit} >   
             <Form.Group >
               <Form.Label> New Email:</Form.Label>
               <Form.Control
                 type="email"
                 placeholder="name@example.com"
-                value={Email}
+                value={InstrEmail}
                 onChange={(e) => setEmail(e.target.value) }
                 autoFocus
               />
 
             </Form.Group>
           </Form>
+
         </Modal.Body>
         <Modal.Footer>
           <Button outline color="danger" onClick={handleClose} >
@@ -113,6 +114,9 @@ const InstructorInfo =()=> {
           </Button>
 
         </Modal.Footer>
+
+
+
       </Modal>
      <Row>
           <Col sm="6" lg="6" xl="7" xxl="6">
