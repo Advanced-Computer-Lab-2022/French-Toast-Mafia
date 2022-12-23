@@ -273,20 +273,31 @@ const filterCourseCost = async (req,res) => {
 
 
 const viewInstrInfo = async(req , res) => {
-    const instrId = req.query.id;
+    const instrId = req.query.instrId;
 if (instrId) {
     try{
         const result = await instructor.findOne({_id:mongoose.Types.ObjectId(instrId)});
-        // get the details of the course 
-        const instructorDetails = 
-            {"Name": result.InstrName,
-            "Email":result.InstrEmail,
-            "Country": result.InstrCountry,
-            "Biography":result.Biography,
-            "Review":result.InstrReview,
-        }
+        if (result != null){
+            // const courseDetails = 
+            // {"Title": courseToView.NameOfCourse,
+            // "Subtitles":courseToView.CourseSubtitle,
+            // "Summary": courseToView.Summary,
+            // "Subject": courseToView.Subject,
+            // "Duration": courseToView.Duration,
+            // "Level" : courseToView.LevelOfCourse,
+            // "Exams" : courseToView.Exams,
+            // "Discount": courseToView.Discount
+            // "Price": courseToView.Cost,}
+            // res.status(200).json(courseDetails);
+            res.status(200).json(result);
 
-        res.status(200).json(instructorDetails);
+        // const instructorDetails = 
+        //     {"Name": result.InstrName,
+        //     "Email":result.InstrEmail,
+        //     "Country": result.InstrCountry,
+        //     "Biography":result.Biography,
+        //     "Review":result.InstrReview,
+        }
         
     
     }catch(error){
@@ -324,47 +335,7 @@ const createExam = async (req,res) => {
 }
 
 
-// find mcq by instructor id 
-const getAllMcq = async (req,res) => {
-    const instrId= req.query.id;
-    const allMcq=[];
-        if (instrId){
-            try{
-                const resInstr= await instructor.findOne({_id:mongoose.Types.ObjectId(instrId)} );
-                if (resInstr){
-                    const resExam= await exam.findOne({_id:mongoose.Types.ObjectId(resInstr.Exam)} );
-                    if (resExam){
-                        allMcq.push(resExam.mcq);
-                    }
-                 }
-                 res.status(200).json(allMcq);
-            }catch {
-            res.status(400).json({error:error.message})
-            }
-    }
-};
 
-const addMCQ = async (req,res) => {
-    const ExamId= req.query.id;
-   if (ExamId){
-    const mcq = [
-        {
-        question: req.body.question,
-        choice1: req.body.choice1,
-        choice2: req.body.choice2,
-        choice3: req.body.choice3,
-        choice4: req.body.choice4,
-        correct: req.body.correct,
-        }
-    ];
-   const result= await exam.findByIdAndUpdate(ExamId, { $push: { mcq: mcq } }, { new: true });
-   res.status(200).send('your question has been added');
-}
-else{
-    res.status(400).json({error:"Please provide the exam id"});
-}
-    
-}
 
 
 const addPromotion = async (req, res) => {
@@ -534,12 +505,32 @@ else{
 }
 }
 
+
+const calculateMoney = async(req , res) => {
+    const instrId=req.query.instrId;
+    if (instrId){
+        try{
+            const result = await instructor.findOne({_id:mongoose.Types.ObjectId(instrId)});
+            var sum=0;
+            for (let i = 0; i < result.CourseGiven.length; i++) {
+                const c1 =result.CourseGiven[i];
+               const c = await course.findById(c1);
+               sum+=(c.Cost*(result.PercentOrMoneyTaken/100));
+               console.log(sum); 
+               const r = await instructor.findByIdAndUpdate({_id:mongoose.Types.ObjectId(instrId)},{Wallet:sum});
+            }
+            res.status(200).json(sum);
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }   
+    }
+}
+
 module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      addCourse , addInstructorName, deleteCourse, filterCost, filterRating, filterSubject, 
      filterCourseSubjcet , filterCourseCost , ViewMyCourses
       , SearchCourse, viewInstrInfo, 
       editBiography, editEmail,ViewMyRatings , ViewMyReview, 
     addInstrRating ,calculateInstrRating,
-    deleteInstrRating, createExam, addMCQ, 
-    getAllMcq, addPromotion,viewInstrCourse};
+    deleteInstrRating, createExam, addPromotion,viewInstrCourse, calculateMoney};
    

@@ -6,8 +6,9 @@ import { Form, FormControl , FormLabel } from "react-bootstrap";
 import RadioGroup from '@mui/material/RadioGroup';
 import { Radio } from "@mui/material";
 import FormControlLabel from '@mui/material/FormControlLabel';
-
-
+import {Box, Typography } from '@mui/material'
+import { TextField } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import {
   Navbar,
   Collapse,
@@ -20,12 +21,25 @@ import {
   DropdownItem,
   Dropdown,
   Button,
+  Alert
 } from "reactstrap";
 import Logo from "./Logo";
 import { ReactComponent as LogoWhite } from "../assets/images/logos/materialprowhite.svg";
 import user1 from "../assets/images/users/user4.jpg";
 
+
 const Header = () => {
+
+  const[done , setDone] = useState(false);
+  const[Name , setName1 ] = useState('')
+  const[Email , setEmail1] = useState('')
+  const[Password , setPassword1] = useState('')
+  const[Type , setType1] = useState('')
+  const[Gender , setGender] = useState('')
+
+  const[err , setErr] = useState(null)
+
+  const navigate = useNavigate();
 
   const [show, setShow] = useState(false);
 
@@ -43,6 +57,37 @@ const Header = () => {
   const showMobilemenu = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const Trainees = { Name, Email , Password , Type , Gender }
+    const response = await fetch('http://localhost:5000/User/signUp' , {
+        method : 'POST' ,
+        body : JSON.stringify(Trainees) , 
+        headers : {
+            'Content-Type' : 'application/json'
+        }
+    }) 
+
+    const json = await response.json(Trainees)
+
+    if(!response.ok){
+        setErr(json.err)
+
+    }
+    if(response.ok){
+        setName1('')
+        setEmail1('')
+        setPassword1('')
+        setType1('')
+        setGender('')
+        
+        setDone(true);
+        setErr(null)
+        console.log('new corporate-trainee added', json)
+    }
+}
+ 
   return (
 
     <div>
@@ -58,12 +103,16 @@ const Header = () => {
               <Form.Control
                 type="name"
                 placeholder="Enter your user name"
+                value={ Name }
+        onChange={(e) => setName1(e.target.value) }
                 autoFocus
               />
               <Form.Label>Email address</Form.Label>
               <Form.Control
                 type="email"
                 placeholder="name@example.com"
+                value={ Email }
+        onChange={(e) => setEmail1( e.target.value)}
                 autoFocus
               />
                <Form.Label>Password</Form.Label>
@@ -71,6 +120,24 @@ const Header = () => {
               <Form.Control
                 type="password"
                 placeholder="Create Password"
+                value={ Password }
+                onChange={(e) => setPassword1(e.target.value)}
+                autoFocus
+              />
+               {/* <Form.Label>Type</Form.Label>
+              <Form.Control
+                type=""
+                placeholder="gender "
+                value={ Gender }
+                onChange={(e) => setGender(e.target.value)}
+                autoFocus
+              /> */}
+               <Form.Label>Type</Form.Label>
+              <Form.Control
+                type="type"
+                placeholder="enter type"
+                value={ Type }
+                onChange={(e) => setType1(e.target.value)}
                 autoFocus
               />
                 {/* <Form.Text className="text-muted">
@@ -83,67 +150,46 @@ const Header = () => {
                     defaultValue="female"
                    name="radio-buttons-group"
   >
-             <FormControlLabel value="female" control={<Radio />} label="Female" />
-             <FormControlLabel value="male" control={<Radio />} label="Male" />
+             <FormControlLabel value="female" control={<Radio />} label="Female"              onChange={(e) => setGender(e.target.value)}
+/>
+             <FormControlLabel value="male" control={<Radio />} label="Male"              onChange={(e) => setGender(e.target.value)}
+/>
+
                 </RadioGroup>
        
-             
+         
             </Form.Group>
           </Form>
+         
+
         </Modal.Body>
+        
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose} >
+        <h6>I accept website's<Link to="/Contract" className="nav-link"   onClick={handleClose}>Terms of Use</Link> and Privacy Notice.</h6>
+          <Button color="secondary" onClick={handleClose} >
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+
+          <Button color="primary"   type='submit' onClick={handleSubmit} >
             Sign Up
           </Button>
+
+          {done?
+        <Alert color="warning"> You have signed-up successfully! 
+        <Button variant="primary"  type='submit' onClick={handleClose}>
+      Done
+    </Button>
+    </Alert>:""}
+
         </Modal.Footer>
       </Modal>
 
 
 
-      {/* login button */}
-      {/* <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Login</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3" controlId="formBasic">
-            <Form.Label>Name</Form.Label>
-              <Form.Control
-                type="name"
-                placeholder="Enter your name"
-                autoFocus
-              />
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                placeholder="name@example.com"
-                autoFocus
-              />
-               <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Enter your password"
-                autoFocus
-              />
-             
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose} >
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Login
-          </Button>
-        </Modal.Footer>
-      </Modal> */}
 
 
+
+    
     <Navbar color="primary" dark expand="md" className="fix-header">
       <div className="d-flex align-items-center">
         <div className="d-lg-block d-none me-5 pe-3">
@@ -223,7 +269,8 @@ const Header = () => {
             <DropdownItem>My Account</DropdownItem>
             <DropdownItem>Edit Profile</DropdownItem>
             <DropdownItem divider />
-            <DropdownItem>My Balance</DropdownItem>
+            <DropdownItem>My Balance
+            </DropdownItem>
             <DropdownItem>Inbox</DropdownItem>
           
             <DropdownItem >
@@ -231,7 +278,13 @@ const Header = () => {
               Users
               </Link>
               </DropdownItem>
-
+              
+            <DropdownItem >
+              <Link to="/InstructorProfile">
+              Instructor Profile
+              </Link>
+              </DropdownItem>
+              
               <DropdownItem >
               <Link to="/Instructors">
               Instructors

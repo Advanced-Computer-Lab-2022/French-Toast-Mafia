@@ -27,7 +27,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   }));
 
 
-const { useState } = require("react");
+const { useState, useEffect } = require("react");
 
 
 const MyCourses = () => { 
@@ -42,8 +42,8 @@ const MyCourses = () => {
     console.log(id);
     const [course,setCourses] = useState([]);
 
-    const getCourses =  async () => {
-         await axios.get(`http://localhost:5000/User/ViewMyCourses?id=${id}`).then(
+    useEffect(function () {
+          axios.get(`http://localhost:5000/User/ViewMyCourses?id=${id}`).then(
 
         (res) => { 
             const course = res.data
@@ -55,20 +55,13 @@ const MyCourses = () => {
        
     
 
-    }
+    }, []);
   
     return(
 
         <div className="UserCourses"   >
-            <Box sx={{marginBottom: 2}}>
-            <Button variant="contained"
-            style={{width:200, height:40 , color:'#FFF' ,marginTop:10 }}
-            onClick={getCourses}
-            margin="normal"
-            padding="normal"
-            >Load courses</Button>
-            </Box>
-            
+        <h1 style={{textAlign: "center"}}>My Courses</h1>
+  
         
         
             

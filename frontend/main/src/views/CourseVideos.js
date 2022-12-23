@@ -69,20 +69,20 @@ const CourseVideos = () => {
     element.click();
   }
 
-  //get the video id from the url
-    function getVideoId(url){
-      url = url.split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
-      return (url[2] !== undefined) ? url[2].split(/[^0-9a-z_\-]/i)[0] : url[0];
-   }
+  // //get the video id from the url
+  //   function getVideoId(url){
+  //     url = url.split(/(vi\/|v=|\/v\/|youtu\.be\/|\/embed\/)/);
+  //     return (url[2] !== undefined) ? url[2].split(/[^0-9a-z_\-]/i)[0] : url[0];
+  //  }
 
 
 
 
-  function iframeclick() {
+  // function iframeclick() {
   
-            console.log("Video Clicked");
+  //           console.log("Video Clicked");
 
-    }
+  //   }
 
   
 
@@ -99,11 +99,12 @@ const CourseVideos = () => {
                 <CardSubtitle className="text-muted" tag="h6">
                   {videos.Description}
                 </CardSubtitle>
-                {/* <iframe id="theiframe" src={videos.Video} title="Youtube Video"
-                  width="100%" height="500" allowFullScreen=""
-                  onLoad={iframeclick}></iframe> */}
+                <iframe id="theiframe" src={videos.Video} title="Youtube Video"
+                  width="100%" height="500" allowFullScreen
+                  // onLoad={iframeclick}
+                  ></iframe>
 
-                  <Youtube videoId={getVideoId(videos.Video)}  onStateChange={iframeclick} />
+                  {/* <Youtube videoId={getVideoId(videos.Video)}  onStateChange={iframeclick} /> */}
               </CardBody>
             </Card>
           </Col>

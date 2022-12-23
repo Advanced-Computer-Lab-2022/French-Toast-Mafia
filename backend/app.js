@@ -71,7 +71,7 @@ mongoose.connect(MongoURI)
 
 
 
-    app.use(express.json())
+    app.use(express.json());
 
 
     app.post('/addUser', async (req,res)=>{

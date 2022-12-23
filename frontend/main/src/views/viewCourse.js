@@ -1,7 +1,5 @@
-import { Col, Row } from "reactstrap";
-import SalesChart from "../components/dashboard/SalesChart";
-import Feeds from "../components/dashboard/Feeds";
-import ProjectTables from "../components/dashboard/ProjectTable";
+import { Col, Row , Alert} from "reactstrap";
+
 import { useLocation } from 'react-router-dom';
 import { viewCourse } from "../api/axios";
 import {useState, useEffect} from 'react';
@@ -27,6 +25,13 @@ const ViewCourse = () => {
     const[subtitles, setSubtitles] = useState([])
     const[preview, setPreview] = useState([])
     const [price, setPrice] = useState([])
+    const [ratingLength, setRatingLength] = useState([])
+    const [reportAlert, setReportAlert] = useState(false)
+
+    const onDismiss = () => {
+      setReportAlert(false);
+    };
+  
 
     useEffect(() => {
         viewCourse(cId).then(json => {
@@ -36,17 +41,28 @@ const ViewCourse = () => {
         setSubtitles(json.CourseSubtitle)
         setPreview(json.Preview)
         setPrice(json.Cost)
+        setRatingLength(json.Rating.length)
         })
       }, []);
+
+      useEffect(() => {
+   
+      }, [reportAlert]);
+      
+    
 
   return (
     <div>
       {/***Top Cards***/}
-
+      <div>
+            <Alert color="success" isOpen={reportAlert} toggle={onDismiss.bind(null)}>
+              Thank you for reporting the issue.
+            </Alert>
+          </div>
       {/***Sales & Feed***/}
       <Row>
         <Col sm="6" lg="6" xl="7" xxl="7">
-          <CourseInfo course={course} instructor={instructor}/>
+          <CourseInfo cId = {cId} course={course} instructor={instructor} ratingLength = {ratingLength} setReportAlert={setReportAlert}/>
         </Col>
         <Col sm="6" lg="6" xl="5" xxl="5">
           <CoursePreview preview = {preview} price = {price} />

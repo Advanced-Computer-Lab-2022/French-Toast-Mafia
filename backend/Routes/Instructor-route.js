@@ -11,15 +11,12 @@ const {createInstructor, getAllInstructors,
         editBiography, editEmail ,
         ViewMyRatings, ViewMyReview,
         createExam,
-        addMCQ,
-        deleteInstrRating,addInstrRating,calculateInstrRating,
-         getAllMcq, addPromotion,viewInstrCourse}= require ("../Controller/instructor-controller");
+        deleteInstrRating,addInstrRating,calculateInstrRating, addPromotion,viewInstrCourse, calculateMoney}= require ("../Controller/instructor-controller");
 
 
 const router = express.Router();
 
 router.put('/addPromotion', addPromotion);
-
 
 router.get('/getAllInstructors',getAllInstructors );
 
@@ -35,11 +32,9 @@ router.post('/selectCountryInstr/:id', selectCountryInstructor);
 
 router.post('/addExam', createExam);
 
-router.post ('/addMCQ',addMCQ);
-
 router.put('/editInstrBiography', editBiography);
 
-router.put('/editInstrEmail', editEmail);
+router.post('/editInstrEmail', editEmail);
 
 router.put('/addPromotion', addPromotion);
 
@@ -63,9 +58,9 @@ router.put('/addInstrRating',addInstrRating);
 
 router.get('/calculateInstrRating',calculateInstrRating);
 
-router.get('/getAllMcq',getAllMcq);
-
 router.get('/viewInstrCourse',viewInstrCourse);
+
+router.get('/calculateMoney',calculateMoney);
 
 
 module.exports=router;

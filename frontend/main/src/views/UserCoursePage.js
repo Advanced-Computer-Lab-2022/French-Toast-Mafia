@@ -22,7 +22,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
   }));
 
-const { useState } = require("react");
+const { useState, useEffect } = require("react");
 
 const UserCoursePage = () => { 
     const [courses,setCourses] = useState([]);
@@ -33,36 +33,26 @@ const UserCoursePage = () => {
     const navigate = useNavigate();
 
 
-    const getCourses=  async () => {
+   useEffect(function () {
        // const courseId = params.get('courseId');
      //   const userId = params.get('userId');
    
         console.log(userId);
-        await axios.get(`http://localhost:5000/Course/viewUserCourse?id=${userId}`).then(
+        axios.get(`http://localhost:5000/Course/viewUserCourse?id=${userId}`).then(
             (res) => { 
                 const resCourse = res.data
                 console.log(resCourse)
                 setCourses(resCourse)
-                
             }
-             );
-             
+        );
+    }, []);
 
-    }
 
     
     return(
      
       <div className="UsersList">
-      <Box sx={{marginBottom: 2}}>
-      <Button variant="contained"
-      style={{width:200, height:40  , color:'#FFF' ,marginTop:10 }}
-      onClick={getCourses}
-      margin="normal"
-      padding="normal"
-      >Load Courses Info</Button>
-      {/* margin */}
-      </Box>
+        <h1 style={{textAlign: "center"}}>Course Information</h1>
 
 
       <TableContainer component={Paper}>
@@ -74,7 +64,7 @@ const UserCoursePage = () => {
         <StyledTableCell align="center">Subject</StyledTableCell>
         <StyledTableCell align="center">Instructor Info</StyledTableCell>
         <StyledTableCell align="center">Chapters</StyledTableCell>
-        <StyledTableCell align="center">Exercises</StyledTableCell>
+        <StyledTableCell align="center">Exams</StyledTableCell>
         <StyledTableCell align="center">Rate Course</StyledTableCell>
       </TableRow>
     </TableHead>
@@ -109,20 +99,10 @@ const UserCoursePage = () => {
           </TableCell>
 
           <TableCell align="center">
-          {/* <Box sx={{marginBottom: 2}}>
-            <Button variant="contained"
-              style={{ width:150, height: 40,  color: '#FFF', marginTop: 10 }}
-              onClick={() => 
-                //window.location.href=`/CourseVideos?courseId=${courseId}&userId=${userId}`
-                navigate(`/CourseVideos?courseId=${courseId}&userId=${userId}`)
-            }
-              margin="normal"
-              padding="normal"
-            >Watch Videos</Button>
-            </Box> */}
+
             <Box sx={{marginBottom: 2}}>
             <Button variant="contained"
-              style={{ width:150, height: 40,  color: '#FFF', marginTop: 10 }}
+              style={{ width:200, height: 40,  color: '#FFF', marginTop: 10 }}
               onClick={() => 
                 //window.location.href=`/CourseVideos?courseId=${courseId}&userId=${userId}`
                 navigate(`/CourseSubtitles?courseId=${courseId}`)
@@ -140,11 +120,12 @@ const UserCoursePage = () => {
               style={{ width:150, height: 40, color: '#FFF', marginTop: 10 }}
               onClick={() =>
                 // window.location.href=`/CourseExercises?courseId=${courseId}&userId=${userId}`
-                navigate(`/CourseExercises?courseId=${courseId}&userId=${userId}`)
+                // navigate(`/ViewExam?courseId=${courseId}&userId=${userId}`)
+                navigate(`/CourseExams?courseId=${courseId}&userId=${userId}`)
             }
               margin="normal"
               padding="normal"
-            >Excercies</Button>
+            >Exams</Button>
             </Box>
           </TableCell>
 
