@@ -9,7 +9,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { useNavigate } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
+import { useEffect } from 'react';
+
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -28,17 +30,30 @@ const InstructorProfile =()=> {
 
     const navigate = useNavigate();
     const [instructors,setInstructors] = useState([]);
+    const [instr,setInstr] = useState([]);
 
-    const getInstructors =  async () => {
-        await axios.get('http://localhost:5000/Instructor/getAllInstructors').then(
-       (res) => { 
-           const instructors = res.data
-           console.log(instructors)
-           setInstructors(instructors)
+
+    useEffect(function () {
+      axios.get('http://localhost:5000/Instructor/getAllInstructors').then(
+        (res) => {
+          const instructors = res.data
+          console.log(instructors)
+          setInstructors(instructors)
+          
+        }
+      );
+    }, []);
+
+  //   const getInstructors =  async () => {
+  //       await axios.get('http://localhost:5000/Instructor/getAllInstructors').then(
+  //      (res) => { 
+  //          const instructors = res.data
+  //          console.log(instructors)
+  //          setInstructors(instructors)
            
-       }
-        );
-   }
+  //      }
+  //       );
+  //  }
 
     
 const [info, setInfo] = useState([]);
@@ -55,17 +70,9 @@ const [info, setInfo] = useState([]);
 
   return(
 
-    // visualize authors in a table map over authors
     <div className="UsersList">
-        <Box sx={{marginBottom: 2}}>
-        <Button variant="contained"
-        style={{width:200, height:40 , color:'#FFF' ,marginTop:10 }}
-        onClick={getInstructors}
-        margin="normal"
-        padding="normal"
-        >Load Instructors</Button>
-        {/* margin */}
-        </Box>
+        <h1 style={{ textAlign: "center" }}>Instructors List</h1>
+
         
     
     
