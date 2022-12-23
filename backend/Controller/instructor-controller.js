@@ -273,20 +273,31 @@ const filterCourseCost = async (req,res) => {
 
 
 const viewInstrInfo = async(req , res) => {
-    const instrId = req.query.id;
+    const instrId = req.query.instrId;
 if (instrId) {
     try{
         const result = await instructor.findOne({_id:mongoose.Types.ObjectId(instrId)});
-        // get the details of the course 
-        const instructorDetails = 
-            {"Name": result.InstrName,
-            "Email":result.InstrEmail,
-            "Country": result.InstrCountry,
-            "Biography":result.Biography,
-            "Review":result.InstrReview,
-        }
+        if (result != null){
+            // const courseDetails = 
+            // {"Title": courseToView.NameOfCourse,
+            // "Subtitles":courseToView.CourseSubtitle,
+            // "Summary": courseToView.Summary,
+            // "Subject": courseToView.Subject,
+            // "Duration": courseToView.Duration,
+            // "Level" : courseToView.LevelOfCourse,
+            // "Exams" : courseToView.Exams,
+            // "Discount": courseToView.Discount
+            // "Price": courseToView.Cost,}
+            // res.status(200).json(courseDetails);
+            res.status(200).json(result);
 
-        res.status(200).json(instructorDetails);
+        // const instructorDetails = 
+        //     {"Name": result.InstrName,
+        //     "Email":result.InstrEmail,
+        //     "Country": result.InstrCountry,
+        //     "Biography":result.Biography,
+        //     "Review":result.InstrReview,
+        }
         
     
     }catch(error){
@@ -494,11 +505,32 @@ else{
 }
 }
 
+
+const calculateMoney = async(req , res) => {
+    const instrId=req.query.id;
+    if (instrId){
+        try{
+            const result = await instructor.findOne({_id:mongoose.Types.ObjectId(instrId)});
+            var sum=0;
+            for (let i = 0; i < result.CourseGiven.length; i++) {
+                const c1 =result.CourseGiven[i];
+               const c = await course.findById(c1);
+               sum+=(c.Cost*(result.PercentOrMoneyTaken/100));
+               console.log(sum); 
+               const r = await instructor.findByIdAndUpdate({_id:mongoose.Types.ObjectId(instrId)},{Wallet:sum});
+            }
+            res.status(200).json(sum);
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }   
+    }
+}
+
 module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      addCourse , addInstructorName, deleteCourse, filterCost, filterRating, filterSubject, 
      filterCourseSubjcet , filterCourseCost , ViewMyCourses
       , SearchCourse, viewInstrInfo, 
       editBiography, editEmail,ViewMyRatings , ViewMyReview, 
     addInstrRating ,calculateInstrRating,
-    deleteInstrRating, createExam, addPromotion,viewInstrCourse};
+    deleteInstrRating, createExam, addPromotion,viewInstrCourse, calculateMoney};
    
