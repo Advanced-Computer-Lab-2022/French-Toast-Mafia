@@ -103,7 +103,7 @@ const ThemeRoutes = [
       { path: "/ExamIsDone", exact: false, element: <ExamIsDone /> },
       { path: "/InstructorProfile", exact: false, element: <InstructorProfile/> },
       { path: "/InstructorInfo", exact: false, element: <InstructorInfo/> },
-      { path: "/InstructorBalance", exact: false, element: <InstructorBlaance/> }
+      { path: "/InstructorBalance", exact: false, element: <InstructorBalance/> }
 
 
     ],
