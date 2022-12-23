@@ -34,6 +34,11 @@ const InstructorInfo =()=> {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const handle = ()=>{
+        handleSubmit();
+        handleClose();
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const Test = {InstrEmail}
@@ -109,7 +114,7 @@ const InstructorInfo =()=> {
           <Button outline color="danger" onClick={handleClose} >
             Close
           </Button>
-          <Button color="primary"   type='submit' onClick={handleSubmit} >
+          <Button color="primary"   type='submit' onClick={handle} >
             Edit
           </Button>
 
