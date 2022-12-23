@@ -58,10 +58,10 @@ const createExam = async (req,res) => {
 
 };
 
-//get exam by id
+//get exam by course id
 const getExamById = async (req,res) => {
-    const examId = req.query.id;
-    const result= await Exams.findOne({_id:mongoose.Types.ObjectId(examId)});
+    const courseId = req.query.id;
+    const result= await Exams.findOne({courseId:mongoose.Types.ObjectId(courseId)});
     if(result){
         res.status(200).json(result);
     }
@@ -114,7 +114,149 @@ const getAllMcq = async (req, res) => {
         
 };
 
+//get mcq by id
+const getMcqById = async (req, res) => {
+  const examId = req.query.id;
+  const mcqId = req.query.mcqId;
+  const result = await Exams.findOne({ _id: mongoose.Types.ObjectId(examId) });
+  if (result) {
+    const mcq = result.mcq;
+    for (let i = 0; i < mcq.length; i++) {
+      if (mcq[i]._id == mcqId) {
+        res.status(200).json(mcq[i]);
+      }
+    }
+  }
+  else {
+    res.status(500).json({ message: 'Error in getting mcq' });
+  }
+}
+
+
+//user solve exam
+const solveExam = async (req, res) => {
+  const examId = req.query.id;
+  const userId = req.query.userId;
+
+  //add user id to exam
+  if (examId) {
+    //check if user already solved the exam
+    const result = await Exams.findOne({ _id: mongoose.Types.ObjectId(examId) });
+    if (result) {
+      const users = result.users;
+      for (let i = 0; i < users.length; i++) {
+        if (users[i] == userId) {
+          res.status(400).json({ message: 'You already solved this exam' });
+          return;
+        }
+      }
+
+      const rest = await Exams.findByIdAndUpdate(examId, { $push: { users: userId } }, { new: true });
+      const mcq = result.mcq;
+      const userAnswer = req.body.Answer;
+      let score = 0;
+      for (let i = 0; i < mcq.length; i++) {
+        if (mcq[i].correct === userAnswer[i]) {
+          score++;
+        }
+      }
+      
+      //create an array of user answers and correct answers
+      const userAnswers = [];
+      const correctAnswers = [];
+      for (let i = 0; i < mcq.length; i++) {
+        userAnswers.push(userAnswer[i]);
+        correctAnswers.push(mcq[i].correct);
+      }
+      const examResult = {
+        userAnswers: userAnswers,
+        correctAnswers: correctAnswers,
+        score: score,
+        total: mcq.length
+      };
+      // const newExamResult = new ExamResult(examResult);
+      // newExamResult.save();
+     // console.log(examResult);
+      res.status(200).json(examResult);
+
+    }
+    else {
+      res.status(400).json({ message: 'Error in solving exam' });
+    }
+  }
 
 
 
-module.exports= {getAllExams, createExam, getExamById, getAllMcq, addMCQ};
+
+};
+
+
+//solve mcq in exam
+const solveMcq = async (req, res) => {
+  const examId = req.query.id;
+  const mcqId = req.query.mcqId;
+  const userId = req.query.userId;
+  const result = await Exams.findOne({ _id: mongoose.Types.ObjectId(examId) });
+  if (result) {
+    const mcq = result.mcq;
+    for (let i = 0; i < mcq.length; i++) {
+      if (mcq[i]._id == mcqId) {
+        const userAnswer = req.body.userAnswer;
+        if (mcq[i].correct === userAnswer) {
+          const examResult = {
+            examId: examId,
+            userId: userId,
+            score: 1,
+            total: 1
+          };
+          const newExamResult = new ExamResult(examResult);
+          newExamResult.save();
+          res.status(200).json({ newExamResult });
+        }
+        else {
+          const examResult = {
+            examId: examId,
+            userId: userId,
+            score: 0,
+            total: 1
+          };
+          const newExamResult = new ExamResult(examResult);
+          newExamResult.save();
+          res.status(200).json({ newExamResult });
+        }
+      }
+    }
+  }
+  else {
+    res.status(500).json({ message: 'Error in solving mcq' });
+  }
+}
+
+//get each question and its answers
+const getAnswers = async (req, res) => {
+  const examId = req.query.id;
+  const result = await Exams.findOne({ _id: mongoose.Types.ObjectId(examId) });
+  if (result) {
+    const mcq = result.mcq;
+    const arr = [];
+    for (let i = 0; i < mcq.length; i++) {
+      const obj = {
+        question: mcq[i].question,
+        answers: mcq[i].correct
+      };
+      arr.push(obj);
+    }
+    res.status(200).json(arr);
+  }
+  else {
+    res.status(500).json({ message: 'Error in getting answers' });
+  }
+}
+
+
+
+
+
+
+
+module.exports= {getAllExams, createExam, getExamById, getAllMcq, addMCQ,getMcqById, solveMcq,solveExam, getAnswers};
