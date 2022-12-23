@@ -1,6 +1,5 @@
 const express= require("express");
-// const cookieParser = require('cookie-parser');
-
+const {User, validate }= require("../Models/User");
 
 const {getAllUser,
     viewCourseTitleHoursRating,
@@ -9,8 +8,8 @@ const {getAllUser,
     ChangeCurrencyUser,
    addCourse, viewMyInfo,ViewMyCourses,
    changePassword,sendPassChangeMail,
-   removeCourse, signUp, 
-   login, logout}= require ("../Controller/user-controller");
+   removeCourse,
+    logout}= require ("../Controller/user-controller");
 
 const router = express.Router();
 
@@ -36,9 +35,9 @@ router.post('/sendPassChangeMail',sendPassChangeMail);
 
 router.put('/removeCourse',removeCourse);
 
-router.post ('/signUp', signUp);
+// router.post ('/signUp', signUp);
 
-router.post('/login', login);
+// router.post('/login', login);
 
 
 module.exports=router;
