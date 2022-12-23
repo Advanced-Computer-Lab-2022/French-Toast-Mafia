@@ -27,7 +27,6 @@ const MyCourses= lazy(() => import('../views/MyCourses.js'));
 const UserCoursePage= lazy(() => import('../views/UserCoursePage.js'));
 const CourseInstructor= lazy(() => import('../views/CourseInstructor.js'));
 const CourseVideos= lazy(() => import('../views/CourseVideos.js'));
-const CourseExercises= lazy(() => import('../views/CourseExercises.js'));
 const CourseRate= lazy(() => import('../views/CourseRate.js'));
 const CreditCardss= lazy(() => import('../views/CreditCardss.js'));
 
@@ -46,11 +45,12 @@ const CreateExam= lazy(() => import('../views/CreateExam.js'));
 const InstrExamPage= lazy(() => import('../views/InstrExamPage.js'));
 const AddMcq= lazy(() => import('../views/AddMcq.js'));
 
+const CourseExams= lazy(() => import('../views/CourseExams.js'));
 const ViewExam= lazy(() => import('../views/ViewExam.js'));
 const ViewExamAnswer= lazy(() => import('../views/ViewExamAnswer.js'));
 const ExamIsDone= lazy(() => import('../views/ExamIsDone.js'));
 
-
+const CertificatePage= lazy(() => import('../views/CertificatePage.js'));
 
 const InstructorProfile= lazy(() => import('../views/InstructorProfile.js'));
 const InstructorInfo= lazy(() => import('../views/InstructorInfo.js'));
@@ -83,7 +83,6 @@ const ThemeRoutes = [
       { path: "/UserCoursePage", exact: false, element: <UserCoursePage /> },
       { path: "/CourseInstructor", exact: false, element: <CourseInstructor /> },
       { path: "/viewCourse", exact: true, element: <ViewCourse /> },
-      { path: "/CourseExercises", exact: false, element: <CourseExercises /> },
       { path: "/CourseRate", exact: false, element: <CourseRate /> },
       { path: "/CreditCardss", exact: false, element: <CreditCardss /> },
       { path: "/CourseSubtitles", exact: false, element: <CourseSubtitles /> },
@@ -98,9 +97,12 @@ const ThemeRoutes = [
       { path: "/InstrExamPage", exact: false, element: <InstrExamPage /> },
       { path: "/AddMcq", exact: false, element: <AddMcq /> },
 
+      { path: "/CourseExams", exact: false, element: <CourseExams /> },
       { path: "/ViewExam", exact: false, element: <ViewExam /> },
       { path: "/ViewExamAnswer", exact: false, element: <ViewExamAnswer /> },
       { path: "/ExamIsDone", exact: false, element: <ExamIsDone /> },
+      { path: "/CertificatePage", exact: false, element: <CertificatePage />},
+
       { path: "/InstructorProfile", exact: false, element: <InstructorProfile/> },
       { path: "/InstructorInfo", exact: false, element: <InstructorInfo/> },
       { path: "/InstructorBalance", exact: false, element: <InstructorBalance/> }
