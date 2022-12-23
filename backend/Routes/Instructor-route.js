@@ -34,7 +34,7 @@ router.post('/addExam', createExam);
 
 router.put('/editInstrBiography', editBiography);
 
-router.put('/editInstrEmail', editEmail);
+router.post('/editInstrEmail', editEmail);
 
 router.put('/addPromotion', addPromotion);
 

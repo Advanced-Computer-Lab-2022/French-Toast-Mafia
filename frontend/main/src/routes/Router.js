@@ -54,7 +54,7 @@ const ExamIsDone= lazy(() => import('../views/ExamIsDone.js'));
 
 const InstructorProfile= lazy(() => import('../views/InstructorProfile.js'));
 const InstructorInfo= lazy(() => import('../views/InstructorInfo.js'));
-
+const InstructorBalance= lazy(() => import('../views/InstructorBalance.js'));
 
 // /*****Routes******/
 
@@ -102,7 +102,9 @@ const ThemeRoutes = [
       { path: "/ViewExamAnswer", exact: false, element: <ViewExamAnswer /> },
       { path: "/ExamIsDone", exact: false, element: <ExamIsDone /> },
       { path: "/InstructorProfile", exact: false, element: <InstructorProfile/> },
-      { path: "/InstructorInfo", exact: false, element: <InstructorInfo/> }
+      { path: "/InstructorInfo", exact: false, element: <InstructorInfo/> },
+      { path: "/InstructorBalance", exact: false, element: <InstructorBlaance/> }
+
 
     ],
   },

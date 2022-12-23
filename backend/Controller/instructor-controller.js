@@ -507,7 +507,7 @@ else{
 
 
 const calculateMoney = async(req , res) => {
-    const instrId=req.query.id;
+    const instrId=req.query.instrId;
     if (instrId){
         try{
             const result = await instructor.findOne({_id:mongoose.Types.ObjectId(instrId)});
