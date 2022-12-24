@@ -36,6 +36,7 @@ const CourseSubtitles= lazy(() => import('../views/CourseSubtitles.js'));
 const Contract = lazy (() => import ('../views/ui/Contract.js'));
 const ViewCourse = lazy(() => import("../views/viewCourse.js"));
 
+const AdminDashboard = lazy(() => import("../views/AdminDashboard"));
 
 const Instructors= lazy(() => import('../views/Instructors.js'));
 const InstructorCourses= lazy(() => import('../views/InstructorCourses.js'));
@@ -106,9 +107,9 @@ const ThemeRoutes = [
 
       { path: "/InstructorProfile", exact: false, element: <InstructorProfile/> },
       { path: "/InstructorInfo", exact: false, element: <InstructorInfo/> },
-      { path: "/InstructorBalance", exact: false, element: <InstructorBalance/> }
+      { path: "/InstructorBalance", exact: false, element: <InstructorBalance/> },
 
-
+      { path: "/AdminHome" , exact: false, element: <AdminDashboard/> }
     ],
   },
 ];

@@ -11,13 +11,26 @@ import {
   } from "reactstrap";
   import { useNavigate } from "react-router-dom";
   import {useState, useEffect} from "react";
+  import { getReporter } from "../../api/axios";
 
   const Report = ({id, report, followup}) => {
+
+    const [reporter, setReporter] = useState("Loading..");
+
     const rId = id;
+    const reporterId = report.reported_by;
     const type = report.type;
     const status = report.status;
     var typeIcon;
     var statusIcon;
+
+    
+  useEffect(() => {
+    getReporter(reporterId).then(json => {
+      setReporter(json)
+      // console.log(reports)
+    })
+  }, []);
 
     if(type === "Technical")
         typeIcon = <span class="bi bi-tools" style={{ fontSize: "25px"}}></span>;
@@ -47,7 +60,7 @@ import {
 
                     <CardTitle tag="h5">{report.description}</CardTitle>
                     <br/>   
-                    <CardSubtitle className="mb-2 text-muted" tag="h6"><span class="bi bi-person"></span> &nbsp;{report.reported_by}</CardSubtitle>
+                    <CardSubtitle className="mb-2 text-muted" tag="h6"><span class="bi bi-person"></span> &nbsp;{reporter}</CardSubtitle>
                     <CardText className="mt-3 text-muted"><span class="bi bi-chat-left-dots"></span> &nbsp;({followup.length}) </CardText>
                     <Button color="primary" >View Report</Button>   
                 </Col>

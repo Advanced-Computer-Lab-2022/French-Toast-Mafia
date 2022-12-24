@@ -6,7 +6,8 @@ const mongoose = require('mongoose');
 
 
 function getAllReports (req,res) {
-   let x= Report.find({}).then (function (rep) {
+   let x= Report.find({}).sort({createdAt: -1})
+   .then (function (rep) {
     res.send(rep);
     });
 };
@@ -45,7 +46,7 @@ const createReport = async(req,res) => {  //add report
 
 const getCourseReports = async(req,res) =>{
     const courseId = req.query.id;
-    const reports = Report.find({reported_course : courseId}).then (reps =>{
+    Report.find({reported_course : courseId}).then (reps =>{
         return res.status(200).json(reps);
     });
 
@@ -61,15 +62,43 @@ const deleteReports = async(req,res) =>{
 const getReporterName = async(req, res) =>{
     const uId = req.query.id;
 
-    // const i = Instructor.findOne({_id:mongoose.Types.ObjectId(uId)}).then(retUser =>{
-    //     return res.status(200).json(retUser.InstrName);
-    // });
+    User.findOne({_id:mongoose.Types.ObjectId(uId)}).then(retUser =>{
+        if(retUser != null){
+            return res.status(200).json(retUser.Name);
+        }
+        else{
+            Instructor.findOne({_id:mongoose.Types.ObjectId(uId)}).then(retInstructor =>{
+                if(retInstructor != null){
+                    return res.status(200).json(retInstructor.InstrName);
+                }
+                else
+                    return res.status(400).json(null);
+            })
+        }
+    });        
+};
 
-    // let i = Instructor.findById({_id : uId}).then(retInstructor =>{
-    //     return res.status(200).json(i.InstrName);
-    // });
 
-}
+const getReportedCourse = async(req, res) =>{
+    const cId = req.query.id;
+    Course.findOne({_id:mongoose.Types.ObjectId(cId)}).then(retCourse =>{
+            return res.status(200).json(retCourse.NameOfCourse);
+    });          
+};
 
+const updateReportType = async(req,res) =>{
+    const cId = req.query.id;
+    Report.findByIdAndUpdate({_id:mongoose.Types.ObjectId(cId)},{type: "Technical"}).then(ret =>{
+        return res.status(200).json(ret);
+    });
+       
+    };
+    
+const updateReportStatus = async(req, res) =>{
+    const cId = req.query.id;
+    Report.findByIdAndUpdate({_id:mongoose.Types.ObjectId(cId)},{status: "Resolved"}).then(ret =>{
+        return res.status(200).json(ret);
+    });
+};
    
-module.exports={ getAllReports, createReport, getCourseReports, deleteReports, getReporterName};
+module.exports={ getAllReports, createReport, getCourseReports, deleteReports, getReporterName, getReportedCourse,updateReportType, updateReportStatus};
