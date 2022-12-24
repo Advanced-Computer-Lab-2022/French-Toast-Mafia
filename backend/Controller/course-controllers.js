@@ -1,6 +1,6 @@
 const course= require("../Models/Course");
-const instructor= require("../Models/Instructor");
-const user = require("../Models/User");
+const {Instructor}= require("../Models/Instructor");
+const {User} = require("../Models/User");
 const mongoose = require('mongoose');
 const Subtitle = require("../Models/Subtitle");
 
@@ -89,7 +89,7 @@ const viewCourseInstructor = async(req , res) => {
         const courseDetails = 
             {"Course Instructor": courseToView.Instructor}
 
-        const InstructorToView = await instructor.
+        const InstructorToView = await Instructor.
         findOne({_id:mongoose.Types.ObjectId(courseToView.Instructor)});
       // console.log(InstructorToView);
         const InstructorDetails =
@@ -143,7 +143,7 @@ const viewUserCourse = async(req , res) => {
     const resultCourses = [];
 if (userId){
     try{
-        const result = await user.findOne({_id:mongoose.Types.ObjectId(userId)});
+        const result = await User.findOne({_id:mongoose.Types.ObjectId(userId)});
         //get each user course details
         for (let i = 0; i < result.Courses.length; i++) {
             const courseToView = await course.findOne({_id:mongoose.Types.ObjectId(result.Courses[i])});
@@ -187,7 +187,7 @@ const addCourseRating = async(req , res) => {
     const userId=req.body.id;
     const rating=req.body.rating;
     const review=req.body.review;
-    const u = await user.findOne({_id:mongoose.Types.ObjectId(userId)});
+    const u = await User.findOne({_id:mongoose.Types.ObjectId(userId)});
     const username = u.Name;
     const uId=mongoose.Types.ObjectId(userId);
     const tuple={uId,rating,review,username};
@@ -261,7 +261,7 @@ const emptyCourseList = async(req , res) => {
     const emp=[];
     if (userId){
         try{
-            const result = await user.findOneAndUpdate({_id:mongoose.Types.ObjectId(userId)}, { Courses: emp }, { new: true });
+            const result = await User.findOneAndUpdate({_id:mongoose.Types.ObjectId(userId)}, { Courses: emp }, { new: true });
             res.status(200).json(result);
         }catch(error){
             res.status(400).json({error:error.message})
@@ -277,9 +277,9 @@ const registerCourseToUser = async(req , res) => {
     if (userId){
         try{
             //check if the user has already enrolled in the course
-            const check = await user.findOne({_id:mongoose.Types.ObjectId(userId), Courses:{$elemMatch:{cId:cId}}});
+            const check = await User.findOne({_id:mongoose.Types.ObjectId(userId), Courses:{$elemMatch:{cId:cId}}});
             if (!check){
-            const resUser = await user.findOneAndUpdate({_id:mongoose.Types.ObjectId(userId)}, { $push: { Courses: cId } }, { new: true });
+            const resUser = await User.findOneAndUpdate({_id:mongoose.Types.ObjectId(userId)}, { $push: { Courses: cId } }, { new: true });
             res.status(200).json(resUser);
             }
             else{

@@ -1,11 +1,10 @@
-const Instructor = require("../Models/Instructor");
-const user=require("../Models/User");
+const {Instructor} = require("../Models/Instructor");
+const {User} =require("../Models/User");
 const Course = require ("../Models/Course")
 var mongoose = require('mongoose');
 const userFilterSubj= require ("../Controller/instructor-controller")
 const userFilterRate= require ("../Controller/instructor-controller")
 const courseController = require("../Controller/course-controllers")
-var mongoose = require('mongoose');
 const nodemailer = require('nodemailer')
 const sendgridTransport = require('nodemailer-sendgrid-transport')
 const express = require("express");
@@ -15,7 +14,7 @@ const jwt = require('jsonwebtoken');
 
 //creatig user 
 const createUser = async(req,res) => {
-    const newUser = new user ({
+    const newUser = new User ({
         Name: req.body.Name,
         Email: req.body.Email,
         Age: req.body.Age, 
@@ -97,7 +96,7 @@ const logout = (req, res) => {
 
 //get all users 
 function getAllUser (req,res) {
-    user.find({}).then (function (user) {
+    User.find({}).then (function (user) {
     res.send(user);
     });
 
@@ -159,7 +158,7 @@ const selectCountryUser = async (req, res) => {
     const newCountry=obj.Country;
 
     try{
-        const u = await user.findByIdAndUpdate(userID, {Country:newCountry}, {new:true});
+        const u = await User.findByIdAndUpdate(userID, {Country:newCountry}, {new:true});
         res.status(200).json(u)
     }
     catch(error){
@@ -226,7 +225,7 @@ const viewCourseTitleHoursRating = async (req, res) => {
         const userId = req.query.id;
     if (userId){
         try{
-            const result = await user.findOne({_id:mongoose.Types.ObjectId(userId)});
+            const result = await User.findOne({_id:mongoose.Types.ObjectId(userId)});
             const userDetails = 
                 {"Name": result.Name,
                 "Email":result.Email,
@@ -253,7 +252,7 @@ const viewCourseTitleHoursRating = async (req, res) => {
         const resultCourses = [];
     if (userId){
         try{
-            const result = await user.findOne({_id:mongoose.Types.ObjectId(userId)}); 
+            const result = await User.findOne({_id:mongoose.Types.ObjectId(userId)}); 
             const courses = result.Courses;
             for (let i = 0; i < courses.length; i++) {
                 const c1 = courses[i];
@@ -277,7 +276,7 @@ const viewCourseTitleHoursRating = async (req, res) => {
 
     const changePassword = async(req, res) => {
         let x = { Email: req.body.Email }
-        const userPassword = await user.findOneAndUpdate(x, { Password: req.body.Password }, { new: true });
+        const userPassword = await User.findOneAndUpdate(x, { Password: req.body.Password }, { new: true });
         if (userPassword) {
             res.status(200).json(userPassword)
         }
@@ -330,14 +329,14 @@ const viewCourseTitleHoursRating = async (req, res) => {
         const userId = req.query.id;
         const courseId=req.body;
       
-       const resultUser = await user.findOne({_id:mongoose.Types.ObjectId(userId)});
+       const resultUser = await User.findOne({_id:mongoose.Types.ObjectId(userId)});
        const resultCourse = await Course.findOne({_id:mongoose.Types.ObjectId(courseId)});
 
          if (resultUser){
             if (resultCourse){
             try{
 
-                await user.findByIdAndUpdate(userId,{$push:{Courses: resultCourse._id}});  
+                await User.findByIdAndUpdate(userId,{$push:{Courses: resultCourse._id}});  
                 res.status(200).json(resultCourse);
 
             }catch(error){
@@ -356,14 +355,14 @@ const removeCourse = async(req , res) => {
     const userId = req.query.id;
     const courseId=req.body;
   
-   const resultUser = await user.findOne({_id:mongoose.Types.ObjectId(userId)});
+   const resultUser = await User.findOne({_id:mongoose.Types.ObjectId(userId)});
    const resultCourse = mongoose.Types.ObjectId(courseId);
 
      if (resultUser){
         if (resultCourse){
         try{
 
-            await user.findByIdAndUpdate(userId,{$pull:{Courses: resultCourse._id}});  
+            await User.findByIdAndUpdate(userId,{$pull:{Courses: resultCourse._id}});  
             res.status(200).json(resultCourse);
 
         }catch(error){

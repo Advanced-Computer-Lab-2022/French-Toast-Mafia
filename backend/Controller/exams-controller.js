@@ -1,5 +1,5 @@
 const course= require("../Models/Course");
-const instructor= require("../Models/Instructor");
+const {Instructor}= require("../Models/Instructor");
 const Exams = require("../Models/Exams");
 const mongoose = require('mongoose');
 
@@ -46,7 +46,7 @@ const createExam = async (req,res) => {
     });
 
     //add exam to instructor
-    instructor.findOneAndUpdate({_id:mongoose.Types.ObjectId(InstrId)},{$push:{Exam:newExam._id}})
+    Instructor.findOneAndUpdate({_id:mongoose.Types.ObjectId(InstrId)},{$push:{Exam:newExam._id}})
         .then(function (instructor) {
       //  res.status(200).json(instructor)
     });

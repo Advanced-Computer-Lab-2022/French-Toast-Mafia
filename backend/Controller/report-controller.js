@@ -1,7 +1,7 @@
 const Report = require("../Models/Report");
-const Instructor= require("../Models/Instructor");
+const {Instructor}= require("../Models/Instructor");
 const Course = require("../Models/Course");
-const User= require("../Models/User");
+const {User}= require("../Models/User");
 const mongoose = require('mongoose');
 
 
