@@ -42,6 +42,14 @@ const createReport = async(req,res) => {  //add report
            }
             
         }
+
+const getCourseReports = async(req,res) =>{
+    const courseId = req.query.id;
+    const reports = Report.find({reported_course : courseId}).then (reps =>{
+        return res.status(200).json(reps);
+    });
+
+}
     
 const deleteReports = async(req,res) =>{
     const del = Report.deleteMany({}).then((deleted) =>{
@@ -50,5 +58,18 @@ const deleteReports = async(req,res) =>{
 
 }
 
+const getReporterName = async(req, res) =>{
+    const uId = req.query.id;
+
+    // const i = Instructor.findOne({_id:mongoose.Types.ObjectId(uId)}).then(retUser =>{
+    //     return res.status(200).json(retUser.InstrName);
+    // });
+
+    // let i = Instructor.findById({_id : uId}).then(retInstructor =>{
+    //     return res.status(200).json(i.InstrName);
+    // });
+
+}
+
    
-module.exports={ getAllReports, createReport, deleteReports};
+module.exports={ getAllReports, createReport, getCourseReports, deleteReports, getReporterName};

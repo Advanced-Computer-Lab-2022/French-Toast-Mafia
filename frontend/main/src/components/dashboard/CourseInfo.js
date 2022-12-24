@@ -207,7 +207,7 @@ const CourseInfo = ({cId,course,instructor,ratingLength,setReportAlert}) => {
           <DropdownToggle className="btn btn dropdown-toggle dropdown-toggle-split" outline color="danger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Report&nbsp;&nbsp;&nbsp;</DropdownToggle>
           <DropdownMenu>
           <DropdownItem id="ReportProblem" onClick={handleShow}>Report Problem</DropdownItem>
-          <DropdownItem id="viewReports" onClick={viewReports}>View Course Reports</DropdownItem>
+          <DropdownItem id="viewReports" onClick={() => navigate(`/viewCourseReports?id=${cId}`)}>View Course Reports</DropdownItem>
           </DropdownMenu> </Dropdown>
           </Col>
         </Row>

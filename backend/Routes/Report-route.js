@@ -1,11 +1,15 @@
 const express= require("express");
-const {getAllReports,createReport, deleteReports }= require ("../Controller/report-controller");
+const {getAllReports,createReport, getCourseReports, deleteReports, getReporterName }= require ("../Controller/report-controller");
 
 const router = express.Router();
 
 router.get("/", getAllReports);
 
 router.post('/addReport',createReport);
+
+router.get('/viewCourseReports',getCourseReports);
+
+router.get('/getReporterName', getReporterName);
 
 router.get('/delete',deleteReports);
 
