@@ -1,6 +1,5 @@
 const express= require("express");
-// const cookieParser = require('cookie-parser');
-
+const {User, validate }= require("../Models/User");
 
 const {getAllUser,
     viewCourseTitleHoursRating,
@@ -36,9 +35,9 @@ router.post('/sendPassChangeMail',sendPassChangeMail);
 
 router.put('/removeCourse',removeCourse);
 
-router.post ('/signUp', signUp);
+// router.post ('/signUp', signUp);
 
-router.post('/login', login);
+// router.post('/login', login);
 
 router.post('/videoProgress',videoProgress);
 

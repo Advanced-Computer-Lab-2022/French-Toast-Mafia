@@ -1,7 +1,7 @@
-const Admin = require("../Models/Admin");
-const Instructor= require("../Models/Instructor");
-const User= require("../Models/User");
-
+const {Admin} = require("../Models/Admin");
+const {Instructor} = require("../Models/Instructor");
+const {User} = require("../Models/User");
+const adminLogout= require("../Controller/user-controller");
 
 function getAllAdmin (req,res) {
    let x= Admin.find({}).then (function (admin) {

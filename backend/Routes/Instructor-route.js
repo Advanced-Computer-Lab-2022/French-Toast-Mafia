@@ -18,7 +18,7 @@ const router = express.Router();
 
 router.put('/addPromotion', addPromotion);
 
-router.get('/getAllInstructors',getAllInstructors );
+router.get('/getAllInstructors',getAllInstructors);
 
 router.post('/addCourse', addCourse);
 
@@ -32,9 +32,9 @@ router.post('/selectCountryInstr/:id', selectCountryInstructor);
 
 router.post('/addExam', createExam);
 
-router.put('/editInstrBiography', editBiography);
+router.post('/editInstrBiography', editBiography);
 
-router.put('/editInstrEmail', editEmail);
+router.post('/editInstrEmail', editEmail);
 
 router.put('/addPromotion', addPromotion);
 

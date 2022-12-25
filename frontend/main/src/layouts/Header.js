@@ -91,7 +91,7 @@ const Header = () => {
   return (
 
     <div>
-
+        {/* sign up button */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Sign Up</Modal.Title>
@@ -99,7 +99,7 @@ const Header = () => {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>User Name</Form.Label>
+            <Form.Label>Username</Form.Label>
               <Form.Control
                 type="name"
                 placeholder="Enter your user name"
@@ -116,6 +116,7 @@ const Header = () => {
                 autoFocus
               />
                <Form.Label>Password</Form.Label>
+              
               <Form.Control
                 type="password"
                 placeholder="Create Password"
@@ -139,6 +140,10 @@ const Header = () => {
                 onChange={(e) => setType1(e.target.value)}
                 autoFocus
               />
+                {/* <Form.Text className="text-muted">
+              Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces.
+                 </Form.Text> */}
+
                  <Form.Label>Gender </Form.Label>
               <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
@@ -178,32 +183,19 @@ const Header = () => {
 
         </Modal.Footer>
       </Modal>
+
+
+
+
+
+
     
-
-
-
-
-
-
-  
-    
-   
-
-
-
-
-
-
-
-
-
-
-
     <Navbar color="primary" dark expand="md" className="fix-header">
       <div className="d-flex align-items-center">
         <div className="d-lg-block d-none me-5 pe-3">
           <Logo />
         </div>
+        
         <NavbarBrand href="/">
           <LogoWhite className=" d-lg-none" />
         </NavbarBrand>
@@ -233,12 +225,19 @@ const Header = () => {
 
       <Collapse navbar isOpen={isOpen}>
         <Nav className="me-auto" navbar>
+
           <NavItem>
             < Button    onClick={handleShow}  color="Transparent" >
               Sign Up
               </Button>
-              {/* // {modalOpen && <Modal setOpenModal={setModalOpen} backdrop={true}/>} */}
-                    </NavItem>
+          </NavItem>
+
+           <NavItem>
+            < Button    onClick={handleShow}  color="Transparent" >
+              Login
+              </Button>
+          </NavItem>
+
           <NavItem>
             <Link to="/about" className="nav-link">
               About
@@ -270,7 +269,8 @@ const Header = () => {
             <DropdownItem>My Account</DropdownItem>
             <DropdownItem>Edit Profile</DropdownItem>
             <DropdownItem divider />
-            <DropdownItem>My Balance</DropdownItem>
+            <DropdownItem>My Balance
+            </DropdownItem>
             <DropdownItem>Inbox</DropdownItem>
           
             <DropdownItem >

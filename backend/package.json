@@ -18,12 +18,15 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "git": "^0.1.5",
+    "joi": "^17.7.0",
+    "joi-password-complexity": "^5.1.0",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.29.4",
-    "mongoose": "^6.6.7",
+    "mongoose": "^6.8.1",
     "nodemailer": "^6.8.0",
     "nodemailer-sendgrid-transport": "^0.2.0",
     "nodeman": "^1.1.2",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "stripe": "^11.5.0"
   }
 }
