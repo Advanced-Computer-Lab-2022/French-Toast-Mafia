@@ -18,7 +18,7 @@ const router = express.Router();
 
 router.put('/addPromotion', addPromotion);
 
-router.get('/getAllInstructors',getAllInstructors );
+router.get('/getAllInstructors',getAllInstructors);
 
 router.post('/addCourse', addCourse);
 

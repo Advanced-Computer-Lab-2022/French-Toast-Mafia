@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const {ObjectId} = mongoose.Schema;
+const jwt = require("jsonwebtoken");
+const Joi = require("joi");
+const passwordComplexity = require("joi-password-complexity");
+
+const maxAge = 3 * 24 * 60 * 60;
+
 
 const instructorSchema = new Schema({
     InstrName: {
@@ -70,5 +76,21 @@ const instructorSchema = new Schema({
     
   }, { timestamps: true });
   
+  instructorSchema.methods.generateAuthToken = function () {
+    const token = jwt.sign({ _id: this._id }, process.env.JWTPRIVATEKEY, {
+      expiresIn: maxAge,
+    });
+    return token;
+  };
+  
   const Instructor = mongoose.model('Instructor', instructorSchema);
-  module.exports = Instructor;
+  
+  const validate2 = (data) => {
+    const schema = Joi.object({
+      InstrEmail: Joi.string().required().label("Email"),
+      InstrPassword: passwordComplexity().required().label("Password"),
+    });
+    return schema.validate(data);
+  };
+
+  module.exports = {Instructor, validate2};

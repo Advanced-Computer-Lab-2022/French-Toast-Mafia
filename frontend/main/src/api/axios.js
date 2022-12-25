@@ -32,3 +32,23 @@ export const viewSubtitle = async(id) =>{
     const response = await axios.get(`http://localhost:5000/Subtitle/viewSubtitle?id=${id}`)
     return response.data
 }
+
+export const viewCourseReports = async(id) =>{
+    const response = await axios.get(`http://localhost:5000/Report/viewCourseReports?id=${id}`)
+    return response.data
+}
+
+export const getReporter = async(id) =>{
+    const response = await axios.get(`http://localhost:5000/Report/getReporterName?id=${id}`)
+    return response.data
+}
+
+export const getAllReports = async() =>{
+    const response = await axios.get(`http://localhost:5000/Report/`)
+    return response.data
+}
+
+export const getReportedCourse = async(id) =>{
+    const response = await axios.get(`http://localhost:5000/Report/getReportedCourse?id=${id}`)
+    return response.data
+}

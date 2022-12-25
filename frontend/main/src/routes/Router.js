@@ -29,13 +29,14 @@ const CourseInstructor= lazy(() => import('../views/CourseInstructor.js'));
 const CourseVideos= lazy(() => import('../views/CourseVideos.js'));
 const CourseRate= lazy(() => import('../views/CourseRate.js'));
 const CreditCardss= lazy(() => import('../views/CreditCardss.js'));
-
+const CourseReports = lazy(() => import('../views/CourseReports'))
 
 
 const CourseSubtitles= lazy(() => import('../views/CourseSubtitles.js'));
 const Contract = lazy (() => import ('../views/ui/Contract.js'));
 const ViewCourse = lazy(() => import("../views/viewCourse.js"));
 
+const AdminDashboard = lazy(() => import("../views/AdminDashboard"));
 
 const Instructors= lazy(() => import('../views/Instructors.js'));
 const InstructorCourses= lazy(() => import('../views/InstructorCourses.js'));
@@ -83,6 +84,7 @@ const ThemeRoutes = [
       { path: "/UserCoursePage", exact: false, element: <UserCoursePage /> },
       { path: "/CourseInstructor", exact: false, element: <CourseInstructor /> },
       { path: "/viewCourse", exact: true, element: <ViewCourse /> },
+      { path: "/viewCourseReports", exact: true, element: <CourseReports /> },
       { path: "/CourseRate", exact: false, element: <CourseRate /> },
       { path: "/CreditCardss", exact: false, element: <CreditCardss /> },
       { path: "/CourseSubtitles", exact: false, element: <CourseSubtitles /> },
@@ -105,9 +107,9 @@ const ThemeRoutes = [
 
       { path: "/InstructorProfile", exact: false, element: <InstructorProfile/> },
       { path: "/InstructorInfo", exact: false, element: <InstructorInfo/> },
-      { path: "/InstructorBalance", exact: false, element: <InstructorBalance/> }
+      { path: "/InstructorBalance", exact: false, element: <InstructorBalance/> },
 
-
+      { path: "/AdminHome" , exact: false, element: <AdminDashboard/> }
     ],
   },
 ];

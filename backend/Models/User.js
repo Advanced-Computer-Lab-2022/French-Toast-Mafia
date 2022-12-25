@@ -1,10 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const jwt = require("jsonwebtoken");
+const Joi = require("joi");
+const passwordComplexity = require("joi-password-complexity");
+
+const maxAge = 3 * 24 * 60 * 60;
 
 const userSchema = new Schema({
     Name: {
       type: String,
-      required: true,
+      required: false,
     },
     Email: {
       type: String,
@@ -38,7 +43,7 @@ const userSchema = new Schema({
     },
     Type : {                //individual or corperate trainee 
         type: String,
-        required: true
+        required: false
     },
     Job: {
       type: String,
@@ -78,6 +83,24 @@ const userSchema = new Schema({
     }
   }
   }, { timestamps: true });
+
+  userSchema.methods.generateAuthToken = function () {
+    const token = jwt.sign({ _id: this._id }, process.env.JWTPRIVATEKEY, {
+      expiresIn: maxAge,
+    });
+    return token;
+  };
   
-  const User = mongoose.model('User', userSchema);
-  module.exports = User;
+  const User = mongoose.model("user", userSchema);
+  
+  const validate3 = (data) => {
+    const schema = Joi.object({
+      Email: Joi.string().email().required().label("Email"),
+      Password: passwordComplexity().required().label("Password"),
+    });
+    return schema.validate(data);
+  };
+  
+
+  // const User = mongoose.model('User', userSchema);
+  module.exports = {User, validate3};
