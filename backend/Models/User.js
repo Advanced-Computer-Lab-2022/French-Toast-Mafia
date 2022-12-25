@@ -76,7 +76,22 @@ const userSchema = new Schema({
       ref: 'Course',
       required: false
     }
-  }
+  },
+  Exams:
+  {
+    type: Array,
+    required: false
+  },
+  Subtitles :
+  {
+    type: Array,
+    required: false
+  },
+  Progress:
+  {
+    type: Array,
+    required: false
+  },
   }, { timestamps: true });
   
   const User = mongoose.model('User', userSchema);

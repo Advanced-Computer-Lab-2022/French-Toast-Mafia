@@ -1,6 +1,8 @@
 const Instructor = require("../Models/Instructor");
 const user=require("../Models/User");
 const Course = require ("../Models/Course")
+const Exam = require ("../Models/Exams")
+const Subtitle = require ("../Models/Subtitle")
 var mongoose = require('mongoose');
 const userFilterSubj= require ("../Controller/instructor-controller")
 const userFilterRate= require ("../Controller/instructor-controller")
@@ -374,9 +376,76 @@ const removeCourse = async(req , res) => {
         }
    } else{
     res.status(400).json({error:"Please enter a valid userId"});
+}   
 }
-    
+
+//watch video and update progress attribute in user schema
+const videoProgress = async (req, res) => {
+    const userId = req.query.id;
+    const courseId = req.query.courseId;
+    const subtitleId = req.query.subtitleId;
+
+    const resultUser = await user.findOne({ _id: mongoose.Types.ObjectId(userId) });
+    const userCourses = resultUser.Courses;
+    const userSubtitles = resultUser.Subtitles;
+    let uCourse=null;
+
+    let courseFound = false;
+    let subtitleFound = false;
+
+    if (resultUser) {
+        for (let i = 0; i < userCourses.length; i++) {
+            if (userCourses[i] == courseId) {
+                courseFound = true;
+            }
+        }
+        for (let i = 0; i < userSubtitles.length; i++) {
+            if (userSubtitles[i].subtitle == subtitleId) {
+                subtitleFound = true;
+            }
+        }
+        if (courseFound) {
+            if (!(subtitleFound)) {
+                try {
+                    await user.findByIdAndUpdate
+                       (userId, { $push: { Subtitles: { course: courseId, subtitle: subtitleId } } });
+                        //update progress attribute in user schema
+                        uCourse=await Course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+                        const totalExams=uCourse.ExamCourse.length;
+                        const totalSubtitles=uCourse.CourseSubtitle.length;
+                        const p=1/(totalExams+totalSubtitles);
+                        //get the progress of the user
+                        for (let i=0;i<resultUser.Progress.length;i++){
+                            if (resultUser.Progress[i].courseId==courseId){
+                                const progress=resultUser.Progress[i].Progress;
+                                const newProgress=progress+p;
+                                console.log(newProgress);
+                                //update the progress of the user of a specific course
+                                await user.findOneAndUpdate({_id:mongoose.Types.ObjectId(userId),"Progress.courseId":mongoose.Types.ObjectId(courseId)},
+                                {$set:{"Progress.$.Progress":newProgress}});
+
+                            }
+                        }
+                    res.status(200).json("Subtitle added to user");
+                } catch (error) {
+                    res.status(400).json({ error: error.message })
+                }
+            }
+            else {
+                res.status(400).json({ error: "Subtitle already exists" });
+            }
+        }
+        else {
+            res.status(400).json({ error: "Course not found" });
+        }
+    }
+    else {
+        res.status(400).json({ error: "Please enter a valid userId" });
+    }
 }
+
+
+
 
 
 
@@ -384,4 +453,4 @@ module.exports = {getAllUser,
     viewCourseTitleHoursRating,viewCoursePrice,
     selectCountryUser,ChangeCurrencyUser,addCourse,
     viewMyInfo,ViewMyCourses,changePassword,sendPassChangeMail,
-    removeCourse, signUp, login, logout};
+    removeCourse, signUp, login, logout, videoProgress};

@@ -10,7 +10,7 @@ const {getAllUser,
    addCourse, viewMyInfo,ViewMyCourses,
    changePassword,sendPassChangeMail,
    removeCourse, signUp, 
-   login, logout}= require ("../Controller/user-controller");
+   login, logout,videoProgress}= require ("../Controller/user-controller");
 
 const router = express.Router();
 
@@ -39,6 +39,9 @@ router.put('/removeCourse',removeCourse);
 router.post ('/signUp', signUp);
 
 router.post('/login', login);
+
+router.post('/videoProgress',videoProgress);
+
 
 
 module.exports=router;

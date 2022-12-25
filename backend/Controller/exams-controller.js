@@ -253,10 +253,32 @@ const getAnswers = async (req, res) => {
   }
 }
 
+//check if user already solved the exam
+const checkUser = async (req, res) => {
+  const examId = req.query.id;
+  const userId = req.query.userId;
+  const result = await Exams.findOne({ _id: mongoose.Types.ObjectId(examId) });
+   x=false;
+  if (result) {
+    const users = result.users;
+    for (let i = 0; i < users.length; i++) {
+      if (users[i] == userId) {
+        x=true;
+        res.status(200).json({solved:x});
+        return;
+      }
+    }
+  }
+  else {
+    res.status(400).json({ message: 'Error in checking user' });
+  }
+}
 
 
 
 
 
 
-module.exports= {getAllExams, createExam, getExamById, getAllMcq, addMCQ,getMcqById, solveMcq,solveExam, getAnswers};
+
+module.exports= {getAllExams, createExam, getExamById, getAllMcq, 
+  addMCQ,getMcqById, solveMcq,solveExam, getAnswers,checkUser};
