@@ -32,7 +32,7 @@ router.post('/selectCountryInstr/:id', selectCountryInstructor);
 
 router.post('/addExam', createExam);
 
-router.put('/editInstrBiography', editBiography);
+router.post('/editInstrBiography', editBiography);
 
 router.post('/editInstrEmail', editEmail);
 

@@ -26,18 +26,30 @@ const InstructorInfo =()=> {
     const InstrId = new URLSearchParams(search).get('instrId');
     const [Info, setInfo] = useState([]);
     const [rate, setRate] = useState([]);
+    const [okay, setOkay] = useState(false);
     const [InstrEmail, setEmail] = useState('');
+    const [Biography, setBiography] = useState('');
     const[err , setErr] = useState(null)
 
     const[done , setDone] = useState(false);
+    const[don , setDone1] = useState(false);
     const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
-    const handle = ()=>{
-        handleSubmit();
-        handleClose();
-    }
+    const handleClose = () => setShow(false);
+    const handleClose1 = () => setOkay(false);
+    
+    const handleShow = () => setShow(true);
+    const handleOkay = () => setOkay(true);
+
+    let stars = [];
+    for (var i = 0; i < parseInt(rate); i++) {
+        stars.push( <i className="bi bi-star-fill"style={{ color: "rgb(255, 210, 48)"}}></i>);
+         if (((rate)-parseInt(rate)) >0){
+       stars.push( <i className="bi bi-star-half"style={{ color: "rgb(255, 210, 48)"}}></i>);
+     }
+ }
+
+ 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -56,9 +68,31 @@ const InstructorInfo =()=> {
         }
         if(response.ok){
             setEmail('')
-            setDone(true);
+            setDone1(true);
             setErr(null)
             console.log('Email has been edited', json)
+        }
+    }
+    const handle = async (e) => {
+        e.preventDefault();
+        const Test = {Biography}
+        const response = await fetch(`http://localhost:5000/Instructor/editInstrBiography?id=${InstrId}` , {
+            method : 'POST' ,
+            body : JSON.stringify(Test) , 
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+        }) 
+        const json = await response.json(Test)
+        if(!response.ok){
+            setErr(json.err)
+    
+        }
+        if(response.ok){
+            setBiography('')
+            setDone1(true);
+            setErr(null)
+            console.log('Biography has been edited', json)
         }
     }
 
@@ -77,6 +111,7 @@ const InstructorInfo =()=> {
         (res) => {
           const resRate = res.data
           setRate(resRate)
+   
         }
       );
   
@@ -95,7 +130,7 @@ const InstructorInfo =()=> {
           <Modal.Title>Edit Email </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={ handleSubmit} >   
+          <Form onSubmit={handleSubmit} >   
             <Form.Group >
               <Form.Label> New Email:</Form.Label>
               <Form.Control
@@ -114,9 +149,56 @@ const InstructorInfo =()=> {
           <Button outline color="danger" onClick={handleClose} >
             Close
           </Button>
-          <Button color="primary"   type='submit' onClick={handle} >
+          <Button color="primary"   type='submit' 
+          onClick={handleSubmit}>
             Edit
           </Button>
+          {done?
+        <Alert color="white "> You have edited your email successfully! &nbsp;
+        <Button color ="primary"  type='submit' onClick={handleClose}>
+      Done
+    </Button>
+    </Alert>:""}
+
+        </Modal.Footer>
+
+
+
+      </Modal>
+      <Modal show={okay}  onHide={handleClose1}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Biography </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handle} >   
+            <Form.Group >
+              <Form.Label> New Biogrpahy:</Form.Label>
+              <Form.Control
+               rows="3"
+                type="biography"
+                value={Biography}
+                onChange={(e) => setBiography(e.target.value) }
+                autoFocus
+              />
+
+            </Form.Group>
+          </Form>
+
+        </Modal.Body>
+        <Modal.Footer>
+          <Button outline color="danger" onClick={handleClose1} >
+            Close
+          </Button>
+          <Button color="primary"   type='submit' 
+          onClick={handle}>
+            Edit
+          </Button>
+          {don?
+        <Alert color="white"> You have edited your Biography successfully! &nbsp;
+        <Button color ="primary"  type='submit' onClick={handleClose1}>
+      Done
+    </Button>
+    </Alert>:""}
 
         </Modal.Footer>
 
@@ -132,22 +214,25 @@ const InstructorInfo =()=> {
                 <CardText className="text-muted" tag="h5">
                 <i className="fa fa-user" aria-hidden="true"></i>&nbsp;{Info.InstrName}
                 </CardText>
-                <br/>
                 <CardText className="text-muted" tag="h5">
-                <i className="fa fa-envelope" aria-hidden="true"></i> &nbsp;{Info.InstrEmail} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <Button className="btn" color="primary" size="lg"  onClick={handleShow} > Edit Email    </Button>    </CardText> 
+                 {stars}
+                </CardText>
                 <br/>
                 <CardText className="text-muted" tag="h5">
                 <i className="fa fa-globe" aria-hidden="true"></i> &nbsp;{Info.InstrCountry}
                 </CardText>
                 <br/>
                 <CardText className="text-muted" tag="h5">
-                <i className="fa fa-book" aria-hidden="true"></i> &nbsp; {Info.Biography}
-                </CardText>
+                <i className="fa fa-envelope" aria-hidden="true"></i> &nbsp;{Info.InstrEmail}
+                <Col className="text-end">
+                <Button className="btn" color="primary" size="lg"  onClick={handleShow} > Edit Email    </Button> </Col>   </CardText> 
+              
                 <br/>
                 <CardText className="text-muted" tag="h5">
-                 My rating : &nbsp;{rate} 
-                </CardText>
+                <i className="fa fa-book" aria-hidden="true"></i> &nbsp; {Info.Biography} 
+                <Col className="text-end">
+                <Button className="btn" color="primary" size="lg"  onClick={handleOkay} > Edit Biography    </Button>   </Col>   </CardText> 
+               
              
 
               </CardBody>

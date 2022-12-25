@@ -515,8 +515,7 @@ const calculateMoney = async(req , res) => {
             for (let i = 0; i < result.CourseGiven.length; i++) {
                 const c1 =result.CourseGiven[i];
                const c = await course.findById(c1);
-               sum+=(c.Cost*(result.PercentOrMoneyTaken/100));
-               console.log(sum); 
+               sum+=(c.Cost*(result.PercentOrMoneyTaken/100)); 
                const r = await instructor.findByIdAndUpdate({_id:mongoose.Types.ObjectId(instrId)},{Wallet:sum});
             }
             res.status(200).json(sum);
