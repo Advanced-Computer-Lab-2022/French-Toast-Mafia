@@ -1,4 +1,4 @@
-import { Row, Col, Card, CardBody, CardTitle,CardSubtitle, Input, Button} from "reactstrap";
+import { Row, Col, Card, CardBody, CardTitle,CardSubtitle, Input, Button, RadioGroup} from "reactstrap";
 import { getReport, getReporter } from "../api/axios";
 import {useState, useEffect} from 'react';
 import { useLocation} from 'react-router-dom';
@@ -8,7 +8,7 @@ import FollowupList from "../components/dashboard/followupList";
 import user1 from "../assets/images/users/user1.jpg";
 
 
-const ViewReport = () => {
+const ViewReportAdmin = () => {
 
     const[report,setReport] = useState([])
     const[reporter, setReporter] = useState("Loading...")
@@ -16,6 +16,8 @@ const ViewReport = () => {
     const[desc,setDesc] = useState("Loading...")
     const[type, setType] = useState("Other")
     const[status, setStatus] = useState("Unseen")
+    const[problemStatus, setProblemStatus] = useState("Pending");
+
 
     const[form, setForm] = useState({});
     const[errors, setErrors] = useState({});
@@ -71,13 +73,11 @@ const ViewReport = () => {
 
 
     const validateForm = () =>{
-        const { id, comment } = form
+        const {status} = form
         const newErrors = {}
 
-        if(!id || id === "")
-            newErrors.id = "Please enter a valid id"
-        if(!comment || comment === "")  
-            newErrors.comment = "Please enter a comment"
+        if(!status || status === "")
+            newErrors.status = "Please choose a valid status"
 
         return newErrors
     }
@@ -92,13 +92,11 @@ const ViewReport = () => {
                 setErrors(formErrors)
             }
             else{
-                
-                newFollowUp[0] = form.id;
-                newFollowUp[1] = form.comment;
 
-                await fetch(`http://localhost:5000/Report/addFollowup?id=${rId}`,{
+
+                await fetch(`http://localhost:5000/Report/updateStatus?id=${rId}`,{
                     method: 'POST',
-                    body: JSON.stringify({"id" : form.id, "comment": form.comment}),
+                    body: JSON.stringify({"status" : form.status}),
                     headers : {
                         'Content-Type':'application/json'
                     }
@@ -109,7 +107,9 @@ const ViewReport = () => {
 
      
     return (
-        <Row>
+    
+    <Row>   
+        
         <Col>
             <Card>  
                 <CardTitle tag="h5" className="border-bottom p-3 mb-0">&nbsp;Report <text className="mb-2 text-muted" tag="h6">#{rId} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{typeIcon}&nbsp;&nbsp;{type}&nbsp;&nbsp;{statusIcon} {status}</text> </CardTitle>
@@ -152,35 +152,22 @@ const ViewReport = () => {
                 <CardBody>
                
             <Form>      
-             <CardTitle tag="h5" >Post a Follow-up:</CardTitle>
+            <CardTitle tag="h5" >Mark Post as:</CardTitle>
              <br/>
-                <Form.Group controlId="id">
-                    <Form.Label>id:</Form.Label>
-                    <Form.Control 
-                        type="text"
-                        placeholder="Enter id"
-                        value = {form.id}
-                        onChange={(e) => setField('id', e.target.value)}
-                        isInvalid={!!errors.id}
-                    ></Form.Control>
+                <Form.Group controlId="status">
+                    <Form.Select placeholder="Unseen"
+                        // type="text"
+                        // placeholder="Enter id"
+                        value = {form.status}
+                        onChange={(e) => setField('status', e.target.value)}
+                        isInvalid={!!errors.status}
+                    >
+                        <option>Unseen</option>
+                        <option value = "Pending">Pending</option>
+                        <option value = "Resolved">Resolved</option>
+                    </Form.Select>
                     <Form.Control.Feedback type='invalid'>
-                        {errors.id}
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <br/>
-                <Form.Group controlId="comment">
-                    <Form.Label>Comment</Form.Label>
-                    <Form.Control 
-                    as='textarea'
-                    rows={3}
-                    type="textarea"
-                    placeholder="Write a Comment"
-                    value = {form.comment}
-                    onChange={(e) => setField('comment', e.target.value)}
-                    isInvalid={!!errors.comment}
-                    ></Form.Control>
-                     <Form.Control.Feedback type='invalid'>
-                        {errors.comment}
+                        {errors.status}
                     </Form.Control.Feedback>
                 </Form.Group>
                 <br/>
@@ -197,8 +184,8 @@ const ViewReport = () => {
                 </CardBody>
             </Card>
         </Col>
-        </Row>
+    </Row>
     );
 };
 
-export default ViewReport;
+export default ViewReportAdmin;

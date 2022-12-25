@@ -95,7 +95,7 @@ const updateReportType = async(req,res) =>{
     
 const updateReportStatus = async(req, res) =>{
     const cId = req.query.id;
-    Report.findByIdAndUpdate({_id:mongoose.Types.ObjectId(cId)},{status: "Resolved"}).then(ret =>{
+    Report.findByIdAndUpdate({_id:mongoose.Types.ObjectId(cId)},{status: req.body.status}).then(ret =>{
         return res.status(200).json(ret);
     });
 };

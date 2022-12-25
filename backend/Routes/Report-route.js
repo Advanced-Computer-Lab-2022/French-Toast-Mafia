@@ -19,7 +19,7 @@ router.get('/getReport',getReport);
 
 router.get('/updateType',updateReportType);
 
-router.get('/updateStatus',updateReportStatus);
+router.post('/updateStatus',updateReportStatus);
 
 router.post('/addFollowup',addFollowup);
 

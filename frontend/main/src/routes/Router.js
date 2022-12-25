@@ -2,6 +2,7 @@
  import { Navigate } from "react-router-dom";
 // import { browserHistory } from 'react-router';
 import React from 'react';
+import ViewReportAdmin from "../views/viewReportAdmin";
 /****Layouts*****/
 const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
 
@@ -38,6 +39,8 @@ const ViewCourse = lazy(() => import("../views/viewCourse.js"));
 const ViewReport = lazy(() => import("../views/viewReport.js"));
 
 const AdminDashboard = lazy(() => import("../views/AdminDashboard"));
+const viewReportAdmin = lazy(() => import("../views/viewReportAdmin"));
+
 
 const Instructors= lazy(() => import('../views/Instructors.js'));
 const InstructorCourses= lazy(() => import('../views/InstructorCourses.js'));
@@ -111,7 +114,9 @@ const ThemeRoutes = [
       { path: "/InstructorInfo", exact: false, element: <InstructorInfo/> },
       { path: "/InstructorBalance", exact: false, element: <InstructorBalance/> },
 
-      { path: "/AdminHome" , exact: false, element: <AdminDashboard/> }
+      { path: "/AdminHome" , exact: false, element: <AdminDashboard/> },
+      { path: "/viewReport_A" , exact: false, element: <ViewReportAdmin/> }
+
     ],
   },
 ];

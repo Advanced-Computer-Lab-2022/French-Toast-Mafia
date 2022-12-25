@@ -60,7 +60,7 @@ const ReportNotification = ({report, rId, type, status}) => {
             <ListGroupItem
               key={report._id}
               action
-              onClick={() => navigate(`/viewReport?id=${report._id}`)}
+              onClick={() => navigate(`/viewReport_A?id=${report._id}`)}
               tag="a"
               className="d-flex align-items-center p-3 border-0"
             >
