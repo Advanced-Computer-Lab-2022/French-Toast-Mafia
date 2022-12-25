@@ -2,6 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const cardSchema = new Schema({
+  token: {
+    type: String,
+    required: false
+  },amount: {
+    type: String,
+    required: false
+  },
     CardName: {
       type: String,
       required: true

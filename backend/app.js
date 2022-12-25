@@ -5,6 +5,7 @@ const MongoURI='mongodb+srv://admin:Mayar2611@db.ntawmzm.mongodb.net/?retryWrite
 const cors=require('cors');
 const cookieParser = require('cookie-parser');
 
+
 const app= express();
 const port= process.env.PORT || "5000" ;
 app.use(express.json());
@@ -16,6 +17,9 @@ app.use((req, res, next) => {
 })
 
 const admin= require('./Models/Admin');
+
+const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY)
+
 
 
 //require the routes

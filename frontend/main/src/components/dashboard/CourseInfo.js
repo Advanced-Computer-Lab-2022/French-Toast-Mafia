@@ -12,6 +12,7 @@ import { Form, FormControl , FormLabel,  } from "react-bootstrap";
 import RadioGroup from '@mui/material/RadioGroup';
 import { Radio } from "@mui/material";
 import FormControlLabel from '@mui/material/FormControlLabel';
+import axios from "axios"
 
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -21,6 +22,12 @@ import Cards from 'react-credit-cards';
 
 import 'reactjs-popup/dist/index.css';
 import { useNavigate } from 'react-router-dom';
+import StripeCheckout from 'react-stripe-checkout';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
+import { createContext } from 'react';
+
+
 
 
 // import Chart from "react-apexcharts";
@@ -41,6 +48,8 @@ const CourseInfo = ({cId,course,instructor,ratingLength,setReportAlert}) => {
 
   const viewReports = () => console.log("view reports!");
 
+  const publishableKey =
+  'pk_test_51MH6ExF2NTNEemMC7fzRVrHpqgnmFaBm6W7pNQ2B3n1Th3yHyuBwhclJYLjC3CNeVgHrAIWgYEE3uEUPzIP3CbTx00Z1ejUGOY';
  
   let stars = [];
 
@@ -53,7 +62,23 @@ const CourseInfo = ({cId,course,instructor,ratingLength,setReportAlert}) => {
 
   const handleClose = () => setShow(false);
   const handleClose1 = () => setOkay(false);
+  const MySwal = withReactContent(Swal);
 
+  const handleSuccess = () => {
+    MySwal.fire({
+      icon: 'success',
+      title: 'Payment was successful',
+      time: 4000,
+    });
+  };
+
+  const handleFailure = () => {
+    MySwal.fire({
+      icon: 'error',
+      title: 'Payment was not successful',
+      time: 4000,
+    });
+  };
 
   const handleShow = () => setShow(true);
   const handleOkay = () => setOkay(true);
@@ -98,6 +123,25 @@ const CourseInfo = ({cId,course,instructor,ratingLength,setReportAlert}) => {
   })
 
 }
+const payNow = async token => {
+  try {
+    const response = await axios({
+      url: 'http://localhost:5000/Card/addCard',
+      method: 'POST',
+      data: {
+        amount: course.Cost * 100,
+        token
+      },
+    });
+    if (response.status === 200) {
+      handleSuccess();
+    }
+  } catch (error) {
+    handleFailure();
+    console.log(error);
+  }
+};
+
 
 
   const handleSubmit = async (e) => {
@@ -225,8 +269,18 @@ const CourseInfo = ({cId,course,instructor,ratingLength,setReportAlert}) => {
           <br/><br/><br/><br/><br/>
           <CardTitle tag="h4" className="text-primary">Price: {course.Cost} EGP</CardTitle>
           <h1>  </h1>
-          <Button className="btn" color="primary" size="lg"  onClick={handleOkay} >Register for Course</Button>   
+          <StripeCheckout
+          stripeKey={publishableKey}
+          label="Pay Now"
+          name="Pay With Credit Card"
+          //billingAddress
+          //shippingAddress
+          card Name={CardName}
+          amount={ course.Cost * 100}
+          description={`Your total is $${course.Cost}`}
+          token={payNow}
 
+      />
     
           </Col>
 
@@ -357,6 +411,8 @@ const CourseInfo = ({cId,course,instructor,ratingLength,setReportAlert}) => {
     <Button color="secondary" onClick={handleClose1} >
       Close
     </Button>
+
+    
 
     <Button color="primary"  type='submit' onClick={handleSubmit}>
       Pay {course.Cost} EGP
