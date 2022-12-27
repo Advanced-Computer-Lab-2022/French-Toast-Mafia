@@ -17,10 +17,15 @@ import {
 
     const [reporter, setReporter] = useState("Loading..");
 
+    const navigate = useNavigate();
+
+
     const rId = id;
     const reporterId = report.reported_by;
     const type = report.type;
     const status = report.status;
+
+
     var typeIcon;
     var statusIcon;
 
@@ -28,7 +33,6 @@ import {
   useEffect(() => {
     getReporter(reporterId).then(json => {
       setReporter(json)
-      // console.log(reports)
     })
   }, []);
 
@@ -62,7 +66,7 @@ import {
                     <br/>   
                     <CardSubtitle className="mb-2 text-muted" tag="h6"><span class="bi bi-person"></span> &nbsp;{reporter}</CardSubtitle>
                     <CardText className="mt-3 text-muted"><span class="bi bi-chat-left-dots"></span> &nbsp;({followup.length}) </CardText>
-                    <Button color="primary" >View Report</Button>   
+                    <Button color="primary" onClick={() => navigate(`/viewReport?id=${rId}`)}>View Report</Button>   
                 </Col>
                
                  

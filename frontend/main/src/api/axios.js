@@ -52,3 +52,8 @@ export const getReportedCourse = async(id) =>{
     const response = await axios.get(`http://localhost:5000/Report/getReportedCourse?id=${id}`)
     return response.data
 }
+
+export const getReport = async(id) =>{
+    const response = await axios.get(`http://localhost:5000/Report/getReport?id=${id}`)
+    return response.data
+}

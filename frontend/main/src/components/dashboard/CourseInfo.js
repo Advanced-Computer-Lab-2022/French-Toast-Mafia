@@ -111,18 +111,18 @@ const CourseInfo = ({cId,course,instructor,ratingLength,setReportAlert}) => {
 
     console.log(reportData)
 
-  await fetch(`http://localhost:5000/Report/addReport?id=${cId}`,{
-      method: 'POST',
-      body: JSON.stringify(reportData),
-      headers : {
-          'Content-Type':'application/json'
-      }
-  }).then(json =>{
-   handleClose()
-  return setReportAlert(true)
-  })
+    await fetch(`http://localhost:5000/Report/addReport?id=${cId}`,{
+        method: 'POST',
+        body: JSON.stringify(reportData),
+        headers : {
+            'Content-Type':'application/json'
+        }
+    }).then(json =>{
+    handleClose()
+    return setReportAlert(true)
+    })
 
-}
+  }
 const payNow = async token => {
   try {
     const response = await axios({
