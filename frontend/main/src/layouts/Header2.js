@@ -28,7 +28,6 @@ import { ReactComponent as LogoWhite } from "../assets/images/logos/materialprow
 import user1 from "../assets/images/users/user4.jpg";
 
 
-
 const Header2 = () => {
 
   const [show, setShow] = useState(false);
@@ -154,6 +153,11 @@ const Header2 = () => {
               </Link>
               </DropdownItem>
 
+            <DropdownItem >
+              <Link to="/forgotPass">
+              Forgot Password
+              </Link>
+              </DropdownItem>
             <DropdownItem>Logout</DropdownItem>
           </DropdownMenu>
         </Dropdown>

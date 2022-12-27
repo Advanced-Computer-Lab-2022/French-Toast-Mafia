@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import { useState } from "react";
@@ -34,17 +35,32 @@ const Header = () => {
   const[Name , setName1 ] = useState('')
   const[Email , setEmail1] = useState('')
   const[Password , setPassword1] = useState('')
-  const[Type , setType1] = useState('')
   const[Gender , setGender] = useState('')
+  
 
   const[err , setErr] = useState(null)
 
   const navigate = useNavigate();
 
   const [show, setShow] = useState(false);
+  const [show2, setShow2] = useState(false);
+  const [show3, setShow3] = useState(false);
 
   const handleClose = () => setShow(false);
+  const handleClose2 = () => setShow2(false);  
+  const handleClose3 = () => setShow3(false);
+
   const handleShow = () => setShow(true);
+  const handleShow2 = () => setShow2(true); 
+  const handleShow3 = () => setShow3(true);
+
+  const [data, setData] = useState({ Email : "", Password: "" });
+	const [error, setError] = useState("");
+  const handleChange = ({ currentTarget: input }) => {
+		                        setData({ ...data, [input.name]: input.value });
+	                      };
+
+
   const [isOpen, setIsOpen] = React.useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -60,7 +76,7 @@ const Header = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const Trainees = { Name, Email , Password , Type , Gender }
+    const Trainees = { Name, Email , Password , Gender }
     const response = await fetch('http://localhost:5000/User/signUp' , {
         method : 'POST' ,
         body : JSON.stringify(Trainees) , 
@@ -79,7 +95,6 @@ const Header = () => {
         setName1('')
         setEmail1('')
         setPassword1('')
-        setType1('')
         setGender('')
         
         setDone(true);
@@ -87,6 +102,54 @@ const Header = () => {
         console.log('new corporate-trainee added', json)
     }
 }
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const loggedin= { Email , Password }
+      const response = await fetch('http://localhost:5000/Login//' , {
+        method : 'POST' ,
+        body : JSON.stringify(loggedin) ,
+        headers : {
+            'Content-Type' : 'application/json'
+        }
+    })
+    const json = await response.json(loggedin)
+    if(!response.ok){
+        setErr(json.err)
+    }
+    if(response.ok){
+        //get user id from response
+        console.log(json)
+
+        setEmail1('')
+        setPassword1('')  
+        setErr(null)
+        console.log('user logged in', json)
+        navigate("/MyCourses");
+    }
+    
+      // const response = await fetch({
+      //   method: 'post',
+      //   url: 'http://localhost:5000/Login//',
+      //   data: { "Email": Email , "Password": Password} ,
+      //   headers: {
+      //       'Content-Type': 'application/json',
+      //          },
+      //     })
+      //     // .then((response) => console.log(response.data))
+      //     console.log(response.data.data);
+      //     console.log(response.data.user);
+      //     // localStorage.setItem("token", response.data.token);
+      //     // localStorage.setItem("user", JSON.stringify(response.data.user));
+      //     console.log(Email);
+      //     console.log(Password);
+      //   navigate("/MyCourses");
+    } catch (error) {
+      setError(error.response.data);
+    }
+  };
+ 
  
   return (
 
@@ -104,7 +167,7 @@ const Header = () => {
                 type="name"
                 placeholder="Enter your user name"
                 value={ Name }
-        onChange={(e) => setName1(e.target.value) }
+                onChange={(e) => setName1(e.target.value) }
                 autoFocus
               />
               <Form.Label>Email address</Form.Label>
@@ -112,84 +175,103 @@ const Header = () => {
                 type="email"
                 placeholder="name@example.com"
                 value={ Email }
-        onChange={(e) => setEmail1( e.target.value)}
+                onChange={(e) => setEmail1( e.target.value)}
                 autoFocus
               />
                <Form.Label>Password</Form.Label>
               
               <Form.Control
                 type="password"
-                placeholder="Create Password"
+                placeholder="Your password must be 8-20 characters long"
                 value={ Password }
                 onChange={(e) => setPassword1(e.target.value)}
                 autoFocus
               />
-               {/* <Form.Label>Type</Form.Label>
-              <Form.Control
-                type=""
-                placeholder="gender "
-                value={ Gender }
-                onChange={(e) => setGender(e.target.value)}
-                autoFocus
-              /> */}
-               <Form.Label>Type</Form.Label>
-              <Form.Control
-                type="type"
-                placeholder="enter type"
-                value={ Type }
-                onChange={(e) => setType1(e.target.value)}
-                autoFocus
-              />
-                {/* <Form.Text className="text-muted">
-              Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces.
-                 </Form.Text> */}
-
+             
                  <Form.Label>Gender </Form.Label>
               <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
                     defaultValue="female"
                    name="radio-buttons-group"
-  >
-             <FormControlLabel value="female" control={<Radio />} label="Female"              onChange={(e) => setGender(e.target.value)}
-/>
-             <FormControlLabel value="male" control={<Radio />} label="Male"              onChange={(e) => setGender(e.target.value)}
-/>
-
+              >
+             <FormControlLabel value="female" control={<Radio />} label="Female"            
+               onChange={(e) => setGender(e.target.value)}
+              />
+             <FormControlLabel value="male" control={<Radio />} label="Male"        
+                   onChange={(e) => setGender(e.target.value)}
+              />
                 </RadioGroup>
-       
-         
+                </Form.Group>
+              </Form>
+            </Modal.Body>
+            
+            <Modal.Footer>
+            <h6>I accept website's<Link to="/Contract" className="nav-link"   onClick={handleClose}>Terms of Use</Link> and Privacy Notice.</h6>
+              <Button color="secondary" onClick={handleClose} >
+                Close
+              </Button>
+
+              <Button color="primary"   type='submit' 
+              onClick={handleSubmit}  
+              >
+                Sign Up
+              </Button>
+
+              {done?
+            <Alert color="warning"> You have signed-up successfully! 
+            <Button variant="primary"  type='submit' onClick={handleClose}>
+                Done
+            </Button>
+            </Alert>:""}
+
+            </Modal.Footer>
+          </Modal>
+
+
+            {/* login button */}
+      <Modal show={show2} onHide={handleClose2}> 
+        <Modal.Header closeButton>
+          <Modal.Title>Login</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Your registered email"
+                value={ Email }
+               onChange={(e) => setEmail1( e.target.value)}
+                autoFocus
+              />  
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Enter your password"
+                value={ Password }
+                onChange={(e) => setPassword1(e.target.value)}
+                autoFocus
+              />  
+              <Link to="/forgotPass" action onClick={handleClose2} >
+                Forget password?
+               </Link>
+              
             </Form.Group>
           </Form>
-         
-
         </Modal.Body>
-        
         <Modal.Footer>
-        <h6>I accept website's<Link to="/Contract" className="nav-link"   onClick={handleClose}>Terms of Use</Link> and Privacy Notice.</h6>
-          <Button color="secondary" onClick={handleClose} >
+          <Button color="secondary" onClick={handleClose2}>
             Close
           </Button>
-
-          <Button color="primary"   type='submit' onClick={handleSubmit} >
-            Sign Up
+          <Button color="primary" onClick={handleLogin}>
+              Login
           </Button>
-
-          {done?
-        <Alert color="warning"> You have signed-up successfully! 
-        <Button variant="primary"  type='submit' onClick={handleClose}>
-      Done
-    </Button>
-    </Alert>:""}
-
+          
         </Modal.Footer>
       </Modal>
 
 
 
-
-
-
-    
     <Navbar color="primary" dark expand="md" className="fix-header">
       <div className="d-flex align-items-center">
         <div className="d-lg-block d-none me-5 pe-3">
@@ -233,7 +315,7 @@ const Header = () => {
           </NavItem>
 
            <NavItem>
-            < Button    onClick={handleShow}  color="Transparent" >
+            < Button    onClick={handleShow2}  color="Transparent" >
               Login
               </Button>
           </NavItem>

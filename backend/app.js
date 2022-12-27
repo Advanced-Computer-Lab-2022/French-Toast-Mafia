@@ -68,9 +68,9 @@ mongoose.connect(MongoURI)
 
     app.use('/Card',cardRoute);
 
-    app.use('/signup', signupRoute);
+    app.use('/Signup', signupRoute);
 
-    app.use('/login', loginRoute);
+    app.use('/Login', loginRoute);
 
 
 

@@ -100,7 +100,7 @@ const userSchema = new Schema({
   }, { timestamps: true });
 
   userSchema.methods.generateAuthToken = function () {
-    const token = jwt.sign({ _id: this._id }, process.env.JWTPRIVATEKEY, {
+    const token = jwt.sign({ _id: this._id }, 'supersecret' , {
       expiresIn: maxAge,
     });
     return token;
