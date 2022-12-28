@@ -3,13 +3,16 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import { useState } from "react";
-import { Form, FormControl , FormLabel } from "react-bootstrap";
+import { Form, FormControl , FormLabel, Row } from "react-bootstrap";
 import RadioGroup from '@mui/material/RadioGroup';
 import { Radio } from "@mui/material";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import {Box, Typography } from '@mui/material'
 import { TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import Checkbox from '@mui/material/Checkbox';
+import {  FormGroup, FormHelperText } from '@mui/material';
+
 import {
   Navbar,
   Collapse,
@@ -36,6 +39,7 @@ const Header = () => {
   const[Email , setEmail1] = useState('')
   const[Password , setPassword1] = useState('')
   const[Gender , setGender] = useState('')
+  const [checked, setChecked] = React.useState(true);
   
 
   const[err , setErr] = useState(null)
@@ -73,6 +77,11 @@ const Header = () => {
   const showMobilemenu = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
+
+  const handlecheck = (event) => {
+    setChecked(!checked);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -102,6 +111,33 @@ const Header = () => {
         console.log('new corporate-trainee added', json)
     }
 }
+const handleSignUp = async (e) => {
+    e.preventDefault();
+    try {
+      const signed= {Name, Email , Password, Gender }
+      const response = await fetch('http://localhost:5000/Signup//' , {
+        method:'POST',
+        body : JSON.stringify(signed) ,
+        headers : { 'Content-Type' : 'application/json' }
+    })
+    const json = await response.json(signed)
+    if(!response.ok){
+        setErr(json.err)
+
+    }
+    if(response.ok){
+        setName1('')
+        setEmail1('')
+        setPassword1('')
+        setGender('')
+        setDone(true);
+        setErr(null)
+
+  }
+} catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -149,7 +185,8 @@ const Header = () => {
       setError(error.response.data);
     }
   };
- 
+    
+  
  
   return (
 
@@ -206,15 +243,31 @@ const Header = () => {
             </Modal.Body>
             
             <Modal.Footer>
-            <h6>I accept website's<Link to="/Contract" className="nav-link"   onClick={handleClose}>Terms of Use</Link> and Privacy Notice.</h6>
+             {/* check box     */}
+              <FormGroup>
+              {/* <Link component ={Checkbox}  to="/Contract" className="nav-link"   onClick={handleClose}>I accept website's Terms of use and Privacy notice</Link>
+              <FormControlLabel control={<Checkbox defaultChecked />}   />                  */}
+              {/* <FormHelperText> Revise your contract before accepting. </FormHelperText> */}
+              <Row>
+                <div className=" input-group mb-3" style= {{display: 'flex', justifyContent: 'flex-start'}}> 
+                <FormControlLabel control={<Checkbox 
+                                          checked={checked}
+                                          onChange={handlecheck}
+                                          inputProps={{ 'aria-label': 'controlled' }} />} />   
+
+                    <Link to="/Contract" className="nav-link"   onClick={handleClose}>I accept website's Terms of use and Privacy notice</Link>           
+                    </div>
+              </Row>
+              </FormGroup>
+
+            {/* <h6>I accept website's<Link to="/Contract" className="nav-link"   onClick={handleClose}>Terms of Use</Link> and Privacy Notice.</h6> */}
               <Button color="secondary" onClick={handleClose} >
                 Close
               </Button>
 
-              <Button color="primary"   type='submit' 
-              onClick={handleSubmit}  
-              >
-                Sign Up
+              <Button className="btn" color="primary" size="lg" disabled={!checked} onClick={handleSignUp} >
+              
+                Sign up
               </Button>
 
               {done?
@@ -226,6 +279,7 @@ const Header = () => {
 
             </Modal.Footer>
           </Modal>
+
 
 
             {/* login button */}
