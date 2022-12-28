@@ -1,8 +1,8 @@
 const {Instructor} = require("../Models/Instructor");
 const {User} =require("../Models/User");
 const Course = require ("../Models/Course")
-const Exam = require ("../Models/Exams")
-const Subtitle = require ("../Models/Subtitle")
+const {Exam} = require ("../Models/Exams")
+const {Subtitle} = require ("../Models/Subtitle")
 var mongoose = require('mongoose');
 const userFilterSubj= require ("../Controller/instructor-controller")
 const userFilterRate= require ("../Controller/instructor-controller")
@@ -384,7 +384,7 @@ const videoProgress = async (req, res) => {
     const courseId = req.query.courseId;
     const subtitleId = req.query.subtitleId;
 
-    const resultUser = await user.findOne({ _id: mongoose.Types.ObjectId(userId) });
+    const resultUser = await User.findOne({ _id: mongoose.Types.ObjectId(userId) });
     const userCourses = resultUser.Courses;
     const userSubtitles = resultUser.Subtitles;
     let uCourse=null;
@@ -406,7 +406,7 @@ const videoProgress = async (req, res) => {
         if (courseFound) {
             if (!(subtitleFound)) {
                 try {
-                    await user.findByIdAndUpdate
+                    await User.findByIdAndUpdate
                        (userId, { $push: { Subtitles: { course: courseId, subtitle: subtitleId } } });
                         //update progress attribute in user schema
                         uCourse=await Course.findOne({_id:mongoose.Types.ObjectId(courseId)});
@@ -443,6 +443,19 @@ const videoProgress = async (req, res) => {
     }
 }
 
+const userRefund = async (req, res) => {
+        const userId = req.query.id;  
+        const courseId = req.query.courseId;
+
+        const resultUser = await User.findOne({ _id: mongoose.Types.ObjectId(userId) });
+        const userCourses = resultUser.Courses;
+
+        
+        
+
+
+
+}
 
 
 
@@ -452,4 +465,4 @@ module.exports = {getAllUser,
     viewCourseTitleHoursRating,viewCoursePrice,
     selectCountryUser,ChangeCurrencyUser,addCourse,
     viewMyInfo,ViewMyCourses,changePassword,sendPassChangeMail,
-    removeCourse, logout, videoProgress};
+    removeCourse, logout, videoProgress,userRefund};
