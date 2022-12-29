@@ -16,6 +16,10 @@ const AdminSchema = new Schema({
         required: true,
         unique: true
 
+    },
+    Requests: {
+      type: Array,
+      required: false
     }
 
 }, { timestamps: true });

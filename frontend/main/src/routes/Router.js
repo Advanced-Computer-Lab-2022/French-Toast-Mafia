@@ -9,6 +9,8 @@ const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
 
 const Starter = lazy(() => import("../views/Starter.js"));
 const Home = lazy(() => import("../views/Home.js"));
+const HomeCop = lazy(() => import("../views/HomeCop.js"));
+
 const About = lazy(() => import("../views/About.js"));
 const Alerts = lazy(() => import("../views/ui/Alerts"));
 const Badges = lazy(() => import("../views/ui/Badges"));
@@ -34,7 +36,10 @@ const CourseReports = lazy(() => import('../views/CourseReports'))
 
 const CourseSubtitles= lazy(() => import('../views/CourseSubtitles.js'));
 const Contract = lazy (() => import ('../views/ui/Contract.js'));
+
 const ViewCourse = lazy(() => import("../views/viewCourse.js"));
+const ViewCourseCop = lazy(() => import("../views/viewCourseCop.js"));
+
 
 const AdminDashboard = lazy(() => import("../views/AdminDashboard"));
 
@@ -66,6 +71,8 @@ const ThemeRoutes = [
     children: [
      { path: "/", exact:true, element: <Navigate to="/home" /> },
       { path: "/home", exact: true, element: <Home /> },
+      { path: "/homeCop", exact: true, element: <HomeCop /> },
+
       { path: "/starter", exact: true, element: <Starter /> },
       { path: "/about", exact: true, element: <About /> },
       { path: "/alerts", exact: true, element: <Alerts /> },
@@ -83,7 +90,10 @@ const ThemeRoutes = [
       { path: "/MyCourses", exact: false, element: <MyCourses /> },
       { path: "/UserCoursePage", exact: false, element: <UserCoursePage /> },
       { path: "/CourseInstructor", exact: false, element: <CourseInstructor /> },
+
       { path: "/viewCourse", exact: true, element: <ViewCourse /> },
+      { path: "/viewCourseCop" , exact: true, element: <ViewCourseCop/> },
+
       { path: "/viewCourseReports", exact: true, element: <CourseReports /> },
       { path: "/CourseRate", exact: false, element: <CourseRate /> },
       { path: "/CreditCardss", exact: false, element: <CreditCardss /> },
@@ -109,7 +119,9 @@ const ThemeRoutes = [
       { path: "/InstructorInfo", exact: false, element: <InstructorInfo/> },
       { path: "/InstructorBalance", exact: false, element: <InstructorBalance/> },
 
-      { path: "/AdminHome" , exact: false, element: <AdminDashboard/> }
+      { path: "/AdminHome" , exact: false, element: <AdminDashboard/> },
+
+    
     ],
   },
 ];
