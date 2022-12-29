@@ -420,7 +420,7 @@ const videoProgress = async (req, res) => {
                                 const newProgress=progress+p;
                                 console.log(newProgress);
                                 //update the progress of the user of a specific course
-                                await user.findOneAndUpdate({_id:mongoose.Types.ObjectId(userId),"Progress.courseId":mongoose.Types.ObjectId(courseId)},
+                                await User.findOneAndUpdate({_id:mongoose.Types.ObjectId(userId),"Progress.courseId":mongoose.Types.ObjectId(courseId)},
                                 {$set:{"Progress.$.Progress":newProgress}});
 
                             }
@@ -444,25 +444,50 @@ const videoProgress = async (req, res) => {
 }
 
 const userRefund = async (req, res) => {
-        const userId = req.query.id;  
-        const courseId = req.query.courseId;
+        const userId = req.body.id;  
+        const courseId = req.body.courseId;
 
         const resultUser = await User.findOne({ _id: mongoose.Types.ObjectId(userId) });
         const userCourses = resultUser.Courses;
+        let courseFound = false;
 
+        //course exists 
+        for (let i = 0; i < userCourses.length; i++) {
+            if (userCourses[i] == courseId) {
+                courseFound = true;
+            }
+        }
+
+        //get progress of user's course 
+        if (courseFound) {
+            for (let i = 0; i < resultUser.Progress.length; i++) {
+                if (resultUser.Progress[i].courseId == courseId) {
+                    const progress = resultUser.Progress[i].Progress;
+                    if (progress==0.5){
+                        const refund=0;
+                        try {
+                            //find price of this course 
+                            const course = await Course.findOne({ _id: mongoose.Types.ObjectId(courseId) }); 
+                            const price = course.Price;
+                            //update user's balance
+                            const newBalance = resultUser.Wallet + price;
+                            resultUser= await User.findByIdAndDelete(courseId);
+                            console.log(newBalance);
+                            }catch {
+                                res.status(400).json({ error: error.message })
+                            }
+                    }
         
-        
-
-
-
+                } else {
+                    res.status(400).json({ error: "Course not found" });
+                     } 
+        }
+    }
 }
-
-
-
 
 
 module.exports = {getAllUser,
     viewCourseTitleHoursRating,viewCoursePrice,
     selectCountryUser,ChangeCurrencyUser,addCourse,
     viewMyInfo,ViewMyCourses,changePassword,sendPassChangeMail,
-    removeCourse, logout, videoProgress,userRefund};
+    removeCourse, logout, videoProgress,userRefund}
