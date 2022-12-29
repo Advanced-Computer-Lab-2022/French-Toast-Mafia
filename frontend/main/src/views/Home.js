@@ -24,9 +24,6 @@ const Home = () => {
         {/* Card-1*/}
         {/* --------------------------------------------------------------------------------*/}
         <Card>
-          <CardTitle tag="h5" className="border-bottom p-3 mb-0">
-          <i className="bi bi-book"></i>&nbsp;Search Courses
-          </CardTitle>
           <CardBody className="p-4">
             <Row justify-content>
               <Col lg="8">
