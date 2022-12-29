@@ -1,8 +1,8 @@
 const {Instructor} = require("../Models/Instructor");
 const {User} =require("../Models/User");
 const Course = require ("../Models/Course")
-const Exam = require ("../Models/Exams")
-const Subtitle = require ("../Models/Subtitle")
+const {Exam} = require ("../Models/Exams")
+const {Subtitle} = require ("../Models/Subtitle")
 var mongoose = require('mongoose');
 const userFilterSubj= require ("../Controller/instructor-controller")
 const userFilterRate= require ("../Controller/instructor-controller")
@@ -460,6 +460,19 @@ const getUserProgress = async (req, res) => {
 }
 
 
+const userRefund = async (req, res) => {
+        const userId = req.query.id;  
+        const courseId = req.query.courseId;
+
+        const resultUser = await User.findOne({ _id: mongoose.Types.ObjectId(userId) });
+        const userCourses = resultUser.Courses;
+
+        
+        
+
+
+
+}
 
 
 
@@ -469,4 +482,4 @@ module.exports = {getAllUser,
     viewCourseTitleHoursRating,viewCoursePrice,
     selectCountryUser,ChangeCurrencyUser,addCourse,
     viewMyInfo,ViewMyCourses,changePassword,sendPassChangeMail,
-    removeCourse, logout, videoProgress, getUserProgress};
+    removeCourse, logout, videoProgress,userRefund};
