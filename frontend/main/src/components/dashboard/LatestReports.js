@@ -13,6 +13,7 @@ import ReportNotification from "./ReportNotification";
 
 
 const LatestReports = ({reports}) => {
+
   return (
     <Card>
         <CardTitle tag="h5" className="border-bottom p-3 mb-0"> <span class="bi bi-flag"></span>&nbsp;&nbsp;Latest Reports</CardTitle>

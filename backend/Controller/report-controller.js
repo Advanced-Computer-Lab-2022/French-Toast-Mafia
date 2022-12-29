@@ -53,7 +53,7 @@ const getCourseReports = async(req,res) =>{
 }
     
 const deleteReports = async(req,res) =>{
-    const del = Report.deleteMany({}).then((deleted) =>{
+    Report.deleteMany({}).then((deleted) =>{
         return res.status(200).json(deleted);
     })
 
@@ -78,7 +78,6 @@ const getReporterName = async(req, res) =>{
     });        
 };
 
-
 const getReportedCourse = async(req, res) =>{
     const cId = req.query.id;
     Course.findOne({_id:mongoose.Types.ObjectId(cId)}).then(retCourse =>{
@@ -96,9 +95,42 @@ const updateReportType = async(req,res) =>{
     
 const updateReportStatus = async(req, res) =>{
     const cId = req.query.id;
-    Report.findByIdAndUpdate({_id:mongoose.Types.ObjectId(cId)},{status: "Resolved"}).then(ret =>{
+    Report.findByIdAndUpdate({_id:mongoose.Types.ObjectId(cId)},{status: req.body.status}).then(ret =>{
         return res.status(200).json(ret);
     });
 };
+
+const getReport = async(req, res) => {
+    const rId = req.query.id;
+    Report.findById({_id:mongoose.Types.ObjectId(rId)}).then(ret =>{
+        console.log(ret)
+        return res.status(200).json(ret);
+    });
+}
+
+
+const addFollowup = async(req,res) => {  //add report
+        
+    const rId = req.query.id;
+    const fUp = [req.body.id, req.body.comment];
+
+            try{ 
+                await Report.findByIdAndUpdate(rId,{$push:{follow_up: fUp}}).then(json =>{
+                return res.status(200).json(json);  
+                }); 
+           }
+           catch(err){
+            return console.log(err);
+           }
+            
+        }
+
+const deleteFollowup = async(req, res) =>{
+    const rId = req.query.id;
+    Report.findByIdAndUpdate(rId,{$pop:{follow_up: 1}} ).then((deleted) =>{
+        return res.status(200).json(deleted);
+    })
+}
+
    
-module.exports={ getAllReports, createReport, getCourseReports, deleteReports, getReporterName, getReportedCourse,updateReportType, updateReportStatus};
+module.exports={ getAllReports, createReport, getCourseReports, deleteReports, getReporterName, getReportedCourse,updateReportType, updateReportStatus, getReport, addFollowup, deleteFollowup};

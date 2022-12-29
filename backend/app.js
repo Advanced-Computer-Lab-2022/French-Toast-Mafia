@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 
 
 
+
 const app= express();
 const port= process.env.PORT || "5000" ;
 app.use(express.json());
@@ -22,6 +23,9 @@ app.use(express.urlencoded({
     }));
 
 const admin= require('./Models/Admin');
+
+const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY)
+
 
 
 //require the routes
@@ -73,9 +77,9 @@ mongoose.connect(MongoURI)
 
     app.use('/Card',cardRoute);
 
-    app.use('/signup', signupRoute);
+    app.use('/Signup', signupRoute);
 
-    app.use('/login', loginRoute);
+    app.use('/Login', loginRoute);
 
 
 

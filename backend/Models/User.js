@@ -81,11 +81,26 @@ const userSchema = new Schema({
       ref: 'Course',
       required: false
     }
-  }
+  },
+  Exams:
+  {
+    type: Array,
+    required: false
+  },
+  Subtitles :
+  {
+    type: Array,
+    required: false
+  },
+  Progress:
+  {
+    type: Array,
+    required: false
+  },
   }, { timestamps: true });
 
   userSchema.methods.generateAuthToken = function () {
-    const token = jwt.sign({ _id: this._id }, process.env.JWTPRIVATEKEY, {
+    const token = jwt.sign({ _id: this._id }, 'supersecret' , {
       expiresIn: maxAge,
     });
     return token;

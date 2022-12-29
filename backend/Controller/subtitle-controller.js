@@ -233,6 +233,8 @@ const viewSubtitleNotes = async (req,res) => {
     res.status(200).json(resSubtitle);
 };
 
+
+
     
 
 module.exports = {getAllSubtitles,addSubtitle, editSubtitle, addExcercise,deleteExcercise,removeAllExcercises, viewSubtitle,
