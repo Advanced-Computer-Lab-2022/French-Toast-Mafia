@@ -9,7 +9,7 @@ const {getAllUser,
    addCourse, viewMyInfo,ViewMyCourses,
    changePassword,sendPassChangeMail,
    removeCourse, signUp, 
-   login, logout,videoProgress}= require ("../Controller/user-controller");
+   login, logout,videoProgress,getUserProgress}= require ("../Controller/user-controller");
 
 const router = express.Router();
 
@@ -40,6 +40,8 @@ router.put('/removeCourse',removeCourse);
 // router.post('/login', login);
 
 router.post('/videoProgress',videoProgress);
+
+router.get('/getUserProgress',getUserProgress);
 
 
 

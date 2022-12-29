@@ -130,7 +130,6 @@ const MySubtitles = () => {
               <StyledTableCell align="center" >Chapter Description</StyledTableCell>
               <StyledTableCell align="center" >Chapter Duration</StyledTableCell>
               <StyledTableCell align="center" >Chapter Video</StyledTableCell>
-              <StyledTableCell align="center" >Progress</StyledTableCell>
 
             </TableRow>
           </TableHead   >
@@ -152,7 +151,6 @@ const MySubtitles = () => {
                     >Watch Video</Button>
                   </Box>
                 </TableCell>
-                <TableCell align="center"> <CircularProgressWithLabel value={progress} /></TableCell>
               </TableRow>
             ))}
           </TableBody>

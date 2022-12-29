@@ -11,6 +11,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import PropTypes from 'prop-types';
+import CircularProgress from '@mui/material/CircularProgress';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -36,8 +40,6 @@ const UserCoursePage = () => {
    useEffect(function () {
        // const courseId = params.get('courseId');
      //   const userId = params.get('userId');
-   
-        console.log(userId);
         axios.get(`http://localhost:5000/Course/viewUserCourse?id=${userId}`).then(
             (res) => { 
                 const resCourse = res.data
@@ -46,6 +48,59 @@ const UserCoursePage = () => {
             }
         );
     }, []);
+
+      const [progress, setProgress] = React.useState(0);
+
+  React.useEffect(() => {
+    // const timer = setInterval(() => {
+    //   setProgress((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 10));
+    // }, 800);
+    // return () => {
+    //   clearInterval(timer);
+    // };
+
+    axios.get(`http://localhost:5000/User/getUserProgress?id=${userId}&courseId=${courseId}`).then(
+      (res) => { 
+          const resProgress = res.data
+          setProgress(resProgress);
+      }
+  );
+
+  }, []);
+
+  function CircularProgressWithLabel(props) {
+    return (
+      <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+        <CircularProgress variant="determinate" {...props} />
+        <Box
+          sx={{
+            top: 0,
+            left: 0,
+            bottom: 0,
+            right: 0,
+            position: 'absolute',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Typography variant="caption" component="div" color="text.secondary">
+            {`${Math.round(props.value)}%`}
+          </Typography>
+        </Box>
+      </Box>
+    );
+  }
+
+  CircularProgressWithLabel.propTypes = {
+    /**
+     * The value of the progress indicator for the determinate variant.
+     * Value between 0 and 100.
+     * @default 0
+     */
+    value: PropTypes.number.isRequired,
+  };
+
 
 
     
@@ -66,6 +121,7 @@ const UserCoursePage = () => {
         <StyledTableCell align="center">Chapters</StyledTableCell>
         <StyledTableCell align="center">Exams</StyledTableCell>
         <StyledTableCell align="center">Rate Course</StyledTableCell>
+        <StyledTableCell align="center">Progress</StyledTableCell>
       </TableRow>
     </TableHead>
 
@@ -142,6 +198,8 @@ const UserCoursePage = () => {
             >Rate Course</Button>
             </Box>
           </TableCell>
+
+                   <TableCell align="center"> <CircularProgressWithLabel value={progress} /></TableCell>
          
         </TableRow>
       ))}

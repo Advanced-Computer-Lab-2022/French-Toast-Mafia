@@ -384,7 +384,7 @@ const videoProgress = async (req, res) => {
     const courseId = req.query.courseId;
     const subtitleId = req.query.subtitleId;
 
-    const resultUser = await user.findOne({ _id: mongoose.Types.ObjectId(userId) });
+    const resultUser = await User.findOne({ _id: mongoose.Types.ObjectId(userId) });
     const userCourses = resultUser.Courses;
     const userSubtitles = resultUser.Subtitles;
     let uCourse=null;
@@ -406,7 +406,7 @@ const videoProgress = async (req, res) => {
         if (courseFound) {
             if (!(subtitleFound)) {
                 try {
-                    await user.findByIdAndUpdate
+                    await User.findByIdAndUpdate
                        (userId, { $push: { Subtitles: { course: courseId, subtitle: subtitleId } } });
                         //update progress attribute in user schema
                         uCourse=await Course.findOne({_id:mongoose.Types.ObjectId(courseId)});
@@ -420,7 +420,7 @@ const videoProgress = async (req, res) => {
                                 const newProgress=progress+p;
                                 console.log(newProgress);
                                 //update the progress of the user of a specific course
-                                await user.findOneAndUpdate({_id:mongoose.Types.ObjectId(userId),"Progress.courseId":mongoose.Types.ObjectId(courseId)},
+                                await User.findOneAndUpdate({_id:mongoose.Types.ObjectId(userId),"Progress.courseId":mongoose.Types.ObjectId(courseId)},
                                 {$set:{"Progress.$.Progress":newProgress}});
 
                             }
@@ -443,6 +443,23 @@ const videoProgress = async (req, res) => {
     }
 }
 
+//get user progress in a specific course
+const getUserProgress = async (req, res) => {
+    const userId = req.query.id;
+    const courseId = req.query.courseId;
+
+    const result=await User.findOne({_id:mongoose.Types.ObjectId(userId),"Progress.courseId":mongoose.Types.ObjectId(courseId)});
+    if (result){
+        const prog=result.Progress[0].Progress*100;
+        const progress=Math.ceil(prog);
+        res.status(200).json(progress);
+    }
+    else{
+        res.status(400).json({error:"Please enter a valid userId"});
+    }
+}
+
+
 
 
 
@@ -452,4 +469,4 @@ module.exports = {getAllUser,
     viewCourseTitleHoursRating,viewCoursePrice,
     selectCountryUser,ChangeCurrencyUser,addCourse,
     viewMyInfo,ViewMyCourses,changePassword,sendPassChangeMail,
-    removeCourse, logout, videoProgress};
+    removeCourse, logout, videoProgress, getUserProgress};
