@@ -8,13 +8,9 @@ const {getAllUser,
     ChangeCurrencyUser,
    addCourse, viewMyInfo,ViewMyCourses,
    changePassword,sendPassChangeMail,
-<<<<<<< HEAD
    removeCourse,  
     logout,videoProgress, userRefund}= require ("../Controller/user-controller");
-=======
-   removeCourse, signUp, 
-   login, logout,videoProgress,getUserProgress}= require ("../Controller/user-controller");
->>>>>>> 4f0a1013af9c726a22b26d0196ab89fc4ccbffa5
+
 
 const router = express.Router();
 
