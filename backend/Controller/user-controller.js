@@ -443,6 +443,23 @@ const videoProgress = async (req, res) => {
     }
 }
 
+//get user progress in a specific course
+const getUserProgress = async (req, res) => {
+    const userId = req.query.id;
+    const courseId = req.query.courseId;
+
+    const result=await User.findOne({_id:mongoose.Types.ObjectId(userId),"Progress.courseId":mongoose.Types.ObjectId(courseId)});
+    if (result){
+        const prog=result.Progress[0].Progress*100;
+        const progress=Math.ceil(prog);
+        res.status(200).json(progress);
+    }
+    else{
+        res.status(400).json({error:"Please enter a valid userId"});
+    }
+}
+
+
 const userRefund = async (req, res) => {
         const userId = req.body.id;  
         const courseId = req.body.courseId;

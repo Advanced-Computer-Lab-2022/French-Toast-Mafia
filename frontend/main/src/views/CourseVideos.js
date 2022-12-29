@@ -11,8 +11,9 @@ import DownloadIcon from '@mui/icons-material/Download';
 import Stack from '@mui/material/Stack';
 import MuiAlert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
-import Youtube from 'react-youtube';
 import getVideoId from 'get-video-id';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 const ref = React.createRef();
 
 
@@ -36,7 +37,7 @@ const CourseVideos = () => {
       (res) => {
         const resVideos = res.data
         setVideos(resVideos)
-        setVideoId( getVideoId(resVideos.Video));
+        setVideoId(getVideoId(resVideos.Video));
         console.log(videoId.id);
       }
     );
@@ -75,35 +76,18 @@ const CourseVideos = () => {
     element.click();
   }
 
-  function loadVideo() {
-    window.YT.ready(function() {
-      new window.YT.Player("video", {
-        height: "390",
-        width: "640",
-        videoId: videoId.id,
-        events: {
-          onReady: onPlayerReady,
-          onStateChange: onPlayerStateChange
-        }
-      });
-    });
-  
-    function onPlayerReady(event) {
-      event.target.playVideo();
-    }
-  
-    function onPlayerStateChange(event) {
-      var videoStatuses = Object.entries(window.YT.PlayerState)
-      console.log(videoStatuses.find(status => status[1] === event.data)[0])
-      console.log("State changed");
-    }
-  }
-  
-  // $(document).ready(function() {
-  //   $.getScript("https://www.youtube.com/iframe_api", function() {
-  //     loadVideo();
-  //   });
-  // });
+  const [checked, setChecked] = React.useState(false);
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+
+    
+    
+  };
+
+
+
+
   return (
 
     <div className="UsersList">
@@ -118,10 +102,15 @@ const CourseVideos = () => {
               </CardSubtitle>
               <iframe id="theiframe" src={videos.Video} title="Youtube Video"
                 width="100%" height="500" allowFullScreen
-              // onLoad={iframeclick}
               ></iframe>
-
-              {/* <Youtube videoId={getVideoId(videos.Video)}  onStateChange={iframeclick} /> */}
+              <FormControlLabel label="I've Watched The Video" control={
+                <Checkbox
+                  checked={checked}
+                  onChange={handleChange}
+                  inputProps={{ 'aria-label': 'controlled' }}
+                  label="beb"
+                />
+              } />
             </CardBody>
           </Card>
         </Col>
