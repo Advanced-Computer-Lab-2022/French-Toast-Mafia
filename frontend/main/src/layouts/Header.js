@@ -52,11 +52,11 @@ const Header = () => {
 
   const handleClose = () => setShow(false);
   const handleClose2 = () => setShow2(false);  
-  const handleClose3 = () => setShow3(false);
+  // const handleClose3 = () => setShow3(false);
 
   const handleShow = () => setShow(true);
   const handleShow2 = () => setShow2(true); 
-  const handleShow3 = () => setShow3(true);
+  // const handleShow3 = () => setShow3(true);
 
   const [data, setData] = useState({ Email : "", Password: "" });
 	const [error, setError] = useState("");
@@ -142,52 +142,30 @@ const handleSignUp = async (e) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const loggedin= { Email , Password }
-      const response = await fetch('http://localhost:5000/Login//' , {
-        method : 'POST' ,
-        body : JSON.stringify(loggedin) ,
+      const response = await axios ({
+        method:'post',
+        url: 'http://localhost:5000/Login//' ,
+        data:{ "Email": Email , "Password": Password} ,
+        // body : JSON.stringify(loggedin) ,
         headers : {
             'Content-Type' : 'application/json'
-        }
-    })
-    const json = await response.json(loggedin)
-    if(!response.ok){
-        setErr(json.err)
-    }
-    if(response.ok){
-        //get user id from response
-        console.log(json)
+            },
+    }).then((response) => console.log(response.data.user))
 
-        setEmail1('')
-        setPassword1('')  
-        setErr(null)
-        console.log('user logged in', json)
-        navigate("/MyCourses");
-    }
-    
-      // const response = await fetch({
-      //   method: 'post',
-      //   url: 'http://localhost:5000/Login//',
-      //   data: { "Email": Email , "Password": Password} ,
-      //   headers: {
-      //       'Content-Type': 'application/json',
-      //          },
-      //     })
-      //     // .then((response) => console.log(response.data))
-      //     console.log(response.data.data);
-      //     console.log(response.data.user);
-      //     // localStorage.setItem("token", response.data.token);
-      //     // localStorage.setItem("user", JSON.stringify(response.data.user));
-      //     console.log(Email);
-      //     console.log(Password);
-      //   navigate("/MyCourses");
+    console.log(response.data.token);
+    console.log(response.data.user);
+    // localStorage.setItem("token", response.data.token);
+    // localStorage.setItem("user", JSON.stringify(response.data.user));
+    console.log(Email);
+    console.log(Password);
+    // navigate("/MyCourses");
+
     } catch (error) {
       setError(error.response.data);
     }
   };
     
   
- 
   return (
 
     <div>
