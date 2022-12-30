@@ -144,8 +144,31 @@ const viewCourseExam = async(req , res) => {
     }
 
 }
+//view User course
+const viewUserCourse= async(req , res) => {
+    const userId = req.query.id;
+    const courseId = req.query.courseId;
+    if (userId){
+        if (courseId){
+            const result = await User.findById(mongoose.Types.ObjectId(userId));
+            if (result.Courses.includes(courseId)){
+                const courseRes= await course.findById(mongoose.Types.ObjectId(courseId));
+                res.status(200).json(courseRes);
+            }
+            else{
+                res.status(404).json({message:"course not found"})
+            }
+        }
+        else{
+            res.status(404).json({message:"course id not found"})
+        }
+    }
+    else{
+        res.status(404).json({message:"user not found"})
+    }
+}
 
-const viewUserCourse = async(req , res) => {
+const viewUserCourses = async(req , res) => {
     const userId = req.query.id;
     const resultCourses = [];
 if (userId){

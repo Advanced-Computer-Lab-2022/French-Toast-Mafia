@@ -42,6 +42,7 @@ const MySubtitles = () => {
 
   const search = useLocation().search;
   const courseId = new URLSearchParams(search).get('courseId');
+  const userId = new URLSearchParams(search).get('userId');
 
   console.log(courseId);
   const [subtitle, setSubtitles] = useState([]);
@@ -144,7 +145,7 @@ const MySubtitles = () => {
                     <Button variant="contained"
                       style={{ width: 150, height: 40, color: '#FFF', marginTop: 10 }}
                       onClick={() =>
-                        navigate(`/CourseVideos?courseId=${courseId}&subtitleId=${Subtitles._id}`)
+                        navigate(`/CourseVideos?courseId=${courseId}&subtitleId=${Subtitles._id}&userId=${userId}`)
                       }
                       margin="normal"
                       padding="normal"
