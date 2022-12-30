@@ -8,8 +8,8 @@ const mongoose = require('mongoose');
 
 function getAllRequests (req,res) {
    let x= Request.find({}).sort({createdAt: -1})
-   .then (function (rep) {
-    res.send(rep);
+   .then ((req) =>{
+    return res.status(200).json(req);
     });
 };
 

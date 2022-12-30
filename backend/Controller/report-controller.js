@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 function getAllReports (req,res) {
    let x= Report.find({}).sort({createdAt: -1})
    .then (function (rep) {
-    res.send(rep);
+    return res.status(200).json(rep);;
     });
 };
 
