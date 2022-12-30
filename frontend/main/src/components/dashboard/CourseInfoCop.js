@@ -43,14 +43,18 @@ import { Card, CardBody, CardSubtitle, CardText, CardTitle, Button, Row, Col,
      const [requested_by, setRequestedBy] = useState('');
      const [open, setOpen] = React.useState(false);
 
-
+     const [dropdownOpen1, setDropdownOpen1] = useState(false);
   
   
     const reportData = {};
   
     const toggle = () => setDropdownOpen((prevState) => !prevState);
-  
+
+    const toggl = () => setDropdownOpen1((prevState) => !prevState);
+
     const viewReports = () => console.log("view reports!");
+
+    const viewRequests = () => console.log("view requests!");
   
    
     let stars = [];
@@ -160,6 +164,7 @@ import { Card, CardBody, CardSubtitle, CardText, CardTitle, Button, Row, Col,
 // }
 
   const handleRequestSubmit = async (e) => {
+    setOpen(true);
     e.preventDefault();
     const request = {requested_by}
     const response = await fetch(`http://localhost:5000/Request/createRequest?id=${cId}` , {
@@ -173,6 +178,10 @@ import { Card, CardBody, CardSubtitle, CardText, CardTitle, Button, Row, Col,
     if(!response.ok){
         setErr(json.err)  
         console.log("Erorrrrrrrrrrrrrrrrrrrr")    
+        if (response.status==404){
+          setErrorMessage('You have already requested this course')
+        }
+        //console.log(errorMessage);
 
     }
     if(response.ok){
@@ -180,8 +189,16 @@ import { Card, CardBody, CardSubtitle, CardText, CardTitle, Button, Row, Col,
         //setErrorMessage(response.data.Message);
         setErr(false)
         console.log('new request sent', json)
+        //console.log(response)
+        //console.log("Hellllo")
+        //console.log(errorMessage);
         setDone(true);
+        if (response.status==200){
+          setErrorMessage('Requested the course succesfuly')
+        }
+
     }
+   
 }
 
 // const handleSubmit = async (event) => {
@@ -244,11 +261,11 @@ import { Card, CardBody, CardSubtitle, CardText, CardTitle, Button, Row, Col,
             <Button type="submit "color="primary" onClick={handleRequestSubmit}> 
               Submit
             </Button>
-            {/* <Snackbar open={open} autoHideDuration={6000} onClose={handleC}>
-                              <Alert onClose={handleC} severity="success" sx={{ width: '100%' }}>
-                                  Hellloo
-                              </Alert>
-                          </Snackbar> */}
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleC} message={errorMessage}>
+                              {/* <Alert onClose={handleC} severity="success" sx={{ width: '100%' }}>
+                                  {errorMessage}
+                              </Alert> */}
+                          </Snackbar>
           </Modal.Footer>
           {/* </Box> */}
         </Modal>
@@ -340,8 +357,18 @@ import { Card, CardBody, CardSubtitle, CardText, CardTitle, Button, Row, Col,
             <br/><br/><br/><br/><br/>
             <CardTitle tag="h4" className="text-primary">Price: {course.Cost} EGP</CardTitle>
             <h1>  </h1>
-            <Button className="btn" color="primary" size="lg" onClick={handleOkay} >Request access </Button>  
-  
+            <Col className="text-end">
+        
+        <Dropdown isOpen={dropdownOpen1} toggle={toggl}>
+
+        <DropdownToggle className="btn btn dropdown-toggle dropdown-toggle-split" outline color="danger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Request&nbsp;&nbsp;&nbsp;</DropdownToggle>
+        <DropdownMenu>
+        <DropdownItem id="ReportProblem" onClick={handleOkay}>Request Course </DropdownItem>
+        <DropdownItem id="viewRequests"  onClick={viewRequests}>View Course Requests</DropdownItem>
+        </DropdownMenu> </Dropdown>
+        </Col>
+            {/* <Button className="btn" color="primary" size="lg" onClick={handleOkay} >Request access </Button>  
+   */}
       
             </Col>
   

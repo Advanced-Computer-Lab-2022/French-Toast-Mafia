@@ -8,7 +8,11 @@ import Reviews from "../components/dashboard/CourseReviews";
 import CourseSubtitles from "../components/dashboard/CourseSubtitles";
 import CoursePreview from "../components/dashboard/CoursePreview";
 import LatestReports from "../components/dashboard/LatestReports";
+
+import LatestRequests from "../components/dashboard/LatestRequests";
 import { getAllReports } from "../api/axios";
+
+import { getAllRequests } from "../api/axios";
 
 const AdminDashboard = () => {
 
@@ -16,6 +20,7 @@ const AdminDashboard = () => {
     const aId = new URLSearchParams(search).get('id');
 
     const[reports, setReports] = useState([  <Alert color="info">No reports available</Alert>]);
+    const[requests, setRequests] = useState([  <Alert color="info">No requests available</Alert>]);
     const[instructor, setInstructor] = useState([])
     const[Rating, setRating] = useState([])
     const[subtitles, setSubtitles] = useState([])
@@ -36,6 +41,19 @@ const AdminDashboard = () => {
         })
       }, []);
 
+      
+    useEffect(() => {
+      getAllRequests().then(json => {
+      setRequests(json)
+      // setInstructor(json.Instructor[1])
+      // setRating(json.Rating)
+      // setSubtitles(json.CourseSubtitle)
+      // setPreview(json.Preview)
+      // setPrice(json.Cost)
+      // setRatingLength(json.Rating.length)
+      })
+    }, []);
+
   return (
     <div>
       {/***Top Cards***/}
@@ -48,6 +66,17 @@ const AdminDashboard = () => {
       <Row>
         <Col sm="6" lg="6" xl="7" xxl="6">
             <LatestReports reports = {reports}/>
+        </Col>
+        <Col sm="6" lg="6" xl="5" xxl="6">
+
+            {/* PLACE THE COMPONENT HERE */}
+
+        </Col>
+      </Row>
+
+      <Row>
+        <Col sm="6" lg="6" xl="7" xxl="6">
+            <LatestRequests requests = {requests}/>
         </Col>
         <Col sm="6" lg="6" xl="5" xxl="6">
 

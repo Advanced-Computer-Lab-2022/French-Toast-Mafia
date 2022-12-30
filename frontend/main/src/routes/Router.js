@@ -2,6 +2,7 @@
  import { Navigate } from "react-router-dom";
 // import { browserHistory } from 'react-router';
 import React from 'react';
+import ViewReportAdmin from "../views/viewReportAdmin";
 /****Layouts*****/
 const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
 
@@ -31,8 +32,9 @@ const CourseInstructor= lazy(() => import('../views/CourseInstructor.js'));
 const CourseVideos= lazy(() => import('../views/CourseVideos.js'));
 const CourseRate= lazy(() => import('../views/CourseRate.js'));
 const CreditCardss= lazy(() => import('../views/CreditCardss.js'));
-const CourseReports = lazy(() => import('../views/CourseReports'))
 
+const CourseReports = lazy(() => import('../views/CourseReports'))
+const CourseRequests = lazy(() => import('../views/CourseRequests'))
 
 const CourseSubtitles= lazy(() => import('../views/CourseSubtitles.js'));
 const Contract = lazy (() => import ('../views/ui/Contract.js'));
@@ -40,8 +42,13 @@ const Contract = lazy (() => import ('../views/ui/Contract.js'));
 const ViewCourse = lazy(() => import("../views/viewCourse.js"));
 const ViewCourseCop = lazy(() => import("../views/viewCourseCop.js"));
 
+const ViewReport = lazy(() => import("../views/viewReport.js"));
+
+const ViewRequest = lazy(() => import("../views/viewRequest.js"));
 
 const AdminDashboard = lazy(() => import("../views/AdminDashboard"));
+const viewReportAdmin = lazy(() => import("../views/viewReportAdmin"));
+
 
 const Instructors= lazy(() => import('../views/Instructors.js'));
 const InstructorCourses= lazy(() => import('../views/InstructorCourses.js'));
@@ -95,6 +102,12 @@ const ThemeRoutes = [
       { path: "/viewCourseCop" , exact: true, element: <ViewCourseCop/> },
 
       { path: "/viewCourseReports", exact: true, element: <CourseReports /> },
+      { path: "/viewCourseRequests", exact: true, element: <CourseRequests /> },
+     
+      { path: "/viewReport", exact: true, element: <ViewReport /> },
+      { path: "/viewRequest", exact: true, element: <ViewRequest /> },
+
+
       { path: "/CourseRate", exact: false, element: <CourseRate /> },
       { path: "/CreditCardss", exact: false, element: <CreditCardss /> },
       { path: "/CourseSubtitles", exact: false, element: <CourseSubtitles /> },
@@ -119,9 +132,7 @@ const ThemeRoutes = [
       { path: "/InstructorInfo", exact: false, element: <InstructorInfo/> },
       { path: "/InstructorBalance", exact: false, element: <InstructorBalance/> },
 
-      { path: "/AdminHome" , exact: false, element: <AdminDashboard/> },
-
-    
+      { path: "/AdminHome" , exact: false, element: <AdminDashboard/> }
     ],
   },
 ];

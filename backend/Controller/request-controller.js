@@ -85,13 +85,33 @@ const getCourseRequests = async(req,res) =>{
 
 const getRequesterName = async(req, res) =>{
     const uId = req.query.id;
-
-    User.findOne({_id:mongoose.Types.ObjectId(uId)}).then(retUser =>{
+    User.findOne({_id:mongoose.Types.ObjectId(uId)}).then(retUser => {
         if(retUser != null){
             return res.status(200).json(retUser.Name);
         }
+        else 
+        return res.status(400).json(null);
     });        
 };
+
+// const getReporterName = async(req, res) =>{
+//     const uId = req.query.id;
+
+//     User.findOne({_id:mongoose.Types.ObjectId(uId)}).then(retUser =>{
+//         if(retUser != null){
+//             return res.status(200).json(retUser.Name);
+//         }
+//         else{
+//             Instructor.findOne({_id:mongoose.Types.ObjectId(uId)}).then(retInstructor =>{
+//                 if(retInstructor != null){
+//                     return res.status(200).json(retInstructor.InstrName);
+//                 }
+//                 else
+//                     return res.status(400).json(null);
+//             })
+//         }
+//     });        
+// };
 
 
 const getRequestedCourse = async(req, res) =>{
@@ -109,5 +129,23 @@ const updateRequestStatus = async(req, res) =>{
         return res.status(200).json(ret);
     });
 };
+
+// function getAllRequests (req,res) {
+//     let x= Request.find({}).sort({createdAt: -1})
+//     .then (function (rep) {
+//      res.send(rep);
+//      });
+//  };
+
+  function getRequest(req,res){
+    const rId = req.query.id;
+    let x= Request.find({__id:rId}).sort({createdAt: -1})
+    .then (function (rep) {
+             res.send(rep);
+             });
+         }
+
+
+
    
-module.exports={ getAllRequests, createRequest,getCourseRequests,  getRequesterName ,  getRequestedCourse, updateRequestStatus};
+module.exports={ getAllRequests, createRequest,getCourseRequests,  getRequesterName ,  getRequestedCourse, updateRequestStatus,getRequest};

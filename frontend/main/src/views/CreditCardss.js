@@ -19,11 +19,16 @@ import {
   CardBody,
   CardTitle,
 } from "reactstrap";
+import StripeCheckout from 'react-stripe-checkout';
+import axios from 'axios';
 
 
 
 
  const CreditCardss = () => {
+
+  const publishableKey =
+    'pk_test_51MH6ExF2NTNEemMC7fzRVrHpqgnmFaBm6W7pNQ2B3n1Th3yHyuBwhclJYLjC3CNeVgHrAIWgYEE3uEUPzIP3CbTx00Z1ejUGOY';
 
   const [visible, setVisible] = useState(true);
 
@@ -86,7 +91,7 @@ import {
         setNumber('')
         setExpiry('')
         setCvc('')
-
+        
 
         setErr(false)
           console.log('new card added', json)
@@ -233,6 +238,17 @@ return (
     <Button variant="secondary" onClick={handleClose} >
       Close
     </Button>
+
+    <StripeCheckout
+        stripeKey={publishableKey}
+        label="Pay Now"
+        name="Pay With Credit Card"
+        billingAddress
+        shippingAddress
+        //amount={priceForStripe}
+        //description={`Your total is $${product.price}`}
+        token={handleSubmit}
+      />
 
     <Button variant="primary"  type='submit' onClick={handleSubmit}>
       Confirm Payment 
