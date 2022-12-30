@@ -416,11 +416,6 @@ const getCoursePreviewVideos = async (req,res) => {
 
 
 
-
-
-
-
-
 module.exports={getAllCourse , viewCourse, createCourse, editCourse, 
     viewCourseInstructor, getMaxPrice, getSubjects,
      viewCourseSubtitles, viewCourseExam, viewUserCourse,
