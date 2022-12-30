@@ -1,58 +1,36 @@
-import { Col, Row, Alert} from "reactstrap";
+import { Col, Row, Alert, ListGroup, CardBody, Card, CardTitle} from "reactstrap";
 
 import { useLocation } from 'react-router-dom';
 import { viewCourse } from "../api/axios";
 import {useState, useEffect} from 'react';
 
-import Reviews from "../components/dashboard/CourseReviews";
-import CourseSubtitles from "../components/dashboard/CourseSubtitles";
-import CoursePreview from "../components/dashboard/CoursePreview";
-import LatestReports from "../components/dashboard/LatestReports";
+import "bootstrap/dist/css/bootstrap.min.css";
 
+
+import LatestReports from "../components/dashboard/LatestReports";
 import LatestRequests from "../components/dashboard/LatestRequests";
+
 import { getAllReports } from "../api/axios";
 
 import { getAllRequests } from "../api/axios";
 
 const AdminDashboard = () => {
-
+    const [ref,setRef] = useState(false);
     const search = useLocation().search;
     const aId = new URLSearchParams(search).get('id');
 
-    const[reports, setReports] = useState([  <Alert color="info">No reports available</Alert>]);
-    const[requests, setRequests] = useState([  <Alert color="info">No requests available</Alert>]);
-    const[instructor, setInstructor] = useState([])
-    const[Rating, setRating] = useState([])
-    const[subtitles, setSubtitles] = useState([])
-    const[preview, setPreview] = useState([])
-    const [price, setPrice] = useState([])
-    const [ratingLength, setRatingLength] = useState([])
-    const [reportAlert, setReportAlert] = useState(false)
+    const[reports, setReports] = useState([ ]);
+    const[requests, setRequests] = useState([ ]);
+  
 
     useEffect(() => {
         getAllReports().then(json => {
-        setReports(json)
-        // setInstructor(json.Instructor[1])
-        // setRating(json.Rating)
-        // setSubtitles(json.CourseSubtitle)
-        // setPreview(json.Preview)
-        // setPrice(json.Cost)
-        // setRatingLength(json.Rating.length)
+          setReports(json)
+        })
+        getAllRequests().then(req => {
+          setRequests(req)
         })
       }, []);
-
-      
-    useEffect(() => {
-      getAllRequests().then(json => {
-      setRequests(json)
-      // setInstructor(json.Instructor[1])
-      // setRating(json.Rating)
-      // setSubtitles(json.CourseSubtitle)
-      // setPreview(json.Preview)
-      // setPrice(json.Cost)
-      // setRatingLength(json.Rating.length)
-      })
-    }, []);
 
   return (
     <div>
@@ -68,32 +46,16 @@ const AdminDashboard = () => {
             <LatestReports reports = {reports}/>
         </Col>
         <Col sm="6" lg="6" xl="5" xxl="6">
-
-            {/* PLACE THE COMPONENT HERE */}
-
-        </Col>
-      </Row>
-
-      <Row>
-        <Col sm="6" lg="6" xl="7" xxl="6">
             <LatestRequests requests = {requests}/>
-        </Col>
-        <Col sm="6" lg="6" xl="5" xxl="6">
-
-            {/* PLACE THE COMPONENT HERE */}
-
         </Col>
       </Row>
       {/***Table ***/}
       <Row>
         <Col lg="12">
-          <CourseSubtitles subtitles={subtitles} />
         </Col>
       </Row>
       {/***Blog Cards***/}
       <Row>
-      <Reviews reviews={Rating} />
-    
       </Row>
 
     </div>
