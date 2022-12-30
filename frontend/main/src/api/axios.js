@@ -57,3 +57,8 @@ export const getReport = async(id) =>{
     const response = await axios.get(`http://localhost:5000/Report/getReport?id=${id}`)
     return response.data
 }
+
+export const getInstructor = async(id) =>{
+    const response = await axios.get(`http://localhost:5000/Instructor/viewInstrInfo?instrId=${id}`)
+    return response.data
+}
