@@ -10,6 +10,8 @@ const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
 
 const Starter = lazy(() => import("../views/Starter.js"));
 const Home = lazy(() => import("../views/Home.js"));
+const HomeCop = lazy(() => import("../views/HomeCop.js"));
+
 const About = lazy(() => import("../views/About.js"));
 const Alerts = lazy(() => import("../views/ui/Alerts"));
 const Badges = lazy(() => import("../views/ui/Badges"));
@@ -30,13 +32,19 @@ const CourseInstructor= lazy(() => import('../views/CourseInstructor.js'));
 const CourseVideos= lazy(() => import('../views/CourseVideos.js'));
 const CourseRate= lazy(() => import('../views/CourseRate.js'));
 const CreditCardss= lazy(() => import('../views/CreditCardss.js'));
-const CourseReports = lazy(() => import('../views/CourseReports'))
 
+const CourseReports = lazy(() => import('../views/CourseReports'))
+const CourseRequests = lazy(() => import('../views/CourseRequests'))
 
 const CourseSubtitles= lazy(() => import('../views/CourseSubtitles.js'));
 const Contract = lazy (() => import ('../views/ui/Contract.js'));
+
 const ViewCourse = lazy(() => import("../views/viewCourse.js"));
+const ViewCourseCop = lazy(() => import("../views/viewCourseCop.js"));
+
 const ViewReport = lazy(() => import("../views/viewReport.js"));
+
+const ViewRequest = lazy(() => import("../views/viewRequest.js"));
 
 const AdminDashboard = lazy(() => import("../views/AdminDashboard"));
 const viewReportAdmin = lazy(() => import("../views/viewReportAdmin"));
@@ -71,6 +79,8 @@ const ThemeRoutes = [
     children: [
      { path: "/", exact:true, element: <Navigate to="/home" /> },
       { path: "/home", exact: true, element: <Home /> },
+      { path: "/homeCop", exact: true, element: <HomeCop /> },
+
       { path: "/starter", exact: true, element: <Starter /> },
       { path: "/about", exact: true, element: <About /> },
       { path: "/alerts", exact: true, element: <Alerts /> },
@@ -88,9 +98,17 @@ const ThemeRoutes = [
       { path: "/MyCourses", exact: false, element: <MyCourses /> },
       { path: "/UserCoursePage", exact: false, element: <UserCoursePage /> },
       { path: "/CourseInstructor", exact: false, element: <CourseInstructor /> },
+
       { path: "/viewCourse", exact: true, element: <ViewCourse /> },
+      { path: "/viewCourseCop" , exact: true, element: <ViewCourseCop/> },
+
       { path: "/viewCourseReports", exact: true, element: <CourseReports /> },
+      { path: "/viewCourseRequests", exact: true, element: <CourseRequests /> },
+     
       { path: "/viewReport", exact: true, element: <ViewReport /> },
+      { path: "/viewRequest", exact: true, element: <ViewRequest /> },
+
+
       { path: "/CourseRate", exact: false, element: <CourseRate /> },
       { path: "/CreditCardss", exact: false, element: <CreditCardss /> },
       { path: "/CourseSubtitles", exact: false, element: <CourseSubtitles /> },
@@ -117,9 +135,7 @@ const ThemeRoutes = [
       { path: "/InstructorInfo", exact: false, element: <InstructorInfo/> },
       { path: "/InstructorBalance", exact: false, element: <InstructorBalance/> },
 
-      { path: "/AdminHome" , exact: false, element: <AdminDashboard/> },
-      { path: "/viewReport_A" , exact: false, element: <ViewReportAdmin/> }
-
+      { path: "/AdminHome" , exact: false, element: <AdminDashboard/> }
     ],
   },
 ];

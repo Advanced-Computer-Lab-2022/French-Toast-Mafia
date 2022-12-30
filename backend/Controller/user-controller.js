@@ -507,4 +507,5 @@ module.exports = {getAllUser,
     viewCourseTitleHoursRating,viewCoursePrice,
     selectCountryUser,ChangeCurrencyUser,addCourse,
     viewMyInfo,ViewMyCourses,changePassword,sendPassChangeMail,
-    removeCourse, logout, videoProgress,userRefund, getUserProgress}
+    removeCourse, logout, videoProgress,userRefund,getUserProgress}
+

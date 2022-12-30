@@ -4,9 +4,10 @@ import {useState, useEffect} from 'react';
 import SearchBar from "../components/dashboard/SearchBar";
 import CourseList from "../components/dashboard/CourseList";
 
-const AdminHome = () => {
+const HomeCop = () => {
   const[courses,setCourses] = useState([])
   const[searchResults,setSearchResults] = useState([])
+
   useEffect(() => {
     getCourses().then(json => {
       setCourses(json)
@@ -16,7 +17,6 @@ const AdminHome = () => {
     })
   }, []);
 
-  
   return (
     <Row>
       <Col>
@@ -41,4 +41,4 @@ const AdminHome = () => {
   );
 };
 
-export default AdminHome;
+export default HomeCop;
