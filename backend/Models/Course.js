@@ -73,6 +73,12 @@ const courseSchema = new Schema({
       type: String,
       required: false
     },
+
+    Published: {
+      type : Boolean,
+      default: false
+    }
+    
     
   }, { timestamps: true });
   

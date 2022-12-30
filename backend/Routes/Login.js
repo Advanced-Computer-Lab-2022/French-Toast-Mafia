@@ -24,9 +24,9 @@ router.post("/", async (req, res) => {
 			user= await Admin.findOne({ AdminName: req.body.AdminName });
 		}
 
-		// console.log(user);
-		// console.log(req.body.Password);
-        // console.log(user.Password);
+		console.log(user);
+		console.log(req.body.Password);
+        console.log(user.Password);
 
 		const validPassword = await bcrypt.compare(
 			req.body.Password,

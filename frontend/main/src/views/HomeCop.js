@@ -4,9 +4,7 @@ import {useState, useEffect} from 'react';
 import SearchBar from "../components/dashboard/SearchBar";
 import CourseList from "../components/dashboard/CourseList";
 
-
-
-const InstrHome = () => {
+const HomeCop = () => {
   const[courses,setCourses] = useState([])
   const[searchResults,setSearchResults] = useState([])
 
@@ -43,4 +41,4 @@ const InstrHome = () => {
   );
 };
 
-export default InstrHome;
+export default HomeCop;

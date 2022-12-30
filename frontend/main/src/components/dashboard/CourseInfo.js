@@ -237,7 +237,7 @@ const payNow = async token => {
     height: "-webkit-fill-available",justify:"space-between",
     height: "307px"}}>
 
-      <CardBody>
+      <CardBody style={{height: "300px"}}>
 
         <Row>
           <Col>
@@ -267,7 +267,7 @@ const payNow = async token => {
         </Col>
         <Col className="text-end">
           <br/><br/><br/><br/><br/>
-          <CardTitle tag="h4" className="text-primary">Price: {course.Cost} EGP</CardTitle>
+          <CardTitle tag="h4" className="text-primary">{course.Cost} EGP</CardTitle>
           <h1>  </h1>
           <StripeCheckout
           stripeKey={publishableKey}

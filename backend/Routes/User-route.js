@@ -13,6 +13,8 @@ const {getAllUser,
     userProgressDecrement,
     sendCertificate,getUserGrades}= require ("../Controller/user-controller");
 
+    
+ 
 
 const router = express.Router();
 
@@ -44,7 +46,7 @@ router.post ('/userRefund', userRefund);
 
 router.post('/videoProgress',videoProgress);
 
-router.get('/getUserProgress',getUserProgress);
+// router.get('/getUserProgress',getUserProgress);
 
 router.put('/userProgressDecrement',userProgressDecrement);
 

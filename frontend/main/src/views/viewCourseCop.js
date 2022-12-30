@@ -1,10 +1,10 @@
-import { Col, Row , Alert, CardDeck} from "reactstrap";
+import { Col, Row , Alert} from "reactstrap";
 
 import { useLocation } from 'react-router-dom';
 import { viewCourse } from "../api/axios";
-import {useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 
-import CourseInfo from "../components/dashboard/CourseInfo";
+import CourseInfoCop from "../components/dashboard/CourseInfoCop";
 import Reviews from "../components/dashboard/CourseReviews";
 import CourseSubtitles from "../components/dashboard/CourseSubtitles";
 import CoursePreview from "../components/dashboard/CoursePreview";
@@ -14,7 +14,7 @@ import bg3 from "../assets/images/bg/bg3.jpg";
 import bg4 from "../assets/images/bg/bg4.jpg";
 
 
-const ViewCourse = () => {
+const ViewCourseCop = () => {
 
     const search = useLocation().search;
     const cId = new URLSearchParams(search).get('id');
@@ -60,16 +60,14 @@ const ViewCourse = () => {
             </Alert>
           </div>
       {/***Sales & Feed***/}
-      <CardDeck>
-      <Row>  
+      <Row>
         <Col sm="6" lg="6" xl="7" xxl="7">
-          <CourseInfo cId = {cId} course={course} instructor={instructor} ratingLength = {ratingLength} setReportAlert={setReportAlert}/>
+          <CourseInfoCop cId = {cId} course={course} instructor={instructor} ratingLength = {ratingLength} setReportAlert={setReportAlert}/>
         </Col>
         <Col sm="6" lg="6" xl="5" xxl="5">
           <CoursePreview preview = {preview} price = {price} />
         </Col>
       </Row>
-      </CardDeck>
       {/***Table ***/}
       <Row>
         <Col lg="12">
@@ -86,4 +84,4 @@ const ViewCourse = () => {
   );
 };
 
-export default ViewCourse;
+export default ViewCourseCop;

@@ -1,7 +1,10 @@
 import axios from 'axios';
+import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import {useState, useEffect} from 'react';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import { Card, CardBody, CardSubtitle, CardText, CardTitle, Button, Row, Col,
     DropdownToggle,
     DropdownMenu,
@@ -30,6 +33,8 @@ const InstructorInfo =()=> {
     const [InstrEmail, setEmail] = useState('');
     const [Biography, setBiography] = useState('');
     const[err , setErr] = useState(null)
+    const [open, setOpen] = React.useState(false);
+
 
     const[done , setDone] = useState(false);
     const[don , setDone1] = useState(false);
@@ -49,10 +54,19 @@ const InstructorInfo =()=> {
      }
  }
 
+ const handleC = (event, reason) => {
+  if (reason === 'clickaway') {
+    return;
+  }
+
+  setOpen(false);
+};
+
  
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setOpen(true);
         const Test = {InstrEmail}
         const response = await fetch(`http://localhost:5000/Instructor/editInstrEmail?id=${InstrId}` , {
             method : 'POST' ,
@@ -70,6 +84,7 @@ const InstructorInfo =()=> {
             setEmail('')
             setDone1(true);
             setErr(null)
+            handleClose(true);
             console.log('Email has been edited', json)
         }
     }
@@ -92,6 +107,7 @@ const InstructorInfo =()=> {
             setBiography('')
             setDone1(true);
             setErr(null)
+            
             console.log('Biography has been edited', json)
         }
     }
@@ -153,12 +169,16 @@ const InstructorInfo =()=> {
           onClick={handleSubmit}>
             Edit
           </Button>
-          {done?
-        <Alert color="white "> You have edited your email successfully! &nbsp;
-        <Button color ="primary"  type='submit' onClick={handleClose}>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleC} >
+      <Alert onClose={handleC} severity="success" sx={{ width: '100%' }}>
+    This is a success message!
+  </Alert>
+        
+        {/* <Button color ="primary"  type='submit' onClick={handleC}>
       Done
-    </Button>
-    </Alert>:""}
+    </Button> */}
+
+    </Snackbar>
 
         </Modal.Footer>
 
@@ -193,12 +213,15 @@ const InstructorInfo =()=> {
           onClick={handle}>
             Edit
           </Button>
-          {don?
-        <Alert color="white"> You have edited your Biography successfully! &nbsp;
+          
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                You have edited your email successfully!
+          </Alert>  
+        </Snackbar>
         <Button color ="primary"  type='submit' onClick={handleClose1}>
       Done
-    </Button>
-    </Alert>:""}
+    </Button> 
 
         </Modal.Footer>
 
