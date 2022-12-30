@@ -28,7 +28,7 @@ const InstrCourseExams = () => {
     const [exams,setExams] = useState([]);
     const params = new URLSearchParams(window.location.search);
     const search = useLocation().search;
-    const userId = new URLSearchParams(search).get('userId');
+    const instrId= new URLSearchParams(search).get('instrId');
     const courseId = new URLSearchParams(search).get('courseId');
     const navigate = useNavigate();
 
@@ -80,7 +80,7 @@ const InstrCourseExams = () => {
             <Button variant="contained"
               style={{ width: 210, height: 40, color: '#FFF', marginTop: 10 }}
               onClick={() => 
-                navigate(`/InstrExamPage?courseId=${courseId}&userId=${userId}&examId=${e._id}`)
+                navigate(`/InstrExamPage?courseId=${courseId}&instrId=${instrId}&examId=${e._id}`)
               }
               margin="normal"
               padding="normal"
@@ -107,7 +107,7 @@ const InstrCourseExams = () => {
             style={{ width: 210, height: 40, color: '#FFF', marginTop: 10 }}
             onClick={() => 
               //window.location.href=`/CourseInstructor?courseId=${courseId}&userId=${userId}`
-              navigate(`/ViewExam?courseId=${courseId}&userId=${userId}&examId=${exams._id}`)
+              navigate(`/ViewExam?courseId=${courseId}&instrId=${instrId}&examId=${exams._id}`)
             }
             margin="normal"
             padding="normal"

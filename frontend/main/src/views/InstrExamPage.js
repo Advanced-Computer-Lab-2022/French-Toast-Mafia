@@ -137,18 +137,36 @@ const InstrExamPage = () => {
     const [choice4, setChoice4] = useState('');
     const [correct, setCorrect] = useState('');
 
+    const [avGrade, setAvGrade] = useState(0);
+
+   useEffect(function () {
+        axios.get(`http://localhost:5000/Exams/getAverageGrade?id=${examId}`).then(
+            (res) => {
+                const avGrade = res.data.averageGrade
+                console.log(res.data)
+                setAvGrade(avGrade)
+            }
+        )
+    }, []);
+
+
+
+
 
     return (
         <div>
             <h1>Exam Page</h1>
             <div className="UsersList">
 
-                <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ mb: 2 }}>
-                    <Grid item xs={6}>
+                <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ mb: 3,mt:2}}>
+                    <Grid item xs={4}>
                         <Item><strong>Exam Title:</strong> {exams.title}</Item>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={4}>
                         <Item><strong>Exam Description: </strong>{exams.description}</Item>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <Item><strong>Average Grade: </strong>{avGrade} %</Item>
                     </Grid>
                 </Grid>
 

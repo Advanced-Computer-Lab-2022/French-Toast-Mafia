@@ -324,6 +324,31 @@ const checkUser = async (req, res) => {
   }
 }
 
+//get average grade of exam
+const getAverageGrade = async (req, res) => {
+  const examId = req.query.id;
+  const result = await Exams.findById(mongoose.Types.ObjectId(examId));
+  if (result) {
+    const users = result.users;
+    const grades = [];
+    for (let i = 0; i < users.length; i++) {
+      const user = await User.findById(mongoose.Types.ObjectId(users[i]));
+      for (let j = 0; j < user.Exams.length; j++) {
+        if ((user.Exams[j].exam).equals(examId)) {
+          grades.push(user.Exams[j].grade);
+        }
+      }
+    }
+    const sum = grades.reduce((a, b) => a + b, 0);
+    const avg = (sum / grades.length) || 0;
+    res.status(200).json({ averageGrade: avg });
+  }
+  else {
+    res.status(400).json({ message: 'Error in getting average grade' });
+  }
+}
+
+
 
 
 
@@ -332,5 +357,5 @@ const checkUser = async (req, res) => {
 
 module.exports = {
   getAllExams, createExam, getExamById, getAllMcq,
-  addMCQ, getMcqById, solveMcq, solveExam, getAnswers, checkUser,getExam
+  addMCQ, getMcqById, solveMcq, solveExam, getAnswers, checkUser,getExam, getAverageGrade
 };
