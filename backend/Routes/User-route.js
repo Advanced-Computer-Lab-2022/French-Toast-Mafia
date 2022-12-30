@@ -11,7 +11,7 @@ const {getAllUser,
    removeCourse,  
     logout,videoProgress, userRefund,getUserProgress,
     userProgressDecrement,
-    sendCertificate,getUserGrades}= require ("../Controller/user-controller");
+    sendCertificate,getUserGrades,intializeProgress}= require ("../Controller/user-controller");
 
     
  
@@ -48,11 +48,13 @@ router.post('/videoProgress',videoProgress);
 
 // router.get('/getUserProgress',getUserProgress);
 
-router.put('/userProgressDecrement',userProgressDecrement);
+router.post('/userProgressDecrement',userProgressDecrement);
 
 router.get('/sendCertificate',sendCertificate);
 
 router.get('/getUserGrades',getUserGrades);
+
+router.get('/intializeProgress',intializeProgress);
 
 
 

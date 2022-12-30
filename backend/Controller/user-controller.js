@@ -332,7 +332,7 @@ const sendPassChangeMail = async (req, res) => {
 
 const addCourse = async (req, res) => {
     const userId = req.query.id;
-    const courseId = req.body;
+    const courseId = req.query.courseId;
 
     const resultUser = await User.findOne({ _id: mongoose.Types.ObjectId(userId) });
     const resultCourse = await Course.findOne({ _id: mongoose.Types.ObjectId(courseId) });
@@ -341,7 +341,10 @@ const addCourse = async (req, res) => {
         if (resultCourse) {
             try {
 
+                // await User.findByIdAndUpdate(userId, { $push: { Courses: resultCourse._id } });
+                //add course to user and make progress 0
                 await User.findByIdAndUpdate(userId, { $push: { Courses: resultCourse._id } });
+                await User.findByIdAndUpdate(userId, { $push: { Progress: { courseId: resultCourse._id, Progress: 0 } } });
                 res.status(200).json(resultCourse);
 
             } catch (error) {
@@ -627,6 +630,33 @@ const getUserGrades = async (req, res) => {
         res.status(200).json(0);
     }
 }
+
+//check if all user courses is in progess array and if not add it and set progress to 0
+const intializeProgress = async (req, res) => {
+    const userId = req.query.id;
+    const result= await User.findById(mongoose.Types.ObjectId(userId));
+    const userCourses = result.Courses;
+    const userProgress = result.Progress;
+    let courseFound = false;
+    for (let i = 0; i < userCourses.length; i++) {
+        for (let j = 0; j < userProgress.length; j++) {
+            if (userCourses[i] == userProgress[j].courseId) {
+                courseFound = true;
+            }
+        }
+        if (!courseFound) {
+            try {
+                await User.findOneAndUpdate({ _id: mongoose.Types.ObjectId(userId) },
+                    { $push: { Progress: { courseId: mongoose.Types.ObjectId(userCourses[i]), Progress: 0 } } });
+                    res.status(200).json("Progress initialized");
+            }
+            catch (error) {
+                res.status(400).json({ error: error.message })
+            }
+        }
+    }
+}
+
       
 
 
@@ -638,14 +668,7 @@ module.exports = {
     selectCountryUser, ChangeCurrencyUser, addCourse,
     viewMyInfo, ViewMyCourses, changePassword, sendPassChangeMail,
     removeCourse, logout, videoProgress, userRefund, getUserProgress,
-     userProgressDecrement, sendCertificate, getUserGrades
-}
-module.exports = {getAllUser,
-    viewCourseTitleHoursRating,viewCoursePrice,
-    selectCountryUser,ChangeCurrencyUser,addCourse,
-    viewMyInfo,ViewMyCourses,changePassword,sendPassChangeMail,
-    removeCourse, logout, videoProgress,userRefund, getUserProgress}
-
+     userProgressDecrement, sendCertificate, getUserGrades,intializeProgress}
 
 
     //find user using id
