@@ -46,7 +46,7 @@ router.post ('/userRefund', userRefund);
 
 router.post('/videoProgress',videoProgress);
 
-// router.get('/getUserProgress',getUserProgress);
+router.get('/getUserProgress',getUserProgress);
 
 router.post('/userProgressDecrement',userProgressDecrement);
 

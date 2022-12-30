@@ -48,7 +48,7 @@ const UserCoursePage = () => {
   useEffect(function () {
     // const courseId = params.get('courseId');
     //   const userId = params.get('userId');
-    axios.get(`http://localhost:5000/Course/viewUserCourse?id=${userId}`).then(
+    axios.get(`http://localhost:5000/Course/viewUserCourse?id=${userId}&courseId=${courseId}`).then(
       (res) => {
         const resCourse = res.data
         console.log(resCourse)
@@ -173,11 +173,10 @@ const UserCoursePage = () => {
           </TableHead>
 
           <TableBody>
-            {courses.map((course) => (
               <TableRow>
-                <TableCell align="center">{course.NameOfCourse}</TableCell>
-                <TableCell align="center">{course.LevelOfCourse}</TableCell>
-                <TableCell align="center">{course.Subject}</TableCell>
+                <TableCell align="center">{courses.NameOfCourse}</TableCell>
+                <TableCell align="center">{courses.LevelOfCourse}</TableCell>
+                <TableCell align="center">{courses.Subject}</TableCell>
                 <TableCell align="center">
                   <Box sx={{ marginBottom: 2 }}>
                     <Button variant="contained"
@@ -241,7 +240,6 @@ const UserCoursePage = () => {
                 > <CircularProgressWithLabel value={progress} /></TableCell>
 
               </TableRow>
-            ))}
 
           </TableBody>
         </Table>
