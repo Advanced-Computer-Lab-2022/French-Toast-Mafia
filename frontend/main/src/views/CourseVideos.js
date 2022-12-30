@@ -29,6 +29,8 @@ const CourseVideos = () => {
   const [videos, setVideos] = useState([]);
   const search = useLocation().search;
   const subtitleId = new URLSearchParams(search).get('subtitleId');
+  const userId = new URLSearchParams(search).get('userId');
+  const courseId = new URLSearchParams(search).get('courseId');
   const [videoId, setVideoId] = useState('');
 
 
@@ -81,7 +83,20 @@ const CourseVideos = () => {
   const handleChange = (event) => {
     setChecked(event.target.checked);
 
-    
+    console.log("checked");
+
+    axios.post(`http://localhost:5000/User/videoProgress?id=${userId}&courseId=${courseId}&subtitleId=${subtitleId}`, {
+
+    }).then((res) => {
+      console.log(res.data)
+    }
+    )
+      .catch((err) => {
+        console.log(err)
+      }
+      )
+      
+
     
   };
 

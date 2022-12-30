@@ -11,6 +11,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
+import Modal from "react-bootstrap/Modal";
+import Snackbar from '@mui/material/Snackbar';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -37,12 +41,30 @@ const CourseExams = () => {
         axios.get(`http://localhost:5000/Exams/getExamById?id=${courseId}`).then(
             (res) => { 
                 const resExam = res.data
-                console.log(resExam)
+                //console.log(resExam)
                 setExams(resExam)
             }
         );
     }, []);
 
+    const [grades,setGrades] = useState([]);
+
+    const getGrade = (examId) => {
+      axios.get(`http://localhost:5000/User/getUserGrades?id=${userId}&examId=${examId}`).then(
+          (res) => {
+              const resGrades = res.data;
+              console.log(resGrades);
+              setGrades(resGrades);
+          }
+      );
+
+      setShow(true)
+    }
+
+
+              
+  const [show, setShow] = useState(false);
+  const handleCancel = () => setShow(false);
 
     
     return(
@@ -58,21 +80,13 @@ const CourseExams = () => {
         <StyledTableCell align="center">Exam Title</StyledTableCell>
         <StyledTableCell align="center">Exam Description</StyledTableCell>
         <StyledTableCell align="center">Exam Page</StyledTableCell>
+        <StyledTableCell align="center">Exam Grade</StyledTableCell>
       </TableRow>
     </TableHead>
 
     <TableBody>
     {Array.isArray(exams) ?exams.map((e) => (
-        <TableRow
-        hover
-        sx={{
-            "&:hover":{
-            cursor: "pointer",
-            backgroundColor: "#f5f5f5",
-            width: "100%"
-            }
-        }}
-          >
+        <TableRow>
           <TableCell align="center">{e.title}</TableCell>
           <TableCell align="center">{e.description}</TableCell>
           <TableCell align="center">
@@ -88,18 +102,21 @@ const CourseExams = () => {
             >Enter Exam</Button>
             </Box>
           </TableCell>
+          <TableCell align="center">
+          <Box sx={{marginBottom: 2}}>
+            <Button variant="outlined"
+              style={{ width: 100, height: 50, marginTop: 10 }}
+              onClick={() => 
+                getGrade(e._id)
+              }
+              margin="normal"
+              padding="normal"
+            >View Grade</Button>
+            </Box>
+          </TableCell>
         </TableRow>
       )):
-      <TableRow
-      hover
-      sx={{
-          "&:hover":{
-          cursor: "pointer",
-          backgroundColor: "#f5f5f5",
-          width: "100%"
-          }
-      }}
-        >
+      <TableRow>
         <TableCell align="center">{exams.title}</TableCell>
         <TableCell align="center">{exams.description}</TableCell>
         <TableCell align="center">
@@ -115,6 +132,19 @@ const CourseExams = () => {
           >Enter Exam</Button>
           </Box>
         </TableCell>
+        <TableCell align="center">
+          <Box sx={{marginBottom: 2}}>
+            <Button variant="outlined"
+              style={{ width: 100, height: 40, marginTop: 10 }}
+              onClick={() => 
+                getGrade(exams._id)
+              }
+              margin="normal"
+              padding="normal"
+            >View Grade</Button>
+            </Box>
+          </TableCell>
+  
       </TableRow>
       }
       
@@ -122,6 +152,24 @@ const CourseExams = () => {
   </Table>
 </TableContainer>
       
+<Modal
+        show={show}
+        onHide={handleCancel}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Exam Grade</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Typography id="modal-modal-description" sx={{ mt: 2, ml: 17,mb:3}}>
+            Your exam grade is: <strong>{grades} %</strong>
+          </Typography>
+
+        </Modal.Body>
+
+
+      </Modal>
 
         
     </div>

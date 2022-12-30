@@ -53,10 +53,11 @@ const InstrExamPage = () => {
     const examId = new URLSearchParams(search).get('examId');
 
     useEffect(function () {
-        axios.get(`http://localhost:5000/Exams/getExamById?id=${examId}`).then(
+        axios.get(`http://localhost:5000/Exams/getExam?id=${examId}`).then(
             (res) => {
                 const exams = res.data
-                // console.log(exams)
+                console.log("HEEERREEEE");
+                 console.log(exams)
                 setExams(exams)
             }
         )
@@ -118,8 +119,8 @@ const InstrExamPage = () => {
         axios.get(`http://localhost:5000/Exams/getAllMcq?id=${examId}`).then(
             (res) => {
                 const m = res.data
-                console.log("MCQS: ")
-                console.log(m)
+                // console.log("MCQS: ")
+                // console.log(m)
                 setMcq(m)
             }
         )
@@ -144,10 +145,10 @@ const InstrExamPage = () => {
 
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{ mb: 2 }}>
                     <Grid item xs={6}>
-                        <Item>Exam Title: {exams.title}</Item>
+                        <Item><strong>Exam Title:</strong> {exams.title}</Item>
                     </Grid>
                     <Grid item xs={6}>
-                        <Item>Exam Description: {exams.description}</Item>
+                        <Item><strong>Exam Description: </strong>{exams.description}</Item>
                     </Grid>
                 </Grid>
 

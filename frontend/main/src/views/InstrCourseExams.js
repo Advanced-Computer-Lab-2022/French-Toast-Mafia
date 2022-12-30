@@ -24,47 +24,45 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 
 const { useState, useEffect } = require("react");
 
-const InstructorCoursePage = () => { 
-    const [courses,setCourses] = useState([]);
+const InstrCourseExams = () => { 
+    const [exams,setExams] = useState([]);
+    const params = new URLSearchParams(window.location.search);
     const search = useLocation().search;
+    const userId = new URLSearchParams(search).get('userId');
     const courseId = new URLSearchParams(search).get('courseId');
-    const instrId =new URLSearchParams(search).get('instrId');
     const navigate = useNavigate();
 
 
    useEffect(function () {
-        console.log(instrId);
-        axios.get(`http://localhost:5000/Instructor/viewInstrCourse?id=${instrId}`).then(
+        axios.get(`http://localhost:5000/Exams/getExamById?id=${courseId}`).then(
             (res) => { 
-                const resCourse = res.data
-                console.log(resCourse)
-                setCourses(resCourse)
-                
+                const resExam = res.data
+                console.log(resExam)
+                setExams(resExam)
             }
-             );
-             
+        );
+    }, []);
 
-    }
-    ,[]);
 
     
     return(
      
       <div className="UsersList">
-            <h1 style={{textAlign: "center"}}>All Courses</h1>
+        <h1 style={{textAlign: "center"}}>Course Information</h1>
+
 
       <TableContainer component={Paper}>
   <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
     <TableHead>
       <TableRow>
-        <StyledTableCell align="center">Course Name</StyledTableCell>
-        <StyledTableCell align="center">Create Exam</StyledTableCell>
-        <StyledTableCell align="center">Exams</StyledTableCell>
+        <StyledTableCell align="center">Exam Title</StyledTableCell>
+        <StyledTableCell align="center">Exam Description</StyledTableCell>
+        <StyledTableCell align="center">Exam Page</StyledTableCell>
       </TableRow>
     </TableHead>
 
     <TableBody>
-      {courses.map((course) => (
+    {Array.isArray(exams) ?exams.map((e) => (
         <TableRow
         hover
         sx={{
@@ -75,34 +73,49 @@ const InstructorCoursePage = () => {
             }
         }}
           >
-          <TableCell align="center">{course.Name}</TableCell>
+          <TableCell align="center">{e.title}</TableCell>
+          <TableCell align="center">{e.description}</TableCell>
           <TableCell align="center">
           <Box sx={{marginBottom: 2}}>
             <Button variant="contained"
               style={{ width: 210, height: 40, color: '#FFF', marginTop: 10 }}
               onClick={() => 
-                navigate(`/CreateExam?courseId=${courseId}&instrId=${instrId}`)
+                navigate(`/InstrExamPage?courseId=${courseId}&userId=${userId}&examId=${e._id}`)
               }
               margin="normal"
               padding="normal"
-            >Create Exam</Button>
+            >View Exam</Button>
             </Box>
           </TableCell>
-          <TableCell align="center">
-          <Box sx={{marginBottom: 2}}>
-            <Button variant="contained"
-              style={{ width: 210, height: 40, color: '#FFF', marginTop: 10 }}
-              onClick={() => 
-                navigate(`/InstrCourseExams?courseId=${courseId}&instrId=${instrId}`)
-              }
-              margin="normal"
-              padding="normal"
-            >View Exams</Button>
-            </Box>
-          </TableCell>
-
         </TableRow>
-      ))}
+      )):
+      <TableRow
+      hover
+      sx={{
+          "&:hover":{
+          cursor: "pointer",
+          backgroundColor: "#f5f5f5",
+          width: "100%"
+          }
+      }}
+        >
+        <TableCell align="center">{exams.title}</TableCell>
+        <TableCell align="center">{exams.description}</TableCell>
+        <TableCell align="center">
+        <Box sx={{marginBottom: 2}}>
+          <Button variant="contained"
+            style={{ width: 210, height: 40, color: '#FFF', marginTop: 10 }}
+            onClick={() => 
+              //window.location.href=`/CourseInstructor?courseId=${courseId}&userId=${userId}`
+              navigate(`/ViewExam?courseId=${courseId}&userId=${userId}&examId=${exams._id}`)
+            }
+            margin="normal"
+            padding="normal"
+          >Enter Exam</Button>
+          </Box>
+        </TableCell>
+      </TableRow>
+      }
       
     </TableBody>
   </Table>
@@ -115,4 +128,4 @@ const InstructorCoursePage = () => {
 
     )
 }
-export default InstructorCoursePage;
+export default InstrCourseExams;

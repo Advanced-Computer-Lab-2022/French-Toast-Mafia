@@ -10,6 +10,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -28,8 +29,8 @@ const Instructors = () => {
   const navigate = useNavigate();
     const [instructors,setInstructors] = useState([]);
     
-    const getInstructors =  async () => {
-         await axios.get('http://localhost:5000/Instructor/getAllInstructors').then(
+    useEffect(function () {
+         axios.get('http://localhost:5000/Instructor/getAllInstructors').then(
         (res) => { 
             const instructors = res.data
             console.log(instructors)
@@ -38,23 +39,12 @@ const Instructors = () => {
         }
          );
     }
+    ,[]);
     return(
 
         // visualize authors in a table map over authors
         <div className="UsersList">
-            <Box sx={{marginBottom: 2}}>
-            <Button variant="contained"
-            style={{width:200, height:40 , color:'#FFF' ,marginTop:10 }}
-            onClick={getInstructors}
-            margin="normal"
-            padding="normal"
-            >Load Instructors</Button>
-            {/* margin */}
-            </Box>
-            
-        
-        
-            
+                <h1 style={{textAlign: "center"}}>All Instructors</h1>
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table"  style={{ color:'#FFF'}}>
         <TableHead>
