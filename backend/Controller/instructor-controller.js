@@ -289,7 +289,7 @@ if (instrId) {
             // "Discount": courseToView.Discount
             // "Price": courseToView.Cost,}
             // res.status(200).json(courseDetails);
-            res.status(200).json(result);
+           return res.status(200).json(result);
 
         // const instructorDetails = 
         //     {"Name": result.InstrName,
@@ -525,11 +525,23 @@ const calculateMoney = async(req , res) => {
     }
 }
 
+const editInstructorData = async(req, res) => {
+    const iId = req.query.id;
+    if (iId){
+        try{
+            const editInstructor = await Instructor.findByIdAndUpdate(iId , req.body);  
+            res.status(200).json(editInstructor);
+        }catch(error){
+            res.status(400).json({error:error.message})
+        }   
+    }
+}
+
 module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      addCourse , addInstructorName, deleteCourse, filterCost, filterRating, filterSubject, 
      filterCourseSubjcet , filterCourseCost , ViewMyCourses
       , SearchCourse, viewInstrInfo, 
       editBiography, editEmail,ViewMyRatings , ViewMyReview, 
-    addInstrRating ,calculateInstrRating,
+    addInstrRating ,calculateInstrRating, editInstructorData,
     deleteInstrRating, createExam, addPromotion,viewInstrCourse, calculateMoney};
    

@@ -6,6 +6,9 @@ const cors=require('cors');
 const cookieParser = require('cookie-parser');
 
 
+
+
+
 const app= express();
 const port= process.env.PORT || "5000" ;
 app.use(express.json());
@@ -15,6 +18,9 @@ app.use((req, res, next) => {
     console.log(req.path, req.method)
     next ()
 })
+app.use(express.urlencoded({
+    extended:true
+    }));
 
 const admin= require('./Models/Admin');
 
@@ -30,6 +36,7 @@ const courseRoute = require('./Routes/Course-route');
 const examRoute = require ('./Routes/Exams-route');
 const subtitleRoute = require ('./Routes/Subtitle-route');
 const reportRoute = require('./Routes/Report-route');
+const requestRoute = require('./Routes/Request-route');
 const cardRoute = require ('./Routes/Card-route');
 const signupRoute = require ('./Routes/Signup');
 const loginRoute = require ('./Routes/Login');
@@ -65,6 +72,8 @@ mongoose.connect(MongoURI)
     app.use('/Exams',examRoute);
         
     app.use('/Report',reportRoute);
+
+    app.use('/Request',requestRoute);
 
     app.use('/Card',cardRoute);
 

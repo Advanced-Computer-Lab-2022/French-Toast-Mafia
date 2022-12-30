@@ -41,7 +41,6 @@ const ViewReport = () => {
 
     // console.log(rId)
     useEffect(() => {
-       
         getReport(rId).then(json =>{
             setReport(json);
             setFollowup(json.follow_up);

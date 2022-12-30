@@ -7,7 +7,6 @@ import CourseList from "../components/dashboard/CourseList";
 const AdminHome = () => {
   const[courses,setCourses] = useState([])
   const[searchResults,setSearchResults] = useState([])
-
   useEffect(() => {
     getCourses().then(json => {
       setCourses(json)
