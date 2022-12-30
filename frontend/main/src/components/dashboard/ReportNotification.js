@@ -75,6 +75,7 @@ const ReportNotification = ({report, rId, type, status}) => {
                 {report.createdAt}
               </small>
             </ListGroupItem>
+            
   )
 };
 

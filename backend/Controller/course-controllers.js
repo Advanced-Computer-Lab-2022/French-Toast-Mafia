@@ -11,6 +11,13 @@ function getAllCourse (req,res) {
 };
 
 
+function getPublishedCourses (req,res) {
+    course.find({"Published" : true}).then (function (course) {
+    res.status(200).json(course)
+    });
+};
+
+
 const viewCourse = async(req , res) => {
     const courseId = req.query.id;
 
@@ -368,7 +375,7 @@ const viewCourseDetails = async(req , res) => {
 
 //calculate total duration of the course from subtitles duration
 const calculateCourseDuration = async(req , res) => {
-    const courseId=req.query.id;
+    const courseId = req.query.id;
     if (courseId){
         try{
             const result = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
@@ -414,12 +421,32 @@ const getCoursePreviewVideos = async (req,res) => {
  });
 }
 
+const updatePublished = async( req, res) => {
+    course.updateMany({},{$set: {'Published' : true}}).then(json =>{
+        res.status(200).json("bleh");
+    })
+   
+}
+
+const removeSubtitle = async( req, res) =>{
+    const cId = req.query.id;
+    //{$pop:{CourseSubtitle:1}},
+    await course.findOneAndUpdate({_id:mongoose.Types.ObjectId(cId)},{$pop:{CourseSubtitle:1}}, {$set:{Duration: 0}}).then(json =>{
+        res.status(200).json(json);
+    });
 
 
-module.exports={getAllCourse , viewCourse, createCourse, editCourse, 
-    viewCourseInstructor, getMaxPrice, getSubjects,
+    
+
+
+}
+
+
+
+module.exports={getAllCourse , getPublishedCourses, viewCourse, createCourse, editCourse, 
+    viewCourseInstructor, getMaxPrice, getSubjects,updatePublished,
      viewCourseSubtitles, viewCourseExam, viewUserCourse,
      deleteCourseRating,addCourseRating,calculateCourseRating,
-     viewCourseRating,emptyCourseList,registerCourseToUser,
+     viewCourseRating,emptyCourseList,registerCourseToUser, removeSubtitle,
      viewCourseDetails,calculateCourseDuration , getCoursePreviewVideos };
    

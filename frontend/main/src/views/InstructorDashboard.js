@@ -5,19 +5,27 @@ import { getInstructor } from "../api/axios";
 import {useState, useEffect } from 'react';
 import {Form} from "react-bootstrap"
 import "bootstrap/dist/css/bootstrap.min.css";
-
-
+import Modal from "react-bootstrap/Modal";
+import RadioGroup from '@mui/material/RadioGroup';
+import { Radio } from "@mui/material";
+import FormControlLabel from '@mui/material/FormControlLabel';
 import Reviews from "../components/dashboard/CourseReviews";
 import user2 from "../assets/images/users/user2.jpg";
-import LatestReports from "../components/dashboard/LatestReports";
 import CourseCard from "../components/dashboard/CourseCard";
 
+import { useNavigate } from "react-router-dom";
+
 const InstructorDashboard = () => {
+  const navigate = useNavigate();
+
 
     const search = useLocation().search;
     const id = new URLSearchParams(search).get('id');
-    console.log(id);  
-    //const[courses, setCourses] = useState([])
+
+
+    const [show, setShow] = useState(false);
+
+ 
     const[instructorName, setInstructorName] = useState("Loading...")
     const[instructorEmail, setInstructorEmail] = useState("Loading...")
     const[instructorDep, setInstructorDep] = useState("Loading...")
@@ -27,13 +35,13 @@ const InstructorDashboard = () => {
     const[edit,setEdit] = useState(false);
     const[wallet,setWallet] = useState(0);
     const[percentageTaken,setPercentageTaken] = useState(0);
-    const[submit,setSubmit] = useState(false);
-
+ 
     const[form, setForm] = useState({});
     const[errors, setErrors] = useState({});
 
     const[courses, setCourses] = useState([]);
 
+    const handleClose = () => setShow(false);
 
 
     useEffect(() => {
@@ -101,7 +109,68 @@ const InstructorDashboard = () => {
     }
 }
 
-    
+const[ccform, setCCForm] = useState({});
+const[ccErrors, setCCErrors] = useState({});
+
+
+
+  const setCCField = (field, value) =>{
+    setCCForm({
+        ...ccform,
+        [field]:value,
+    })
+    if(!!ccErrors[field])
+    setCCErrors({
+        ...ccErrors,
+        [field]:null,
+    })
+}
+
+const validateCCForm = () =>{
+  const { title, difficulty, subject, summary, preview, price} = ccform
+  const newErrors = {}
+
+  if(!title || title === "")
+  newErrors.title = "Please enter a course title"
+  if(!subject || subject === "")  
+  newErrors.subject = "Please enter a subject"
+  if(!summary || summary === "")  
+  newErrors.summary = "Please enter a summary"
+  if(!preview || preview === "")  
+  newErrors.preview = "Please enter a preview"
+  return newErrors
+}    
+
+const handleCCSubmit = async (e) => {
+
+  e.preventDefault();
+
+  const formErrors = validateCCForm()
+
+  if(Object.keys(formErrors).length > 0){
+      setCCErrors(formErrors)
+  }
+  else{
+
+      await fetch(`http://localhost:5000/Instructor/addCourse?id=${id}`,{
+          method: 'POST',
+          body: JSON.stringify({"NameOfCourse" : ccform.title,
+            "LevelOfCourse": ccform.difficulty,
+            "Summary": ccform.summary,
+            "Subject": ccform.subject, 
+            "Cost":ccform.price,
+            "Preview": ccform.preview}),
+          headers : {
+              'Content-Type':'application/json'
+          }
+      }).then(json =>{
+        handleClose()
+        window.location.reload();
+      })
+  }
+}
+
+
     const editName = 
         <Form.Group controlId="name">
           <div style={{ display: "flex", justifyContent: 'flex-end'}}>
@@ -211,7 +280,123 @@ const InstructorDashboard = () => {
 
   return (
     <div>
-    
+      
+      <div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Create New Course</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+              <Form.Group controlId="title">
+                    <Form.Label>Title:</Form.Label>
+                    <Form.Control 
+                        type="text"
+                        placeholder="Ex. 'Introduction to Javascript'"
+                        value = {ccform.title}
+                        onChange={(e) => setCCField('title', e.target.value)}
+                        isInvalid={!!ccErrors.title}
+                    ></Form.Control>
+                    <Form.Control.Feedback type='invalid'>
+                        {ccErrors.title}
+                    </Form.Control.Feedback>
+                </Form.Group>
+              <br/>
+            <Form.Group controlId="difficulty">
+              <Form.Label>Difficulty:</Form.Label>
+        
+              <RadioGroup
+                  aria-labelledby="demo-radio-buttons-group-label"
+                  defaultValue="Medium"
+                  name="radio-buttons-group"
+  >           <Row>
+                  <Col>
+                    <FormControlLabel value="Easy" control={<Radio />} label="Easy" onChange={(e) => setCCField('difficulty', e.target.value)} />
+                  </Col>
+                  <Col>
+                    <FormControlLabel value="Medium" control={<Radio />} label="Medium" onChange={(e) => setCCField('difficulty', e.target.value)}/>
+                  </Col>
+                  <Col>
+                    <FormControlLabel value="Hard" control={<Radio />} label="Hard" onChange={(e) => setCCField('difficulty', e.target.value)}/>
+                  </Col>
+                </Row>
+              </RadioGroup>
+            </Form.Group>
+               <Form.Group controlId="subject">
+                   <Form.Label>Subject:</Form.Label>
+                   <Form.Control 
+                       type="text"
+                       placeholder="Ex. 'Computer Science'"
+                       value = {ccform.subject}
+                       onChange={(e) => setCCField('subject', e.target.value)}
+                       isInvalid={!!ccErrors.subject}
+                   ></Form.Control>
+                   <Form.Control.Feedback type='invalid'>
+                       {ccErrors.subject}
+                   </Form.Control.Feedback>
+               </Form.Group>
+               <br/>
+                <Form.Group controlId="summary">
+                    <Form.Label>Summary:</Form.Label>
+                      <Form.Control 
+                      as='textarea'
+                      rows={3}
+                      type="textarea"
+                      placeholder="Write a Summary"
+                      value = {ccform.summary}
+                      onChange={(e) => setCCField('summary', e.target.value)}
+                      isInvalid={!!ccErrors.summary}
+                      ></Form.Control>
+                    <Form.Control.Feedback type='invalid'>
+                        {ccErrors.summary}
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <br/>
+               <Form.Group controlId="preview">
+                   <Form.Label>Preview:</Form.Label>
+                   <Form.Control 
+                       type="text"
+                       placeholder="https://www.youtube.com/embed/IyGwvGzrqp8"
+                       value = {ccform.preview}
+                       onChange={(e) => setCCField('preview', e.target.value)}
+                       isInvalid={!!ccErrors.preview}
+                   ></Form.Control>
+                   <Form.Control.Feedback type='invalid'>
+                       {ccErrors.preview}
+                   </Form.Control.Feedback>
+               </Form.Group>
+
+               <br/>
+
+               <Form.Group controlId="price">
+                   <Form.Label>Price:</Form.Label>
+                   <Form.Control 
+                       type="number"
+                       placeholder="0"
+                       min = "0"
+                       max = "100000"
+                       value = {ccform.price}
+                       onChange={(e) => setCCField('price', e.target.value)}
+                       isInvalid={!!ccErrors.price}
+                   ></Form.Control>
+                   <Form.Control.Feedback type='invalid'>
+                       {ccErrors.price}
+                   </Form.Control.Feedback>
+               </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button outline color="danger"onClick={handleClose} >
+            Close
+          </Button>
+          <Button color="primary" onClick={handleCCSubmit}>
+            Save Course
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      </div>
+
+
       {/***Sales & Feed***/}
       <CardDeck>
         <Card style={{height: "440px"}}>
@@ -289,8 +474,8 @@ const InstructorDashboard = () => {
               <CardTitle tag="h4">My Courses</CardTitle>
             </Col>
             <Col lg="2">
-            <Button className="btn" outline color="primary" onClick={handleSubmit}>Add New</Button>
-            <Button className="btn" outline color="primary" onClick={handleSubmit}>View All</Button>
+            <Button className="btn" outline color="primary" onClick={() => setShow(true)}>Add New</Button>
+            <Button className="btn" outline color="primary" >View All</Button>
             </Col>
           </Row>
           <hr/>

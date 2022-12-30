@@ -78,22 +78,16 @@ const addCourse = async(req , res) => {
                 Subject,
                 LevelOfCourse,
                 Cost,
-                //ExamCourse,
-                //CourseCurrency,
-                //Promotion,
                 Preview} = req.body;
 
             //create the course
             const createdCourse = await course.create(
                 {NameOfCourse,
-                //CourseSubtitle,
                 Instructor: [instructorId, result.InstrName],
                 LevelOfCourse,
                 Summary,
                 Subject,
-                Cost , //CourseCurrency,
-                //ExamCourse,
-                //Promotion,
+                Cost ,
                 Preview});
     
             //adds the course id to the instructor's courses given array

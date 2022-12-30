@@ -2,6 +2,7 @@
  import { Navigate } from "react-router-dom";
 // import { browserHistory } from 'react-router';
 import React from 'react';
+import CreateCourse from "../views/createCourse.js";
 /****Layouts*****/
 const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
 
@@ -38,6 +39,7 @@ const CourseSubtitles= lazy(() => import('../views/CourseSubtitles.js'));
 const Contract = lazy (() => import ('../views/ui/Contract.js'));
 
 const ViewCourse = lazy(() => import("../views/viewCourse.js"));
+const EditCourse = lazy(() => import("../views/editCourse.js"));
 const ViewCourseCop = lazy(() => import("../views/viewCourseCop.js"));
 
 const ViewReport = lazy(() => import("../views/viewReport.js"));
@@ -98,6 +100,8 @@ const ThemeRoutes = [
       { path: "/CourseInstructor", exact: false, element: <CourseInstructor /> },
 
       { path: "/viewCourse", exact: true, element: <ViewCourse /> },
+      { path: "/editCourse", exact: true, element: <EditCourse /> },
+      { path: "/createCourse", exact: true, element: <CreateCourse/>},
       { path: "/viewCourseCop" , exact: true, element: <ViewCourseCop/> },
 
       { path: "/viewCourseReports", exact: true, element: <CourseReports /> },

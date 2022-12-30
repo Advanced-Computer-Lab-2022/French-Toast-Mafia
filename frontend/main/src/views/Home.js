@@ -1,5 +1,5 @@
 import { Row, Col, Card, CardBody, CardTitle} from "reactstrap";
-import { getCourses } from "../api/axios";
+import { getPublishedCourses } from "../api/axios";
 import {useState, useEffect} from 'react';
 import SearchBar from "../components/dashboard/SearchBar";
 import CourseList from "../components/dashboard/CourseList";
@@ -9,7 +9,7 @@ const Home = () => {
   const[searchResults,setSearchResults] = useState([])
 
   useEffect(() => {
-    getCourses().then(json => {
+    getPublishedCourses().then(json => {
       setCourses(json)
       return json
     }).then(json => {

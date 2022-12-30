@@ -5,6 +5,12 @@ export const getCourses = async() =>{
     return response.data
 }
 
+export const getPublishedCourses = async() =>{
+    const response = await axios.get("http://localhost:5000/Course/getPublishedCourses")
+    return response.data
+}
+
+
 export const viewCourse = async(id) =>{
     const response = await axios.get(`http://localhost:5000/Course/viewCourse?id=${id}`)
     return response.data;
