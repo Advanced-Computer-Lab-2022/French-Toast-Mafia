@@ -59,7 +59,7 @@ const UserCoursePage = () => {
 
   const [progress, setProgress] = React.useState(0);
 
-  React.useEffect(() => {
+  useEffect(function () {
     axios.get(`http://localhost:5000/User/getUserProgress?id=${userId}&courseId=${courseId}`).then(
       (res) => {
         const resProgress = res.data

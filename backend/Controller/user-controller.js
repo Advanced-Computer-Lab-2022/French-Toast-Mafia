@@ -456,7 +456,7 @@ const getUserProgress = async (req, res) => {
     const userId = req.query.id;
     const courseId = req.query.courseId;
 
-    const result = await User.findOne({ _id: mongoose.Types.ObjectId(userId), "Progress.courseId": mongoose.Types.ObjectId(courseId) });
+    const result = await User.findById(mongoose.Types.ObjectId(userId), { Progress: { $elemMatch: { courseId: mongoose.Types.ObjectId(courseId) } } });
     if (result) {
         const prog = result.Progress[0].Progress * 100;
         const progress = Math.ceil(prog);
