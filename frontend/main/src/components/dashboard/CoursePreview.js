@@ -51,12 +51,11 @@ const FeedData = [
 
 const CoursePreview = ({preview, price}) => {
   return (
-    <Card   >
-      <CardBody className="text-center" >
-        <CardTitle tag="h6" className="text-muted">Watch Preview</CardTitle>
-       <CardMedia   class="ratio ratio-16x9">
+    <Card>
+      <CardBody className="text-center" style={{height: "300px"}}>
+       <CardMedia class="ratio ratio-16x9">
     <iframe src={preview}  title="YouTube video" allowFullScreen autoplay={"false"}  ></iframe> </CardMedia>
-
+   
 
       </CardBody>
     </Card>

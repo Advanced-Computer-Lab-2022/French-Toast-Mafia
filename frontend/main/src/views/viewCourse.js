@@ -1,8 +1,8 @@
-import { Col, Row , Alert} from "reactstrap";
+import { Col, Row , Alert, CardDeck} from "reactstrap";
 
 import { useLocation } from 'react-router-dom';
 import { viewCourse } from "../api/axios";
-import {useState, useEffect} from 'react';
+import {useState, useEffect } from 'react';
 
 import CourseInfo from "../components/dashboard/CourseInfo";
 import Reviews from "../components/dashboard/CourseReviews";
@@ -60,7 +60,8 @@ const ViewCourse = () => {
             </Alert>
           </div>
       {/***Sales & Feed***/}
-      <Row>
+      <CardDeck>
+      <Row>  
         <Col sm="6" lg="6" xl="7" xxl="7">
           <CourseInfo cId = {cId} course={course} instructor={instructor} ratingLength = {ratingLength} setReportAlert={setReportAlert}/>
         </Col>
@@ -68,6 +69,7 @@ const ViewCourse = () => {
           <CoursePreview preview = {preview} price = {price} />
         </Col>
       </Row>
+      </CardDeck>
       {/***Table ***/}
       <Row>
         <Col lg="12">

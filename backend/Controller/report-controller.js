@@ -47,7 +47,7 @@ const createReport = async(req,res) => {  //add report
 const getCourseReports = async(req,res) =>{
     const courseId = req.query.id;
     Report.find({reported_course : courseId}).then (reps =>{
-        return res.status(200).json(reps);
+        return res.status(200).json(reps.reverse());
     });
 
 }

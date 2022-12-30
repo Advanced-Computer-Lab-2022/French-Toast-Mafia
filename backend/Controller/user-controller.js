@@ -508,3 +508,4 @@ module.exports = {getAllUser,
     selectCountryUser,ChangeCurrencyUser,addCourse,
     viewMyInfo,ViewMyCourses,changePassword,sendPassChangeMail,
     removeCourse, logout, videoProgress,userRefund,getUserProgress}
+
