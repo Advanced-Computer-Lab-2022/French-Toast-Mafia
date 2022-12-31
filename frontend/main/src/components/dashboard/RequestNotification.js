@@ -58,9 +58,9 @@ const RequestNotification = ({request, reqCourse, reqUser, status}) => {
      }
    ) };
 
-   const handle  =  async () => {
+   const handleRequest  =  async () => {
     axios.get(`http://localhost:5000/Request/RejectRequest?id=${request._id}`).then(
-  (res) => { 
+      (res) => { 
        console.log(res);
       
   }
@@ -93,7 +93,7 @@ const RequestNotification = ({request, reqCourse, reqUser, status}) => {
                   Accept
               </Button> 
               &nbsp;
-              <Button   onclick={handle}
+              <Button   onclick={handleRequest}
                 color="danger" size="sm">
                   Reject
               </Button> 

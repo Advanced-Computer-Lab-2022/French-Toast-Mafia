@@ -25,7 +25,8 @@ const InstructorDashboard = () => {
 
     const [show, setShow] = useState(false);
 
- 
+  
+
     const[instructorName, setInstructorName] = useState("Loading...")
     const[instructorEmail, setInstructorEmail] = useState("Loading...")
     const[instructorDep, setInstructorDep] = useState("Loading...")
@@ -121,6 +122,7 @@ const[ccErrors, setCCErrors] = useState({});
 
 
 
+
   const setCCField = (field, value) =>{
     setCCForm({
         ...ccform,
@@ -150,7 +152,10 @@ const validateCCForm = () =>{
   if(!price || price === "")  
     ccform.price = 0;
   return newErrors
-}    
+}  
+
+
+
 
 const handleCCSubmit = async (e) => {
 
@@ -180,6 +185,7 @@ const handleCCSubmit = async (e) => {
       })
   }
 }
+
 
     const editName = 
         <Form.Group controlId="name">
@@ -291,6 +297,7 @@ const handleCCSubmit = async (e) => {
   return (
     <div>
       <div>
+        
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Create New Course</Modal.Title>

@@ -123,26 +123,27 @@ const handleSignUp = async (e) => {
             'Content-Type' : 'application/json' 
           },
     })
-    // then ((response) => 
-  //   const json = await response.json(signed)
-  //   if(!response.ok){
-  //       setErr(json.err)
+    .then ((response) => {console.log (response.data)
+      navigate("/home")})
+    if(!response.ok){
+        console.log("bep")
+    }
+    if(response.ok){
+        setName1('')
+        setEmail1('')
+        setPassword1('')
+        setGender('')
+        // setDone(true);
+        // setErr(null)
 
-  //   }
-  //   if(response.ok){
-  //       setName1('')
-  //       setEmail1('')
-  //       setPassword1('')
-  //       setGender('')
-  //       setDone(true);
-  //       setErr(null)
-
-  // }
+  } 
   } catch (error) {
         console.log(error);
       }
     };
 
+
+  
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -153,7 +154,6 @@ const handleSignUp = async (e) => {
         headers : {
             'Content-Type' : 'application/json'
             },
-
     })
     .then((response) => 
       {console.log(response.data.userid)
@@ -164,11 +164,13 @@ const handleSignUp = async (e) => {
     // localStorage.setItem("user", JSON.stringify(response.data.user));
         console.log(Email);
         console.log(Password);
-        navigate(`/MyCourses?userId=${id}`);
+        // navigate("/InstructorHome")
+        // navigate(`/MyCourses?userId=${id}`);
       })
     } catch (error) {
       setError(error.response.data);
     }
+    setShow2(false);
   };
     
   

@@ -16,7 +16,7 @@ const {createInstructor, getAllInstructors,
 
 const router = express.Router();
 
-router.put('/addPromotion', addPromotion);
+router.post('/addPromotion', addPromotion);
 
 router.get('/getAllInstructors',getAllInstructors);
 

@@ -16,7 +16,7 @@ const SubtitleSchema = new Schema({
         required: false
     },
     Video: {
-        type: String,
+        type: Array,
         required: false
     },
     Notes:{
