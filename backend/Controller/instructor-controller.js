@@ -83,18 +83,20 @@ const addCourse = async(req , res) => {
             //create the course
             const createdCourse = await course.create(
                 {NameOfCourse,
-                Instructor: [instructorId, result.InstrName],
+                Instructor: [mongoose.Types.ObjectId(instructorId), result.InstrName],
                 LevelOfCourse,
                 Summary,
                 Subject,
                 Cost ,
-                Preview});
+                Preview}).then(json =>{
+                    Instructor.findByIdAndUpdate({_id:mongoose.Types.ObjectId(instructorId)},{$push:{CourseGiven: json._id}}).then(json =>{
+                        return res.status(200).json(json);
+                    });
+                 
+                });
     
             //adds the course id to the instructor's courses given array
-            await Instructor.findByIdAndUpdate(instructorId,{$push:{CourseGiven: createdCourse._id}});
-             
-            res.status(200).json(createdCourse);
-            return createdCourse
+            
         
         }catch(error){
             res.status(400).json({error:error.message})
@@ -179,9 +181,25 @@ const filterSubject = async (req,res) => {
 
   const ViewMyCourses = async (req , res) => {
     const w = req.query.id;
+    const ids = [];
+    var resCourses = [];
     if(w){
-    const result = await course.find({Instructor:mongoose.Types.ObjectId(w)}).populate('Instructor');
-    res.status(200).json(result)
+       await course.find({Instructor: mongoose.Types.ObjectId(w)}).then(r =>{ res.status(200).json(r)});
+
+        // await Instructor.findById({_id:mongoose.Types.ObjectId(w)}).then(json =>{
+        //     (json.CourseGiven).forEach((item) => {
+        //         ids.push(item)
+        //     })
+        // })
+
+        // ids.forEach((item) =>{
+        //     course.findById({_id:mongoose.Types.ObjectId(item)}).then(json =>{
+        //         resCourses.push(json)
+        //     })
+        // })
+       
+        
+   
     }
     else{
         res.status(400).json({error:"Instructor Id is required"})
@@ -337,7 +355,7 @@ const addPromotion = async (req, res) => {
     const {Promotion, StartDatePromotion ,EndDatePromotion} = req.body;
     if (Promotion && StartDatePromotion && EndDatePromotion) {
         try {
-            const CurrentPrice = await course.findOne({_id:mongoose.Types.ObjectId(courseId)}).populate("Cost").select("Cost");
+            const CurrentPrice = await course.findById({_id:mongoose.Types.ObjectId(courseId)}).populate("Cost").select("Cost");
             console.log(CurrentPrice.Cost);
             const C=CurrentPrice.Cost;
             const discount= Promotion/100;
@@ -531,10 +549,18 @@ const editInstructorData = async(req, res) => {
     }
 }
 
+const removeExam = async(req, res) =>{
+        const iId = req.query.id;
+        //{$pop:{CourseSubtitle:1}},
+        await Instructor.findOneAndUpdate({_id:mongoose.Types.ObjectId(iId)},{$pop:{Exam:1}}).then(json =>{
+            res.status(200).json(json);
+        });
+}
+
 module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      addCourse , addInstructorName, deleteCourse, filterCost, filterRating, filterSubject, 
      filterCourseSubjcet , filterCourseCost , ViewMyCourses
-      , SearchCourse, viewInstrInfo, 
+      , SearchCourse, viewInstrInfo, removeExam,
       editBiography, editEmail,ViewMyRatings , ViewMyReview, 
     addInstrRating ,calculateInstrRating, editInstructorData,
     deleteInstrRating, createExam, addPromotion,viewInstrCourse, calculateMoney};

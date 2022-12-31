@@ -1,18 +1,21 @@
 import { Row, Col, Card, CardBody, CardTitle} from "reactstrap";
-import { getPublishedCourses } from "../api/axios";
+import { viewInstructorCourses } from "../api/axios";
 import {useState, useEffect} from 'react';
 import SearchBar from "../components/dashboard/SearchBar";
 import CourseList from "../components/dashboard/CourseList";
+import { useLocation } from 'react-router-dom';
 
-const Home = () => {
+const SearchInstructorCourses = () => {
+
+  const search = useLocation().search;
+  const id = new URLSearchParams(search).get('id');
+
   const[courses,setCourses] = useState([])
-  const[searchResults,setSearchResults] = useState([])
+  const[searchResults,setSearchResults] = useState([])  
 
-  useEffect(() => {
-    getPublishedCourses().then(json => {
+  useEffect(() => {   
+    viewInstructorCourses(id).then(json => {
       setCourses(json)
-      return json
-    }).then(json => {
       setSearchResults(json)
     })
   }, []);
@@ -38,4 +41,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default SearchInstructorCourses;

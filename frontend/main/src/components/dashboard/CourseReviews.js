@@ -30,11 +30,11 @@ import user1 from "../../assets/images/users/user1.jpg";
   }
     return (
          reviews.map((r) => (
-          <Col sm="6" lg="6" xl="3" key={r._id}>
-      <Card>
+          <Col sm="3" lg="3" xl="3" key={r._id}>
+        <Card>
      
-        <CardBody className="text-center">
-        <img 
+         <CardBody className="text-center">
+          <img 
             src={user1}
             className="rounded-circle"
             alt="avatar"

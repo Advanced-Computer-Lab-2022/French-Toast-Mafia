@@ -1,7 +1,7 @@
 import { Col, Row , Alert, CardDeck, Card, CardImg, CardTitle, CardBody, CardSubtitle, CardText, Button, CardGroup} from "reactstrap";
 
 import { useLocation } from 'react-router-dom';
-import { getInstructor } from "../api/axios";
+import { getInstructor, getReporter } from "../api/axios";
 import {useState, useEffect } from 'react';
 import {Form} from "react-bootstrap"
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -25,7 +25,8 @@ const InstructorDashboard = () => {
 
     const [show, setShow] = useState(false);
 
- 
+  
+
     const[instructorName, setInstructorName] = useState("Loading...")
     const[instructorEmail, setInstructorEmail] = useState("Loading...")
     const[instructorDep, setInstructorDep] = useState("Loading...")
@@ -35,6 +36,7 @@ const InstructorDashboard = () => {
     const[edit,setEdit] = useState(false);
     const[wallet,setWallet] = useState(0);
     const[percentageTaken,setPercentageTaken] = useState(0);
+    const[refresh,setRefresh] = useState(false);
  
     const[form, setForm] = useState({});
     const[errors, setErrors] = useState({});
@@ -43,6 +45,12 @@ const InstructorDashboard = () => {
 
     const handleClose = () => setShow(false);
 
+    const [reportAlert, setReportAlert] = useState(false)
+
+    const onDismiss = () => {
+      setReportAlert(false);
+    };
+  
 
     useEffect(() => {
         getInstructor(id).then(json => {
@@ -114,6 +122,7 @@ const[ccErrors, setCCErrors] = useState({});
 
 
 
+
   const setCCField = (field, value) =>{
     setCCForm({
         ...ccform,
@@ -132,14 +141,21 @@ const validateCCForm = () =>{
 
   if(!title || title === "")
   newErrors.title = "Please enter a course title"
+  if(!difficulty || difficulty == "")
+    ccform.difficulty = "Medium"
   if(!subject || subject === "")  
   newErrors.subject = "Please enter a subject"
   if(!summary || summary === "")  
   newErrors.summary = "Please enter a summary"
   if(!preview || preview === "")  
   newErrors.preview = "Please enter a preview"
+  if(!price || price === "")  
+    ccform.price = 0;
   return newErrors
-}    
+}  
+
+
+
 
 const handleCCSubmit = async (e) => {
 
@@ -164,7 +180,8 @@ const handleCCSubmit = async (e) => {
               'Content-Type':'application/json'
           }
       }).then(json =>{
-        handleClose()
+        handleClose();
+        setRefresh(true);
         window.location.reload();
       })
   }
@@ -280,8 +297,8 @@ const handleCCSubmit = async (e) => {
 
   return (
     <div>
-      
       <div>
+        
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Create New Course</Modal.Title>
@@ -475,7 +492,7 @@ const handleCCSubmit = async (e) => {
             </Col>
             <Col lg="2">
             <Button className="btn" outline color="primary" onClick={() => setShow(true)}>Add New</Button>
-            <Button className="btn" outline color="primary" >View All</Button>
+            <Button className="btn" outline color="primary" onClick={() => navigate(`/searchInstructorCourses?id=${id}`)}>View All</Button>
             </Col>
           </Row>
           <hr/>
@@ -485,6 +502,11 @@ const handleCCSubmit = async (e) => {
             </Row>
         </CardBody>
         </Card>
+
+        <Row>
+          {/* <Reviews reviews={Rating} />     */}
+      </Row>
+
 
       </div>
   );

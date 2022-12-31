@@ -1,7 +1,7 @@
 const express= require("express");
 const {getAllCourse , viewCourse,viewCourseInstructor, createCourse, editCourse, viewCourseSubtitles, getMaxPrice, getSubjects,
      viewCourseExam,viewUserCourse,deleteCourseRating,addCourseRating, viewCourseRating, calculateCourseRating,
-emptyCourseList,registerCourseToUser,viewCourseDetails,calculateCourseDuration, getCoursePreviewVideos, updatePublished, getPublishedCourses, removeSubtitle }= require ("../Controller/course-controllers");
+emptyCourseList,registerCourseToUser,viewCourseDetails,calculateCourseDuration, getCoursePreviewVideos, updatePublished, getPublishedCourses, removeSubtitle, clearExams, updateInstructorId, deleteCourse, publishCourse }= require ("../Controller/course-controllers");
 
 
 const router = express.Router();
@@ -50,6 +50,13 @@ router.get('/getCoursePreviewVideos',getCoursePreviewVideos);
 
 router.get('/removeSubtitle',removeSubtitle);
 
+router.get('/clearExams',clearExams);
+
+router.get('/updateId',updateInstructorId);
+
+router.get('/deleteCourse', deleteCourse);
+
+router.get('/publishCourse', publishCourse);
 
 module.exports=router;
 
