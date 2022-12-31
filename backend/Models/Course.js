@@ -19,7 +19,8 @@ const courseSchema = new Schema({
     },
     Duration: {
       type: Number,
-      required: false
+      required: false,
+      default : 0
     },
     LevelOfCourse: {
       type: String,

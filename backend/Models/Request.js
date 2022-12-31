@@ -14,7 +14,8 @@ const RequestSchema = new Schema({
         required: true
     },
     status: {
-        type: String, "enum": ["Unseen","Accepted","Rejected"],
+        type: String, 
+        enum: ["Unseen","Accepted","Rejected"],
         default: "Unseen"
 
     }

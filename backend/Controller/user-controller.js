@@ -657,13 +657,19 @@ const intializeProgress = async (req, res) => {
     }
 }
 
-      
+
+const getUser = async (req, res) => {
+    const userId = req.query.id;
+    await User.findById(mongoose.Types.ObjectId(userId)).then(r =>{
+        res.status(200).json(r);
+    });
+}
 
 
 
 
 module.exports = {
-    getAllUser,
+    getAllUser, getUser,
     viewCourseTitleHoursRating, viewCoursePrice,
     selectCountryUser, ChangeCurrencyUser, addCourse,
     viewMyInfo, ViewMyCourses, changePassword, sendPassChangeMail,

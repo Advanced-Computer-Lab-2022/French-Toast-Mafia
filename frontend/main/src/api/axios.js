@@ -107,4 +107,9 @@ export const publishCourse = async(id) =>{
     return response.data
 }
 
+export const getUser = async(id) =>{
+    const response = await axios.get(`http://localhost:5000/User/getUser?id=${id}`)
+    return response.data
+}
+
 
