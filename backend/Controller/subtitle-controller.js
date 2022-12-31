@@ -64,7 +64,7 @@ const deleteSubtitleFromCourse= async (req,res) =>{
 const viewSubtitle = async(req , res) => {
     const subId = req.query.id;
     try{
-        const subtitleToView = await Subtitle.findOne({_id:mongoose.Types.ObjectId(subId)});
+        const subtitleToView = await Subtitle.findById(mongoose.Types.ObjectId(subId));
         // get the details of the course 
         if (subtitleToView != null){
             res.status(200).json(subtitleToView);
@@ -242,9 +242,20 @@ const clearAllExercises = async( req, res) => {
     })
    
 }
+
+//add video to array of videos in subtitle
+function addVideo (req,res) {
+    const subId=req.query.id;
+    const {Video} = req.body;
+    Subtitle.findByIdAndUpdate({_id:
+        subId},{$push:{Video:Video}})
+        .then(function (Subtitle) {
+        res.status(200).json(Subtitle)
+    });
+};
     
 
 module.exports = {getAllSubtitles,addSubtitle, editSubtitle, addExcercise,deleteExcercise,removeAllExcercises, viewSubtitle,
     deleteSubtitle,deleteSubtitleFromCourse,removeAllSubtitles,getCourseSubtitlesVideos,
     getCourseSubtitlesExcercises,addVideoDescription,emptySubtitlesArray,getExcercisesQuestions,
-    getExcercisesAnswers,addNotes,viewAllCourseSubtitles,viewSubtitleVideo,viewSubtitleNotes, clearAllExercises};
+    getExcercisesAnswers,addNotes,viewAllCourseSubtitles,viewSubtitleVideo,viewSubtitleNotes, clearAllExercises, addVideo};
