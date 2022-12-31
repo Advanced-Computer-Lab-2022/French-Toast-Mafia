@@ -11,7 +11,7 @@ const maxAge = 3 * 24 * 60 * 60;
 const instructorSchema = new Schema({
     InstrName: {
       type: String,
-      required: true
+      required: false
     },
     InstrEmail: {
       type: String,
