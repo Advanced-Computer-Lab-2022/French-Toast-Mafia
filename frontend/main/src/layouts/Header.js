@@ -114,30 +114,34 @@ const Header = () => {
 const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      const signed= {Name, Email , Password, Gender }
-      const response = await fetch('http://localhost:5000/Signup//' , {
-        method:'POST',
-        body : JSON.stringify(signed) ,
-        headers : { 'Content-Type' : 'application/json' }
+      // const signed= {Name, Email , Password, Gender }
+      const response = await axios( {
+         url: 'http://localhost:5000/Signup//' , 
+         method:'post',
+         data: { "Name": Name , "Email": Email , "Password": Password , "Gender": Gender },
+         headers : { 
+            'Content-Type' : 'application/json' 
+          },
     })
-    const json = await response.json(signed)
-    if(!response.ok){
-        setErr(json.err)
+    // then ((response) => 
+  //   const json = await response.json(signed)
+  //   if(!response.ok){
+  //       setErr(json.err)
 
-    }
-    if(response.ok){
-        setName1('')
-        setEmail1('')
-        setPassword1('')
-        setGender('')
-        setDone(true);
-        setErr(null)
+  //   }
+  //   if(response.ok){
+  //       setName1('')
+  //       setEmail1('')
+  //       setPassword1('')
+  //       setGender('')
+  //       setDone(true);
+  //       setErr(null)
 
-  }
-} catch (error) {
-      console.log(error);
-    }
-  };
+  // }
+  } catch (error) {
+        console.log(error);
+      }
+    };
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -146,20 +150,22 @@ const handleSignUp = async (e) => {
         method:'post',
         url: 'http://localhost:5000/Login//' ,
         data:{ "Email": Email , "Password": Password} ,
-        // body : JSON.stringify(loggedin) ,
         headers : {
             'Content-Type' : 'application/json'
             },
-    }).then((response) => console.log(response.data.user))
 
-    console.log(response.data.token);
-    console.log(response.data.user);
-    // localStorage.setItem("token", response.data.token);
+    })
+    .then((response) => 
+      {console.log(response.data.userid)
+    const id= response.data.userid
+    // console.log(response.data.userid);
+    // console.log(response.data.user);
+    localStorage.setItem("token", response.data.token);
     // localStorage.setItem("user", JSON.stringify(response.data.user));
-    console.log(Email);
-    console.log(Password);
-    // navigate("/MyCourses");
-
+        console.log(Email);
+        console.log(Password);
+        navigate(`/MyCourses?userId=${id}`);
+      })
     } catch (error) {
       setError(error.response.data);
     }
