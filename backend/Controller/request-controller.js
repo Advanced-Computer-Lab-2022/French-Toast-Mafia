@@ -137,12 +137,18 @@ const AcceptRequest = async(req, res) =>{
 
 };
 
- const RejectRequest = async (req,res) =>{
-      const rId= req.query.id;
-      Request.findByIdAndUpdate({_id:mongoose.Types.ObjectId(rId)},{status: "Rejected"}).then(ret =>{
-          return res.status(200).json(ret);
-        });
-}; 
+//  const RejectRequest = async (req,res) =>{
+//          const rId= req.query.id;
+//         const r = await Request.findByIdAndUpdate((rId),{status:"Rejected"})
+//        res.status(200).json(r);
+// }; 
+
+const RejectRequest = async(req, res) =>{
+    const rId = req.query.id;
+    Request.findByIdAndUpdate({_id:mongoose.Types.ObjectId(rId)},{status: "Rejecetd"}).then(ret =>{
+        return res.status(200).json(ret);
+    });
+};
 
 
 

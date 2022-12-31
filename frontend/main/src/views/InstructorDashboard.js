@@ -25,7 +25,8 @@ const InstructorDashboard = () => {
 
     const [show, setShow] = useState(false);
 
- 
+  
+
     const[instructorName, setInstructorName] = useState("Loading...")
     const[instructorEmail, setInstructorEmail] = useState("Loading...")
     const[instructorDep, setInstructorDep] = useState("Loading...")
@@ -42,7 +43,7 @@ const InstructorDashboard = () => {
     const[courses, setCourses] = useState([]);
 
     const handleClose = () => setShow(false);
-
+    
 
     useEffect(() => {
         getInstructor(id).then(json => {
@@ -114,6 +115,7 @@ const[ccErrors, setCCErrors] = useState({});
 
 
 
+
   const setCCField = (field, value) =>{
     setCCForm({
         ...ccform,
@@ -139,7 +141,10 @@ const validateCCForm = () =>{
   if(!preview || preview === "")  
   newErrors.preview = "Please enter a preview"
   return newErrors
-}    
+}  
+
+
+
 
 const handleCCSubmit = async (e) => {
 
@@ -169,6 +174,8 @@ const handleCCSubmit = async (e) => {
       })
   }
 }
+
+
 
 
     const editName = 
@@ -282,6 +289,7 @@ const handleCCSubmit = async (e) => {
     <div>
       
       <div>
+        
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Create New Course</Modal.Title>

@@ -337,7 +337,7 @@ const addPromotion = async (req, res) => {
     const {Promotion, StartDatePromotion ,EndDatePromotion} = req.body;
     if (Promotion && StartDatePromotion && EndDatePromotion) {
         try {
-            const CurrentPrice = await course.findOne({_id:mongoose.Types.ObjectId(courseId)}).populate("Cost").select("Cost");
+            const CurrentPrice = await course.findById({_id:mongoose.Types.ObjectId(courseId)}).populate("Cost").select("Cost");
             console.log(CurrentPrice.Cost);
             const C=CurrentPrice.Cost;
             const discount= Promotion/100;
