@@ -91,3 +91,20 @@ export const viewCourseRequests = async(id) =>{
     const response = await axios.get(`http://localhost:5000/Request/getCourseRequests?id=${id}`)
     return response.data
 }
+
+export const viewInstructorCourses = async(id) =>{
+    const response = await axios.get(`http://localhost:5000/Instructor/ViewMyCourses?id=${id}`)
+    return response.data
+}
+
+export const deleteCourse = async(id) =>{
+    const response = await axios.get(`http://localhost:5000/Course/deleteCourse?id=${id}`)
+    return response.data
+}
+
+export const publishCourse = async(id) =>{
+    const response = await axios.get(`http://localhost:5000/Course/publishCourse?id=${id}`)
+    return response.data
+}
+
+

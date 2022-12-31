@@ -1,12 +1,16 @@
 const express= require("express");
-const { getAllExams , createExam,getExamById,addMCQ,getAllMcq,
-    getMcqById,solveMcq,solveExam,getAnswers,checkUser,getExam,getAverageGrade} = require("../Controller/exams-controller");
+const { getAllExams , createExam,getExamById,addMCQ,getAllMcq, createExercise,
+    getMcqById,solveMcq,solveExam,getAnswers,checkUser,getExam,getAverageGrade, deleteExercise} = require("../Controller/exams-controller");
 
 const router = express.Router();
 
 router.get("/getAllExams",getAllExams);
 
 router.post("/createExam", createExam);
+
+router.post("/createExercise", createExercise);
+
+router.get("/deleteExercise", deleteExercise);
 
 router.get("/getExamById",getExamById);
 

@@ -3,6 +3,7 @@ const {Instructor}= require("../Models/Instructor");
 const {User} = require("../Models/User");
 const mongoose = require('mongoose');
 const Subtitle = require("../Models/Subtitle");
+const Exam = require("../Models/Exams");
 
 function getAllCourse (req,res) {
     course.find({}).then (function (course) {
@@ -458,18 +459,44 @@ const removeSubtitle = async( req, res) =>{
         res.status(200).json(json);
     });
 
+}
 
-    
+const clearExams = async(req, res) =>{
+    const cId = req.query.id;
+    //{$pop:{CourseSubtitle:1}},
+    await course.findOneAndUpdate({_id:mongoose.Types.ObjectId(cId)},{$set:{ExamCourse: []}}).then(json =>{
+        res.status(200).json(json);
+    });
+}
 
+const updateInstructorId = async( req, res) => {
+    const cId = req.query.id;
+    course.findByIdAndUpdate({_id:mongoose.Types.ObjectId(cId)},{$set: {Instructor: [mongoose.Types.ObjectId("638406b772a816f9a6130b87"),"Sara sherif"]}}).then(json =>{
+        res.status(200).json(json);
+    })
+   
+}
 
+const deleteCourse = async(req, res) => {
+    const cId = req.query.id;
+    course.findByIdAndDelete({_id:mongoose.Types.ObjectId(cId)}).then(json =>{
+        Instructor.findByIdAndUpdate({_id:mongoose.Types.ObjectId(json.Instructor[0])},{$pull: {CourseGiven: mongoose.Types.ObjectId(cId)}}).then(json =>{})
+        Subtitle.deleteMany({ Course: {_id:mongoose.Types.ObjectId(cId)}}).then(json =>{})
+        Exam.deleteMany({courseId: {_id:mongoose.Types.ObjectId(cId)}}).then(json =>{})
+        res.status(200).json(json);
+    })
+}
+
+const publishCourse = async(req, res) =>{
+    const cId = req.query.id;
+    course.findByIdAndUpdate({_id:mongoose.Types.ObjectId(cId)}, {$set:{Published : true}}).then(json =>{ return res.status(200).json(json);})
 }
 
 
-
 module.exports={getAllCourse , getPublishedCourses, viewCourse, createCourse, editCourse, 
-    viewCourseInstructor, getMaxPrice, getSubjects,updatePublished,
-     viewCourseSubtitles, viewCourseExam, viewUserCourse,
-     deleteCourseRating,addCourseRating,calculateCourseRating,
+    viewCourseInstructor, getMaxPrice, getSubjects,updatePublished, deleteCourse,
+     viewCourseSubtitles, viewCourseExam, viewUserCourse, clearExams, publishCourse,
+     deleteCourseRating,addCourseRating,calculateCourseRating, updateInstructorId,
      viewCourseRating,emptyCourseList,registerCourseToUser, removeSubtitle,
      viewCourseDetails,calculateCourseDuration , getCoursePreviewVideos };
    
