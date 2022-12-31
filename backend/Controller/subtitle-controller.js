@@ -1,7 +1,6 @@
 const Subtitle = require("../Models/Subtitle");
 const course= require("../Models/Course");
 const mongoose = require('mongoose');
-const calculateCourseDuration = require('./course-controllers')
 
 function getAllSubtitles (req,res) {
     Subtitle.find({}).then (function (Subtitle) {
@@ -12,13 +11,10 @@ function getAllSubtitles (req,res) {
 //add subtitle
 function addSubtitle (req,res) {
     const courseId = req.query.id;
-    const {Title,Question,Answer,Video,Description,Duration} = req.body;
-    const newExcercise={Question,Answer};
+    const {Title,Description,Duration} = req.body;
     const newSubtitle = new Subtitle({
         Course : courseId,
         Title,
-        Exercise : newExcercise,
-        Video,
         Description,
         Duration
     }); 
@@ -26,8 +22,14 @@ function addSubtitle (req,res) {
     //add subtitle to course
     course.findOneAndUpdate({_id:
         mongoose.Types.ObjectId(courseId)},{$push:{CourseSubtitle:newSubtitle._id}})
-        .then(function (course) {
-        res.status(200).json(course)
+        .then(function (c) {
+              //calculate new course Duration
+            const newDur = c.Duration + newSubtitle.Duration;
+            course.findOneAndUpdate({_id:
+                mongoose.Types.ObjectId(courseId)},{$set:{Duration: newDur}})
+                .then(function (course) {
+            res.status(200).json(course)
+                });
     });
 };
 
@@ -234,10 +236,15 @@ const viewSubtitleNotes = async (req,res) => {
 };
 
 
-
+const clearAllExercises = async( req, res) => {
+    Subtitle.updateMany({},{$set: {'Exercise' : []}}).then(json =>{
+        res.status(200).json("bleh");
+    })
+   
+}
     
 
 module.exports = {getAllSubtitles,addSubtitle, editSubtitle, addExcercise,deleteExcercise,removeAllExcercises, viewSubtitle,
     deleteSubtitle,deleteSubtitleFromCourse,removeAllSubtitles,getCourseSubtitlesVideos,
     getCourseSubtitlesExcercises,addVideoDescription,emptySubtitlesArray,getExcercisesQuestions,
-    getExcercisesAnswers,addNotes,viewAllCourseSubtitles,viewSubtitleVideo,viewSubtitleNotes};
+    getExcercisesAnswers,addNotes,viewAllCourseSubtitles,viewSubtitleVideo,viewSubtitleNotes, clearAllExercises};

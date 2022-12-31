@@ -1,16 +1,20 @@
 const express= require("express");
 const {getAllCourse , viewCourse,viewCourseInstructor, createCourse, editCourse, viewCourseSubtitles, getMaxPrice, getSubjects,
      viewCourseExam,viewUserCourse,deleteCourseRating,addCourseRating, viewCourseRating, calculateCourseRating,
-emptyCourseList,registerCourseToUser,viewCourseDetails,calculateCourseDuration, getCoursePreviewVideos }= require ("../Controller/course-controllers");
+emptyCourseList,registerCourseToUser,viewCourseDetails,calculateCourseDuration, getCoursePreviewVideos, updatePublished, getPublishedCourses, removeSubtitle }= require ("../Controller/course-controllers");
 
 
 const router = express.Router();
 
 router.get("/getAllCourse",getAllCourse );
 
+router.get("/getPublishedCourses", getPublishedCourses);
+
 router.get('/viewCourse',viewCourse);
 
 router.get('/viewCourseInstructor',viewCourseInstructor);
+
+router.get('/updatePub',updatePublished);
 
 router.get('/viewCourseSubtitles',viewCourseSubtitles);
 
@@ -44,7 +48,7 @@ router.get('/calculateCourseDuration',calculateCourseDuration);
 
 router.get('/getCoursePreviewVideos',getCoursePreviewVideos);
 
-
+router.get('/removeSubtitle',removeSubtitle);
 
 
 module.exports=router;

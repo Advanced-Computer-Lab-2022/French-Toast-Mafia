@@ -6,7 +6,7 @@ const CertificatePage = () => {
 
 const onButtonClick = () => {
     // using Java Script method to get PDF file
-    fetch('SamplePDF.pdf').then(response => {
+    fetch('Certificate.pdf').then(response => {
         response.blob().then(blob => {
             // Creating new object of PDF file
             const fileURL = window.URL.createObjectURL(blob);

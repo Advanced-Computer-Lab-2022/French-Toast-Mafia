@@ -1,10 +1,7 @@
 import axios from 'axios';
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import Table from '@mui/material/Table';
 import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { useLocation } from 'react-router-dom';
 import { Radio } from '@mui/material';
 import { RadioGroup } from '@mui/material';
@@ -12,24 +9,17 @@ import { FormControlLabel } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Modal from "react-bootstrap/Modal";
 import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
-
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-  [`&.${tableCellClasses.head}`]: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
-}));
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 const { useState, useEffect } = require("react");
 
 
 const ViewExam = () => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
   const [Mcqs, setMcq] = useState([])
   const navigate = useNavigate();
 
@@ -42,7 +32,7 @@ const ViewExam = () => {
 
 
   useEffect(function () {
-    axios.get(`http://localhost:5000/Exams/getExamById?id=${courseId}`).then(
+    axios.get(`http://localhost:5000/Exams/getExam?id=${examId}`).then(
       (res) => {
         const Mcqs = res.data
         setMcq(Mcqs.mcq)
@@ -70,33 +60,64 @@ const ViewExam = () => {
  
 
   const [show, setShow] = useState(false);
+  const [show2, setShow2] = useState(false);
   //const handleShow = () => setShow(true);
   const handleCancel = () => setShow(false);
+  const handleCancel2=()=>setShow2(false);
 
   const [score, setScore] = useState(0);
   const [total, setTotal] = useState(0);
+  const [open, setOpen] = React.useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = (event) => {
-    setShow(true);
     event.preventDefault();
     console.log("AnswersArray");
     console.log(AnswersArray);
     const data = new FormData();
     data.append("Answer", AnswersArray);
-    console.log(data.get("Answer"));
+    //console.log(data.get("Answer"));
 
     axios.post(`http://localhost:5000/Exams/solveExam?id=${examId}&userId=${userId}`, {
-        Answer: data.get("Answer")
+      // Answer: data.get("Answer")
+      Answer: AnswersArray
 
-    }).then((res) => {
-        //get exam created id
-        setScore(res.data.score);
-        setTotal(res.data.total);
-    }).catch((err) => {
-        console.log(err);
-    });
+  }).then((res) => {
+      //get exam created id
+      setScore(res.data.score);
+      setTotal(res.data.total);
+      
+      console.log(res.data.score);
+      console.log(res.data.total);
+      
+      if (res.data.score/res.data.total >= 0.5) {
+        setShow(true);
+      }
+      else {
+          setShow2(true);
+      }
+  }).catch((err) => {
+    setOpen(true);
+    console.log(err.response.data.message);
+    setErrorMessage(err.response.data.message);
+  });
    
   };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const handleRetake = () => {
+    handleCancel2();
+    window.location.reload(false);
+    navigate(`/ViewExam?courseId=${courseId}&userId=${userId}&examId=${examId}`)
+  }
+
 
 
 
@@ -148,6 +169,11 @@ const ViewExam = () => {
           onClick={handleSubmit} >
           Submit
         </Button>
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                              <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                                  {errorMessage}
+                              </Alert>
+                          </Snackbar>
       </ul>
       <Modal
                             show={show}
@@ -156,7 +182,7 @@ const ViewExam = () => {
                             aria-describedby="modal-modal-description"
                         >
                             <Modal.Header closeButton>
-                                <Modal.Title>Exam Submitted!</Modal.Title>
+                                <Modal.Title>Congrats! You Passed The Exam!</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
                                 <Typography id="modal-modal-description" sx={{ mt: 0,ml:20 }}>
@@ -184,6 +210,45 @@ const ViewExam = () => {
 
 
                         </Modal>
+
+
+
+                        <Modal
+                            show={show2}
+                            onHide={handleCancel2}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
+                        >
+                            <Modal.Header closeButton>
+                                <Modal.Title>You scored less than 50% !</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <Typography id="modal-modal-description" sx={{ mt: 0,ml:20 }}>
+                                  Your Score is: <strong> {score}</strong> 
+                                </Typography>
+                                <Typography sx={{ml:25}}>
+                                  Out of: <strong>{total} </strong> 
+                                </Typography>
+
+                                <Button variant="contained" size="small"
+                                    style={{
+                                        display: 'flex', height: 40, marginTop: 10,
+                                        borderBlockColor: '#1aac83', borderTop: '#1aac83',
+                                        borderBottom: '#1aac83', borderRight: '#1aac83',
+                                        borderLeft: '#1aac83', marginLeft: 175
+                                    }}
+
+                                    onClick={() => {
+                                        handleRetake();
+                                    }} >
+                                   Retake Exam
+                                </Button>
+                    
+                            </Modal.Body>
+
+
+                        </Modal>
+
 
 
 

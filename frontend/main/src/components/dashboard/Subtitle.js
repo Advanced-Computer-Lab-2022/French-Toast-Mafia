@@ -36,11 +36,11 @@ import { viewSubtitle } from '../../api/axios';
             </Accordion.Body>
             <Accordion.Body>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            {/* <span class="bi bi-play-btn"></span> {video.length} video(s)   */}
+            <span class="bi bi-play-btn"></span> {video?.length? video.length : "0" } video(s)  
             </Accordion.Body>
             <Accordion.Body>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span class="bi bi-pencil-square"></span> {Exercise.length} Exercise(s)  
+            <span class="bi bi-pencil-square"></span> {Exercise?.length? Exercise.length : "0"} Exercise(s)  
             </Accordion.Body>
         </Accordion.Item>
       </div>

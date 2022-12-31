@@ -240,7 +240,7 @@ const payNow = async token => {
       <CardBody style={{height: "300px"}}>
 
         <Row>
-          <Col>
+          <Col lg = "10">
             <CardTitle tag="h4">{course.NameOfCourse}</CardTitle>
             <CardSubtitle className="text-muted" tag="h6"> {course.Summary}</CardSubtitle>
           </Col>

@@ -162,7 +162,7 @@ const ViewReportAdmin = () => {
                         onChange={(e) => setField('status', e.target.value)}
                         isInvalid={!!errors.status}
                     >
-                        <option>Unseen</option>
+                        <option value = "Unseen">Unseen</option>
                         <option value = "Pending">Pending</option>
                         <option value = "Resolved">Resolved</option>
                     </Form.Select>

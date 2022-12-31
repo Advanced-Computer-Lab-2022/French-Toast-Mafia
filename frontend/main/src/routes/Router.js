@@ -2,6 +2,7 @@
  import { Navigate } from "react-router-dom";
 // import { browserHistory } from 'react-router';
 import React from 'react';
+import CreateCourse from "../views/createCourse.js";
 /****Layouts*****/
 const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
 
@@ -38,6 +39,7 @@ const CourseSubtitles= lazy(() => import('../views/CourseSubtitles.js'));
 const Contract = lazy (() => import ('../views/ui/Contract.js'));
 
 const ViewCourse = lazy(() => import("../views/viewCourse.js"));
+const EditCourse = lazy(() => import("../views/editCourse.js"));
 const ViewCourseCop = lazy(() => import("../views/viewCourseCop.js"));
 
 const ViewReport = lazy(() => import("../views/viewReport.js"));
@@ -51,6 +53,7 @@ const ViewReportAdmin = lazy(() => import("../views/viewReportAdmin"));
 const Instructors= lazy(() => import('../views/Instructors.js'));
 const InstructorCourses= lazy(() => import('../views/InstructorCourses.js'));
 const InstructorCoursePage= lazy(() => import('../views/InstructorCoursePage.js'));
+const InstrCourseExams= lazy(() => import('../views/InstrCourseExams.js'));
 
 const CreateExam= lazy(() => import('../views/CreateExam.js'));
 const InstrExamPage= lazy(() => import('../views/InstrExamPage.js'));
@@ -98,6 +101,8 @@ const ThemeRoutes = [
       { path: "/CourseInstructor", exact: false, element: <CourseInstructor /> },
 
       { path: "/viewCourse", exact: true, element: <ViewCourse /> },
+      { path: "/editCourse", exact: true, element: <EditCourse /> },
+      { path: "/createCourse", exact: true, element: <CreateCourse/>},
       { path: "/viewCourseCop" , exact: true, element: <ViewCourseCop/> },
 
       { path: "/viewCourseReports", exact: true, element: <CourseReports /> },
@@ -115,6 +120,7 @@ const ThemeRoutes = [
       { path: "/Instructors", exact: true, element: <Instructors /> },
       { path: "/InstructorCourses", exact: false, element: <InstructorCourses /> },
       { path: "/InstructorCoursePage", exact: false, element: <InstructorCoursePage /> },
+      { path: "/InstrCourseExams", exact: false, element: <InstrCourseExams /> },
       { path: "/InstructorHome", exact: false, element: <InstructorDashboard /> },
 
 

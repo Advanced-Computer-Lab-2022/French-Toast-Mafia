@@ -65,7 +65,8 @@ const createExam = async (req, res) => {
 //get exam by course id
 const getExamById = async (req, res) => {
   const courseId = req.query.id;
-  const result = await Exams.findOne({ courseId: mongoose.Types.ObjectId(courseId) });
+  const result = await Exams.find({ courseId: mongoose.Types.ObjectId(courseId) });
+  //get result exam titles and description
   if (result) {
     res.status(200).json(result);
   }
@@ -73,6 +74,18 @@ const getExamById = async (req, res) => {
     res.status(500).json({ message: 'Error in getting exam' });
   }
 }
+
+const getExam=async(req,res)=>{
+  const examId=req.query.id;
+  const result=await Exams.findOne({_id:mongoose.Types.ObjectId(examId)});
+  if(result){
+    res.status(200).json(result);
+  }
+  else{
+    res.status(500).json({message:'Error in getting exam'});
+  }
+}
+
 
 const addMCQ = async (req, res) => {
   const ExamId = req.query.id;
@@ -154,9 +167,6 @@ const solveExam = async (req, res) => {
           return;
         }
       }
-
-      const rest = await Exams.findByIdAndUpdate(examId, { $push: { users: userId } }, { new: true });
-
       const mcq = result.mcq;
       const userAnswer = req.body.Answer;
       let score = 0;
@@ -179,19 +189,25 @@ const solveExam = async (req, res) => {
         score: score,
         total: mcq.length
       };
+
+      // console.log(examResult);
+      // console.log(userAnswer[1]);
+
       //get course id 
       const courseId = result.courseId;
       //add course id and exam id to user
       if (score >= 0.5 * mcq.length) {
         const g = score / mcq.length * 100;
-        const resultUs = await User.findByIdAndUpdate(mongoose.Types.ObjectId(userId), { $push: { Exams: { course: courseId, exam: mongoose.Types.ObjectId(examId), grade: g } } }, { new: true });
+       const resE= await Exams.findByIdAndUpdate(examId, { $push: { users: userId } }, { new: true });
+       const resU= await User.findByIdAndUpdate(mongoose.Types.ObjectId(userId), { $push: { Exams: { course: courseId, exam: mongoose.Types.ObjectId(examId), grade: g } } }, { new: true });
+      
         //update user progress
         const uCourse = await course.findOne({ _id: mongoose.Types.ObjectId(courseId) });
         const totalExams = uCourse.ExamCourse.length;
         const totalSubtitles = uCourse.CourseSubtitle.length;
         const p = 1 / (totalExams + totalSubtitles);
         const resultUser = await User.findOne({ _id: mongoose.Types.ObjectId(userId) });
-        console.log(resultUser);
+        //console.log(resultUser);
 
         //get the progress of the user
         for (let i = 0; i < resultUser.Progress.length; i++) {
@@ -207,11 +223,11 @@ const solveExam = async (req, res) => {
         }
 
 
-
+        res.status(200).json(examResult);
       }
-
-
-      res.status(200).json(examResult);
+      else {
+        console.log('you failed');
+      }
 
     }
     else {
@@ -308,6 +324,31 @@ const checkUser = async (req, res) => {
   }
 }
 
+//get average grade of exam
+const getAverageGrade = async (req, res) => {
+  const examId = req.query.id;
+  const result = await Exams.findById(mongoose.Types.ObjectId(examId));
+  if (result) {
+    const users = result.users;
+    const grades = [];
+    for (let i = 0; i < users.length; i++) {
+      const user = await User.findById(mongoose.Types.ObjectId(users[i]));
+      for (let j = 0; j < user.Exams.length; j++) {
+        if ((user.Exams[j].exam).equals(examId)) {
+          grades.push(user.Exams[j].grade);
+        }
+      }
+    }
+    const sum = grades.reduce((a, b) => a + b, 0);
+    const avg = (sum / grades.length) || 0;
+    res.status(200).json({ averageGrade: avg });
+  }
+  else {
+    res.status(400).json({ message: 'Error in getting average grade' });
+  }
+}
+
+
 
 
 
@@ -316,5 +357,5 @@ const checkUser = async (req, res) => {
 
 module.exports = {
   getAllExams, createExam, getExamById, getAllMcq,
-  addMCQ, getMcqById, solveMcq, solveExam, getAnswers, checkUser
+  addMCQ, getMcqById, solveMcq, solveExam, getAnswers, checkUser,getExam, getAverageGrade
 };

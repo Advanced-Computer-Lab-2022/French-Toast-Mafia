@@ -55,27 +55,29 @@ const RequestNotification = ({request, reqCourse, reqUser, status}) => {
               tag="a"
               className="d-flex align-items-center p-3 border-0"
             >
+              <Col lg = "6">
               <Button
                 className="rounded-circle me-3"
                 size="sm"
                 color={statusColor}
                 disabled>
                 {icon}
-                
               </Button> 
               {requester} &nbsp;
               ({courseName})
+              </Col>
               <Button
-                color="primary">
+                color="primary" size="sm">
                   Accept
               </Button> 
               &nbsp;
               <Button
-                color="danger">
+                color="danger" size="sm">
                   Reject
               </Button> 
+              &nbsp;
               <small className="ms-auto text-muted text-small">
-                {req.createdAt}
+                {request.createdAt}
               </small>
             </ListGroupItem>
   )
