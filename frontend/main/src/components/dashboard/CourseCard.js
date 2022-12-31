@@ -6,7 +6,7 @@ import {
     CardText,
     CardTitle,
     Button,
-    Col,
+    Col,Row
   } from "reactstrap";
   import { useNavigate } from "react-router-dom";
 
@@ -50,6 +50,18 @@ import {
         }
     }
 
+
+    const pubButton = <>
+    <Row>
+    <Col>
+    <Button color="primary" onClick={() => navigate(`/viewCourse?id=${cId}`)}>View Course</Button>
+    </Col>
+    <Col>
+    <Button color="primary" >Define Promo</Button>
+    </Col>
+    </Row>
+    </>
+
     return (
     <Col lg = "4">
       <Card style={{height:"475px"}}  className="text-center" body color={!coursePub? "light-danger" : null}>
@@ -64,7 +76,7 @@ import {
             {coursePub? <CardText className="mt-3 text-muted">{stars} &nbsp; ({ratings}) </CardText> : null}
             <CardText ><span class="bi bi-book"></span> {courseSubject}</CardText>
             <CardTitle tag="h5">Price: {coursePrice} EGP</CardTitle>
-            {!coursePub?  <Button color="primary" onClick={() => navigate(`/editCourse?id=${cId}`)}>Edit Course</Button> : <Button color="primary" onClick={() => navigate(`/viewCourse?id=${cId}`)}>View Course</Button>  }
+            {!coursePub?  <Button color="primary" onClick={() => navigate(`/editCourse?id=${cId}`)}>Edit Course</Button> :  pubButton }
                    
             {!coursePub? <CardText className="text-danger" ><span class="bi bi-exclamation-circle"></span> This course is not published</CardText> : null}
         </CardBody>

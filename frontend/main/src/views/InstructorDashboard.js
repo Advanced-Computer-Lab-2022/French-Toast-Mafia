@@ -475,7 +475,7 @@ const handleCCSubmit = async (e) => {
             </Col>
             <Col lg="2">
             <Button className="btn" outline color="primary" onClick={() => setShow(true)}>Add New</Button>
-            <Button className="btn" outline color="primary" >View All</Button>
+            <Button className="btn" outline color="primary" onClick={() => navigate(`/searchInstructorCourses?id=${id}`)}>View All</Button>
             </Col>
           </Row>
           <hr/>
@@ -485,6 +485,11 @@ const handleCCSubmit = async (e) => {
             </Row>
         </CardBody>
         </Card>
+
+        <Row>
+          {/* <Reviews reviews={Rating} />     */}
+      </Row>
+
 
       </div>
   );
