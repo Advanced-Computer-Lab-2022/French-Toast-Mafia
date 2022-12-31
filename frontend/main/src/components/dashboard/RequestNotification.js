@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import {
   Col,
   Row,
@@ -33,6 +34,9 @@ const RequestNotification = ({request, reqCourse, reqUser, status}) => {
           })
         }
       }, []);
+
+      
+
     
     //   console.log(type)
     
@@ -44,7 +48,25 @@ const RequestNotification = ({request, reqCourse, reqUser, status}) => {
         else 
             statusColor = "success"
     }
+
+
+    const handlesubmit  =  async () => {
+       axios.get(`http://localhost:5000/Request/AcceptRequest?id=${request._id}`).then(
+     (res) => { 
+          console.log(res);
+         
+     }
+   ) };
+
+   const handle  =  async () => {
+    axios.get(`http://localhost:5000/Request/RejectRequest?id=${request._id}`).then(
+  (res) => { 
+       console.log(res);
+      
+  }
+) };
     
+  
 
 
 
@@ -66,12 +88,12 @@ const RequestNotification = ({request, reqCourse, reqUser, status}) => {
               {requester} &nbsp;
               ({courseName})
               </Col>
-              <Button
+              <Button onClick={handlesubmit}
                 color="primary" size="sm">
                   Accept
               </Button> 
               &nbsp;
-              <Button
+              <Button   onclick={handle}
                 color="danger" size="sm">
                   Reject
               </Button> 

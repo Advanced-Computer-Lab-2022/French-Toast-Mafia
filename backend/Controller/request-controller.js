@@ -94,48 +94,59 @@ const getRequesterName = async(req, res) =>{
     });        
 };
 
-// const getReporterName = async(req, res) =>{
-//     const uId = req.query.id;
-
-//     User.findOne({_id:mongoose.Types.ObjectId(uId)}).then(retUser =>{
-//         if(retUser != null){
-//             return res.status(200).json(retUser.Name);
-//         }
-//         else{
-//             Instructor.findOne({_id:mongoose.Types.ObjectId(uId)}).then(retInstructor =>{
-//                 if(retInstructor != null){
-//                     return res.status(200).json(retInstructor.InstrName);
-//                 }
-//                 else
-//                     return res.status(400).json(null);
-//             })
-//         }
-//     });        
-// };
 
 
 const getRequestedCourse = async(req, res) =>{
     const cId = req.query.id;
-    Course.findOne({_id:mongoose.Types.ObjectId(cId)}).then(retCourse =>{
-            return res.status(200).json(retCourse.NameOfCourse);
-    });          
+    console.log(cId);
+    const s= await  Course.findById(cId);
+   console.log(s);
+  if(s){
+    const r =s.NameOfCourse;
+    res.status(200).json(r);
+
+  }
+  else 
+  
+  res.status(400).json(null);        
 };
 
 
 
-const updateRequestStatus = async(req, res) =>{
+const AcceptRequest = async(req, res) =>{
     const cId = req.query.id;
-    Request.findByIdAndUpdate({_id:mongoose.Types.ObjectId(cId)},{status: "Resolved"}).then(ret =>{
-        return res.status(200).json(ret);
-    });
+    console.log("hiiii");
+   const request= await Request.findById(cId);
+   console.log(request);
+   console.log(request.requested_by);
+   if(request) {
+    await Request.findByIdAndUpdate({_id:mongoose.Types.ObjectId(cId)},{status:"Accepted"});
+     await User.findByIdAndUpdate(request.requested_by,{$push:{Courses: request.requested_course} } )
+     const UserRequest = await User.findByIdAndUpdate(request.requested_by, { $push: { Progress: { courseId: request.requested_course, Progress: 0 } } });
+    res.status(200).json(UserRequest);
+
+   }
+   else 
+      res.status(400).json({error:"Please enter a valid request Id"});
+    //  const request= await  Request.findByIdAndUpdate({_id:mongoose.Types.ObjectId(cId)},{status: "Accepted"});
+    //    //res.status(200).json(ret);
+    //    console.log(request);
+    //      const s= await User.findByIdAndUpdate({_id:request.requested_by},{$push:{Courses: request.requested_course}});  
+    //      res.status(200).json(s);
+
+
 };
 
-// function getAllRequests (req,res) {
-//     let x= Request.find({}).sort({createdAt: -1})
-//     .then (function (rep) {
-//      res.send(rep);
-//      });
-//  };
+ const RejectRequest = async (req,res) =>{
+      const rId= req.query.id;
+      Request.findByIdAndUpdate({_id:mongoose.Types.ObjectId(rId)},{status: "Rejected"}).then(ret =>{
+          return res.status(200).json(ret);
+        });
+}; 
+
+
+
+
 
   function getRequest(req,res){
     const rId = req.query.id;
@@ -148,4 +159,4 @@ const updateRequestStatus = async(req, res) =>{
 
 
    
-module.exports={ getAllRequests, createRequest,getCourseRequests,  getRequesterName ,  getRequestedCourse, updateRequestStatus,getRequest};
+module.exports={ getAllRequests, createRequest,getCourseRequests,  getRequesterName ,  getRequestedCourse, AcceptRequest,getRequest, RejectRequest};
