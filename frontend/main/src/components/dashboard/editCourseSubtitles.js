@@ -6,14 +6,11 @@ import { Container, Card, CardBody, CardTitle, CardSubtitle, Table,
   import {Form} from "react-bootstrap"
 import "bootstrap/dist/css/bootstrap.min.css";
 import Modal from "react-bootstrap/Modal";
-import RadioGroup from '@mui/material/RadioGroup';
-import { Radio } from "@mui/material";
-import FormControlLabel from '@mui/material/FormControlLabel';
 import {useState, useEffect } from 'react';
 
 
   import Accordion from 'react-bootstrap/Accordion';
-  import Subtitle from "./Subtitle";
+  import SubtitleEdit from "./SubtitleEdit";
   
   const EditCourseSubtitles = ({cId, subtitles}) => {
 
@@ -39,7 +36,6 @@ import {useState, useEffect } from 'react';
     const validateForm = () =>{
         const { title, description} = form
         const newErrors = {}
-  
         if(!title || title === "")
             newErrors.title = "Please enter a title"
         if(!description || description === "")  
@@ -156,7 +152,7 @@ import {useState, useEffect } from 'react';
               <Col>
                   <div>
                       <Accordion className="accordion accordion-flush" defaultActiveKey="0">
-                        {subtitles.map(s =>  <Subtitle subtitle={s}/>)}
+                        {subtitles.map(s =>  <SubtitleEdit subtitle={s}/>)}
                       </Accordion>
                   </div>
               </Col>

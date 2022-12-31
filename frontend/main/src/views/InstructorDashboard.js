@@ -1,7 +1,7 @@
 import { Col, Row , Alert, CardDeck, Card, CardImg, CardTitle, CardBody, CardSubtitle, CardText, Button, CardGroup} from "reactstrap";
 
 import { useLocation } from 'react-router-dom';
-import { getInstructor } from "../api/axios";
+import { getInstructor, getReporter } from "../api/axios";
 import {useState, useEffect } from 'react';
 import {Form} from "react-bootstrap"
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -35,6 +35,7 @@ const InstructorDashboard = () => {
     const[edit,setEdit] = useState(false);
     const[wallet,setWallet] = useState(0);
     const[percentageTaken,setPercentageTaken] = useState(0);
+    const[refresh,setRefresh] = useState(false);
  
     const[form, setForm] = useState({});
     const[errors, setErrors] = useState({});
@@ -43,6 +44,12 @@ const InstructorDashboard = () => {
 
     const handleClose = () => setShow(false);
 
+    const [reportAlert, setReportAlert] = useState(false)
+
+    const onDismiss = () => {
+      setReportAlert(false);
+    };
+  
 
     useEffect(() => {
         getInstructor(id).then(json => {
@@ -132,12 +139,16 @@ const validateCCForm = () =>{
 
   if(!title || title === "")
   newErrors.title = "Please enter a course title"
+  if(!difficulty || difficulty == "")
+    ccform.difficulty = "Medium"
   if(!subject || subject === "")  
   newErrors.subject = "Please enter a subject"
   if(!summary || summary === "")  
   newErrors.summary = "Please enter a summary"
   if(!preview || preview === "")  
   newErrors.preview = "Please enter a preview"
+  if(!price || price === "")  
+    ccform.price = 0;
   return newErrors
 }    
 
@@ -164,12 +175,12 @@ const handleCCSubmit = async (e) => {
               'Content-Type':'application/json'
           }
       }).then(json =>{
-        handleClose()
+        handleClose();
+        setRefresh(true);
         window.location.reload();
       })
   }
 }
-
 
     const editName = 
         <Form.Group controlId="name">
@@ -280,7 +291,6 @@ const handleCCSubmit = async (e) => {
 
   return (
     <div>
-      
       <div>
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
