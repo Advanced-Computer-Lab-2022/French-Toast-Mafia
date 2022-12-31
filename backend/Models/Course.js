@@ -39,7 +39,8 @@ const courseSchema = new Schema({
     },
     avgRating: {
       type: Number,
-      required: false
+      required: false,
+      default: 0
     },
     NoOfViews: {
       type: Number,
