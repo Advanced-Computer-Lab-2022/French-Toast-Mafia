@@ -13,11 +13,6 @@ const RequestSchema = new Schema({
         ref: 'Course',
         required: true
     },
-   follow_up: {
-        type: Array,
-        required: false
-
-    },
     status: {
         type: String, "enum": ["Unseen","Accepted","Rejected"],
         default: "Unseen"

@@ -140,7 +140,6 @@ const SearchBar = ({courses, setSearchResults}) =>{
     const handleSearchChange = (e) => {
       search = e.target.value
         if (!e.target.value){
-        
           if(subject !== "All"){
             if(rating != "All"){
               const resultsArray = courses.filter(courses => (courses.Instructor[1].toLowerCase().includes(search.toLowerCase()) ||
@@ -200,8 +199,7 @@ const SearchBar = ({courses, setSearchResults}) =>{
        
     }
     return (
-      
-        <header>
+    
               <FormGroup>
                 <div className="input-group mb-3" style={{ display: "flex", justifyContent: 'flex-end'}}>
                     <Input
@@ -228,14 +226,11 @@ const SearchBar = ({courses, setSearchResults}) =>{
                 <Col lg="10">
                   <Slider setPriceRange={setPriceRange} handlePriceChange={handlePriceChange}/>
                   </Col>
-                </div>
-                <div className="input-group mb-3" style={{ display: "flex", justifyContent: 'flex-start'}}>
                 <CardText className="fw-light card-text">Rating:&nbsp;&nbsp;&nbsp;&nbsp;</CardText>
                   <Rating setRating={setRating}/>
                 </div>
                 </FormGroup>
-        </header>
-   
+      
     )
 }
 

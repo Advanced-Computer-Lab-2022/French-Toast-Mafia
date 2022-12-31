@@ -1,4 +1,4 @@
-import { Col, Row , Alert, CardDeck} from "reactstrap";
+import { Col, Row , Alert, CardDeck, Card, CardBody} from "reactstrap";
 
 import { useLocation } from 'react-router-dom';
 import { viewCourse } from "../api/axios";
@@ -78,8 +78,7 @@ const ViewCourse = () => {
       </Row>
       {/***Blog Cards***/}
       <Row>
-      <Reviews reviews={Rating} />
-    
+         <Reviews reviews={Rating} />
       </Row>
 
     </div>

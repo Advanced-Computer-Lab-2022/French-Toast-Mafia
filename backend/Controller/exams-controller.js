@@ -1,8 +1,10 @@
 const course = require("../Models/Course");
+const subtitle = require("../Models/Subtitle");
 const { Instructor } = require("../Models/Instructor");
 const Exams = require("../Models/Exams");
 const { User } = require("../Models/User");
 var mongoose = require('mongoose');
+const e = require("express");
 
 
 const getAllExams = async (req, res) => {
@@ -61,6 +63,68 @@ const createExam = async (req, res) => {
   }
 
 };
+
+
+const createExercise = async (req, res) => {
+  const subId = req.query.id;
+  console.log("subtitle id: " + subId);
+  const title = req.body.title;
+  const description = req.body.description;
+  const question = req.body.question;
+  const choice1 = req.body.choice1;
+  const choice2 = req.body.choice2;
+  const choice3 = req.body.choice3;
+  const choice4 = req.body.choice4;
+  const correct = req.body.correct;
+  const mcq = {
+    question: question,
+    choice1: choice1,
+    choice2: choice2,
+    choice3: choice3,
+    choice4: choice4,
+    correct: correct,
+  };
+  //get the course id from the subtitle
+  subtitle.findOne({ _id: mongoose.Types.ObjectId(subId)}).then(sub =>{
+    //get the instructorId from the instructor
+    course.findOne({ _id: sub.Course}).then( c =>{
+        const newExam = new Exams({
+          courseId: sub.Course,
+          instrId: c.Instructor[0],
+          title: title,
+          description: description,
+          mcq: mcq
+        });
+        newExam.save();
+        if(newExam){  
+          try{
+  
+            course.findOneAndUpdate({_id: mongoose.Types.ObjectId(sub.Course)}, { $push: { ExamCourse: newExam._id }  }).then(c =>{});
+            Instructor.findOneAndUpdate({ _id: mongoose.Types.ObjectId(c.Instructor[0]) }, { $push: { Exam: newExam._id } }).then(i =>{});
+            subtitle.findOneAndUpdate({ _id: mongoose.Types.ObjectId(subId) }, { $push: { Exercise: newExam._id }}).then(s =>{})
+            return res.status(200).json(newExam._id);
+          }
+          catch{
+            res.status(500).json({ message: 'Error in creating exam' });
+          }
+
+        }
+    })
+  });
+  
+};
+
+const deleteExercise = async(req, res) => {
+  const examId=req.query.id;
+  const result=await Exams.findOneAndDelete({_id:mongoose.Types.ObjectId(examId)});
+  if(result){
+    res.status(200).json(result);
+  }
+  else{
+    res.status(500).json({message:'Error in getting exam'});
+  }
+}
+
 
 //get exam by course id
 const getExamById = async (req, res) => {
@@ -352,10 +416,7 @@ const getAverageGrade = async (req, res) => {
 
 
 
-
-
-
 module.exports = {
-  getAllExams, createExam, getExamById, getAllMcq,
+  getAllExams, createExam, getExamById, getAllMcq, createExercise, deleteExercise,
   addMCQ, getMcqById, solveMcq, solveExam, getAnswers, checkUser,getExam, getAverageGrade
 };

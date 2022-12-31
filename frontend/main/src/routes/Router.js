@@ -69,7 +69,10 @@ const CertificatePage= lazy(() => import('../views/CertificatePage.js'));
 const InstructorProfile= lazy(() => import('../views/InstructorProfile.js'));
 const InstructorInfo= lazy(() => import('../views/InstructorInfo.js'));
 const InstructorBalance= lazy(() => import('../views/InstructorBalance.js'));
+
+
 const InstructorDashboard= lazy(() => import('../views/InstructorDashboard.js'));
+const SearchInstructorCourses = lazy(() => import('../views/searchInstructorCourses'));
 
 // /*****Routes******/
 
@@ -121,8 +124,9 @@ const ThemeRoutes = [
       { path: "/InstructorCourses", exact: false, element: <InstructorCourses /> },
       { path: "/InstructorCoursePage", exact: false, element: <InstructorCoursePage /> },
       { path: "/InstrCourseExams", exact: false, element: <InstrCourseExams /> },
-      { path: "/InstructorHome", exact: false, element: <InstructorDashboard /> },
 
+      { path: "/InstructorHome", exact: false, element: <InstructorDashboard /> },
+      { path: "/searchInstructorCourses", exact: false, element: <SearchInstructorCourses /> },
 
       { path: "/CreateExam", exact: false, element: <CreateExam />},
       { path: "/InstrExamPage", exact: false, element: <InstrExamPage /> },

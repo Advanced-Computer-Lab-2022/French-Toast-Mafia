@@ -37,10 +37,12 @@ const CourseVideos = () => {
   useEffect(function () {
     axios.get(`http://localhost:5000/Subtitle/viewSubtitleVideo?id=${subtitleId}`).then(
       (res) => {
-        const resVideos = res.data
+        const resVideos = res.data.Video;
         setVideos(resVideos)
+        console.log(resVideos);
         setVideoId(getVideoId(resVideos.Video));
-        console.log(videoId.id);
+        //console.log(videoId.id);
+        
       }
     );
   }, []);
@@ -106,16 +108,16 @@ const CourseVideos = () => {
   return (
 
     <div className="UsersList">
-
+       {videos.map((v,index) => (
       <Row>
         <Col sm="6" lg="6" xl="7" xxl="6">
-          <Card>
+          <Card key={index}>
             <CardBody>
               <CardTitle tag="h5">Chapter Video</CardTitle>
               <CardSubtitle className="text-muted" tag="h6">
                 {videos.Description}
               </CardSubtitle>
-              <iframe id="theiframe" src={videos.Video} title="Youtube Video"
+              <iframe id="theiframe" src={v} title="Youtube Video"
                 width="100%" height="500" allowFullScreen
               ></iframe>
               <FormControlLabel label="I've Watched The Video" control={
@@ -175,6 +177,7 @@ const CourseVideos = () => {
           </Card>
         </Col>
       </Row>
+      ))}
     </div>
 
 

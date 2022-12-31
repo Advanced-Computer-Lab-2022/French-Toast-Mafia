@@ -71,6 +71,11 @@ const instructorSchema = new Schema({
     Reports: {
       type: Array,
       required: false
+    },
+
+    avgRating: {
+      type: Number,
+      required : false
     }
 
     
