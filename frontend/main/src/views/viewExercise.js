@@ -63,11 +63,6 @@ const ViewExercise = () => {
     })
 
 
-
-
-
-
-
       
   return (
     <div>

@@ -211,7 +211,6 @@ const handleSubmitExerciseForm = async (e) => {
   }
 
   else{
-
       await fetch(`http://localhost:5000/Exams/createExercise?id=${id}`,{
           method: 'POST',
           body: JSON.stringify({"title" : Exform.title, "description": Exform.description, "question" : Exform.q1, "choice1":Exform.q1c1, "choice2":Exform.q1c2, "choice3":Exform.q1c3, "choice4":Exform.q1c4, "correct":Exform[`q1c${Exform.cc1}`]}),
@@ -221,55 +220,55 @@ const handleSubmitExerciseForm = async (e) => {
       }).then(response => { 
         return response.json()
       }).then(async data =>{
-
-        if(parseInt(Exform.number)  > 1){
-          console.log("LARGER THAN 1")
-          console.log(data)
-          
-          await fetch(`http://localhost:5000/Exams/addMCQ?id=${data}`,{
-          method: 'POST',
-          body: JSON.stringify({"title" : Exform.title, "description": Exform.description, "question" : Exform.q2, "choice1":Exform.q1c1, "choice2":Exform.q2c2, "choice3":Exform.q2c3, "choice4":Exform.q2c4, "correct":Exform[`q2c${Exform.cc2}`]}),
-          headers : {
-              'Content-Type':'application/json'
-          }
-        });
-      }else{
-        handleCloseExerciseForm()
-        window.location.reload();
-      }
-  
-        if(parseInt(Exform.number)  > 2){
-          console.log("LARGER THAN 2")
-          console.log(data)
-          await fetch(`http://localhost:5000/Exams/addMCQ?id=${data}`,{
-          method: 'POST',
-          body: JSON.stringify({"question" : Exform.q3, "choice1":Exform.q3c1, "choice2":Exform.q3c2, "choice3":Exform.q3c3, "choice4":Exform.q3c4, "correct":Exform[`q3c${Exform.cc3}`]}),
-          headers : {
-              'Content-Type':'application/json'
-          }
-        });
-      }
-      else{
-        handleCloseExerciseForm()
-        window.location.reload();
-
-      }
-          
-        if(parseInt(Exform.number) > 3){
-          console.log("LARGER THAN 3")
-          console.log(data)
-          await fetch(`http://localhost:5000/Exams/addMCQ?id=${data}`,{
-          method: 'POST',
-          body: JSON.stringify({"question" : Exform.q4, "choice1":Exform.q4c1, "choice2":Exform.q4c2, "choice3":Exform.q4c3, "choice4":Exform.q4c4, "correct":Exform[`q4c${Exform.cc4}`]}),
-          headers : {
-              'Content-Type':'application/json'
-          }
-        })
-      }
-      handleCloseExerciseForm()
-      window.location.reload();
-
+        if(data){
+          if(parseInt(Exform.number)  > 1){
+            console.log("LARGER THAN 1")
+            console.log(data)
             
+            await fetch(`http://localhost:5000/Exams/addMCQ?id=${data}`,{
+            method: 'POST',
+            body: JSON.stringify({"title" : Exform.title, "description": Exform.description, "question" : Exform.q2, "choice1":Exform.q1c1, "choice2":Exform.q2c2, "choice3":Exform.q2c3, "choice4":Exform.q2c4, "correct":Exform[`q2c${Exform.cc2}`]}),
+            headers : {
+                'Content-Type':'application/json'
+            }
+          });
+        }else{
+          handleCloseExerciseForm()
+          window.location.reload();
+        }
+          if(parseInt(Exform.number)  > 2){
+            console.log("LARGER THAN 2")
+            console.log(data)
+            await fetch(`http://localhost:5000/Exams/addMCQ?id=${data}`,{
+            method: 'POST',
+            body: JSON.stringify({"question" : Exform.q3, "choice1":Exform.q3c1, "choice2":Exform.q3c2, "choice3":Exform.q3c3, "choice4":Exform.q3c4, "correct":Exform[`q3c${Exform.cc3}`]}),
+            headers : {
+                'Content-Type':'application/json'
+            }
+          });
+        }
+        else{
+          handleCloseExerciseForm()
+          window.location.reload();
+  
+        }
+            
+          if(parseInt(Exform.number) > 3){
+            console.log("LARGER THAN 3")
+            console.log(data)
+            await fetch(`http://localhost:5000/Exams/addMCQ?id=${data}`,{
+            method: 'POST',
+            body: JSON.stringify({"question" : Exform.q4, "choice1":Exform.q4c1, "choice2":Exform.q4c2, "choice3":Exform.q4c3, "choice4":Exform.q4c4, "correct":Exform[`q4c${Exform.cc4}`]}),
+            headers : {
+                'Content-Type':'application/json'
+            }
+          })
+        }
+        handleCloseExerciseForm()
+        window.location.reload();
+  
+              
+        }
 
     });
   }

@@ -58,5 +58,6 @@ router.get('/deleteCourse', deleteCourse);
 
 router.get('/publishCourse', publishCourse);
 
+
 module.exports=router;
 

@@ -12,6 +12,8 @@ import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { Col, Row , CardDeck, Card, CardImg, CardTitle, CardBody, CardSubtitle, CardText, CardGroup} from "reactstrap";
+
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -21,6 +23,8 @@ const { useState, useEffect } = require("react");
 
 const ViewExam = () => {
   const [Mcqs, setMcq] = useState([])
+  const [title,setTitle]=useState('');
+  const [description,setDescription]=useState('');
   const navigate = useNavigate();
 
   const search = useLocation().search;
@@ -35,6 +39,8 @@ const ViewExam = () => {
     axios.get(`http://localhost:5000/Exams/getExam?id=${examId}`).then(
       (res) => {
         const Mcqs = res.data
+        setTitle(Mcqs.title)
+        setDescription(Mcqs.description)
         setMcq(Mcqs.mcq)
       }
     );
@@ -118,6 +124,33 @@ const ViewExam = () => {
     navigate(`/ViewExam?courseId=${courseId}&userId=${userId}&examId=${examId}`)
   }
 
+  var i=1;
+
+  const displayQuestions=Mcqs.map((q) => {
+    return (
+      <>
+      <hr/>
+       <CardSubtitle tag="h5" className="text-muted">{i++}. &nbsp;{q.question}</CardSubtitle>
+       <hr/>
+        {/* <h2 className="question-text" >Subject: { q.title} , Description: { q.description}</h2> */}
+
+        <RadioGroup name="use-radio-group"
+          style={{ display: 'flex', 
+          flexDirection: 'column', 
+          alignItems: 'left', 
+          justifyContent: 'left' }}
+        >
+              <FormControlLabel  onChange={handleChange}  value={q.choice1} label={q.choice1} control={<Radio />} />
+              <FormControlLabel  onChange={handleChange}  value={q.choice2} label={q.choice2} control={<Radio />} />
+              <FormControlLabel  onChange={handleChange}  value={q.choice3} label={q.choice3} control={<Radio />} />
+              <FormControlLabel  onChange={handleChange}  value={q.choice4} label={q.choice4} control={<Radio />} />
+        </RadioGroup>
+        <br />
+      </>
+    )
+  })
+
+
 
 
 
@@ -125,45 +158,45 @@ const ViewExam = () => {
   return (
 
 
-    <div className="UsersList">
+    <div>
 
 
       <ul>
         <h1 style={heading}>Welcome to Your Exam!</h1>
+        <Row>
+    <Col lg="1"></Col>
+      {/***Sales & Feed***/}
+      <Col lg="10">
+      <CardDeck>
+        <Card >
+          <CardBody>
+      <Row>  
+      
+      <Card >
+     
+     <CardBody>
+       <CardTitle tag="h4"> <span>Title: </span> {title} </CardTitle>    
+       <CardSubtitle tag="h5" className="text-muted"><span>Description: </span>{description}</CardSubtitle>
+       <hr/>
 
-        {Mcqs.map((q, i) => {
-          return (
-            <div key={i}>
+        {Mcqs?.length? displayQuestions : null}
 
-              {/* <h2 className="question-text" >Subject: { q.title} , Description: { q.description}</h2> */}
+       </CardBody>
+        </Card>
+      </Row> 
+      </CardBody>
+      </Card>
+      </CardDeck>
+      </Col>
+      </Row>
 
-              <RadioGroup name="use-radio-group"
-                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
-              >
-                <div className="question-card">
-                  <h112 className="question-text" > <strong> Question :</strong> {q.question}</h112>
-                  <div>
-                    <FormControlLabel  onChange={handleChange}  value={q.choice1} label={q.choice1} control={<Radio />} />
-                    <FormControlLabel  onChange={handleChange}  value={q.choice2} label={q.choice2} control={<Radio />} />
-                    <FormControlLabel  onChange={handleChange}  value={q.choice3} label={q.choice3} control={<Radio />} />
-                    <FormControlLabel  onChange={handleChange}  value={q.choice4} label={q.choice4} control={<Radio />} />
-                  </div>
-                </div>
-
-                <h1></h1>
-
-              </RadioGroup>
-
-            </div>
-
-          )
-        })}
-        <Button variant="contained" size="small"
+        
+        <Button variant="contained" size="large"
           style={{
             display: 'flex', height: 40, marginTop: 10,
             borderBlockColor: '#1aac83', borderTop: '#1aac83',
             borderBottom: '#1aac83', borderRight: '#1aac83',
-            borderLeft: '#1aac83'
+            borderLeft: '#1aac83',width: 200, marginLeft: 470
           }}
 
           onClick={handleSubmit} >

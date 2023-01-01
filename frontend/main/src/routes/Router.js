@@ -78,6 +78,7 @@ const ViewExercise = lazy(() => import('../views/viewExercise'));
 const SearchInstructorCourses = lazy(() => import('../views/searchInstructorCourses'));
 
 const UserDashboard = lazy(() => import('../views/UserDashboard.js'));
+const OpenCourse = lazy(() => import('../views/openCourse.js'));
 
 
 
@@ -113,6 +114,7 @@ const ThemeRoutes = [
       { path: "/CourseInstructor", exact: false, element: <CourseInstructor /> },
 
       { path: "/viewCourse", exact: true, element: <ViewCourse /> },
+      { path: "/openCourse", exact: true, element: <OpenCourse /> },
       { path: "/editCourse", exact: true, element: <EditCourse /> },
       { path: "/createCourse", exact: true, element: <CreateCourse/>},
       { path: "/viewCourseCop" , exact: true, element: <ViewCourseCop/> },

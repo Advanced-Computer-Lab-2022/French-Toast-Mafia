@@ -11,6 +11,7 @@ function getAllRequests (req,res) {
    .then ((req) =>{
     return res.status(200).json(req);
     });
+    
 };
 
 const createRequest = async(req,res) => {  //add request   
@@ -85,7 +86,7 @@ const getCourseRequests = async(req,res) =>{
 
 const getRequesterName = async(req, res) =>{
     const uId = req.query.id;
-    User.findOne({_id:mongoose.Types.ObjectId(uId)}).then(retUser => {
+    User.findById(mongoose.Types.ObjectId(uId)).then(retUser => {
         if(retUser != null){
             return res.status(200).json(retUser.Name);
         }
