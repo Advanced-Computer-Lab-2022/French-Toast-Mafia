@@ -11,6 +11,7 @@ const FullLayout = lazy(() => import("../layouts/FullLayout.js"));
 const Starter = lazy(() => import("../views/Starter.js"));
 const Home = lazy(() => import("../views/Home.js"));
 const HomeCop = lazy(() => import("../views/HomeCop.js"));
+const HomeAdmin = lazy(() => import("../views/HomeAdmin.js"));
 
 const About = lazy(() => import("../views/About.js"));
 const Alerts = lazy(() => import("../views/ui/Alerts"));
@@ -41,6 +42,8 @@ const Contract = lazy (() => import ('../views/ui/Contract.js'));
 const ViewCourse = lazy(() => import("../views/viewCourse.js"));
 const EditCourse = lazy(() => import("../views/editCourse.js"));
 const ViewCourseCop = lazy(() => import("../views/viewCourseCop.js"));
+
+const ViewCourseA = lazy(() => import("../views/viewCourseA.js"));
 
 const ViewReport = lazy(() => import("../views/viewReport.js"));
 
@@ -87,6 +90,8 @@ const ThemeRoutes = [
      { path: "/", exact:true, element: <Navigate to="/home" /> },
       { path: "/home", exact: true, element: <Home /> },
       { path: "/homeCop", exact: true, element: <HomeCop /> },
+      { path: "/homeA", exact: true, element: <HomeAdmin /> },
+
 
       { path: "/starter", exact: true, element: <Starter /> },
       { path: "/about", exact: true, element: <About /> },
@@ -110,6 +115,7 @@ const ThemeRoutes = [
       { path: "/editCourse", exact: true, element: <EditCourse /> },
       { path: "/createCourse", exact: true, element: <CreateCourse/>},
       { path: "/viewCourseCop" , exact: true, element: <ViewCourseCop/> },
+      { path: "/viewCourseA" , exact: true, element: <ViewCourseA/> },
 
       { path: "/viewCourseReports", exact: true, element: <CourseReports /> },
      
