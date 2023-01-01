@@ -140,7 +140,9 @@ const handleSignUp = async (e) => {
   } catch (error) {
         console.log(error);
       }
+      handleClose();
     };
+   
 
 
   
