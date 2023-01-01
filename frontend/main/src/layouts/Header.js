@@ -140,9 +140,9 @@ const handleSignUp = async (e) => {
   } catch (error) {
         console.log(error);
       }
-      setShow(false);
-
+      handleClose();
     };
+   
 
 
   

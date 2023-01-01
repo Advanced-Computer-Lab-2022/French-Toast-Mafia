@@ -1,7 +1,12 @@
 const {Admin, validate1} = require("../Models/Admin");
+const Course = require ("../Models/Course");
+const mongoose = require('mongoose');
 const {Instructor,validate2} = require("../Models/Instructor");
+
 const {User} = require("../Models/User");
+
 const adminLogout= require("../Controller/user-controller");
+
 const bcrypt = require("bcrypt");
 
 
@@ -94,6 +99,47 @@ const createCorporateTrainess = async(req,res) => { //Requirement 3
     else{
      return res.status(401).json({Message: "invalid user!"});
      }
+}
+ // add Promotion for all courses 
+
+     const addPromotionAll = async (req, res) => {
+    const {Promotion, StartDatePromotion ,EndDatePromotion} = req.body;
+    console.log("hiiiiiiiiiiiiii");
+     if (Promotion && StartDatePromotion && EndDatePromotion) {
+        try {
+            console.log("hiiiiiiiiiiiiii");
+            const CurrentPrice = await Course.find({}).populate("Cost").select("Cost");
+            console.log(CurrentPrice);
+            let result;
+            for( let i =0;i<CurrentPrice.length ;i++){
+            const C=CurrentPrice[i].Cost;
+            console.log(C);
+            console.log(CurrentPrice[i]._id);
+            const discount= Promotion/100;
+            const discountedPrice= C * discount;
+            const newPrice= C-discountedPrice;
+            const endDate= new Date (EndDatePromotion);
+            let currentDate = new Date();
+            console.log(currentDate);
+            const startDate = new Date (StartDatePromotion);
+            if ( (endDate >= currentDate) && (currentDate >= startDate)) {
+                 result = await Course.findByIdAndUpdate({_id:mongoose.Types.ObjectId(CurrentPrice[i]._id)},{Cost:newPrice, Promotion:req.body.Promotion,StartDatePromotion:req.body.StartDatePromotion,EndDatePromotion:req.body.EndDatePromotion },{new:true});    
+                 // res.status(200).json(result);
+               }
+               else {
+                 result = await Course.findByIdAndUpdate({_id:mongoose.Types.ObjectId(CurrentPrice[i]._id)},{Cost:C,Promotion:req.body.Promotion,StartDatePromotion:req.body.StartDatePromotion,EndDatePromotion:req.body.EndDatePromotion},{new:true});
+                  // res.status(200).json(result);
+               }
+            }
+            res.status(200).json(result);
+     
+        } 
+       
+         catch (error){
+            res.status(400).json({error:error.message});
+        }
+    }
+    //res.status(400).json({error:error.message});
 }
 
 
@@ -196,4 +242,4 @@ const createCorporateTrainess = async(req,res) => { //Requirement 3
 
 //}
 
-module.exports={ getAllAdmin, createAdmin, createInstructor, createCorporateTrainess};
+module.exports={ getAllAdmin, createAdmin, createInstructor, createCorporateTrainess, addPromotionAll};

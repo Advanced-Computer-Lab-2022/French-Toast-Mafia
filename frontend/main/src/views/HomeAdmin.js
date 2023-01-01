@@ -1,10 +1,11 @@
 import { Row, Col, Card, CardBody, CardTitle} from "reactstrap";
 import { getPublishedCourses } from "../api/axios";
 import {useState, useEffect} from 'react';
-import SearchBar from "../components/dashboard/SearchBar";
-import CourseListCop from "../components/dashboard/CourseListCop";
 
-const HomeCop = () => {
+import SearchBar from "../components/dashboard/SearchBar";
+import CourseListA from "../components/dashboard/CourseListA";
+
+const HomeAdmin = () => {
   const[courses,setCourses] = useState([])
   const[searchResults,setSearchResults] = useState([])
 
@@ -32,10 +33,10 @@ const HomeCop = () => {
             </Row>
           </CardBody>
         </Card>
-        <CourseListCop searchResults={searchResults} />
+        <CourseListA searchResults={searchResults} />
       </Col>
     </Row>
   );
 };
 
-export default HomeCop;
+export default HomeAdmin;

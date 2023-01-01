@@ -129,21 +129,23 @@ const deleteExercise = async(req, res) => {
 //get exam by course id
 const getExamById = async (req, res) => {
   const courseId = req.query.id;
-  const result = await Exams.find({ courseId: mongoose.Types.ObjectId(courseId) });
+  await Exams.find({ courseId: mongoose.Types.ObjectId(courseId) }).then(result =>{
+    if (result) {
+      return res.status(200).json(result);
+    }
+    else {
+      res.status(500).json({ message: 'Error in getting exam' });
+    }
+   });
   //get result exam titles and description
-  if (result) {
-    res.status(200).json(result);
-  }
-  else {
-    res.status(500).json({ message: 'Error in getting exam' });
-  }
+  
 }
 
 const getExam=async(req,res)=>{
   const examId=req.query.id;
   const result=await Exams.findOne({_id:mongoose.Types.ObjectId(examId)});
   if(result){
-    res.status(200).json(result);
+    return res.status(200).json(result);
   }
   else{
     res.status(500).json({message:'Error in getting exam'});
