@@ -81,14 +81,18 @@ const createCorporateTrainess = async(req,res) => { //Requirement 3
     var email=req.body.Email;
     var password=req.body.Password;
     var type=req.body.Type;
+    var gender=req.body.Gender;
+
     
-    if( type == "corporate trainee"){
+    if( type ==  "Corporate"){
         try{ const corporateTrainees = await User.create(
             {
              Name: name,
              Email:email ,
              Password: password,
              Type: type,
+             Gender: gender
+
             } )
         }
         catch(err){
