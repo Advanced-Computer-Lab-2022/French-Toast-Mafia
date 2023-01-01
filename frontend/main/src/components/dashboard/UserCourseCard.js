@@ -18,7 +18,7 @@ import {
   import {useState, useEffect} from "react";
 
 
-  const UserCourseCard = ({cId, progress}) => {
+  const UserCourseCard = ({uId, cId, progress}) => {
     
     const[coursePreview,setCoursePreview] = useState([]);
     const[courseName, setCourseName] = useState("Loading...");
@@ -76,7 +76,7 @@ const[cpErrors, setCPErrors] = useState({});
         <CardText className="fw-light"><span class="bi bi-person"></span>&nbsp;{courseInstructor}</CardText>
         <CardText className="mt-3 text-muted">{stars}&nbsp;({ratings}) </CardText>
         <CardText ><span class="bi bi-book"></span> {courseSubject}</CardText>
-        <Button color="primary" onClick={() => navigate(`/openCourse?id=${cId}`)}>Open Course</Button> 
+        <Button color="primary" onClick={() => navigate(`/openCourse?id=${cId}&userId=${uId}`)}>Open Course</Button> 
         </Col>
         <Col lg="4">
         <CircularProgressbar value={progress * 100} text={`${parseInt(progress * 100)}%`} />

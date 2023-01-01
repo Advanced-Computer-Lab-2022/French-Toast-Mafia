@@ -22,7 +22,6 @@ const UserDashboard = () => {
     const search = useLocation().search;
     const id = new URLSearchParams(search).get('id');
 
-
     const [show, setShow] = useState(false);
 
  
@@ -143,7 +142,7 @@ const UserDashboard = () => {
           <hr/>
 
             <Row style={{ maxHeight : "450px",overflow: "auto"}}>
-              {courseProgress.map(c => <UserCourseCard cId={c.courseId} progress = {c.Progress}/>)}
+              {courseProgress.map(c => <UserCourseCard uId={id} cId={c.courseId} progress = {c.Progress}/>)}
             </Row>
         </CardBody>
         </Card>

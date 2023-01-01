@@ -22,17 +22,17 @@ import Cards from 'react-credit-cards';
 
 import 'reactjs-popup/dist/index.css';
 import { useNavigate } from 'react-router-dom';
-import StripeCheckout from 'react-stripe-checkout';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
-import { createContext } from 'react';
-
+import { useLocation } from 'react-router-dom';
 
 
 
 // import Chart from "react-apexcharts";
 
-const OpenCourseInfo = ({cId,course,instructor,ratingLength, setReportAlert, setReviewAlert}) => {
+const OpenCourseInfo = ({uId, cId, course,instructor,ratingLength, setReportAlert, setReviewAlert}) => {
+
+  const search = useLocation().search;
+
+    const userId = new URLSearchParams(search).get('userId');
 
   const [showRep, setShowRep] = useState(false);
   const [showRev, setShowRev] = useState(false);
@@ -40,9 +40,12 @@ const OpenCourseInfo = ({cId,course,instructor,ratingLength, setReportAlert, set
   const [problemType, setProblemType] = useState("Technical");
   const [description, setDescription] = useState("");
   const [reportedBy ,setReportedBy] = useState("");
-
-
+  const [rating, setRating] = useState("1");
+  const [review, setReview] = useState("");
+  
   const reportData = {};
+
+  const reviewData = {};
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 
@@ -69,7 +72,7 @@ const OpenCourseInfo = ({cId,course,instructor,ratingLength, setReportAlert, set
   const handleReportSubmit = async(req , res) => {
     reportData["type"] = problemType;
     reportData["description"] = description;
-    reportData["reported_by"] = reportedBy;
+    reportData["reported_by"] = userId;
 
     console.log(reportData)
 
@@ -87,22 +90,23 @@ const OpenCourseInfo = ({cId,course,instructor,ratingLength, setReportAlert, set
   }
 
   const handleReviewSubmit = async(req , res) => {
-    reportData["type"] = problemType;
-    reportData["description"] = description;
-    reportData["reported_by"] = reportedBy;
+    reviewData["id"] = userId;
+    reviewData["rating"] = rating;
+    reviewData["review"] = review;
 
-    console.log(reportData)
+    console.log(reviewData)
+    console.log(cId)
 
-    // await fetch(`http://localhost:5000/Report/addReport?id=${cId}`,{
-    //     method: 'POST',
-    //     body: JSON.stringify(reportData),
-    //     headers : {
-    //         'Content-Type':'application/json'
-    //     }
-    // }).then(json =>{
+    await fetch(`http://localhost:5000/Course/addCourseRating?id=${cId}`,{
+        method: 'POST',
+        body: JSON.stringify(reviewData),
+        headers : {
+            'Content-Type':'application/json'
+        }
+    }).then(json =>{
     handleCloseRev()
     return setReviewAlert(true)
-    // })
+    })
 
   }
 
@@ -118,13 +122,7 @@ const OpenCourseInfo = ({cId,course,instructor,ratingLength, setReportAlert, set
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="problemReport">
-              <Form.Label>Reporter id:</Form.Label>
-              <br/>
-              <Input
-                      id="reported_by"
-                      onChange={(e) => setReportedBy(e.target.value)}
-                    />
-              <br/>
+  
             <Form.Label>Problem Type:</Form.Label>
             <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
@@ -164,31 +162,25 @@ const OpenCourseInfo = ({cId,course,instructor,ratingLength, setReportAlert, set
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="problemReport">
-              <Form.Label>Reviewer id:</Form.Label>
-              <br/>
-              <Input
-                      id="reported_by"
-                      onChange={(e) => setReportedBy(e.target.value)}
-                    />
-              <br/>
+             
             <Form.Label>Rating:</Form.Label>
             <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
                 defaultValue="1"
                 name="radio-buttons-group"
   >
-              <FormControlLabel value="1" control={<Radio />} label="1" onChange={(e) => setProblemType("Technical")} />
-              <FormControlLabel value="2" control={<Radio />} label="2" onChange={(e) => setProblemType("Financial")}/>
-              <FormControlLabel value="3" control={<Radio />} label="3" onChange={(e) => setProblemType("Other")}/>
-              <FormControlLabel value="4" control={<Radio />} label="4" onChange={(e) => setProblemType("Technical")} />
-              <FormControlLabel value="5" control={<Radio />} label="5" onChange={(e) => setProblemType("Financial")}/>
+              <FormControlLabel value="1" control={<Radio />} label="1" onChange={(e) => setRating("1")} />
+              <FormControlLabel value="2" control={<Radio />} label="2" onChange={(e) => setRating("2")}/>
+              <FormControlLabel value="3" control={<Radio />} label="3" onChange={(e) => setRating("3")}/>
+              <FormControlLabel value="4" control={<Radio />} label="4" onChange={(e) => setRating("4")} />
+              <FormControlLabel value="5" control={<Radio />} label="5" onChange={(e) => setRating("5")}/>
           
             </RadioGroup>
               <br/>
               <Form.Label>Review: </Form.Label>
               <Input
               type="textarea"
-              id="description" rows="3" required="true" onChange={(e) => setDescription(e.target.value)}/>
+              id="description" rows="3" required="true" onChange={(e) => setReview(e.target.value)}/>
               <br/>
              
             </Form.Group>

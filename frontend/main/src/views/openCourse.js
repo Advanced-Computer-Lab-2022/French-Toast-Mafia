@@ -18,6 +18,7 @@ const OpenCourse = () => {
 
     const search = useLocation().search;
     const cId = new URLSearchParams(search).get('id');
+    const uId = new URLSearchParams(search).get('userId');
 
     const[course, setCourse] = useState([])
     const[instructor, setInstructor] = useState([])
@@ -75,7 +76,7 @@ const OpenCourse = () => {
       <CardDeck>
       <Row>  
         <Col sm="6" lg="6" xl="7" xxl="7">
-          <OpenCourseInfo cId = {cId} course={course} instructor={instructor} ratingLength = {ratingLength} setReportAlert={setReportAlert} setReviewAlert={setReviewAlert}/>
+          <OpenCourseInfo uId = {uId} cId = {cId} course={course} instructor={instructor} ratingLength = {ratingLength} setReportAlert={setReportAlert} setReviewAlert={setReviewAlert}/>
         </Col>
         <Col sm="6" lg="6" xl="5" xxl="5">
           <CoursePreview preview = {preview} price = {price} />

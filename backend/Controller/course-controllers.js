@@ -216,36 +216,71 @@ const removeCourseRating = async(req, res) =>{
 const addCourseRating = async(req , res) => {
     const courseId=req.query.id;
     const userId=req.body.id;
-    const rating=req.body.rating;
-    const review=req.body.review;
-    const u = await User.findOne({_id:mongoose.Types.ObjectId(userId)});
-    const username = u.Name;
-    const uId=mongoose.Types.ObjectId(userId);
-    const tuple={uId,rating,review,username};
-    if (courseId){
-        try{
-            //check if the user has already rated the course
-            const check = await course.findOne({_id:mongoose.Types.ObjectId(courseId), Rating:{$elemMatch:{uId:uId}}});
-            if (!check){
-            await course.findOneAndUpdate({_id:mongoose.Types.ObjectId(courseId)}, { $push: { Rating: tuple } }, { new: true }).then(async resCourse => {
-                var sum=0;
-                for (let i = 0; i < resCourse.Rating.length; i++) {
-                    sum+=parseInt(resCourse.Rating[i].rating);
+    
+    const u = await User.findOne({_id:mongoose.Types.ObjectId(userId)})
+    if(u){
+        const username = u.Name 
+        const rating=req.body.rating;
+        const review=req.body.review;
+        const uId = mongoose.Types.ObjectId(userId);
+        const tuple={uId,rating,review,username};
+        if (courseId){
+            try{
+                //check if the user has already rated the course
+                const check = await course.findOne({_id:mongoose.Types.ObjectId(courseId), Rating:{$elemMatch:{uId:uId}}});
+                if (!check){
+                await course.findOneAndUpdate({_id:mongoose.Types.ObjectId(courseId)}, { $push: { Rating: tuple } }, { new: true }).then(async resCourse => {
+                    var sum=0;
+                    for (let i = 0; i < resCourse.Rating.length; i++) {
+                        sum+=parseInt(resCourse.Rating[i].rating);
+                    }
+                    const avg=sum/resCourse.Rating.length;
+                await course.findByIdAndUpdate(courseId , {avgRating:avg}, { new: true }).then(r =>{ return r.status(200).json(r)});
+                });
+               
                 }
-                const avg=sum/resCourse.Rating.length;
-            await course.findByIdAndUpdate(courseId , {avgRating:avg}, { new: true }).then(r =>{ return r.status(200).json(resCourse)});
-            });
-           
+                else{
+                    res.status(400).json({error:"User has already rated this course"});
+                }
+    
             }
-            else{
-                res.status(400).json({error:"User has already rated this course"});
+            catch(error){
+                res.status(400).json({error:error.message})
             }
-
-        }
-        catch(error){
-            res.status(400).json({error:error.message})
         }
     }
+    else{
+        const username = "Anonymous User"
+        const uId = mongoose.Types.ObjectId(userId);
+        const rating=req.body.rating;
+        const review=req.body.review;
+        const tuple={uId,rating,review,username};
+        if (courseId){
+            try{
+                //check if the user has already rated the course
+                const check = await course.findOne({_id:mongoose.Types.ObjectId(courseId), Rating:{$elemMatch:{uId:uId}}});
+                if (!check){
+                await course.findOneAndUpdate({_id:mongoose.Types.ObjectId(courseId)}, { $push: { Rating: tuple } }, { new: true }).then(async resCourse => {
+                    var sum=0;
+                    for (let i = 0; i < resCourse.Rating.length; i++) {
+                        sum+=parseInt(resCourse.Rating[i].rating);
+                    }
+                    const avg=sum/resCourse.Rating.length;
+                await course.findByIdAndUpdate(courseId , {avgRating:avg}, { new: true }).then(r =>{ return r.status(200).json(r)});
+                });
+               
+                }
+                else{
+                    res.status(400).json({error:"User has already rated this course"});
+                }
+    
+            }
+            catch(error){
+                res.status(400).json({error:error.message})
+            }
+        }
+    }
+   
 }
 
 
@@ -499,11 +534,15 @@ const publishCourse = async(req, res) =>{
     course.findByIdAndUpdate({_id:mongoose.Types.ObjectId(cId)}, {$set:{Published : true}}).then(json =>{ return res.status(200).json(json);})
 }
 
+const deleteReview = async(req, res) =>{
+    const cId = req.query.id;
+    course.findByIdAndUpdate({_id:mongoose.Types.ObjectId(cId)}, {$pull:{Rating : {'uId' : mongoose.Types.ObjectId("63a6407ff29347d86eabd440")}}}).then(json =>{ return res.status(200).json(json);})
+}
 
 module.exports={getAllCourse , getPublishedCourses, viewCourse, createCourse, editCourse, 
     viewCourseInstructor, getMaxPrice, getSubjects,updatePublished, deleteCourse,
      viewCourseSubtitles, viewCourseExam, viewUserCourse, clearExams, publishCourse,
      deleteCourseRating,addCourseRating,calculateCourseRating, updateInstructorId,
-     viewCourseRating,emptyCourseList,registerCourseToUser, removeSubtitle,
+     viewCourseRating,emptyCourseList,registerCourseToUser, removeSubtitle, deleteReview,
      viewCourseDetails,calculateCourseDuration , getCoursePreviewVideos };
    
