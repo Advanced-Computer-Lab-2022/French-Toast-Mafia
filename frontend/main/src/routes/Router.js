@@ -72,6 +72,7 @@ const InstructorBalance= lazy(() => import('../views/InstructorBalance.js'));
 
 
 const InstructorDashboard= lazy(() => import('../views/InstructorDashboard.js'));
+const ViewExercise = lazy(() => import('../views/viewExercise'));
 const SearchInstructorCourses = lazy(() => import('../views/searchInstructorCourses'));
 
 const UserDashboard = lazy(() => import('../views/UserDashboard.js'));
@@ -129,6 +130,8 @@ const ThemeRoutes = [
 
       { path: "/InstructorHome", exact: false, element: <InstructorDashboard /> },
       { path: "/searchInstructorCourses", exact: false, element: <SearchInstructorCourses /> },
+      { path: "/viewExercise", exact: false, element: <ViewExercise /> },
+      
 
       { path: "/UserHome", exact: false, element: <UserDashboard /> },
 

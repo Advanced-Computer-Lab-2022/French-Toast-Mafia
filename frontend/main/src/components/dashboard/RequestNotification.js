@@ -17,6 +17,7 @@ const RequestNotification = ({request, reqCourse, reqUser, status}) => {
     const [req, setReq] = useState([]);
     const [courseName, setCourseName] = useState('Loading...');
     const [ requester, setRequester] = useState("Loading...");
+    const [st, setStatus] = useState(status);
    
     var statusColor;
     const icon = <span class="bi bi-person"></span>
@@ -54,7 +55,7 @@ const RequestNotification = ({request, reqCourse, reqUser, status}) => {
        axios.get(`http://localhost:5000/Request/AcceptRequest?id=${request._id}`).then(
      (res) => { 
           console.log(res);
-         
+         setStatus("Accepted");
      }
    ) };
     

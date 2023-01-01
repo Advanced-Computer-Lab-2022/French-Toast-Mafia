@@ -1,7 +1,9 @@
 import Accordion from 'react-bootstrap/Accordion';
-import { Card, CardBody, CardSubtitle, CardText, CardImg, CardTitle, Button, Row, Col } from "reactstrap";
+import { Card, CardBody, CardSubtitle, CardText, CardImg, CardTitle, Button, Row, Col , ListGroup,
+} from "reactstrap";
 import {useState, useEffect} from 'react';
 import { viewSubtitle } from '../../api/axios';
+import ExerciseList from '../dashboard/exerciseList';
 
 import {Form} from "react-bootstrap"
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -14,8 +16,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
     const [id, setId] = useState("");
     const [sub,setSub] = useState([])
     const [video,setVideo] = useState([1])
-    const [Exercise,setExercise] = useState([1])
-    const [toggleVideos,setToggleVideos] = useState(false)
+    const [Exercise,setExercise] = useState([])
+    const [toggleExercises,setToggleExercises] = useState(false)
    
     var i = 0;
     useEffect(() => {
@@ -27,27 +29,51 @@ import FormControlLabel from '@mui/material/FormControlLabel';
         })
       }, []);
 
-      const videoList = <Accordion.Body>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <span class="bi bi-play-btn"></span> 0 video(s)  
-      </Accordion.Body> 
-     
-     
-
- const yesVideo =  <Accordion.Body>
-    <Row>
-      <Col lg="1">
+      const exerciseList = 
+      <>
+      <Row>
+      <Col lg= "1"></Col>
+      <Col>
+      <ListGroup>
+      <ExerciseList exercises = {Exercise}/>
+      </ListGroup>
       </Col>
-    <Col lg="3">
-      <span class="bi bi-play-btn"></span> 0 video(s)
-    </Col>  
-    <Col>
-      <Button className="btn" color="link" size="sm" onClick={() => setToggleVideos(!toggleVideos)}>Show more</Button>
-    </Col>
-    </Row>   
-  {toggleVideos? videoList : null}
-  </Accordion.Body>
+      </Row>
+      </>
+     
+     
+    
+     
+const noExercises =  <Accordion.Body>
+                    <Row>
+                    <Col lg="1"></Col>
+                    <Col lg="9">
+                    <span class="bi bi-pencil-square"></span> 0 Exercise(s) 
+                    </Col> 
+                    <Col lg="2">
+                    <Button className="btn" outline color="primary"  size="sm" onClick={() => setShowExerciseForm(true)}>Add Exercise</Button>
+                    </Col>
+                    </Row>
+                    </Accordion.Body>
 
+const exShowMore =  <Button className="btn" color="link" size="sm" onClick={() => setToggleExercises(!toggleExercises)}>Show more</Button>
+const exShowLess =  <Button className="btn" color="link" size="sm" onClick={() => setToggleExercises(!toggleExercises)}>Show less</Button>
+
+const yesExercises =  <Accordion.Body>
+                      <Row>
+                        <Col lg="1"></Col>
+                          <Col lg="2">
+                            <span class="bi bi-pencil-square"></span> {Exercise.length} Exercise(s) 
+                          </Col> 
+                          <Col lg="7">
+                            {toggleExercises? exShowLess : exShowMore}
+                          </Col>
+                        <Col lg="2">
+                          <Button className="btn" outline color="primary"  size="sm" onClick={() => setShowExerciseForm(true)}>Add Exercise</Button>
+                        </Col>
+                      </Row>
+                      {toggleExercises? exerciseList : null}
+                      </Accordion.Body>
 
   const[Exform, setExForm] = useState({});
   const[Exerrors, setExErrors] = useState({});
@@ -553,7 +579,7 @@ const q4 =  <>
 
     return (
       <div>
-<div>
+    <div>
       <Modal style ={{maxHeight : "750px" ,overflowY: 'scroll'}} show={showVideoForm} onHide={handleCloseVideoForm}>
         <Modal.Header closeButton>
           <Modal.Title>Add Video</Modal.Title>
@@ -788,18 +814,8 @@ const q4 =  <>
             </Col>
             </Row>
                </Accordion.Body>
-            <Accordion.Body>
-          
-            <Row>
-            <Col lg="1"></Col>
-            <Col lg="9">
-            <span class="bi bi-pencil-square"></span> {Exercise?.length? Exercise.length : "0"} Exercise(s) 
-            </Col> 
-            <Col lg="2">
-            <Button className="btn" outline color="primary"  size="sm" onClick={() => setShowExerciseForm(true)}>Add Exercise</Button>
-            </Col>
-            </Row>
-            </Accordion.Body>
+          {Exercise?.length? yesExercises : noExercises}
+           
         </Accordion.Item>
       </div>
     );
