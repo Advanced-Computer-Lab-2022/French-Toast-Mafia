@@ -61,8 +61,8 @@ const OpenCourse = () => {
       }, [reviewAlert]);
 
   return (
+   
     <div>
-      {/***Top Cards***/}
       <div>
             <Alert color="success" isOpen={reportAlert} toggle={onDismiss.bind(null)}>
               Thank you for reporting the issue.
@@ -72,6 +72,7 @@ const OpenCourse = () => {
             </Alert>
           </div>
       {/***Sales & Feed***/}
+      <CardDeck>
       <Row>  
         <Col sm="6" lg="6" xl="7" xxl="7">
           <OpenCourseInfo cId = {cId} course={course} instructor={instructor} ratingLength = {ratingLength} setReportAlert={setReportAlert} setReviewAlert={setReviewAlert}/>
@@ -81,18 +82,19 @@ const OpenCourse = () => {
         </Col>
       </Row>
       </CardDeck>
-      {/***Table ***/}
+     
       <Row>
         <Col lg="12">
           <OpenCourseSubtitles subtitles={subtitles} />
         </Col>
       </Row>
-      {/***Blog Cards***/}
-      <Row>
-         <Reviews reviews={Rating} />
-      </Row>
+       {/***Blog Cards***/}
+       <Row>
+        <Reviews reviews={Rating} />
+       </Row>
 
-    </div>
+      </div>
+   
   );
 };
 
