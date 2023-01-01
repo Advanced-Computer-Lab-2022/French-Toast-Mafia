@@ -477,7 +477,7 @@ const calculateInstrRating = async(req , res) => {
     const instrId=req.query.id;
     if (instrId){
         try{
-            const result = await Instructor.findOne({_id:mongoose.Types.ObjectId(instrId)});
+            const result = await Instructor.findById({_id:mongoose.Types.ObjectId(instrId)});
             var sum=0;
             for (let i = 0; i < result.InstrRating.length; i++) {
                 sum+=parseInt(result.InstrRating[i].rating);
