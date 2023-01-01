@@ -121,7 +121,7 @@ const handleSignUp = async (e) => {
          data: { "Name": Name , "Email": Email , "Password": Password , "Gender": Gender },
          headers : { 
             'Content-Type' : 'application/json' 
-          },
+          }
     })
     .then ((response) => {console.log (response.data)
       navigate("/home")})
@@ -140,6 +140,8 @@ const handleSignUp = async (e) => {
   } catch (error) {
         console.log(error);
       }
+      setShow(false);
+
     };
 
 
