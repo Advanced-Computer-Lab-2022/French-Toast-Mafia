@@ -85,4 +85,4 @@ https://mui.com/ <br/>
 https://react-bootstrap.github.io/getting-started/introduction/ <br/>
 https://www.npmjs.com/ <br/>
 ## License :black_nib:
-A short description of the license. (MIT, Apache, etc.)
+[MIT License](LICENSE.md)
