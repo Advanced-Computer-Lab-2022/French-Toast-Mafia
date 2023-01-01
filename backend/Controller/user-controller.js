@@ -227,7 +227,7 @@ const viewMyInfo = async (req, res) => {
     const userId = req.query.id;
     if (userId) {
         try {
-            const result = await User.findOne({ _id: mongoose.Types.ObjectId(userId) });
+            const result = await User.findById(mongoose.Types.ObjectId(userId));
             const userDetails =
             {
                 "Name": result.Name,
@@ -339,8 +339,8 @@ const addCourse = async (req, res) => {
     const userId = req.query.id;
     const courseId = req.query.courseId;
 
-    const resultUser = await User.findOne({ _id: mongoose.Types.ObjectId(userId) });
-    const resultCourse = await Course.findOne({ _id: mongoose.Types.ObjectId(courseId) });
+    const resultUser = await User.findById(mongoose.Types.ObjectId(userId));
+    const resultCourse = await Course.findById(mongoose.Types.ObjectId(courseId));
 
     if (resultUser) {
         if (resultCourse) {
@@ -369,7 +369,7 @@ const removeCourse = async (req, res) => {
     const userId = req.query.id;
     const courseId = req.body;
 
-    const resultUser = await User.findOne({ _id: mongoose.Types.ObjectId(userId) });
+    const resultUser = await User.findById(mongoose.Types.ObjectId(userId));
     const resultCourse = mongoose.Types.ObjectId(courseId);
 
     if (resultUser) {
@@ -588,7 +588,7 @@ const userProgressDecrement = async (req, res) => {
 //send mail with certificate to user
 const sendCertificate = async (req, res) => {
     const userId = req.query.id;
-    const result = await User.findOne({ _id: mongoose.Types.ObjectId(userId) });
+    const result = await User.findById(mongoose.Types.ObjectId(userId));
     const userEmail = result.Email;
     return new Promise((resolve, reject) => {
         const transporter = nodemailer.createTransport({
@@ -687,10 +687,18 @@ const getUser = async (req, res) => {
 }
 
 
+const removeUnknownCourses = async (req, res) => {
+    const userId = req.query.id;
+    await User.findByIdAndUpdate({_id:mongoose.Types.ObjectId(userId)},{ $pull: { Progress:{ courseId : mongoose.Types.ObjectId("63af32f66fa969be4820b032"),Progress : 0 }} }).then(r =>{
+        res.status(200).json(r);
+    });
+}
+
+
 
 
 module.exports = {
-    getAllUser, getUser,
+    getAllUser, getUser, removeUnknownCourses,
     viewCourseTitleHoursRating, viewCoursePrice,
     selectCountryUser, ChangeCurrencyUser, addCourse,
     viewMyInfo, ViewMyCourses, changePassword, sendPassChangeMail,

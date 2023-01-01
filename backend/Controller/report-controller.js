@@ -26,7 +26,7 @@ const createReport = async(req,res) => {  //add report
                     description: req.body.description
                 }
             ).then((newReport) => {
-                const c = Course.findOne({_id:mongoose.Types.ObjectId(rep_course)}
+                const c = Course.findById(mongoose.Types.ObjectId(rep_course)
                 ).then((retCourse) =>{
                     console.log(retCourse.Instructor[0]);
                     // console.log(newReport._id);
@@ -62,12 +62,12 @@ const deleteReports = async(req,res) =>{
 const getReporterName = async(req, res) =>{
     const uId = req.query.id;
 
-    User.findOne({_id:mongoose.Types.ObjectId(uId)}).then(retUser =>{
+    User.findById(mongoose.Types.ObjectId(uId)).then(retUser =>{
         if(retUser != null){
             return res.status(200).json(retUser.Name);
         }
         else{
-            Instructor.findOne({_id:mongoose.Types.ObjectId(uId)}).then(retInstructor =>{
+            Instructor.findById(mongoose.Types.ObjectId(uId)).then(retInstructor =>{
                 if(retInstructor != null){
                     return res.status(200).json(retInstructor.InstrName);
                 }
@@ -80,7 +80,7 @@ const getReporterName = async(req, res) =>{
 
 const getReportedCourse = async(req, res) =>{
     const cId = req.query.id;
-    Course.findOne({_id:mongoose.Types.ObjectId(cId)}).then(retCourse =>{
+    Course.findById(mongoose.Types.ObjectId(cId)).then(retCourse =>{
             return res.status(200).json(retCourse.NameOfCourse);
     });          
 };
