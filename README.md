@@ -1,6 +1,6 @@
 # French-Toast-Mafia
-## Online Learning System
-Online Learning System is a web application through which individuals can attend pre-recorded courses online. :books: :man_teacher:
+## Online Learning System :books: 
+Online Learning System is a web application through which individuals can attend pre-recorded courses online. :man_teacher:
 ## Motivation :zap:
 This project aim was to help us: <br/>
 • Learn how to properly use the Agile Methodology to plan out a project and develop the software. <br/>
@@ -25,7 +25,7 @@ Node(.js) — the premier JavaScript web server. <br/>
 ### For Users:<br/>
     •  Can a preview video about the course before registering to it. 
     •  While enrollment in the course, he'll be able to see his/her progress in the course 
-    as a percentage of how much of the course has been completed so far.
+       as a percentage of how much of the course has been completed so far.
     •  Can request a refund if his progress in the course is less than 50%.
     •  Can retake an exam if his grade is less than 50%.
     •  Can download his notes while watching the course videos.
