@@ -446,7 +446,7 @@ const deleteInstrRating = async(req , res) => {
     }
 }
 
-//add course rating function
+//add Instructor rating function
 const addInstrRating = async(req , res) => {
     const instrId=req.query.id;
     const userId=req.body.id;
