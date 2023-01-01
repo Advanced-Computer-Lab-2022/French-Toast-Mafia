@@ -227,8 +227,15 @@ const addCourseRating = async(req , res) => {
             //check if the user has already rated the course
             const check = await course.findOne({_id:mongoose.Types.ObjectId(courseId), Rating:{$elemMatch:{uId:uId}}});
             if (!check){
-            const resCourse = await course.findOneAndUpdate({_id:mongoose.Types.ObjectId(courseId)}, { $push: { Rating: tuple } }, { new: true });
-            res.status(200).json(resCourse);
+            await course.findOneAndUpdate({_id:mongoose.Types.ObjectId(courseId)}, { $push: { Rating: tuple } }, { new: true }).then(async resCourse => {
+                var sum=0;
+                for (let i = 0; i < resCourse.Rating.length; i++) {
+                    sum+=parseInt(resCourse.Rating[i].rating);
+                }
+                const avg=sum/resCourse.Rating.length;
+            await course.findByIdAndUpdate(courseId , {avgRating:avg}, { new: true }).then(r =>{ return r.status(200).json(resCourse)});
+            });
+           
             }
             else{
                 res.status(400).json({error:"User has already rated this course"});
