@@ -23,19 +23,20 @@ Node(.js) — the premier JavaScript web server. <br/>
 
 ## Features :star2:
 ### For Users:<br/>
-    •  Can a preview video about the course before registering to it<br/>
-    •  While enrollment in the course, he'll be able to see his/her progress in the course as a percentage of how much of the course has been completed so far<br/>
-    •  Can request a refund if his progress in the course is less than 50%<br/>
-    •  Can retake an exam if his grade is less than 50%<br/>
-    •  Can download his notes while watching the course videos<br/>
-    •  Can recieve a certificate upon completing the course<br/>
-    <br/>
+    •  Can a preview video about the course before registering to it. 
+    •  While enrollment in the course, he'll be able to see his/her progress in the course 
+    as a percentage of how much of the course has been completed so far.
+    •  Can request a refund if his progress in the course is less than 50%.
+    •  Can retake an exam if his grade is less than 50%.
+    •  Can download his notes while watching the course videos.
+    •  Can recieve a certificate upon completing the course.
+    
 ### For Instructors:<br/>
-    • Can view the amount of money owed per month<br/>
-    • Can define a promotion for the course and for how long<br/>
-    • Can view the average grades of the exams in his course<br/>
-    • Can save his/her progress in creating a course WITHOUT publishing the course<br/>
-    • Can publish his/her course. A published course CANNOT be edited nor deleted.<br/>
+    • Can view the amount of money owed per month.
+    • Can define a promotion for the course and for how long.
+    • Can view the average grades of the exams in his course.
+    • Can save his/her progress in creating a course WITHOUT publishing the course.
+    • Can publish his/her course. A published course CANNOT be edited nor deleted.
 ## Code Examples :computer:
 
 ## Installation :arrow_down:
