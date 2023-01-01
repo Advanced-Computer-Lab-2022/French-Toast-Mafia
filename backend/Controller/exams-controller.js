@@ -222,7 +222,7 @@ const solveExam = async (req, res) => {
   //add user id to exam
   if (examId) {
     //check if user already solved the exam
-    const result = await Exams.findOne({ _id: mongoose.Types.ObjectId(examId) });
+    const result = await Exams.findById(mongoose.Types.ObjectId(examId));
     if (result) {
       const users = result.users;
       for (let i = 0; i < users.length; i++) {
@@ -268,7 +268,14 @@ const solveExam = async (req, res) => {
         //update user progress
         const uCourse = await course.findOne({ _id: mongoose.Types.ObjectId(courseId) });
         const totalExams = uCourse.ExamCourse.length;
-        const totalSubtitles = uCourse.CourseSubtitle.length;
+        // const totalSubtitles = uCourse.CourseSubtitle.length;
+        //get total videos in course
+        let totalSubtitles = 0;
+        for (let i = 0; i < uCourse.CourseSubtitle.length; i++) {
+            const s=await subtitle.findById(mongoose.Types.ObjectId(uCourse.CourseSubtitle[i]));
+            totalSubtitles += s.Video.length;
+            
+        }
         const p = 1 / (totalExams + totalSubtitles);
         const resultUser = await User.findOne({ _id: mongoose.Types.ObjectId(userId) });
         //console.log(resultUser);
