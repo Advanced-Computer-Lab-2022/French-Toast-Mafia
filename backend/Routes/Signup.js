@@ -7,26 +7,25 @@ const bcrypt = require("bcrypt");
 
 
 router.post("/", async (req, res) => {
+	// console.log("no0-----------------------------------------------------------");
 	try {
 		const { error } = validate3(req.body);
-		// console.log("no1-----------------------------------------------------------")
-		if (error){
+		console.log("no1-----------------------------------------------------------")
+		if (error)
 			return res.status(400).send({ message: error.details[0].message });
-			}
 		const user = await User.findOne({ Email: req.body.Email });
 		console.log(user);
-		// console.log("no2-----------------------------------------------------------")
 
-		if (user){
+		if (user) 
 			return res.status(409).send({ message: "User with given email already Exist!" });
-			}	
-		// console.log("no3-----------------------------------------------------------")
+		
         const salt = await bcrypt.genSalt();
 		const hashPassword = await bcrypt.hash(req.body.Password, salt);
-		// console.log("tetettetetetetteteteetetetetet")
-		await new User({Name:req.body.Name, Email:req.body.Email ,Password: hashPassword, Gender:req.body.Gender}).save();
+		console.log("tetettetetetetteteteetetetetet")
+		// await new User({Name:req.body.Name, Email:req.body.Email ,Password: hashPassword, Gender:req.body.Gender}).save();
 		// const newUser= new User({ Email:Email, Password: hashPassword , Gender: Gender});
-		// newUser.save().then(result => res.status(200).send(result));
+        const newUser = await User.create({ Name: Name, Email: Email, Password: hashPassword,  Gender: Gender});
+		newUser.save().then(result => res.status(200).send(result));
 
 		// console.log(newUser);
         // const token = createToken(newUser.Email);

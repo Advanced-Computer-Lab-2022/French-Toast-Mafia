@@ -112,7 +112,7 @@ const userSchema = new Schema({
     const schema = Joi.object({
       Name: Joi.string().required().label("Name"),
       Email: Joi.string().email().required().label("Email"),
-      Password: passwordComplexity().required().label("Password"),
+      Password: passwordComplexity().required().label("Password")
     });
     return schema.validate(data);
   };
