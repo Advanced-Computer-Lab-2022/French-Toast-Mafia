@@ -165,7 +165,7 @@ const handleSignUp = async (e) => {
         console.log(Email);
         console.log(Password);
         // navigate("/InstructorHome")
-        // navigate(`/MyCourses?userId=${id}`);
+        navigate(`/MyCourses?userId=${id}`);
       })
     } catch (error) {
       setError(error.response.data);

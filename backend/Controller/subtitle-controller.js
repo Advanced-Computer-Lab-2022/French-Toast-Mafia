@@ -47,7 +47,7 @@ const deleteSubtitleFromCourse= async (req,res) =>{
     const subId = req.query.id;
     // const courseId = req.query.courseId;
     if (subId){
-        const subRes= await Subtitle.findOne({_id:mongoose.Types.ObjectId(subId)});
+        const subRes= await Subtitle.findById(mongoose.Types.ObjectId(subId));
         const courseId = subRes.Course;
         try{
             const courseRes= await course.findOneAndUpdate({_id:mongoose.Types.ObjectId(courseId)},{$pull:{CourseSubtitle:mongoose.Types.ObjectId(subId)}}).then(r =>{});

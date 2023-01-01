@@ -67,7 +67,7 @@ const addCourse = async(req , res) => {
     const instructorId = req.query.id;
    
    //check if the Instructor exists first (this check will probably be removed when authentication is implemented)
-   const result = await Instructor.findOne({_id:mongoose.Types.ObjectId(instructorId)});
+   const result = await Instructor.findById(mongoose.Types.ObjectId(instructorId));
    if(result !== null){
         try{
 
@@ -288,7 +288,7 @@ const viewInstrInfo = async(req , res) => {
     const instrId = req.query.instrId;
 if (instrId) {
     try{
-        const result = await Instructor.findOne({_id:mongoose.Types.ObjectId(instrId)});
+        const result = await Instructor.findById(mongoose.Types.ObjectId(instrId));
         if (result != null){
             // const courseDetails = 
             // {"Title": courseToView.NameOfCourse,
@@ -422,7 +422,7 @@ const ViewMyRatings = async (req , res) => {
 // View Instructor reviews
 const ViewMyReview = async (req , res) => {
     const w = req.query.id;
-    const a = await Instructor.findOne({_id:mongoose.Types.ObjectId(w)}, {InstrReview:1,_id:0 });
+    const a = await Instructor.findById(mongoose.Types.ObjectId(w), {InstrReview:1,_id:0 });
    
     if (a == null) {
         res.status(404).send('no instructors available');
@@ -496,7 +496,7 @@ const viewInstrCourse = async (req , res) => {
     const resultCourses = [];
 if (instrId){
     try{
-        const result = await Instructor.findOne({_id:mongoose.Types.ObjectId(instrId)}); 
+        const result = await Instructor.findById(mongoose.Types.ObjectId(instrId)); 
         const courses = result.CourseGiven;
         for (let i = 0; i < courses.length; i++) {
             const c1 = courses[i];
@@ -522,7 +522,7 @@ const calculateMoney = async(req , res) => {
     const instrId=req.query.instrId;
     if (instrId){
         try{
-            const result = await Instructor.findOne({_id:mongoose.Types.ObjectId(instrId)});
+            const result = await Instructor.findById(mongoose.Types.ObjectId(instrId));
             var sum=0;
             for (let i = 0; i < result.CourseGiven.length; i++) {
                 const c1 =result.CourseGiven[i];

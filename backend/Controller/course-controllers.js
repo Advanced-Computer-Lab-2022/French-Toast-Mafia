@@ -23,7 +23,7 @@ const viewCourse = async(req , res) => {
     const courseId = req.query.id;
 
     try{
-        const courseToView = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+        const courseToView = await course.findById(mongoose.Types.ObjectId(courseId));
         // get the details of the course 
         if (courseToView != null){
             // const courseDetails = 
@@ -92,13 +92,13 @@ const viewCourseInstructor = async(req , res) => {
     const courseId = req.query.id;
 
     try{
-        const courseToView = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+        const courseToView = await course.findById(mongoose.Types.ObjectId(courseId));
         // get the details of the course 
         const courseDetails = 
             {"Course Instructor": courseToView.Instructor}
 
         const InstructorToView = await Instructor.
-        findOne({_id:mongoose.Types.ObjectId(courseToView.Instructor)});
+        findById(mongoose.Types.ObjectId(courseToView.Instructor));
       // console.log(InstructorToView);
         const InstructorDetails =
             {"InstrId": InstructorToView._id,
@@ -134,7 +134,7 @@ const viewCourseExam = async(req , res) => {
     const courseId = req.query.id;
 
     try{
-        const courseToView = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+        const courseToView = await course.findById(mongoose.Types.ObjectId(courseId));
         // get the subtitles of the course 
         const courseExam = courseToView.Exams
             
@@ -174,10 +174,10 @@ const viewUserCourses = async(req , res) => {
     const resultCourses = [];
 if (userId){
     try{
-        const result = await User.findOne({_id:mongoose.Types.ObjectId(userId)});
+        const result = await User.findById(mongoose.Types.ObjectId(userId));
         //get each user course details
         for (let i = 0; i < result.Courses.length; i++) {
-            const courseToView = await course.findOne({_id:mongoose.Types.ObjectId(result.Courses[i])});
+            const courseToView = await course.findById(mongoose.Types.ObjectId(result.Courses[i]));
             resultCourses.push(courseToView);
         }
         res.status(200).json(resultCourses);
@@ -289,7 +289,7 @@ const calculateCourseRating = async(req , res) => {
     const courseId=req.query.id;
     if (courseId){
         try{
-            const result = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+            const result = await course.findById(mongoose.Types.ObjectId(courseId));
             var sum=0;
             for (let i = 0; i < result.Rating.length; i++) {
                 sum+=parseInt(result.Rating[i].rating);
@@ -308,7 +308,7 @@ const viewCourseRating = async(req, res) => {
     const courseId=req.query.id;
     if (courseId){
         try{
-            const result = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+            const result = await course.findById(mongoose.Types.ObjectId(courseId));
             res.status(200).json(result.Rating);
         }catch(error){
             res.status(400).json({error:error.message})
@@ -381,17 +381,17 @@ const viewCourseDetails = async(req , res) => {
     const resQuestions = [];
     if (courseId){
         try{
-        const result = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+        const result = await course.findById(mongoose.Types.ObjectId(courseId));
         //get subtitles of the course
         for (let i = 0; i < result.CourseSubtitle.length; i++) {
-            const subtitleToView = await Subtitle.findOne({_id:mongoose.Types.ObjectId(result.CourseSubtitle[i])});
+            const subtitleToView = await Subtitle.findById(mongoose.Types.ObjectId(result.CourseSubtitle[i]));
             resSubtitles.push(subtitleToView);
         }
 
         //get each subtitle details
         for (let i = 0; i < resSubtitles.length; i++) {
             const subtitleToView = await
-            Subtitle.findOne({_id:mongoose.Types.ObjectId(resSubtitles[i])});
+            Subtitle.findById(mongoose.Types.ObjectId(resSubtitles[i]));
             resSubtitlesDetails.push(subtitleToView);
         }
         //get each subtitle titles
@@ -412,7 +412,7 @@ const viewCourseDetails = async(req , res) => {
         //get total hours of each subtitle
         for (let i = 0; i < resSubtitlesDetails.length; i++) {
             const subtitleHours = await
-            Subtitle.findOne({_id:mongoose.Types.ObjectId(resSubtitlesDetails[i]._id)});
+            Subtitle.findById(mongoose.Types.ObjectId(resSubtitlesDetails[i]._id));
             resHours.push(subtitleHours.Duration);
         }
         //get total hours of the course
@@ -444,10 +444,10 @@ const calculateCourseDuration = async(req , res) => {
     const courseId = req.query.id;
     if (courseId){
         try{
-            const result = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+            const result = await course.findById(mongoose.Types.ObjectId(courseId));
             var sum=0;
             for (let i = 0; i < result.CourseSubtitle.length; i++) {
-                const subtitleToView = await Subtitle.findOne({_id:mongoose.Types.ObjectId(result.CourseSubtitle[i])});
+                const subtitleToView = await Subtitle.findById(mongoose.Types.ObjectId(result.CourseSubtitle[i]));
                 sum+=parseInt(subtitleToView.Duration);
             }
             await course.findByIdAndUpdate(courseId , {Duration:sum}, { new: true });
