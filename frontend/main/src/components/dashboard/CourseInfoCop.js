@@ -358,14 +358,17 @@ import { Card, CardBody, CardSubtitle, CardText, CardTitle, Button, Row, Col,
             <CardTitle tag="h4" className="text-primary">Price: {course.Cost} EGP</CardTitle>
             <h1>  </h1>
             <Col className="text-end">
+
+            <Button className="btn" color="primary"  onClick={handleOkay} >Request access </Button>   
+
         
-        <Dropdown isOpen={dropdownOpen1} toggle={toggl}>
+        {/* <Dropdown isOpen={dropdownOpen1} toggle={toggl}>
 
         <DropdownToggle className="btn btn dropdown-toggle dropdown-toggle-split" outline color="danger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Request&nbsp;&nbsp;&nbsp;</DropdownToggle>
         <DropdownMenu>
         <DropdownItem id="ReportProblem" onClick={handleOkay}>Request Course </DropdownItem>
         <DropdownItem id="viewRequests"  onClick={viewRequests}>View Course Requests</DropdownItem>
-        </DropdownMenu> </Dropdown>
+        </DropdownMenu> </Dropdown> */}
         </Col>
             {/* <Button className="btn" color="primary" size="lg" onClick={handleOkay} >Request access </Button>  
    */}

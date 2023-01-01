@@ -2,7 +2,7 @@ import { Row, Col, Card, CardBody, CardTitle} from "reactstrap";
 import { getCourses } from "../api/axios";
 import {useState, useEffect} from 'react';
 import SearchBar from "../components/dashboard/SearchBar";
-import CourseList from "../components/dashboard/CourseList";
+import CourseListCop from "../components/dashboard/CourseListCop";
 
 const HomeCop = () => {
   const[courses,setCourses] = useState([])
@@ -35,7 +35,7 @@ const HomeCop = () => {
             </Row>
           </CardBody>
         </Card>
-        <CourseList searchResults={searchResults} />
+        <CourseListCop searchResults={searchResults} />
       </Col>
     </Row>
   );
