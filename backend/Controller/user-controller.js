@@ -507,18 +507,23 @@ const userRefund = async (req, res) => {
                 if (result){
                     console.log(result);
                     console.log("beebebebebebbbebebeb");
-                    const prog=result.Progress[0]
-                    // [1].Progress*100;
-                    console.log("blllllll");
-
+                    const prog=result.Progress[0].Progress*100
+                    console.log(prog);
                     const progress=Math.ceil(prog);
-                    res.status(200).json(progress);
+                    console.log(progress)               
+                    console.log('1-------------------------------------------------------------')
+
                 } else {
                         res.status(400).json({message:"Please enter a valid userId"});
                     }
+                console.log('2-------------------------------------------------------------')
+
                if (result.Progress<=50){
+                console.log('3-------------------------------------------------------------')
+
                 refundedCourses.push(courseId);
-                    res.status(200).json( {message :"You have successfully refunded this course"})
+                    res.status(200).json( {message :"Your request has been sent successfully to the admin"})
+
                     } else {
                     res.status(400).json({message:"You can't refund this course because you attended more than 50% of the course"});
                     }

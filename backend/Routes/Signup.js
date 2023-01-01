@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 
 
 router.post("/", async (req, res) => {
+	// console.log("no0-----------------------------------------------------------");
 	try {
 		const { error } = validate3(req.body);
 		// console.log("no1-----------------------------------------------------------")
@@ -38,6 +39,7 @@ router.post("/", async (req, res) => {
 		res.status(500).send({ message: "Internal Server Error" });
 	}
 });
+
 
 // 	if (error){
 // 		return res.status(400).send({ message: error.details[0].message });
