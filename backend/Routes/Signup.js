@@ -7,19 +7,19 @@ const bcrypt = require("bcrypt");
 
 
 router.post("/", async (req, res) => {
+	// console.log("no0-----------------------------------------------------------");
 	try {
 		const { error } = validate3(req.body);
 		// console.log("no1-----------------------------------------------------------")
-		if (error){
-			return res.status(400).send({ message: error.details[0].message });
-			}
-		const user = await User.findOne({ Email: req.body.Email });
+		if (error)
+			return res.status(400).send({ message: error.details[0].message });	
+		const user = await User.find({ Email: req.body.Email });
 		console.log(user);
 		// console.log("no2-----------------------------------------------------------")
 
-		if (user){
+		if (user.length!=0)
 			return res.status(409).send({ message: "User with given email already Exist!" });
-			}	
+				
 		// console.log("no3-----------------------------------------------------------")
         const salt = await bcrypt.genSalt();
 		const hashPassword = await bcrypt.hash(req.body.Password, salt);
@@ -39,6 +39,7 @@ router.post("/", async (req, res) => {
 		res.status(500).send({ message: "Internal Server Error" });
 	}
 });
+
 
 // 	if (error){
 // 		return res.status(400).send({ message: error.details[0].message });

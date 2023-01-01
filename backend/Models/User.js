@@ -9,7 +9,7 @@ const maxAge = 3 * 24 * 60 * 60;
 const userSchema = new Schema({
     Name: {
       type: String,
-      required: false,
+      required: true,
     },
     Email: {
       type: String,
@@ -22,7 +22,7 @@ const userSchema = new Schema({
     },
     Gender: {
         type: String,
-        required: false
+        required: true
     },
     Birthday: {
         type: Date,
@@ -114,6 +114,7 @@ const userSchema = new Schema({
       Name: Joi.string().required().label("Name"),
       Email: Joi.string().email().required().label("Email"),
       Password: passwordComplexity().required().label("Password"),
+      Gender: Joi.string().required().label("Gender")
     });
     return schema.validate(data);
   };

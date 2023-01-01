@@ -446,7 +446,7 @@ const deleteInstrRating = async(req , res) => {
     }
 }
 
-//add course rating function
+//add Instructor rating function
 const addInstrRating = async(req , res) => {
     const instrId=req.query.id;
     const userId=req.body.id;
@@ -477,7 +477,7 @@ const calculateInstrRating = async(req , res) => {
     const instrId=req.query.id;
     if (instrId){
         try{
-            const result = await Instructor.findOne({_id:mongoose.Types.ObjectId(instrId)});
+            const result = await Instructor.findById({_id:mongoose.Types.ObjectId(instrId)});
             var sum=0;
             for (let i = 0; i < result.InstrRating.length; i++) {
                 sum+=parseInt(result.InstrRating[i].rating);
