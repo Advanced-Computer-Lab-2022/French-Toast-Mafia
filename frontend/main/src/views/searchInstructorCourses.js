@@ -20,6 +20,7 @@ const SearchInstructorCourses = () => {
     })
   }, []);
 
+  
   return (
     <Row>
       <Col>

@@ -74,6 +74,8 @@ const InstructorBalance= lazy(() => import('../views/InstructorBalance.js'));
 const InstructorDashboard= lazy(() => import('../views/InstructorDashboard.js'));
 const SearchInstructorCourses = lazy(() => import('../views/searchInstructorCourses'));
 
+const UserDashboard = lazy(() => import('../views/UserDashboard.js'));
+
 // /*****Routes******/
 
 const ThemeRoutes = [
@@ -127,6 +129,8 @@ const ThemeRoutes = [
 
       { path: "/InstructorHome", exact: false, element: <InstructorDashboard /> },
       { path: "/searchInstructorCourses", exact: false, element: <SearchInstructorCourses /> },
+
+      { path: "/UserHome", exact: false, element: <UserDashboard /> },
 
       { path: "/CreateExam", exact: false, element: <CreateExam />},
       { path: "/InstrExamPage", exact: false, element: <InstrExamPage /> },

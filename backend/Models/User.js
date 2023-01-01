@@ -42,7 +42,8 @@ const userSchema = new Schema({
       required: false
     },
     Type : {                //individual or corperate trainee 
-        type: String,
+        type: String, 
+        enum: ["Individual","Corporate"],
         required: false
     },
     Job: {
@@ -110,12 +111,11 @@ const userSchema = new Schema({
   
   const validate3 = (data) => {
     const schema = Joi.object({
+      Name: Joi.string().required().label("Name"),
       Email: Joi.string().email().required().label("Email"),
       Password: passwordComplexity().required().label("Password"),
     });
     return schema.validate(data);
   };
   
-
-  // const User = mongoose.model('User', userSchema);
   module.exports = {User, validate3};

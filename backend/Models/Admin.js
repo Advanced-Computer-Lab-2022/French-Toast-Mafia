@@ -9,7 +9,7 @@ const maxAge = 3 * 24 * 60 * 60;
 const AdminSchema = new Schema({
     AdminName: {
         type: String,
-        required: true
+        required: false
     },
     AdminId: {
         type: String,

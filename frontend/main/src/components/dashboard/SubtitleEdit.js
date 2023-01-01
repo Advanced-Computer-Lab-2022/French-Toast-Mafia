@@ -245,15 +245,15 @@ const handleSubmitVideoForm = async (e) => {
       setVErrors(formErrors)
   }
   else{
-    //   await fetch(`http://localhost:5000/Subtitle/addSubtitle?id=${cId}`,{
-    //       method: 'POST',
-    //       body: JSON.stringify({"Title" : form.title, "Description": form.description, "Duration" : form.duration}),
-    //       headers : {
-    //           'Content-Type':'application/json'
-    //       }
-    //   }).then(json =>{
-    //       window.location.reload();
-    // })
+      await fetch(`http://localhost:5000/Subtitle/addVideo?id=${id}`,{
+          method: 'POST',
+          body: JSON.stringify({"Video" : Vform.link}),
+          headers : {
+              'Content-Type':'application/json'
+          }
+      }).then(json =>{
+          window.location.reload();
+    })
   }
 }
 
