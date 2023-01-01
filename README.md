@@ -57,7 +57,7 @@ npm start
 cd backend 
 ```
 ```
-node App.js
+nodemon app.js
 ```
 ## API reference :bookmark_tabs:
 • [Axios](https://axios-http.com/docs/api_intro) for communication between the frontend and backend
@@ -78,9 +78,9 @@ Open http://localhost:3000/#/home to view the homepage in your browser.
 To contribute to our project, you can check our [Contribution Guidelines](CONTRIBUTING.md) 
 ## Credits :white_check_mark:
 ### The main resources that helped us in our implementation 
-https://www.youtube.com/@NetNinja 
-https://mui.com/ 
-https://react-bootstrap.github.io/getting-started/introduction/
-https://www.npmjs.com/ 
+https://www.youtube.com/@NetNinja <br/>
+https://mui.com/ <br/>
+https://react-bootstrap.github.io/getting-started/introduction/ <br/>
+https://www.npmjs.com/ <br/>
 ## License :black_nib:
 A short description of the license. (MIT, Apache, etc.)
