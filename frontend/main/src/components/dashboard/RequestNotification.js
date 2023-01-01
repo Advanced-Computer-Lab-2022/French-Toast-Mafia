@@ -17,6 +17,7 @@ const RequestNotification = ({request, reqCourse, reqUser, status}) => {
     const [req, setReq] = useState([]);
     const [courseName, setCourseName] = useState('Loading...');
     const [ requester, setRequester] = useState("Loading...");
+    const [st, setStatus] = useState(status);
    
     var statusColor;
     const icon = <span class="bi bi-person"></span>
@@ -54,24 +55,21 @@ const RequestNotification = ({request, reqCourse, reqUser, status}) => {
        axios.get(`http://localhost:5000/Request/AcceptRequest?id=${request._id}`).then(
      (res) => { 
           console.log(res);
-         
+         setStatus("Accepted");
      }
    ) };
-
-   const handleRequest  =  async () => {
-    axios.get(`http://localhost:5000/Request/RejectRequest?id=${request._id}`).then(
-      (res) => { 
-       console.log(res);
-      
-  }
-) };
     
   
-
+const buttons =  <><Button onClick={handlesubmit}
+color="primary" size="sm">
+  Accept
+</Button> 
+&nbsp;
+</>
 
 
   return (
-            <ListGroupItem
+            <ListGroupItem color = {status == "Accepted"? "success" : null}
               key={req._id}
               action
               tag="a"
@@ -88,16 +86,7 @@ const RequestNotification = ({request, reqCourse, reqUser, status}) => {
               {requester} &nbsp;
               ({courseName})
               </Col>
-              <Button onClick={handlesubmit}
-                color="primary" size="sm">
-                  Accept
-              </Button> 
-              &nbsp;
-              <Button   onclick={handleRequest}
-                color="danger" size="sm">
-                  Reject
-              </Button> 
-              &nbsp;
+              {status != "Accepted"? buttons : null}
               <small className="ms-auto text-muted text-small">
                 {request.createdAt}
               </small>

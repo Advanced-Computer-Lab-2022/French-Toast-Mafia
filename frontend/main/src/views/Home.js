@@ -1,6 +1,7 @@
 import { Row, Col, Card, CardBody, CardTitle} from "reactstrap";
 import { getPublishedCourses } from "../api/axios";
 import {useState, useEffect} from 'react';
+
 import SearchBar from "../components/dashboard/SearchBar";
 import CourseList from "../components/dashboard/CourseList";
 

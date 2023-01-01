@@ -30,7 +30,7 @@ import { Card, CardBody, CardSubtitle, CardText, CardTitle, Button, Row, Col,
   
   // import Chart from "react-apexcharts";
   
-  const CourseInfoCop = ({cId,course,instructor,ratingLength,setReportAlert}) => {
+  const CourseInfoA = ({cId,course,instructor,ratingLength,setReportAlert}) => {
   
     const [show, setShow] = useState(false);
     const [okay, setOkay] = useState(false);
@@ -67,7 +67,15 @@ import { Card, CardBody, CardSubtitle, CardText, CardTitle, Button, Row, Col,
   }
   
     const handleClose = () => setShow(false);
-    const handleClose1 = () => setOkay(false);
+
+
+    const [show1, setShow1] = useState(false);
+   
+    const handleClose1 = () => setShow1(false);
+
+
+    const[cpform, setCPForm] = useState({});
+    const[cpErrors, setCPErrors] = useState({});
   
   
     const handleShow = () => setShow(true);
@@ -85,6 +93,60 @@ import { Card, CardBody, CardSubtitle, CardText, CardTitle, Button, Row, Col,
     const[err , setErr] = useState(false);
   
     const[done , setDone] = useState(false);
+
+
+    const setCPField = (field, value) =>{
+      setCPForm({
+          ...cpform,
+          [field]:value,
+      })
+      if(!!cpErrors[field])
+      setCPErrors({
+          ...cpErrors,
+          [field]:null,
+      })
+    }
+    
+    const validateCPForm = () =>{
+      const { promotion, start, end} = cpform
+      const newErrors = {}
+    
+      if(!promotion ||promotion === "")
+      newErrors.promotion = "Please enter a course promotion"
+      if(!start|| start === "")  
+      newErrors.start = "Please enter a start time"
+      if(!end|| end === "")  
+      newErrors.end = "Please enter an end time"
+      return newErrors
+    }
+
+const handleCPSubmit = async (e) => {
+  console.log("jjjjjjjjjjj")
+
+  e.preventDefault();
+
+  const formErrors = validateCPForm()
+
+  if(Object.keys(formErrors).length > 0){
+      setCPErrors(formErrors)
+  }
+  else{
+
+      await fetch(`http://localhost:5000/Instructor/addPromotion?id=${cId}`,{
+          method: 'POST',
+          body: JSON.stringify({"Promotion" : cpform.promotion,
+            "StartDatePromotion": cpform.start,
+            "EndDatePromotion": cpform.end}),
+          headers : {
+              'Content-Type':'application/json'
+          }
+      }).then(json =>{
+        handleClose1()
+        window.location.reload();
+      })
+  }
+}
+    
   
   
     const handleReportSubmit = async(req , res) => {
@@ -113,55 +175,7 @@ import { Card, CardBody, CardSubtitle, CardText, CardTitle, Button, Row, Col,
 
     setOpen(false);
   };
-//   const handleRequestSubmit = async (event) => {
-//     setOpen(true);
-//     event.preventDefault();
-//     const data = new FormData(event.currentTarget);
-//     console.log(data.get('requested_by'));
-//     axios.post(`http://localhost:5000/Request/createRequest?id=${cId}`, { 
-//         requested_by : data.get('requested_by')
-//     }).then((res) => {
-//         setErrorMessage(res.data.Message);
-//   }).catch((err)=>{
-//     setErrorMessage("Error in requesting access");
-//   });
-// };
 
-// const handleSubmit = async (e) => {
-//   e.preventDefault();
-
-//   if(CardNumber.length==0 || CardName.length==0 || CardCvc.length==0 || CardExpiry.length==0){
-//     setErr(true);
-//   }
-
-//   const card = { CardName, CardNumber , CardExpiry , CardCvc }
-//   const response = await fetch('http://localhost:5000/Card/addCard' , {
-//       method : 'POST' ,
-//       body : JSON.stringify(card) , 
-//       headers : {
-//           'Content-Type' : 'application/json'
-//       }
-//   }) 
-
-//   const json = await response.json(card)
-
-//   if(!response.ok){
-//       setErr(json.err)
-         
-
-//   }
-//   if(response.ok){
-//       setName('')
-//       setNumber('')
-//       setExpiry('')
-//       setCvc('')
-
-
-//         setErr(false)
-//         console.log('new card added', json)
-//         setDone(true);
-//   }
-// }
 
   const handleRequestSubmit = async (e) => {
     setOpen(true);
@@ -201,79 +215,76 @@ import { Card, CardBody, CardSubtitle, CardText, CardTitle, Button, Row, Col,
    
 }
 
-// const handleSubmit = async (event) => {
-//   setOpen(true);
-//   event.preventDefault();
-//   const data = new FormData(event.currentTarget);
-
-//   axios.post(`http://localhost:5000/Request/createRequest?id=${cId}`, { 
-//       requested_by: data.get('requested_by'),
-//   }).then((res) => {
-//     if(res.data.status === 200){
-//         setErrorMessage('You have successfly requetesd the course');
-//     } else {
-//         setErrorMessage('Cannot change password');
-//     }
-// }).catch((err) => {
-//     setErrorMessage('Cannot change password');
-// });
-
-// };
    
     return (
         <div>
        
       <div>
-        <Modal show={okay}  onHide={handleClose1}>
-        {/* <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}> */}
-          <Modal.Header closeButton>
-            <Modal.Title>Request Access </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group className="mb-3" controlId="problemReport">
-                <Form.Label> Requester id:</Form.Label>
-                <br/>
-                
-                {/* <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="requested_by"
-              label="Requester id"
-              name="requested_by"
-              autoComplete="requested_by"
-              autoFocus
-            /> */}
-                <Input
-                        id="requested_by"
-                        onChange={(e) => setRequestedBy(e.target.value)}
-                      />
-                <br/>  
-              </Form.Group>
-            </Form>
-          
-          </Modal.Body>
-          <Modal.Footer>
-            <Button outline color="danger"onClick={handleClose1} >
-              Close
-            </Button>
-            <Button type="submit "color="primary" onClick={handleRequestSubmit}> 
-              Submit
-            </Button>
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleC} message={errorMessage}>
-                              {/* <Alert onClose={handleC} severity="success" sx={{ width: '100%' }}>
-                                  {errorMessage}
-                              </Alert> */}
-                          </Snackbar>
-          </Modal.Footer>
-          {/* </Box> */}
-        </Modal>
+      <Modal show={show1} onHide={handleClose1}>
+        <Modal.Header closeButton>
+          <Modal.Title>Course Promotion</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+              <Form.Group controlId="Promotion">
+                    <Form.Label>Promotion:</Form.Label>
+                    <Form.Control 
+                        type="text"
+                        placeholder="Ex. '50'"
+                        value = {cpform.promotion}
+                        onChange={(e) => setCPField('promotion', e.target.value)}
+                        isInvalid={!!cpErrors.promotion}
+                    ></Form.Control>
+                    <Form.Control.Feedback type='invalid'>
+                        {cpErrors.promotion}
+                    </Form.Control.Feedback>
+                </Form.Group>
+
+              <br/>
+            <Form.Group controlId="start">
+              <Form.Label>Promotion Start Time:</Form.Label>
+              <Form.Control 
+                        type="text"
+                        placeholder="Ex. 'YYYY-MM-DD'"
+                        value = {cpform.start}
+                        onChange={(e) => setCPField('start', e.target.value)}
+                        isInvalid={!!cpErrors.start}
+                    ></Form.Control>
+                    <Form.Control.Feedback type='invalid'>
+                        {cpErrors.start}
+                    </Form.Control.Feedback>
+      
+            </Form.Group>
+               <Form.Group controlId="subject">
+                   <Form.Label>Promotion end time :</Form.Label>
+                   <Form.Control 
+                       type="text"
+                       placeholder="Ex. 'YYYY-MM-DD'"
+                       value = {cpform.end}
+                       onChange={(e) => setCPField('end', e.target.value)}
+                       isInvalid={!!cpErrors.end}
+                   ></Form.Control>
+                   <Form.Control.Feedback type='invalid'>
+                       {cpErrors.end}
+                   </Form.Control.Feedback>
+               </Form.Group>
+               <br/>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button outline color="danger"onClick={handleClose1} >
+            Close
+          </Button>
+          <Button color="primary" onClick={handleCPSubmit}>
+            Save Promotion
+          </Button>
+        </Modal.Footer>
+      </Modal>
         
         </div>
         <div>
 
-        <Modal show={show}  onHide={handleClose}>
+        {/* <Modal show={show}  onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Report Problem</Modal.Title>
           </Modal.Header>
@@ -315,7 +326,7 @@ import { Card, CardBody, CardSubtitle, CardText, CardTitle, Button, Row, Col,
               Submit
             </Button>
           </Modal.Footer>
-        </Modal>
+        </Modal> */}
         </div>
         
   
@@ -334,13 +345,13 @@ import { Card, CardBody, CardSubtitle, CardText, CardTitle, Button, Row, Col,
             </Col>
             <Col className="text-end">
           
-            <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+            {/* <Dropdown isOpen={dropdownOpen} toggle={toggle}>
   
             <DropdownToggle className="btn btn dropdown-toggle dropdown-toggle-split" outline color="danger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Report&nbsp;&nbsp;&nbsp;</DropdownToggle>
             <DropdownMenu>
             <DropdownItem id="ReportProblem" onClick={handleShow}>Report Problem</DropdownItem>
             <DropdownItem id="viewReports"   onClick={viewReports}>View Course Reports</DropdownItem>
-            </DropdownMenu> </Dropdown>
+            </DropdownMenu> </Dropdown> */}
             </Col>
           </Row>
          
@@ -359,19 +370,11 @@ import { Card, CardBody, CardSubtitle, CardText, CardTitle, Button, Row, Col,
             <h1>  </h1>
             <Col className="text-end">
 
-            <Button className="btn" color="primary"  onClick={handleOkay} >Request access </Button>   
+            <Button className="btn" color="primary"  onClick={setShow1} >Add Promotion </Button>   
 
         
-        {/* <Dropdown isOpen={dropdownOpen1} toggle={toggl}>
-
-        <DropdownToggle className="btn btn dropdown-toggle dropdown-toggle-split" outline color="danger" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Request&nbsp;&nbsp;&nbsp;</DropdownToggle>
-        <DropdownMenu>
-        <DropdownItem id="ReportProblem" onClick={handleOkay}>Request Course </DropdownItem>
-        <DropdownItem id="viewRequests"  onClick={viewRequests}>View Course Requests</DropdownItem>
-        </DropdownMenu> </Dropdown> */}
+      
         </Col>
-            {/* <Button className="btn" color="primary" size="lg" onClick={handleOkay} >Request access </Button>  
-   */}
       
             </Col>
   
@@ -390,7 +393,7 @@ import { Card, CardBody, CardSubtitle, CardText, CardTitle, Button, Row, Col,
     );
   };
   
-  export default CourseInfoCop;
+  export default CourseInfoA;
   
   
   

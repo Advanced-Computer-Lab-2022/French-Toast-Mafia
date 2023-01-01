@@ -1,7 +1,9 @@
 import Accordion from 'react-bootstrap/Accordion';
-import { Card, CardBody, CardSubtitle, CardText, CardImg, CardTitle, Button, Row, Col } from "reactstrap";
+import { Card, CardBody, CardSubtitle, CardText, CardImg, CardTitle, Button, Row, Col , ListGroup,
+} from "reactstrap";
 import {useState, useEffect} from 'react';
 import { viewSubtitle } from '../../api/axios';
+import ExerciseList from '../dashboard/exerciseList';
 
 import {Form} from "react-bootstrap"
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -14,8 +16,8 @@ import FormControlLabel from '@mui/material/FormControlLabel';
     const [id, setId] = useState("");
     const [sub,setSub] = useState([])
     const [video,setVideo] = useState([1])
-    const [Exercise,setExercise] = useState([1])
-    const [toggleVideos,setToggleVideos] = useState(false)
+    const [Exercise,setExercise] = useState([])
+    const [toggleExercises,setToggleExercises] = useState(false)
    
     var i = 0;
     useEffect(() => {
@@ -27,27 +29,51 @@ import FormControlLabel from '@mui/material/FormControlLabel';
         })
       }, []);
 
-      const videoList = <Accordion.Body>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <span class="bi bi-play-btn"></span> 0 video(s)  
-      </Accordion.Body> 
-     
-     
-
- const yesVideo =  <Accordion.Body>
-    <Row>
-      <Col lg="1">
+      const exerciseList = 
+      <>
+      <Row>
+      <Col lg= "1"></Col>
+      <Col>
+      <ListGroup>
+      <ExerciseList exercises = {Exercise}/>
+      </ListGroup>
       </Col>
-    <Col lg="3">
-      <span class="bi bi-play-btn"></span> 0 video(s)
-    </Col>  
-    <Col>
-      <Button className="btn" color="link" size="sm" onClick={() => setToggleVideos(!toggleVideos)}>Show more</Button>
-    </Col>
-    </Row>   
-  {toggleVideos? videoList : null}
-  </Accordion.Body>
+      </Row>
+      </>
+     
+     
+    
+     
+const noExercises =  <Accordion.Body>
+                    <Row>
+                    <Col lg="1"></Col>
+                    <Col lg="9">
+                    <span class="bi bi-pencil-square"></span> 0 Exercise(s) 
+                    </Col> 
+                    <Col lg="2">
+                    <Button className="btn" outline color="primary"  size="sm" onClick={() => setShowExerciseForm(true)}>Add Exercise</Button>
+                    </Col>
+                    </Row>
+                    </Accordion.Body>
 
+const exShowMore =  <Button className="btn" color="link" size="sm" onClick={() => setToggleExercises(!toggleExercises)}>Show more</Button>
+const exShowLess =  <Button className="btn" color="link" size="sm" onClick={() => setToggleExercises(!toggleExercises)}>Show less</Button>
+
+const yesExercises =  <Accordion.Body>
+                      <Row>
+                        <Col lg="1"></Col>
+                          <Col lg="2">
+                            <span class="bi bi-pencil-square"></span> {Exercise.length} Exercise(s) 
+                          </Col> 
+                          <Col lg="7">
+                            {toggleExercises? exShowLess : exShowMore}
+                          </Col>
+                        <Col lg="2">
+                          <Button className="btn" outline color="primary"  size="sm" onClick={() => setShowExerciseForm(true)}>Add Exercise</Button>
+                        </Col>
+                      </Row>
+                      {toggleExercises? exerciseList : null}
+                      </Accordion.Body>
 
   const[Exform, setExForm] = useState({});
   const[Exerrors, setExErrors] = useState({});
@@ -57,6 +83,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
   const[showExerciseForm, setShowExerciseForm] = useState(false);
   const[showVideoForm, setShowVideoForm] = useState(false);
 
+  const[ref, setRef] = useState(false);
 
   const handleCloseExerciseForm = () => setShowExerciseForm(false);
   const handleCloseVideoForm = () => setShowVideoForm(false);
@@ -86,7 +113,8 @@ const setVField = (field, value) =>{
 }
 
 const validateExForm = () =>{
-  const { title, description, q1, q1c1, q1c2, q1c3, q1c4, cc1,
+  const { title, description, number,
+    q1, q1c1, q1c2, q1c3, q1c4, cc1,
     q2, q2c1, q2c2, q2c3, q2c4, cc2,
     q3, q3c1, q3c2, q3c3, q3c4, cc3,
     q4, q4c1, q4c2, q4c3, q4c4, cc4} = Exform
@@ -97,7 +125,9 @@ const validateExForm = () =>{
     newErrors.title = "Please enter a title"
   if(!description || description === "")
     newErrors.description = "Please enter a description"
-
+  if(!number  || number === "")
+    Exform.number = 1;
+  
   if(!q1 || q1 === "")  
     newErrors.q1 = "Please enter a question"
   if(!q1c1 || q1c1 === "")  
@@ -179,14 +209,8 @@ const handleSubmitExerciseForm = async (e) => {
   if(Object.keys(formErrors).length > 0){
       setExErrors(formErrors)
   }
+
   else{
-    console.log("Hurray!")
-    console.log(Exform.q1)
-    console.log(Exform.q1c1)
-    console.log(Exform.q1c2)
-    console.log(Exform.q1c3)
-    console.log(Exform.q1c4)
-    console.log(Exform[`q1c${Exform.cc1}`])
 
       await fetch(`http://localhost:5000/Exams/createExercise?id=${id}`,{
           method: 'POST',
@@ -194,45 +218,62 @@ const handleSubmitExerciseForm = async (e) => {
           headers : {
               'Content-Type':'application/json'
           }
-      }).then(response => {return (response.json())}).then(data =>{  
-          if(Exform.number >= 2){
-              fetch(`http://localhost:5000/Exams/addMCQ?id=${data}`,{
-              method: 'POST',
-              body: JSON.stringify({"title" : Exform.title, "description": Exform.description, "question" : Exform.q2, "choice1":Exform.q1c1, "choice2":Exform.q2c2, "choice3":Exform.q2c3, "choice4":Exform.q2c4, "correct":Exform[`q2c${Exform.cc2}`]}),
-              headers : {
-                  'Content-Type':'application/json'
-              }
-          }).then(res1 =>{
-              if(Exform.number >= 3){
-                  fetch(`http://localhost:5000/Exams/addMCQ?id=${data}`,{
-                  method: 'POST',
-                  body: JSON.stringify({"question" : Exform.q3, "choice1":Exform.q3c1, "choice2":Exform.q3c2, "choice3":Exform.q3c3, "choice4":Exform.q3c4, "correct":Exform[`q3c${Exform.cc3}`]}),
-                  headers : {
-                      'Content-Type':'application/json'
-                  }
-                }).then(res2 =>{
-                  if(Exform.number >= 4){
-                      fetch(`http://localhost:5000/Exams/addMCQ?id=${data}`,{
-                      method: 'POST',
-                      body: JSON.stringify({"question" : Exform.q4, "choice1":Exform.q4c1, "choice2":Exform.q4c2, "choice3":Exform.q4c3, "choice4":Exform.q4c4, "correct":Exform[`q4c${Exform.cc4}`]}),
-                      headers : {
-                          'Content-Type':'application/json'
-                      }
-                    })
-                  }
-                  else{
-                    window.location.reload();
-                  }
-                })
-              }
-              else{
-                window.location.reload();
-              }
-          })
-        }
-          window.location.reload(); 
-    })  
+      }).then(response => { 
+        return response.json()
+      }).then(async data =>{
+
+        if(parseInt(Exform.number)  > 1){
+          console.log("LARGER THAN 1")
+          console.log(data)
+          
+          await fetch(`http://localhost:5000/Exams/addMCQ?id=${data}`,{
+          method: 'POST',
+          body: JSON.stringify({"title" : Exform.title, "description": Exform.description, "question" : Exform.q2, "choice1":Exform.q1c1, "choice2":Exform.q2c2, "choice3":Exform.q2c3, "choice4":Exform.q2c4, "correct":Exform[`q2c${Exform.cc2}`]}),
+          headers : {
+              'Content-Type':'application/json'
+          }
+        });
+      }else{
+        handleCloseExerciseForm()
+        window.location.reload();
+      }
+  
+        if(parseInt(Exform.number)  > 2){
+          console.log("LARGER THAN 2")
+          console.log(data)
+          await fetch(`http://localhost:5000/Exams/addMCQ?id=${data}`,{
+          method: 'POST',
+          body: JSON.stringify({"question" : Exform.q3, "choice1":Exform.q3c1, "choice2":Exform.q3c2, "choice3":Exform.q3c3, "choice4":Exform.q3c4, "correct":Exform[`q3c${Exform.cc3}`]}),
+          headers : {
+              'Content-Type':'application/json'
+          }
+        });
+      }
+      else{
+        handleCloseExerciseForm()
+        window.location.reload();
+
+      }
+          
+        if(parseInt(Exform.number) > 3){
+          console.log("LARGER THAN 3")
+          console.log(data)
+          await fetch(`http://localhost:5000/Exams/addMCQ?id=${data}`,{
+          method: 'POST',
+          body: JSON.stringify({"question" : Exform.q4, "choice1":Exform.q4c1, "choice2":Exform.q4c2, "choice3":Exform.q4c3, "choice4":Exform.q4c4, "correct":Exform[`q4c${Exform.cc4}`]}),
+          headers : {
+              'Content-Type':'application/json'
+          }
+        })
+      }
+      handleCloseExerciseForm()
+      window.location.reload();
+
+            
+
+    });
   }
+     
 }
 
 const handleSubmitVideoForm = async (e) => {
@@ -553,7 +594,7 @@ const q4 =  <>
 
     return (
       <div>
-<div>
+    <div>
       <Modal style ={{maxHeight : "750px" ,overflowY: 'scroll'}} show={showVideoForm} onHide={handleCloseVideoForm}>
         <Modal.Header closeButton>
           <Modal.Title>Add Video</Modal.Title>
@@ -781,29 +822,19 @@ const q4 =  <>
             <Row>            
             <Col lg="1"></Col>
             <Col lg="9">
-            <span class="bi bi-play-btn"></span>  {video?.length? video.length : "0"} video(s)  
+            <span class="bi bi-play-btn"></span>  {video?.length? video.length : "0"} Video(s)  
             </Col> 
             <Col lg="2">
             <Button className="btn" outline color="primary"  size="sm" onClick={() => setShowVideoForm(true)}>Add Video</Button>
             </Col>
             </Row>
                </Accordion.Body>
-            <Accordion.Body>
-          
-            <Row>
-            <Col lg="1"></Col>
-            <Col lg="9">
-            <span class="bi bi-pencil-square"></span> {Exercise?.length? Exercise.length : "0"} Exercise(s) 
-            </Col> 
-            <Col lg="2">
-            <Button className="btn" outline color="primary"  size="sm" onClick={() => setShowExerciseForm(true)}>Add Exercise</Button>
-            </Col>
-            </Row>
-            </Accordion.Body>
+          {Exercise?.length? yesExercises : noExercises}
+           
         </Accordion.Item>
       </div>
     );
   };
   
-  export default SubtitleEdit;
+export default SubtitleEdit;
   

@@ -113,3 +113,10 @@ export const getUser = async(id) =>{
 }
 
 
+export const getExercise = async(id) =>{
+    const response = await axios.get(`http://localhost:5000/Exams/getExam?id=${id}`)
+    return response.data
+}
+
+
+

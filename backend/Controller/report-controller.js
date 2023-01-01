@@ -103,7 +103,6 @@ const updateReportStatus = async(req, res) =>{
 const getReport = async(req, res) => {
     const rId = req.query.id;
     Report.findById({_id:mongoose.Types.ObjectId(rId)}).then(ret =>{
-        console.log(ret)
         return res.status(200).json(ret);
     });
 }
