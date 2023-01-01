@@ -2,7 +2,6 @@ const { Instructor } = require("../Models/Instructor");
 const { User } = require("../Models/User");
 const Course = require("../Models/Course")
 const { Exam } = require("../Models/Exams")
-const { Subtitle } = require("../Models/Subtitle")
 var mongoose = require('mongoose');
 const userFilterSubj = require("../Controller/instructor-controller")
 const userFilterRate = require("../Controller/instructor-controller")
@@ -12,6 +11,7 @@ const sendgridTransport = require('nodemailer-sendgrid-transport')
 const express = require("express");
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
+const Subtitle = require("../Models/Subtitle");
 
 
 //creatig user 
@@ -391,8 +391,9 @@ const videoProgress = async (req, res) => {
     const userId = req.query.id;
     const courseId = req.query.courseId;
     const subtitleId = req.query.subtitleId;
+    const video = req.body.Video;
 
-    const resultUser = await User.findOne({ _id: mongoose.Types.ObjectId(userId) });
+    const resultUser = await User.findById(mongoose.Types.ObjectId(userId));
     const userCourses = resultUser.Courses;
     const userSubtitles = resultUser.Subtitles;
     let uCourse = null;
@@ -408,18 +409,28 @@ const videoProgress = async (req, res) => {
         }
         for (let i = 0; i < userSubtitles.length; i++) {
             if (userSubtitles[i].subtitle == subtitleId) {
-                subtitleFound = true;
-            }
+                //check if video is already watched
+                    if (userSubtitles[i].video == video) {
+                            subtitleFound = true;
+                        }
         }
+    }
         if (courseFound) {
             if (!(subtitleFound)) {
                 try {
                     await User.findByIdAndUpdate
-                        (userId, { $push: { Subtitles: { course: courseId, subtitle: subtitleId } } });
+                        (userId, { $push: { Subtitles: { course: courseId, subtitle: subtitleId, video: video} } });
                     //update progress attribute in user schema
-                    uCourse = await Course.findOne({ _id: mongoose.Types.ObjectId(courseId) });
+                    uCourse = await Course.findById(mongoose.Types.ObjectId(courseId));
                     const totalExams = uCourse.ExamCourse.length;
-                    const totalSubtitles = uCourse.CourseSubtitle.length;
+                    // const totalSubtitles = uCourse.CourseSubtitle.length;
+                    //get total videos in course
+                    let totalSubtitles = 0;
+                    for (let i = 0; i < uCourse.CourseSubtitle.length; i++) {
+                        const s=await Subtitle.findById(mongoose.Types.ObjectId(uCourse.CourseSubtitle[i]));
+                        totalSubtitles += s.Video.length;
+                        
+                    }
                     const p = 1 / (totalExams + totalSubtitles);
                     //get the progress of the user
                     for (let i = 0; i < resultUser.Progress.length; i++) {
@@ -431,15 +442,17 @@ const videoProgress = async (req, res) => {
                             await User.findOneAndUpdate({ _id: mongoose.Types.ObjectId(userId), "Progress.courseId": mongoose.Types.ObjectId(courseId) },
                                 { $set: { "Progress.$.Progress": newProgress } });
 
+                        
+
                         }
                     }
-                    res.status(200).json("Subtitle added to user");
+                    res.status(200).json("Video added to user");
                 } catch (error) {
                     res.status(400).json({ error: error.message })
                 }
             }
             else {
-                res.status(400).json({ error: "Subtitle already exists" });
+                res.status(400).json({ error: "Video already watched" });
             }
         }
         else {
@@ -526,7 +539,7 @@ const userProgressDecrement = async (req, res) => {
     const userId = req.query.id;
     const courseId = req.query.courseId;
 
-    const result = await User.findOne({ _id: mongoose.Types.ObjectId(userId) });
+    const result = await User.findById( mongoose.Types.ObjectId(userId));
     const userCourses = result.Courses;
     let courseFound = false;
 
@@ -539,12 +552,19 @@ const userProgressDecrement = async (req, res) => {
 
     //get progress of user's course
     if (courseFound) {
-        const r = await Course.findOne({ _id: mongoose.Types.ObjectId(courseId) });
+        const r = await Course.findById(mongoose.Types.ObjectId(courseId));
         for (let i = 0; i < result.Progress.length; i++) {
             if (result.Progress[i].courseId == courseId) {
                 const progress = result.Progress[i].Progress;
                 if (progress > 0) {
-                    const newProgress = progress - (1 / (r.ExamCourse.length + r.CourseSubtitle.length));
+                    //get total videos in course
+                    let totalSubtitles = 0;
+                    for (let i = 0; i < r.CourseSubtitle.length; i++) {
+                        const s=await Subtitle.findById(mongoose.Types.ObjectId(r.CourseSubtitle[i]));
+                        totalSubtitles += s.Video.length;
+                        
+                    }
+                    const newProgress = progress - (1 / (totalSubtitles + r.ExamCourse.length));
                     try {
                         //update progress attribute in user schema
                         await User.findOneAndUpdate({ _id: mongoose.Types.ObjectId(userId), "Progress.courseId": mongoose.Types.ObjectId(courseId) },
@@ -662,13 +682,19 @@ const intializeProgress = async (req, res) => {
     }
 }
 
-      
+
+const getUser = async (req, res) => {
+    const userId = req.query.id;
+    await User.findById(mongoose.Types.ObjectId(userId)).then(r =>{
+        res.status(200).json(r);
+    });
+}
 
 
 
 
 module.exports = {
-    getAllUser,
+    getAllUser, getUser,
     viewCourseTitleHoursRating, viewCoursePrice,
     selectCountryUser, ChangeCurrencyUser, addCourse,
     viewMyInfo, ViewMyCourses, changePassword, sendPassChangeMail,

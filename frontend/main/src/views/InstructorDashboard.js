@@ -36,7 +36,7 @@ const InstructorDashboard = () => {
     const[edit,setEdit] = useState(false);
     const[wallet,setWallet] = useState(0);
     const[percentageTaken,setPercentageTaken] = useState(0);
-    const[refresh,setRefresh] = useState(false);
+  
  
     const[form, setForm] = useState({});
     const[errors, setErrors] = useState({});
@@ -181,7 +181,6 @@ const handleCCSubmit = async (e) => {
           }
       }).then(json =>{
         handleClose();
-        setRefresh(true);
         window.location.reload();
       })
   }

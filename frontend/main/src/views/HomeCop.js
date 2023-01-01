@@ -1,15 +1,15 @@
 import { Row, Col, Card, CardBody, CardTitle} from "reactstrap";
-import { getCourses } from "../api/axios";
+import { getPublishedCourses } from "../api/axios";
 import {useState, useEffect} from 'react';
 import SearchBar from "../components/dashboard/SearchBar";
-import CourseList from "../components/dashboard/CourseList";
+import CourseListCop from "../components/dashboard/CourseList";
 
 const HomeCop = () => {
   const[courses,setCourses] = useState([])
   const[searchResults,setSearchResults] = useState([])
 
   useEffect(() => {
-    getCourses().then(json => {
+    getPublishedCourses().then(json => {
       setCourses(json)
       return json
     }).then(json => {
@@ -24,10 +24,7 @@ const HomeCop = () => {
         {/* Card-1*/}
         {/* --------------------------------------------------------------------------------*/}
         <Card>
-          <CardTitle tag="h5" className="border-bottom p-3 mb-0">
-          <i className="bi bi-book"></i>&nbsp;Search Courses
-          </CardTitle>
-          <CardBody className="p-4">
+          <CardBody className="p-4" style={{maxHeight:"200px"}}>
             <Row justify-content>
               <Col lg="8">
               <SearchBar courses={courses} setSearchResults={setSearchResults}/>
@@ -35,7 +32,7 @@ const HomeCop = () => {
             </Row>
           </CardBody>
         </Card>
-        <CourseList searchResults={searchResults} />
+        <CourseListCop searchResults={searchResults} />
       </Col>
     </Row>
   );

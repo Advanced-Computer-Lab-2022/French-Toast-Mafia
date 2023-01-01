@@ -42,7 +42,8 @@ const userSchema = new Schema({
       required: false
     },
     Type : {                //individual or corperate trainee 
-        type: String,
+        type: String, 
+        enum: ["Individual","Corporate"],
         required: false
     },
     Job: {

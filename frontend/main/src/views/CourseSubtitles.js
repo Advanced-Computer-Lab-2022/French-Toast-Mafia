@@ -149,7 +149,7 @@ const MySubtitles = () => {
                       }
                       margin="normal"
                       padding="normal"
-                    >Watch Video</Button>
+                    >Watch Videos</Button>
                   </Box>
                 </TableCell>
               </TableRow>

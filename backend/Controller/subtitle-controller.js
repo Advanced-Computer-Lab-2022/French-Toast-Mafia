@@ -24,6 +24,7 @@ function addSubtitle (req,res) {
         mongoose.Types.ObjectId(courseId)},{$push:{CourseSubtitle:newSubtitle._id}})
         .then(function (c) {
               //calculate new course Duration
+            console.log(c.Duration);
             const newDur = c.Duration + newSubtitle.Duration;
             course.findOneAndUpdate({_id:
                 mongoose.Types.ObjectId(courseId)},{$set:{Duration: newDur}})
@@ -49,9 +50,9 @@ const deleteSubtitleFromCourse= async (req,res) =>{
         const subRes= await Subtitle.findOne({_id:mongoose.Types.ObjectId(subId)});
         const courseId = subRes.Course;
         try{
-            const courseRes= await course.findOneAndUpdate({_id:mongoose.Types.ObjectId(courseId)},{$pull:{CourseSubtitle:mongoose.Types.ObjectId(subId)}});
-            const subRes= await Subtitle.findOneAndDelete({_id:mongoose.Types.ObjectId(subId)});
-            res.status(200).json(subRes);
+            const courseRes= await course.findOneAndUpdate({_id:mongoose.Types.ObjectId(courseId)},{$pull:{CourseSubtitle:mongoose.Types.ObjectId(subId)}}).then(r =>{});
+            const subRes= await Subtitle.findOneAndDelete({_id:mongoose.Types.ObjectId(subId)}).then(r =>{  res.status(200).json(r);});
+          
     }
     catch(err){
         res.status(500).json(err);
