@@ -19,7 +19,8 @@ const courseSchema = new Schema({
     },
     Duration: {
       type: Number,
-      required: false
+      required: false,
+      default : 0
     },
     LevelOfCourse: {
       type: String,
@@ -44,7 +45,8 @@ const courseSchema = new Schema({
     },
     NoOfViews: {
       type: Number,
-      required: false
+      required: false,
+      default : 10
     },
     Promotion: {           //percent el 3adeya 
       type: Number,

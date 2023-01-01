@@ -25,12 +25,14 @@ const reportSchema = new Schema({
 
     },
     type: {
-        type: String, "enum": ["Technical", "Financial","Other"],
+        type: String, 
+        enum: ["Technical", "Financial","Other"],
         required: true
     },
 
     status: {
-        type: String, "enum": ["Unseen","Pending","Resolved"],
+        type: String, 
+        enum: ["Unseen","Pending","Resolved"],
         default: "Unseen"
 
     }

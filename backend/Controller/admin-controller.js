@@ -1,7 +1,9 @@
-const {Admin} = require("../Models/Admin");
-const {Instructor} = require("../Models/Instructor");
+const {Admin, validate1} = require("../Models/Admin");
+const {Instructor,validate2} = require("../Models/Instructor");
 const {User} = require("../Models/User");
 const adminLogout= require("../Controller/user-controller");
+const bcrypt = require("bcrypt");
+
 
 function getAllAdmin (req,res) {
    let x= Admin.find({}).then (function (admin) {
@@ -36,29 +38,37 @@ const createAdmin = async(req,res) => {  //add administrator
        
     }
 
+const createInstructor = async(req,res) => {  //add instructors
 
-    const createInstructor = async(req,res) => {  //add instructors
-      
-        var name=req.body.InstrName;
-        var email = req.body.InstrEmail;
-        var password = req.body.InstrPassword;
+    try {
+		const { error } = validate2(req.body);
+		if (error){
+			return res.status(400).send({ message: error.details[0].message });
+             }
+		const instr = await Instructor.find({ InstrEmail: req.body.InstrEmail });
+        console.log(instr);
+
+        if (!(instr.length ==0)){
+            return res.status(409).send({ message: "Instructor has already an account..!" });
+        }       
+        console.log("mayar");
+             
+        const salt = await bcrypt.genSalt();
+        // console.log("mayar");
+        const hashedPassword = await bcrypt.hash(req.body.InstrPassword, salt);
+
+        const newInstr = new Instructor({ InstrEmail: req.body.InstrEmail, InstrPassword: hashedPassword });
+            newInstr.save().then(result => res.status(200).send(result))
         
+        // res.status(200).json(newInstr);
+		// res.status(201).send({ message: "Instructor added successfully and request accepted!" });
         
-    try{ const instructor = await Instructor.create(
-       {
-        InstrName: name,
-        InstrEmail: email ,
-        InstrPassword: password
+        } catch(err) {
+            res.status(500).send({ message: "server failed.." });
+            console.log(err);
         }
-    )
-   return res.status(200).json({Message: "Instructor is added successfully!"});
-  }
-  catch(err){
-   return console.log(err);
-  }
-} 
+    } 
 
-  
 
 const createCorporateTrainess = async(req,res) => { //Requirement 3
 

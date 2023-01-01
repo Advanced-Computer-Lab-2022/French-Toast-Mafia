@@ -34,13 +34,15 @@ import {useState, useEffect } from 'react';
 
 
     const validateForm = () =>{
-        const { title, description} = form
+        const { title, description, duration} = form
         const newErrors = {}
         if(!title || title === "")
             newErrors.title = "Please enter a title"
         if(!description || description === "")  
             newErrors.description = "Please enter a description"
-        return newErrors
+        if(!duration || duration === "")  
+            form.duration = 1;
+            return newErrors
     }
   
     const handleSubmit = async (e) => {
@@ -95,8 +97,8 @@ import {useState, useEffect } from 'react';
                     <Form.Label>Duration (in Hours):</Form.Label>
                     <Form.Control 
                         type="number"
-                        min="1"
-                        defaultValue="1"
+                        min={1}
+                        defaultValue={1}
                         value = {form.duration}
                         onChange={(e) => setField('duration', e.target.value)}
                         isInvalid={!!errors.duration}
