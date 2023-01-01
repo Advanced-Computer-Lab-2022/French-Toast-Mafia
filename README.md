@@ -38,7 +38,7 @@ Node(.js) — the premier JavaScript web server. <br/>
     • Can save his/her progress in creating a course WITHOUT publishing the course.
     • Can publish his/her course. A published course CANNOT be edited nor deleted.
 ## Code Examples :computer:
-
+![Code](https://user-images.githubusercontent.com/58050300/210185679-11df031c-2095-47cb-a58d-3763836b9add.png)
 ## Installation :arrow_down:
    ### A) Clone the Repository to your device :computer:
 
