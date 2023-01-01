@@ -693,10 +693,18 @@ const getUser = async (req, res) => {
 }
 
 
+const removeUnknownCourses = async (req, res) => {
+    const userId = req.query.id;
+    await User.findByIdAndUpdate({_id:mongoose.Types.ObjectId(userId)},{ $pull: { Progress:{ courseId : mongoose.Types.ObjectId("63af32f66fa969be4820b032"),Progress : 0 }} }).then(r =>{
+        res.status(200).json(r);
+    });
+}
+
+
 
 
 module.exports = {
-    getAllUser, getUser,
+    getAllUser, getUser, removeUnknownCourses,
     viewCourseTitleHoursRating, viewCoursePrice,
     selectCountryUser, ChangeCurrencyUser, addCourse,
     viewMyInfo, ViewMyCourses, changePassword, sendPassChangeMail,
