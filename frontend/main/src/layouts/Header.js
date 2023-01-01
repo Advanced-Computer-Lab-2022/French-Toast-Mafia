@@ -143,8 +143,6 @@ const handleSignUp = async (e) => {
       handleClose();
     };
    
-
-
   
   const handleLogin = async (e) => {
     e.preventDefault();
