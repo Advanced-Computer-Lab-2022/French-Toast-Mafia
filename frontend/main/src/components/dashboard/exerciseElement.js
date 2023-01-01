@@ -33,8 +33,6 @@ const ExerciseElement = ({eId}) => {
             getExercise(eId).then(json => {
             setExercise(json)
             setTitle(json.title);
-            console.log(json)
-
         })
       }, []);
     

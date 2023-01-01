@@ -255,11 +255,15 @@ const ViewMyCourses = async (req, res) => {
     const resultCourses = [];
     if (userId) {
         try {
-            const result = await User.findOne({ _id: mongoose.Types.ObjectId(userId) });
+            const result = await User.findById(mongoose.Types.ObjectId(userId));
             const courses = result.Courses;
             for (let i = 0; i < courses.length; i++) {
                 const c1 = courses[i];
                 const c = await Course.findById(c1);
+                if (c == null) {
+                    res.status(404).send('Course not found');
+                }
+                else{
                 const courseDetails =
                 {
                     "id": c._id,
@@ -268,6 +272,7 @@ const ViewMyCourses = async (req, res) => {
                 resultCourses.push(courseDetails);
             }
             res.status(200).json(resultCourses);
+        }
 
         } catch (error) {
             res.status(400).json({ error: error.message })

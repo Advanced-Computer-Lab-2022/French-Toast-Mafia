@@ -25,7 +25,9 @@ const { useState } = require("react");
 
 const CourseVideos = () => {
   const [errorMessage, setErrorMessage] = useState('');
+  const [errorVideo, setErrorVideo] = useState('');
   const [open, setOpen] = React.useState(false);
+  const [openV, setOpenV] = React.useState(false);
   const [videos, setVideos] = useState([]);
   const search = useLocation().search;
   const subtitleId = new URLSearchParams(search).get('subtitleId');
@@ -71,6 +73,15 @@ const CourseVideos = () => {
     setOpen(false);
   };
 
+  const handleCloseV = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenV(false);
+  };
+
+
   const downloadTxtFile = () => {
     const element = document.createElement("a");
     const file = new Blob([document.getElementById('notes').value], { type: 'text/plain' });
@@ -82,23 +93,32 @@ const CourseVideos = () => {
 
   const [checked, setChecked] = React.useState(false);
 
-  const handleChange = (event) => {
+  const handleChange = (event,video) => {
     setChecked(event.target.checked);
 
     console.log("checked");
 
     axios.post(`http://localhost:5000/User/videoProgress?id=${userId}&courseId=${courseId}&subtitleId=${subtitleId}`, {
-
+      Video: video,
     }).then((res) => {
+      //check status
+      console.log("VIDEO WATCHED: ");
+      console.log(video)
       console.log(res.data)
+      setChecked(false);
     }
     )
       .catch((err) => {
+        //get error message
+        setErrorVideo(err.response.data.error);
+        console.log(err.response.data.error)
         console.log(err)
+        setChecked(false);
       }
       )
-      
 
+      
+      setOpenV(true);
     
   };
 
@@ -123,7 +143,7 @@ const CourseVideos = () => {
               <FormControlLabel label="I've Watched The Video" control={
                 <Checkbox
                   checked={checked}
-                  onChange={handleChange}
+                  onChange={(e) => handleChange(e,v)}
                   inputProps={{ 'aria-label': 'controlled' }}
                   label="beb"
                 />
@@ -166,6 +186,12 @@ const CourseVideos = () => {
                   <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
                       {errorMessage}
+                    </Alert>
+                  </Snackbar>
+
+                  <Snackbar open={openV} autoHideDuration={6000} onClose={handleCloseV}>
+                    <Alert onClose={handleCloseV} severity="error" sx={{ width: '100%' }}>
+                      {errorVideo}
                     </Alert>
                   </Snackbar>
                 </Stack>
