@@ -502,12 +502,12 @@ const userRefund = async (req, res) => {
 
             if (courseFound){
                 console.log("teettttttt");
-                const result=await User.findById({_id:mongoose.Types.ObjectId(userId)}, {"Progress.courseId":mongoose.Types.ObjectId(courseId)});
-                // console.log(result);
+                const result = await User.findById(mongoose.Types.ObjectId(userId), { Progress: { $elemMatch: { courseId: mongoose.Types.ObjectId(courseId) } } });         
+                    // console.log(result);
                 if (result){
                     console.log(result);
                     console.log("beebebebebebbbebebeb");
-                    const prog=result.Progress[0].Progress*100
+                    const prog=(result.Progress[0].Progress)*100
                     console.log(prog);
                     const progress=Math.ceil(prog);
                     console.log(progress)               
@@ -517,11 +517,13 @@ const userRefund = async (req, res) => {
                         res.status(400).json({message:"Please enter a valid userId"});
                     }
                 console.log('2-------------------------------------------------------------')
-
-               if (result.Progress<=50){
+                console.log(result);
+                console.log(result.Progress[0].Progress);
                 console.log('3-------------------------------------------------------------')
-
-                refundedCourses.push(courseId);
+               if ((result.Progress[0].Progress)<=50){
+                console.log('4-------------------------------------------------------------')
+                    console.log(result.Progress);
+                    refundedCourses.push(courseId);
                     res.status(200).json( {message :"Your request has been sent successfully to the admin"})
 
                     } else {
