@@ -22,14 +22,15 @@ React(.js) — a client-side JavaScript framework. <br/>
 Node(.js) — the premier JavaScript web server. <br/>
 
 ## Features :star2:
-For Users:<br/>
+### For Users:<br/>
     •  Can a preview video about the course before registering to it<br/>
     •  While enrollment in the course, he'll be able to see his/her progress in the course as a percentage of how much of the course has been completed so far<br/>
     •  Can request a refund if his progress in the course is less than 50%<br/>
     •  Can retake an exam if his grade is less than 50%<br/>
     •  Can download his notes while watching the course videos<br/>
     •  Can recieve a certificate upon completing the course<br/>
-For Instructors:<br/>
+    <br/>
+### For Instructors:<br/>
     • Can view the amount of money owed per month<br/>
     • Can define a promotion for the course and for how long<br/>
     • Can view the average grades of the exams in his course<br/>
