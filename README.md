@@ -11,17 +11,17 @@ This project aim was to help us: <br/>
 ## Code Style :sunglasses:
 Our code style is a standard code style.
 ## Screenshots :camera_flash:
-A) As a guest, you can sign up
+### A) As a guest, you can sign up
 ![Sign Up](https://user-images.githubusercontent.com/58050300/210186469-e4f80248-210f-47e6-94b7-d594378f0e1a.png)
-B) You can view a course
+### B) You can view a course
 ![view Course Trainee](https://user-images.githubusercontent.com/58050300/210186488-2d9dc906-3248-4f17-b40e-46d2215039b3.png)
-C) As a registered user, you can pay for a course
+### C) As a registered user, you can pay for a course
 ![pay for a course](https://user-images.githubusercontent.com/58050300/210186504-9f298f58-20cc-421e-926b-9fb2d28e8713.png)
-D) You can report a problem
+### D) You can report a problem
 ![Report problem ](https://user-images.githubusercontent.com/58050300/210186518-c3cf2308-9a17-47a3-9563-2ce5afe548a1.png)
-E) As a user, you can solve an exam
+### E) As a user, you can solve an exam
 ![Exam](https://user-images.githubusercontent.com/58050300/210186521-7383c8c9-4fe1-4fcf-b9d7-ea4e11aff0be.png)
-F) You can change your password
+### F) You can change your password
 ![Forget password](https://user-images.githubusercontent.com/58050300/210186527-7be2bb25-5dbb-434e-839b-5887288361e1.png)
 
 ## Tech/Framework used :bulb:
