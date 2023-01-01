@@ -9,7 +9,7 @@ import {
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 
-const Course = (course) => {
+const CourseCop = (course) => {
 
   const navigate = useNavigate();
   const c = Object.values(course)[0]
@@ -46,4 +46,4 @@ const Course = (course) => {
   );
 };
 
-export default Course;
+export default CourseCop;
