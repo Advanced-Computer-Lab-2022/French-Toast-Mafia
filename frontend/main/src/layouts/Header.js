@@ -115,7 +115,6 @@ const Header = () => {
 const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      // const signed= {Name, Email , Password, Gender }
       const response = await axios( {
          url: 'http://localhost:5000/Signup//' , 
          method:'post',
@@ -125,7 +124,10 @@ const handleSignUp = async (e) => {
           }
     })
     .then ((response) => {console.log (response.data)
-      navigate("/home")})
+    // const id= response.data.id
+      // navigate("/home")}
+     navigate (`/UserHome?userId`)} )
+     console.log(response.data)
     if(!response.ok){
         console.log("bep")
     }
@@ -449,7 +451,11 @@ const handleSignUp = async (e) => {
               Forgot Password
               </Link>
               </DropdownItem>
-            <DropdownItem>Logout</DropdownItem>
+            <DropdownItem>
+              <Link to="/home">
+              Logout
+              </Link>
+              </DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </Collapse>
