@@ -3,7 +3,7 @@ import { Card, CardBody, CardSubtitle, CardText, CardImg, CardTitle, Button, Row
 } from "reactstrap";
 import {useState, useEffect} from 'react';
 import { viewSubtitle } from '../../api/axios';
-import ExerciseList from '../dashboard/exerciseList';
+import OpenExerciseList from '../dashboard/OpenExerciseList';
 
 import {Form} from "react-bootstrap"
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -11,14 +11,24 @@ import Modal from "react-bootstrap/Modal";
 import RadioGroup from '@mui/material/RadioGroup';
 import { Radio } from "@mui/material";
 import FormControlLabel from '@mui/material/FormControlLabel';
+import { useLocation } from 'react-router-dom';
 
-  const SubtitleEdit = ({subtitle}) => {
+import { useNavigate } from 'react-router-dom';
+
+ 
+  const OpenSubtitle = ({subtitle}) => {
     const [id, setId] = useState("");
     const [sub,setSub] = useState([])
     const [video,setVideo] = useState([1])
     const [Exercise,setExercise] = useState([])
     const [toggleExercises,setToggleExercises] = useState(false)
    
+    const search = useLocation().search;
+    const courseId = new URLSearchParams(search).get('id');
+    const userId = new URLSearchParams(search).get('userId');
+    const navigate = useNavigate();
+
+
     var i = 0;
     useEffect(() => {
         viewSubtitle(subtitle).then(json => {
@@ -35,13 +45,13 @@ import FormControlLabel from '@mui/material/FormControlLabel';
       <Col lg= "1"></Col>
       <Col>
       <ListGroup>
-        <ExerciseList exercises = {Exercise}/>
+        <OpenExerciseList exercises = {Exercise} cId = {courseId} uId = {userId}/>
       </ListGroup>
       </Col>
       </Row>
       </>
      
-     
+    
     
      
 const noExercises =  <Accordion.Body>
@@ -97,7 +107,7 @@ const yesExercises =  <Accordion.Body>
             <span class="bi bi-play-btn"></span>  {video?.length? video.length : "0"} Video(s)  
             </Col> 
             <Col lg="7">
-            {video?.length? <Button className="btn" color="link" size="sm" >Open Videos</Button> : null}
+            {video?.length? <Button className="btn" color="link" size="sm" onClick = {() => navigate(`/CourseVideos?courseId=${courseId}&subtitleId=${id}&userId=${userId}`)}>Open Videos</Button> : null}
             </Col>
             <Col lg="2">
        
@@ -111,5 +121,5 @@ const yesExercises =  <Accordion.Body>
     );
   };
   
-export default SubtitleEdit;
+export default OpenSubtitle;
   

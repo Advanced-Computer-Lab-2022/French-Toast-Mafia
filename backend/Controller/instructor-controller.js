@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 const moment = require("moment");
 // const instrlogin = require("../Controller/user-controller");
 const instrlogout = require("../Controller/user-controller");
-
+const {User} = require("../Models/User");
 
 
 function getAllInstructors (req,res) {
@@ -67,7 +67,7 @@ const addCourse = async(req , res) => {
     const instructorId = req.query.id;
    
    //check if the Instructor exists first (this check will probably be removed when authentication is implemented)
-   const result = await Instructor.findById(mongoose.Types.ObjectId(instructorId));
+   const result = await Instructor.findOne({_id:mongoose.Types.ObjectId(instructorId)});
    if(result !== null){
         try{
 
@@ -288,7 +288,7 @@ const viewInstrInfo = async(req , res) => {
     const instrId = req.query.instrId;
 if (instrId) {
     try{
-        const result = await Instructor.findById(mongoose.Types.ObjectId(instrId));
+        const result = await Instructor.findOne({_id:mongoose.Types.ObjectId(instrId)});
         if (result != null){
             // const courseDetails = 
             // {"Title": courseToView.NameOfCourse,
@@ -422,7 +422,7 @@ const ViewMyRatings = async (req , res) => {
 // View Instructor reviews
 const ViewMyReview = async (req , res) => {
     const w = req.query.id;
-    const a = await Instructor.findById(mongoose.Types.ObjectId(w), {InstrReview:1,_id:0 });
+    const a = await Instructor.findOne({_id:mongoose.Types.ObjectId(w)}, {InstrReview:1,_id:0 });
    
     if (a == null) {
         res.status(404).send('no instructors available');
@@ -448,21 +448,68 @@ const deleteInstrRating = async(req , res) => {
 
 //add Instructor rating function
 const addInstrRating = async(req , res) => {
+
     const instrId=req.query.id;
     const userId=req.body.id;
     const rating=req.body.rating;
+    const review=req.body.review;
+    const u = await User.findById(mongoose.Types.ObjectId(userId));
+    const username = u.Name;
     const uId=mongoose.Types.ObjectId(userId);
-    const tuple={uId,rating};
+    const tuple={uId,rating,review,username};
     if (instrId){
         try{
-            //check if the user has already rated the instructor
-            const check = await Instructor.findOne({_id:mongoose.Types.ObjectId(instrId), InstrRating:{$elemMatch:{uId:uId}}});
+            //check if the user has already rated the course
+            const check = await course.findOne({_id:mongoose.Types.ObjectId(instrId), InstrRating:{$elemMatch:{uId:uId}}});
             if (!check){
-            const resCourse = await Instructor.findOneAndUpdate({_id:mongoose.Types.ObjectId(instrId)}, { $push: { InstrRating: tuple } }, { new: true });
-            res.status(200).json(resCourse);
+            await Instructor.findOneAndUpdate({_id:mongoose.Types.ObjectId(instrId)}, { $push: { InstrRating: tuple } }, { new: true }).then(async resInstructor => {
+                var sum=0;
+                for (let i = 0; i < resInstructor.InstrRating.length; i++) {
+                    sum+=parseInt(resInstructor.InstrRating[i].rating);
+                }
+                const avg=sum/resInstructor.InstrRating.length;
+            await Instructor.findByIdAndUpdate(instrId , {avgRating:avg}, { new: true }).then(r =>{ return res.status(200).json(resInstructor)});
+            });
+           
             }
             else{
-                res.status(400).json({error:"You have already rated the instructor"});
+                res.status(400).json({error:"User has already rated this instructor"});
+            }
+
+        }
+        catch(error){
+            res.status(400).json({error:error.message})
+        }
+    }
+}
+
+
+const addInstructorRating = async(req , res) => {
+    const instrId=req.query.id;
+    const userId=req.body.id;
+    const rating=req.body.rating;
+    const review=req.body.review;
+    const u = await User.findOne({_id:mongoose.Types.ObjectId(userId)});
+    const username = u.Name;
+    const uId=mongoose.Types.ObjectId(userId);
+    const tuple={uId,rating,review,username};
+    if (instrId){
+        try{
+            //check if the user has already rated the course
+            const check = await Instructor.findOne({_id:mongoose.Types.ObjectId(instrId), Rating:{$elemMatch:{uId:uId}}});
+            if (!check){
+            await Instructor.findOneAndUpdate({_id:mongoose.Types.ObjectId(instrId)}, { $push: { Rating: tuple } }, { new: true }).then(async resInst => {
+                var sum=0;
+                for (let i = 0; i < resInst.Rating.length; i++) {
+                    sum+=parseInt(resInst.Rating[i].rating);
+                }
+                const avg=sum/resInst.Rating.length;
+            await Instructor.findByIdAndUpdate(instrId , {avgRating:avg}, { new: true }).then(r =>{ return r.status(200).json(resInst)});
+            });
+           
+            }
+            else{
+                res.status(400).json({error:"User has already rated this course"});
             }
 
         }
@@ -496,7 +543,7 @@ const viewInstrCourse = async (req , res) => {
     const resultCourses = [];
 if (instrId){
     try{
-        const result = await Instructor.findById(mongoose.Types.ObjectId(instrId)); 
+        const result = await Instructor.findOne({_id:mongoose.Types.ObjectId(instrId)}); 
         const courses = result.CourseGiven;
         for (let i = 0; i < courses.length; i++) {
             const c1 = courses[i];
@@ -522,7 +569,7 @@ const calculateMoney = async(req , res) => {
     const instrId=req.query.instrId;
     if (instrId){
         try{
-            const result = await Instructor.findById(mongoose.Types.ObjectId(instrId));
+            const result = await Instructor.findOne({_id:mongoose.Types.ObjectId(instrId)});
             var sum=0;
             for (let i = 0; i < result.CourseGiven.length; i++) {
                 const c1 =result.CourseGiven[i];
@@ -556,6 +603,8 @@ const removeExam = async(req, res) =>{
             res.status(200).json(json);
         });
 }
+
+
 
 module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      addCourse , addInstructorName, deleteCourse, filterCost, filterRating, filterSubject, 

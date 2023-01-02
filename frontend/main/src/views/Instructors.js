@@ -67,7 +67,7 @@ const Instructors = () => {
             }}
             onClick={() => 
               // window.location.href=`MyCourses?userId=${user._id}`
-              navigate(`/InstructorCourses?instrId=${instr._id}`)
+              navigate(`/InstructorHome?id=${instr._id}`)
           }
               key={instr._id}
 
