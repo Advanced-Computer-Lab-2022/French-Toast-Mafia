@@ -16,7 +16,6 @@ router.post("/", async (req, res) => {
 			return res.status(400).send({ message: error.details[0].message });
 		    console.log(req.body.Email);
             let validPassword;
-
 		    var user = await User.find({ Email: req.body.Email });
 			if(user.length!=0){
 			console.log(user);

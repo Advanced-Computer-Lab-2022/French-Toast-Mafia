@@ -158,7 +158,7 @@ const handleSignUp = async (e) => {
     })
     .then((response) => 
       {console.log(response.data.userid)
-    const id= response.data.id
+        const id= response.data.id
     // console.log(response.data.userid);
     // console.log(response.data.user);
     localStorage.setItem("token", response.data.token);
@@ -415,10 +415,10 @@ const handleSignUp = async (e) => {
           <DropdownMenu>
             <DropdownItem header>Info</DropdownItem>
             <DropdownItem>   
-              <button  onclick={()=> navigate(`/UserHome?id=${id}`)}> My account </button>
-            {/* <Link to="/UserHome?id=${id}">
+              {/* <button  onclick={()=> navigate(`/UserHome?id=${id}`)}> My account </button>
+            {/* <Link to="/UserHome?id=${id}"> */}
                My Account 
-              </Link> */}
+              {/* </Link> */} 
             </DropdownItem>
             <DropdownItem>Edit Profile</DropdownItem>
             <DropdownItem divider />
