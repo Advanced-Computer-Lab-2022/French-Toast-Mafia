@@ -235,9 +235,9 @@ const payNow = async token => {
     <Card sx={{width:"687px",display: "flex",
     justifyContent: "space-around",
     height: "-webkit-fill-available",justify:"space-between",
-    height: "307px"}}>
+    height: "350px"}}>
 
-      <CardBody style={{height: "300px"}}>
+      <CardBody style={{height: "350px"}}>
 
         <Row>
           <Col lg = "10">

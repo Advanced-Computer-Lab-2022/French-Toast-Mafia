@@ -162,7 +162,7 @@ const OpenCourse = () => {
         </Col>
         <Col lg="4">
         <Card>
-          <CardBody className="text-center" style={{height: "300px"}}>
+          <CardBody className="text-center" style={{height: "350px"}}>
           <img 
               src={user2}
               className="rounded-circle"

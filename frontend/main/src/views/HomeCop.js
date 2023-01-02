@@ -24,7 +24,7 @@ const HomeCop = () => {
         {/* Card-1*/}
         {/* --------------------------------------------------------------------------------*/}
         <Card>
-          <CardBody className="p-4" style={{maxHeight:"200px"}}>
+          <CardBody className="p-4" style={{maxHeight:"250px"}}>
             <Row justify-content>
               <Col lg="8">
               <SearchBar courses={courses} setSearchResults={setSearchResults}/>

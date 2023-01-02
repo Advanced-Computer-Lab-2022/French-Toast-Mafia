@@ -331,10 +331,8 @@ const handleCPSubmit = async (e) => {
         
   
   
-      <Card sx={{width:"687px",display: "flex",
-      justifyContent: "space-around",
-      height: "-webkit-fill-available",justify:"space-between",
-      height: "307px"}}>
+      <Card sx={{
+      height: "350px"}}>
   
         <CardBody>
   

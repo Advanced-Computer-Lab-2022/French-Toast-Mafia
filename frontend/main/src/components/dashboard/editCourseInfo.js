@@ -207,7 +207,7 @@ import { Card, CardBody, CardSubtitle, CardText, CardTitle, Button, Row, Col,
         <div>
     
       <Card>
-        <CardBody style={{height: "350px"}}>
+        <CardBody style={{height: "400px"}}>
   
           <Row>
             <Col lg="10">

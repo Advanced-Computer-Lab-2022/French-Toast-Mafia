@@ -320,10 +320,7 @@ import { Card, CardBody, CardSubtitle, CardText, CardTitle, Button, Row, Col,
         
   
   
-      <Card sx={{width:"687px",display: "flex",
-      justifyContent: "space-around",
-      height: "-webkit-fill-available",justify:"space-between",
-      height: "307px"}}>
+      <Card style={{height: "350px"}}>
   
         <CardBody>
   

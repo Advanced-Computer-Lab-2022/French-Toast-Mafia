@@ -15,7 +15,7 @@ import {
 const CoursePreview = ({preview}) => {
   return (
     <Card>
-      <CardBody className="text-center" style={{height: "300px"}}>
+      <CardBody className="text-center" style={{height: "350px"}}>
        <CardMedia class="ratio ratio-16x9">
     <iframe src={preview}  title="YouTube video" allowFullScreen autoplay={"false"}  ></iframe> </CardMedia>
    
