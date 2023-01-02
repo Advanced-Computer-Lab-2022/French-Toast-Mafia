@@ -119,6 +119,7 @@ export const getExercise = async(id) =>{
 }
 
 export const getGrade = async (uId, eId) => {
+   
     const response = axios.get(`http://localhost:5000/User/getUserGrades?id=${uId}&examId=${eId}`)
     return response.data
 }

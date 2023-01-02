@@ -158,7 +158,9 @@ const Header2 = () => {
               Forgot Password
               </Link>
               </DropdownItem>
-            <DropdownItem>Logout</DropdownItem>
+            <DropdownItem> 
+              Logout 
+              </DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </Collapse>

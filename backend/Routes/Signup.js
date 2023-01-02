@@ -24,7 +24,9 @@ router.post("/", async (req, res) => {
 		const hashPassword = await bcrypt.hash(req.body.Password, salt);
 		console.log("tetettetetetetteteteetetetetet")
 
-		await new User({Name:req.body.Name, Email:req.body.Email ,Password: hashPassword, Gender:req.body.Gender}).save();
+		const newuser =await new User({Name:req.body.Name, Email:req.body.Email ,Password: hashPassword, Gender:req.body.Gender}).save();
+		console.log("aaaaaaaaaaaaaaaaaaaaaa")
+		console.log(newuser)
 		// const newUser= new User({ Email:Email, Password: hashPassword , Gender: Gender});
         // const newUser = await User.create({ Name: Name , Email: Email, Password: hashPassword,  Gender: Gender});
 		// new.save().then(result => res.status(200).send(result));
