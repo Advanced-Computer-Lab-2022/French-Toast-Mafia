@@ -94,9 +94,7 @@ const OpenCourseInfo = ({uId, cId, course,instructor,ratingLength, setReportAler
     reviewData["rating"] = rating;
     reviewData["review"] = review;
 
-    console.log(reviewData)
-    console.log(cId)
-
+  
     await fetch(`http://localhost:5000/Course/addCourseRating?id=${cId}`,{
         method: 'POST',
         body: JSON.stringify(reviewData),
