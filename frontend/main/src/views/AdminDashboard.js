@@ -1,4 +1,4 @@
-import { Col, Row, Alert, ListGroup, CardBody, Card, CardTitle} from "reactstrap";
+import { Col, Row, Alert, ListGroup, CardBody, Card, CardTitle, Button} from "reactstrap";
 
 import { useLocation } from 'react-router-dom';
 import { viewCourse } from "../api/axios";
@@ -13,7 +13,6 @@ import LatestRequests from "../components/dashboard/LatestRequests";
 import { getAllReports } from "../api/axios";
 
 import { getAllRequests } from "../api/axios";
-import { Button } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Modal from "react-bootstrap/Modal";
@@ -321,11 +320,11 @@ const handleProm = async (e) => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button color="primary" variant='contained'  onClick={handleClose2}>
+          <Button outline color="danger" onClick={handleClose2}>
             Close
           </Button>
           &nbsp;
-          <Button color="primary" variant='contained' onClick={handleSubmit} >
+          <Button color="primary" onClick={handleSubmit} >
               Add Admin
               
           </Button>
@@ -348,7 +347,7 @@ const handleProm = async (e) => {
               <CardTitle tag="h4">Admins</CardTitle>
             </Col>
             <Col lg="2">
-            <Button className="btn" outline color="primary" variant="contained"  onClick={() => setShow2(true)}>Add New</Button>
+            <Button className="btn" outline color="primary" onClick={() => setShow2(true)}>Add New</Button>
             {/* <Button className="btn" outline color="primary" onClick={() => navigate(`/`)}>View All</Button> */}
             </Col>
           </Row>
@@ -417,10 +416,10 @@ const handleProm = async (e) => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button color="primary" variant='contained' onClick={handleClose3}>
+          <Button outline color="danger"  onClick={handleClose3}>
             Close
           </Button>
-          <Button color="primary" variant='contained' onClick={handleSubmit1}>
+          <Button color="primary" onClick={handleSubmit1}>
               Add 
           </Button>
 
@@ -441,7 +440,7 @@ const handleProm = async (e) => {
               <CardTitle tag="h4">Users</CardTitle>
             </Col>
             <Col lg="2">
-            <Button className="btn" outline color="primary" variant="contained" onClick={() => setShow3(true)}>Add New</Button>
+            <Button className="btn" outline color="primary"  onClick={() => setShow3(true)}>Add New</Button>
             {/* <Button className="btn" outline color="primary" onClick={() => navigate(`/`)}>View All</Button> */}
             </Col>
           </Row>
@@ -478,11 +477,11 @@ const handleProm = async (e) => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button  variant='contained' color="secondary" onClick={handleClose4}>
+          <Button  outline color="danger" onClick={handleClose4}>
             Close
           </Button>
 
-          <Button variant="contained" color="primary" onClick={handleSubmit2}>
+          <Button  color="primary" onClick={handleSubmit2}>
               Add 
 
           </Button>
@@ -504,7 +503,7 @@ const handleProm = async (e) => {
               <CardTitle tag="h4">Instructors</CardTitle>
             </Col>
             <Col lg="2">
-            <Button className="btn"  color="primary" variant="contained"  onClick={() => setShow4(true)}>Add New</Button>
+            <Button className="btn"  outline color="primary"   onClick={() => setShow4(true)}>Add New</Button>
             {/* <Button className="btn" outline color="primary" onClick={() => navigate(`/`)}>View All</Button> */}
             </Col>
           </Row>
@@ -547,10 +546,10 @@ const handleProm = async (e) => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button color="secondary" variant='contained' onClick={handleClose1}>
+          <Button outline color="danger" onClick={handleClose1}>
             Close
           </Button>
-          <Button color="primary" variant='contained' onClick={handleProm}>
+          <Button color="primary"  onClick={handleProm}>
               Add Promotion
           </Button>
           
@@ -563,7 +562,7 @@ const handleProm = async (e) => {
               <CardTitle tag="h4"> Courses </CardTitle>
             </Col>
             <Col lg="2">
-            <Button className="btn"  color="primary" variant="contained"  onClick={() =>setShow1(true)}> Add Promotion</Button>
+            <Button className="btn"  outline color="primary" onClick={() =>setShow1(true)}> Add Promotion</Button>
             {/* <Button className="btn" outline color="primary" onClick={() => navigate(`/`)}>View All</Button> */}
             </Col>
           </Row>
