@@ -388,22 +388,6 @@ const handleSignUp = async (e) => {
               </Button>
           </NavItem>
 
-          <NavItem>
-            <Link to="/about" className="nav-link">
-              About
-            </Link>
-          </NavItem>
-          <UncontrolledDropdown inNavbar nav>
-            <DropdownToggle caret nav>
-              DD Menu
-            </DropdownToggle>
-            <DropdownMenu end>
-              <DropdownItem>Option 1</DropdownItem>
-              <DropdownItem>Option 2</DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem>Reset</DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown>
         </Nav>
         <Dropdown isOpen={dropdownOpen} toggle={toggle}>
           <DropdownToggle color="transparent">
@@ -416,27 +400,10 @@ const handleSignUp = async (e) => {
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem header>Info</DropdownItem>
-            <DropdownItem>   
-              {/* <button  onclick={()=> navigate(`/UserHome?id=${id}`)}> My account </button>
-            {/* <Link to="/UserHome?id=${id}"> */}
-               My Account 
-              {/* </Link> */} 
-            </DropdownItem>
-            <DropdownItem>Edit Profile</DropdownItem>
-            <DropdownItem divider />
-            <DropdownItem>My Balance
-            </DropdownItem>
-            <DropdownItem>Inbox</DropdownItem>
           
             <DropdownItem >
               <Link to="/Users">
               Users
-              </Link>
-              </DropdownItem>
-              
-            <DropdownItem >
-              <Link to="/InstructorProfile">
-              Instructor Profile
               </Link>
               </DropdownItem>
               
