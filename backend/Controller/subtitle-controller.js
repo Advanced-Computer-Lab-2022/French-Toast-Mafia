@@ -24,7 +24,6 @@ function addSubtitle (req,res) {
         mongoose.Types.ObjectId(courseId)},{$push:{CourseSubtitle:newSubtitle._id}})
         .then(function (c) {
               //calculate new course Duration
-            console.log(c.Duration);
             const newDur = c.Duration + newSubtitle.Duration;
             course.findOneAndUpdate({_id:
                 mongoose.Types.ObjectId(courseId)},{$set:{Duration: newDur}})
@@ -254,9 +253,18 @@ function addVideo (req,res) {
         res.status(200).json(Subtitle)
     });
 };
+
+const addCourseExam = (req, res) =>{
+    const subId=req.query.id;
+    Subtitle.findByIdAndUpdate({_id:
+        subId},{$push:{Exercise: "63aed939c2126acd2a6bbb69"}})
+        .then(function (Subtitle) {
+        res.status(200).json(Subtitle)
+    });
+}
     
 
 module.exports = {getAllSubtitles,addSubtitle, editSubtitle, addExcercise,deleteExcercise,removeAllExcercises, viewSubtitle,
-    deleteSubtitle,deleteSubtitleFromCourse,removeAllSubtitles,getCourseSubtitlesVideos,
+    deleteSubtitle,deleteSubtitleFromCourse,removeAllSubtitles,getCourseSubtitlesVideos, addCourseExam,
     getCourseSubtitlesExcercises,addVideoDescription,emptySubtitlesArray,getExcercisesQuestions,
     getExcercisesAnswers,addNotes,viewAllCourseSubtitles,viewSubtitleVideo,viewSubtitleNotes, clearAllExercises, addVideo};

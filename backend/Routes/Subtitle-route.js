@@ -6,7 +6,7 @@ const {getAllSubtitles,addSubtitle, editSubtitle, addExcercise,deleteExcercise,r
     deleteSubtitle,deleteSubtitleFromCourse,removeAllSubtitles,getCourseSubtitlesVideos,getCourseSubtitlesExcercises,
     addVideoDescription,emptySubtitlesArray,getExcercisesQuestions,
     getExcercisesAnswers,addNotes,viewAllCourseSubtitles,
-    viewSubtitleVideo,viewSubtitleNotes, clearAllExercises,addVideo} = require('../Controller/subtitle-controller');
+    viewSubtitleVideo,viewSubtitleNotes, clearAllExercises,addVideo, addCourseExam} = require('../Controller/subtitle-controller');
 
 router.get('/getAllSubtitles',getAllSubtitles);
 
@@ -51,5 +51,7 @@ router.get('/viewSubtitleNotes',viewSubtitleNotes);
 router.get('/clearAllExercises', clearAllExercises);
 
 router.post('/addVideo',addVideo);
+
+router.get('/addCourseExam', addCourseExam);
 
 module.exports=router;

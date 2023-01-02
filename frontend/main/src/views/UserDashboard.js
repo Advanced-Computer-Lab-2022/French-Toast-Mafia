@@ -11,7 +11,7 @@ import { Radio } from "@mui/material";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Reviews from "../components/dashboard/CourseReviews";
 import user3 from "../assets/images/users/user3.jpg";
-import CourseCard from "../components/dashboard/CourseCard";
+import UserCourseCard from "../components/dashboard/UserCourseCard";
 
 import { useNavigate } from "react-router-dom";
 
@@ -21,7 +21,6 @@ const UserDashboard = () => {
 
     const search = useLocation().search;
     const id = new URLSearchParams(search).get('id');
-
 
     const [show, setShow] = useState(false);
 
@@ -67,11 +66,11 @@ const UserDashboard = () => {
 
       {/***Sales & Feed***/}
       <CardDeck>
-        <Card style={{height: "440px"}}>
+        <Card style={{height: "350px"}}>
           <CardBody>
       <Row>  
       <Col sm="6" lg="6" xl="3" xxl="3">
-      <Card style={{height: "400px"}}>
+      <Card style={{height: "300px"}}>
      
      <CardBody className="text-center">
      <img 
@@ -83,7 +82,7 @@ const UserDashboard = () => {
        />
        <hr/>
        <CardTitle tag="h5"> <span class="bi bi-person"></span> {userName} </CardTitle>    
-       <CardSubtitle>{userType} Trainee</CardSubtitle>
+       <CardSubtitle>{userType}</CardSubtitle>
        {/* <CardText className="mt-3 text-muted"><span class="bi bi-eye-fill"></span> {profileViews} views</CardText>  */}
   
      </CardBody>
@@ -91,7 +90,7 @@ const UserDashboard = () => {
    </Card>
         </Col>
         <Col sm="6" lg="6" xl="6" xxl="6">
-          <Card style={{height:"400px"}}>
+          <Card style={{height:"300px"}}>
             <CardBody>
               <Row>
                 <Col lg="10">
@@ -111,7 +110,7 @@ const UserDashboard = () => {
         </Col> 
 
         <Col sm="3" lg="3" xl="3" xxl="3">
-          <Card style={{height:"400px"}}>
+          <Card style={{height:"300px"}}>
             <CardBody>
               <Row>
                 <Col lg="10">
@@ -143,7 +142,7 @@ const UserDashboard = () => {
           <hr/>
 
             <Row style={{ maxHeight : "450px",overflow: "auto"}}>
-              {courses.map(c => <CourseCard cId={c}/>)}
+              {courseProgress.map(c => <UserCourseCard uId={id} cId={c.courseId} progress = {c.Progress}/>)}
             </Row>
         </CardBody>
         </Card>

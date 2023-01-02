@@ -32,7 +32,6 @@ const UserCoursePage= lazy(() => import('../views/UserCoursePage.js'));
 const CourseInstructor= lazy(() => import('../views/CourseInstructor.js'));
 const CourseVideos= lazy(() => import('../views/CourseVideos.js'));
 const CourseRate= lazy(() => import('../views/CourseRate.js'));
-const CreditCardss= lazy(() => import('../views/CreditCardss.js'));
 
 const CourseReports = lazy(() => import('../views/CourseReports'))
 
@@ -79,6 +78,9 @@ const ViewExercise = lazy(() => import('../views/viewExercise'));
 const SearchInstructorCourses = lazy(() => import('../views/searchInstructorCourses'));
 
 const UserDashboard = lazy(() => import('../views/UserDashboard.js'));
+const OpenCourse = lazy(() => import('../views/openCourse.js'));
+
+
 
 // /*****Routes******/
 
@@ -112,6 +114,7 @@ const ThemeRoutes = [
       { path: "/CourseInstructor", exact: false, element: <CourseInstructor /> },
 
       { path: "/viewCourse", exact: true, element: <ViewCourse /> },
+      { path: "/openCourse", exact: true, element: <OpenCourse /> },
       { path: "/editCourse", exact: true, element: <EditCourse /> },
       { path: "/createCourse", exact: true, element: <CreateCourse/>},
       { path: "/viewCourseCop" , exact: true, element: <ViewCourseCop/> },
@@ -124,7 +127,6 @@ const ThemeRoutes = [
 
 
       { path: "/CourseRate", exact: false, element: <CourseRate /> },
-      { path: "/CreditCardss", exact: false, element: <CreditCardss /> },
       { path: "/CourseSubtitles", exact: false, element: <CourseSubtitles /> },
       { path: "/CourseVideos", exact: false, element: <CourseVideos /> },
       { path: "/Contract", exact: true, element: <Contract /> },
@@ -156,7 +158,8 @@ const ThemeRoutes = [
       { path: "/InstructorBalance", exact: false, element: <InstructorBalance/> },
 
       { path: "/AdminHome" , exact: false, element: <AdminDashboard/> },
-      { path: "/ViewReport_A" , exact: false, element: <ViewReportAdmin/> }
+      { path: "/ViewReport_A" , exact: false, element: <ViewReportAdmin/> },
+
     ],
   },
 ];

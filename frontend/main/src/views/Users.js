@@ -72,7 +72,7 @@ const Users = () => {
                 }}
                 onClick={() =>
                   // window.location.href=`MyCourses?userId=${user._id}`
-                  navigate(`/MyCourses?userId=${user._id}`)
+                  navigate(`/UserHome?id=${user._id}`)
                 }
                 key={user._id}
 

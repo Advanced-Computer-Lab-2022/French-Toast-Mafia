@@ -23,7 +23,7 @@ const viewCourse = async(req , res) => {
     const courseId = req.query.id;
 
     try{
-        const courseToView = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+        const courseToView = await course.findById(mongoose.Types.ObjectId(courseId));
         // get the details of the course 
         if (courseToView != null){
             // const courseDetails = 
@@ -92,13 +92,13 @@ const viewCourseInstructor = async(req , res) => {
     const courseId = req.query.id;
 
     try{
-        const courseToView = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+        const courseToView = await course.findById(mongoose.Types.ObjectId(courseId));
         // get the details of the course 
         const courseDetails = 
             {"Course Instructor": courseToView.Instructor}
 
         const InstructorToView = await Instructor.
-        findOne({_id:mongoose.Types.ObjectId(courseToView.Instructor)});
+        findById(mongoose.Types.ObjectId(courseToView.Instructor));
       // console.log(InstructorToView);
         const InstructorDetails =
             {"InstrId": InstructorToView._id,
@@ -134,7 +134,7 @@ const viewCourseExam = async(req , res) => {
     const courseId = req.query.id;
 
     try{
-        const courseToView = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+        const courseToView = await course.findById(mongoose.Types.ObjectId(courseId));
         // get the subtitles of the course 
         const courseExam = courseToView.Exams
             
@@ -174,10 +174,10 @@ const viewUserCourses = async(req , res) => {
     const resultCourses = [];
 if (userId){
     try{
-        const result = await User.findOne({_id:mongoose.Types.ObjectId(userId)});
+        const result = await User.findById(mongoose.Types.ObjectId(userId));
         //get each user course details
         for (let i = 0; i < result.Courses.length; i++) {
-            const courseToView = await course.findOne({_id:mongoose.Types.ObjectId(result.Courses[i])});
+            const courseToView = await course.findById(mongoose.Types.ObjectId(result.Courses[i]));
             resultCourses.push(courseToView);
         }
         res.status(200).json(resultCourses);
@@ -216,29 +216,71 @@ const removeCourseRating = async(req, res) =>{
 const addCourseRating = async(req , res) => {
     const courseId=req.query.id;
     const userId=req.body.id;
-    const rating=req.body.rating;
-    const review=req.body.review;
-    const u = await User.findOne({_id:mongoose.Types.ObjectId(userId)});
-    const username = u.Name;
-    const uId=mongoose.Types.ObjectId(userId);
-    const tuple={uId,rating,review,username};
-    if (courseId){
-        try{
-            //check if the user has already rated the course
-            const check = await course.findOne({_id:mongoose.Types.ObjectId(courseId), Rating:{$elemMatch:{uId:uId}}});
-            if (!check){
-            const resCourse = await course.findOneAndUpdate({_id:mongoose.Types.ObjectId(courseId)}, { $push: { Rating: tuple } }, { new: true });
-            res.status(200).json(resCourse);
+    
+    const u = await User.findOne({_id:mongoose.Types.ObjectId(userId)})
+    if(u){
+        const username = u.Name 
+        const rating=req.body.rating;
+        const review=req.body.review;
+        const uId = mongoose.Types.ObjectId(userId);
+        const tuple={uId,rating,review,username};
+        if (courseId){
+            try{
+                //check if the user has already rated the course
+                const check = await course.findOne({_id:mongoose.Types.ObjectId(courseId), Rating:{$elemMatch:{uId:uId}}});
+                if (!check){
+                await course.findOneAndUpdate({_id:mongoose.Types.ObjectId(courseId)}, { $push: { Rating: tuple } }, { new: true }).then(async resCourse => {
+                    var sum=0;
+                    for (let i = 0; i < resCourse.Rating.length; i++) {
+                        sum+=parseInt(resCourse.Rating[i].rating);
+                    }
+                    const avg=sum/resCourse.Rating.length;
+                await course.findByIdAndUpdate(courseId , {avgRating:avg}, { new: true }).then(r =>{ return r.status(200).json(r)});
+                });
+               
+                }
+                else{
+                    res.status(400).json({error:"User has already rated this course"});
+                }
+    
             }
-            else{
-                res.status(400).json({error:"User has already rated this course"});
+            catch(error){
+                res.status(400).json({error:error.message})
             }
-
-        }
-        catch(error){
-            res.status(400).json({error:error.message})
         }
     }
+    else{
+        const username = "Anonymous User"
+        const uId = mongoose.Types.ObjectId(userId);
+        const rating=req.body.rating;
+        const review=req.body.review;
+        const tuple={uId,rating,review,username};
+        if (courseId){
+            try{
+                //check if the user has already rated the course
+                const check = await course.findOne({_id:mongoose.Types.ObjectId(courseId), Rating:{$elemMatch:{uId:uId}}});
+                if (!check){
+                await course.findOneAndUpdate({_id:mongoose.Types.ObjectId(courseId)}, { $push: { Rating: tuple } }, { new: true }).then(async resCourse => {
+                    var sum=0;
+                    for (let i = 0; i < resCourse.Rating.length; i++) {
+                        sum+=parseInt(resCourse.Rating[i].rating);
+                    }
+                    const avg=sum/resCourse.Rating.length;
+                await course.findByIdAndUpdate(courseId , {avgRating:avg}, { new: true }).then(r =>{ return r.status(200).json(r)});
+                });
+               
+                }
+                else{
+                    res.status(400).json({error:"User has already rated this course"});
+                }
+    
+            }
+            catch(error){
+                res.status(400).json({error:error.message})
+            }
+        }
+    }
+   
 }
 
 
@@ -247,7 +289,7 @@ const calculateCourseRating = async(req , res) => {
     const courseId=req.query.id;
     if (courseId){
         try{
-            const result = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+            const result = await course.findById(mongoose.Types.ObjectId(courseId));
             var sum=0;
             for (let i = 0; i < result.Rating.length; i++) {
                 sum+=parseInt(result.Rating[i].rating);
@@ -266,7 +308,7 @@ const viewCourseRating = async(req, res) => {
     const courseId=req.query.id;
     if (courseId){
         try{
-            const result = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+            const result = await course.findById(mongoose.Types.ObjectId(courseId));
             res.status(200).json(result.Rating);
         }catch(error){
             res.status(400).json({error:error.message})
@@ -339,17 +381,17 @@ const viewCourseDetails = async(req , res) => {
     const resQuestions = [];
     if (courseId){
         try{
-        const result = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+        const result = await course.findById(mongoose.Types.ObjectId(courseId));
         //get subtitles of the course
         for (let i = 0; i < result.CourseSubtitle.length; i++) {
-            const subtitleToView = await Subtitle.findOne({_id:mongoose.Types.ObjectId(result.CourseSubtitle[i])});
+            const subtitleToView = await Subtitle.findById(mongoose.Types.ObjectId(result.CourseSubtitle[i]));
             resSubtitles.push(subtitleToView);
         }
 
         //get each subtitle details
         for (let i = 0; i < resSubtitles.length; i++) {
             const subtitleToView = await
-            Subtitle.findOne({_id:mongoose.Types.ObjectId(resSubtitles[i])});
+            Subtitle.findById(mongoose.Types.ObjectId(resSubtitles[i]));
             resSubtitlesDetails.push(subtitleToView);
         }
         //get each subtitle titles
@@ -370,7 +412,7 @@ const viewCourseDetails = async(req , res) => {
         //get total hours of each subtitle
         for (let i = 0; i < resSubtitlesDetails.length; i++) {
             const subtitleHours = await
-            Subtitle.findOne({_id:mongoose.Types.ObjectId(resSubtitlesDetails[i]._id)});
+            Subtitle.findById(mongoose.Types.ObjectId(resSubtitlesDetails[i]._id));
             resHours.push(subtitleHours.Duration);
         }
         //get total hours of the course
@@ -402,10 +444,10 @@ const calculateCourseDuration = async(req , res) => {
     const courseId = req.query.id;
     if (courseId){
         try{
-            const result = await course.findOne({_id:mongoose.Types.ObjectId(courseId)});
+            const result = await course.findById(mongoose.Types.ObjectId(courseId));
             var sum=0;
             for (let i = 0; i < result.CourseSubtitle.length; i++) {
-                const subtitleToView = await Subtitle.findOne({_id:mongoose.Types.ObjectId(result.CourseSubtitle[i])});
+                const subtitleToView = await Subtitle.findById(mongoose.Types.ObjectId(result.CourseSubtitle[i]));
                 sum+=parseInt(subtitleToView.Duration);
             }
             await course.findByIdAndUpdate(courseId , {Duration:sum}, { new: true });
@@ -492,11 +534,15 @@ const publishCourse = async(req, res) =>{
     course.findByIdAndUpdate({_id:mongoose.Types.ObjectId(cId)}, {$set:{Published : true}}).then(json =>{ return res.status(200).json(json);})
 }
 
+const deleteReview = async(req, res) =>{
+    const cId = req.query.id;
+    course.findByIdAndUpdate({_id:mongoose.Types.ObjectId(cId)}, {$pull:{Rating : {'uId' : mongoose.Types.ObjectId("63a6407ff29347d86eabd440")}}}).then(json =>{ return res.status(200).json(json);})
+}
 
 module.exports={getAllCourse , getPublishedCourses, viewCourse, createCourse, editCourse, 
     viewCourseInstructor, getMaxPrice, getSubjects,updatePublished, deleteCourse,
      viewCourseSubtitles, viewCourseExam, viewUserCourse, clearExams, publishCourse,
      deleteCourseRating,addCourseRating,calculateCourseRating, updateInstructorId,
-     viewCourseRating,emptyCourseList,registerCourseToUser, removeSubtitle,
+     viewCourseRating,emptyCourseList,registerCourseToUser, removeSubtitle, deleteReview,
      viewCourseDetails,calculateCourseDuration , getCoursePreviewVideos };
    

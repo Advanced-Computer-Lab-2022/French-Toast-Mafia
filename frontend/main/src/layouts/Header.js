@@ -178,6 +178,7 @@ const handleSignUp = async (e) => {
         else if(type=="Coprate Trainee"){
           navigate(`/homeCop?id=${id}`);
         }
+        navigate(`/MyCourses?userId=${id}`);
       })
     } catch (error) {
       setError(error.response.data);

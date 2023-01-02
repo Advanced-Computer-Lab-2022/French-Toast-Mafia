@@ -20,6 +20,10 @@ const AdminSchema = new Schema({
     Requests: {
       type: Array,
       required: false
+    },
+    reqRefunds: {
+      type: Array,
+      required: false
     }
 
 }, { timestamps: true });

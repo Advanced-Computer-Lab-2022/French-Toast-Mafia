@@ -11,7 +11,7 @@ const {getAllUser,
    removeCourse,  
     logout,videoProgress, userRefund,getUserProgress,
     userProgressDecrement,
-    sendCertificate,getUserGrades,intializeProgress, getUser}= require ("../Controller/user-controller");
+    sendCertificate,getUserGrades,intializeProgress, getUser, removeUnknownCourses}= require ("../Controller/user-controller");
 
     
  
@@ -58,6 +58,7 @@ router.get('/intializeProgress',intializeProgress);
 
 router.get ('/getUser', getUser);
 
+router.get('/removeUnknownCourses',removeUnknownCourses);
 
 
 module.exports=router;
