@@ -420,7 +420,11 @@ const handleSignUp = async (e) => {
               Forgot Password
               </Link>
               </DropdownItem>
-            <DropdownItem>Logout</DropdownItem>
+            <DropdownItem>
+              <Link to="/home">
+              Logout
+              </Link>
+              </DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </Collapse>
