@@ -36,7 +36,7 @@ import {
           <CardText className="mt-3 text-muted">{stars}&nbsp;({c.Rating.length}) </CardText>
           <CardText ><span class="bi bi-book"></span> {c.Subject}</CardText>
           <CardTitle tag="h5">Price: {c.Cost} EGP</CardTitle>
-          {c.Published? <Button color="primary" onClick={() => navigate(`/viewCourseA?id=${cId}`)}>View Admin </Button>  : <Button color="primary" onClick={() => navigate(`/editCourse?id=${cId}`)}>Edit Course</Button> }
+          {c.Published? <Button color="primary" onClick={() => navigate(`/viewCourseA?id=${cId}`)}>View Course </Button>  : <Button color="primary" onClick={() => navigate(`/editCourse?id=${cId}`)}>Edit Course</Button> }
           
   
         </CardBody>
