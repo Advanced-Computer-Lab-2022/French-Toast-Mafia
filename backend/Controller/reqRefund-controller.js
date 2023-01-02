@@ -26,18 +26,33 @@ const createRefund = async(req,res) => {
 
 
         }
-
-
-
-
-
 }
 
 
+const AcceptRequest = async(req, res) =>{
+
+   const cId = req.query.id;
+   const request= await Request.findById(cId);
+   console.log(request);
+   console.log(request.requested_by);
+   if(request) {
+     await Request.findByIdAndUpdate({_id:mongoose.Types.ObjectId(cId)},{status:"Accepted"});
+     await User.findByIdAndUpdate(request.requested_by,{$pull:{Courses: request.requested_course} } )
+     const UserRequest = await User.findByIdAndUpdate({ _id:mongoose.Types.ObjectId(cId)}, {Wallet: Course.Cost*0.5 });
+    res.status(200).json(UserRequest);
+
+   }
+   else 
+      res.status(400).json({error:"Please enter a valid request Id"});
+};
 
 
 
 
 
 
-module.exports = {getAllrefunds, createRefund};
+
+
+
+
+module.exports = {getAllrefunds, createRefund, AcceptRequest };
