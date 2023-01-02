@@ -14,39 +14,25 @@ router.post("/", async (req, res) => {
 		console.log("1----------------------------------------------------------------------")
 		if (error )
 			return res.status(400).send({ message: error.details[0].message });
-
-		var user = await User.findOne({ Email: req.body.Email });
-		console.log("2----------------------------------------------------------------------")
-		console.log(user);
-
-		if (!user){
-			user= await Instructor.find({ InstrEmail: Email});
+		    console.log(req.body.Email);
+            let validPassword;
+		    var user = await User.find({ Email: req.body.Email });
+			if(user.length!=0){
+			console.log(user);
+		     validPassword = await bcrypt.compare(req.body.Password, user[0].Password);
+			}
+		if (user.length==0) {
+		user= await Instructor.find({ InstrEmail: req.body.Email });
+		validPassword = await bcrypt.compare(req.body.Password,user[0].InstrPassword);
 		}
-		console.log(user)
-		console.log("3----------------------------------------------------------------------")
-
-
-		if (!user){
-			user= await Admin.findOne({ AdminName: req.body.AdminName });
-		}
-		console.log("4----------------------------------------------------------------------")
-
-		console.log(user);
-		console.log(Password);
-		console.log("5----------------------------------------------------------------------")
-		console.log(user.Password)
-
-		const validPassword = await bcrypt.compare(
-			Password,
-			user.Password
-		);
-		console.log("6----------------------------------------------------------------------")
-
+		console.log(validPassword);
 		if (!validPassword) 
 			return res.status(401).send({ message: "Invalid Email or Password" });
 	
-		const token = user.generateAuthToken();
-		 return res.status(200).send({ data: token, message: "logged in successfully", userid:user._id });
+		const token = user[0].generateAuthToken();
+		console.log(user[0]._id);
+		 return res.status(200).send({ data: token, message: "logged in successfully",id:user[0]._id });
+		 
 	} catch (error) {
 
 		return res.status(500).send({ message: "Internal Server Error" });

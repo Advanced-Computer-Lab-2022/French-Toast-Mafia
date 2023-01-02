@@ -1,4 +1,4 @@
-import { Col, Row, Alert, ListGroup, CardBody, Card, CardTitle} from "reactstrap";
+import { Col, Row, Alert, ListGroup, CardBody, Card, CardTitle, Button} from "reactstrap";
 
 import { useLocation } from 'react-router-dom';
 import { viewCourse } from "../api/axios";
@@ -13,7 +13,6 @@ import LatestRequests from "../components/dashboard/LatestRequests";
 import { getAllReports } from "../api/axios";
 
 import { getAllRequests } from "../api/axios";
-import { Button } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Modal from "react-bootstrap/Modal";
@@ -33,16 +32,26 @@ const AdminDashboard = () => {
   
     const handleClose2 = () => setShow2(false); 
     const [show2, setShow2] = useState(false);
+    
+    const [show1, setShow1] = useState(false);
+    
+  
+    const handleClose1 = () => setShow1(false); 
+
+
 
     const handleShow2 = () => setShow2(true); 
 
     const[AdminName , setAdminName] = useState('')
     const[AdminId , setAdminid] = useState('')
+   
+    const[Done,setDone]= useState(false)
+    const[Done1,setDone1]= useState(false)
+    const[Done2,setDone2]= useState(false)
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        //navigate("/AdminAdded");
 
 
         const admin = { AdminName , AdminId  }
@@ -66,6 +75,7 @@ const AdminDashboard = () => {
 
             setErr(null)
             console.log('new admin added', json)
+            setDone(true);
         }
    }
   
@@ -79,6 +89,16 @@ const AdminDashboard = () => {
    const[Password , setPassword2] = useState('')
    const[Type , setType2] = useState('')
    const[Gender , setGender] = useState('')
+
+   const[Promotion , setPromotion] = useState('')
+   const[StartDatePromotion , setStart] = useState('')
+   const[EndDatePromotion , setEnd] = useState('')
+  
+
+   
+   const[cpform, setCPForm] = useState({});
+   const[cpErrors, setCPErrors] = useState({});
+ 
 
 
    const[err1 , setErr] = useState("")
@@ -112,6 +132,7 @@ const AdminDashboard = () => {
 
            setErr(null)
            console.log('new corporate-trainee added', json)
+           setDone1(true)
        }
   }
   
@@ -122,6 +143,88 @@ const AdminDashboard = () => {
 
     const[InstrEmail , setEmail3] = useState('')
     const[InstrPassword , setPassword3] = useState('')
+
+
+    const setCPField = (field, value) =>{
+      setCPForm({
+          ...cpform,
+          [field]:value,
+      })
+      if(!!cpErrors[field])
+      setCPErrors({
+          ...cpErrors,
+          [field]:null,
+      })
+    }
+    
+    const validateCPForm = () =>{
+      const { promotion, start, end} = cpform
+      const newErrors = {}
+    
+      if(!promotion ||promotion === "")
+      newErrors.promotion = "Please enter a course promotion"
+      if(!start|| start === "")  
+      newErrors.start = "Please enter a start time"
+      if(!end|| end === "")  
+      newErrors.end = "Please enter an end time"
+      return newErrors
+    }
+
+// const handleCPSubmit = async (e) => {
+//   console.log("jjjjjjjjjjj")
+
+//   e.preventDefault();
+
+//   const formErrors = validateCPForm()
+
+//   if(Object.keys(formErrors).length > 0){
+//       setCPErrors(formErrors)
+//   }
+//   else{
+
+//       await fetch('http://localhost:5000/Admin/addPromotionAll',{
+//           method: 'POST',
+//           body: JSON.stringify({"Promotion" : cpform.promotion,
+//             "StartDatePromotion": cpform.start,
+//             "EndDatePromotion": cpform.end}),
+//           headers : {
+//               'Content-Type':'application/json'
+//           }
+//       }).then(json =>{
+//         handleClose1()
+//         window.location.reload();
+//       })
+//   }
+// }
+
+const handleProm = async (e) => {
+  e.preventDefault();
+
+  const instructor = {Promotion , StartDatePromotion, EndDatePromotion }
+  const response = await fetch('http://localhost:5000/Admin/addPromotionAll' , {
+      method : 'POST' ,
+      body : JSON.stringify(instructor) , 
+      headers : {
+          'Content-Type' : 'application/json'
+      }
+  }) 
+
+  const json = await response.json(instructor)
+
+  if(!response.ok){
+      setErr(json.err)
+
+  }
+  if(response.ok){
+      setPromotion('')
+      setStart('')
+        setEnd('')
+
+      setErr(null)
+      console.log('new instr added', json)
+  }
+  handleClose1();
+}
 
 
     const handleSubmit2 = async (e) => {
@@ -148,6 +251,7 @@ const AdminDashboard = () => {
 
             setErr(null)
             console.log('new instr added', json)
+            setDone2(true);
         }
   }
 
@@ -189,7 +293,6 @@ const AdminDashboard = () => {
       </Row>
       
       {/* Add admin */}
-
       <Modal show={show2} onHide={handleClose2}> 
         <Modal.Header closeButton>
           <Modal.Title>Add Admin</Modal.Title>
@@ -217,12 +320,22 @@ const AdminDashboard = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button color="secondary" variant='contained' onClick={handleClose2}>
+          <Button outline color="danger" onClick={handleClose2}>
             Close
           </Button>
-          <Button color="primary" variant='contained' onClick={handleSubmit}>
+          &nbsp;
+          <Button color="primary" onClick={handleSubmit} >
               Add Admin
+              
           </Button>
+          {Done?
+        <Alert color="warning"> Admin is Added Successfully! 
+        <Button variant="primary"  type='submit' onClick={handleClose2}>
+      Done
+    </Button>
+    </Alert>:""}
+
+          
           
         </Modal.Footer>
       </Modal>
@@ -234,7 +347,7 @@ const AdminDashboard = () => {
               <CardTitle tag="h4">Admins</CardTitle>
             </Col>
             <Col lg="2">
-            <Button className="btn" outline color="primary" variant="contained"  onClick={() => setShow2(true)}>Add New</Button>
+            <Button className="btn" outline color="primary" onClick={() => setShow2(true)}>Add New</Button>
             {/* <Button className="btn" outline color="primary" onClick={() => navigate(`/`)}>View All</Button> */}
             </Col>
           </Row>
@@ -303,12 +416,19 @@ const AdminDashboard = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button color="secondary" variant='contained' onClick={handleClose3}>
+          <Button outline color="danger"  onClick={handleClose3}>
             Close
           </Button>
-          <Button color="primary" variant='contained' onClick={handleSubmit1}>
+          <Button color="primary" onClick={handleSubmit1}>
               Add 
           </Button>
+
+          {Done1?
+        <Alert color="warning"> User is Added Successfully! 
+        <Button variant="primary"  type='submit' onClick={handleClose3}>
+      Done
+    </Button>
+    </Alert>:""}
           
         </Modal.Footer>
       </Modal>
@@ -320,7 +440,7 @@ const AdminDashboard = () => {
               <CardTitle tag="h4">Users</CardTitle>
             </Col>
             <Col lg="2">
-            <Button className="btn" outline color="primary" variant="contained" onClick={() => setShow3(true)}>Add New</Button>
+            <Button className="btn" outline color="primary"  onClick={() => setShow3(true)}>Add New</Button>
             {/* <Button className="btn" outline color="primary" onClick={() => navigate(`/`)}>View All</Button> */}
             </Col>
           </Row>
@@ -357,13 +477,21 @@ const AdminDashboard = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button  variant='contained' color="secondary" onClick={handleClose4}>
+          <Button  outline color="danger" onClick={handleClose4}>
             Close
           </Button>
 
-          <Button variant="contained" color="primary" onClick={handleSubmit2}>
+          <Button  color="primary" onClick={handleSubmit2}>
               Add 
+
           </Button>
+          
+          {Done2?
+        <Alert color="warning"> Instructor is Added Successfully! 
+        <Button variant="primary"  type='submit' onClick={handleClose4}>
+      Done
+    </Button>
+    </Alert>:""}
           
         </Modal.Footer>
       </Modal>
@@ -375,7 +503,66 @@ const AdminDashboard = () => {
               <CardTitle tag="h4">Instructors</CardTitle>
             </Col>
             <Col lg="2">
-            <Button className="btn"  color="primary" variant="contained"  onClick={() => setShow4(true)}>Add New</Button>
+            <Button className="btn"  outline color="primary"   onClick={() => setShow4(true)}>Add New</Button>
+            {/* <Button className="btn" outline color="primary" onClick={() => navigate(`/`)}>View All</Button> */}
+            </Col>
+          </Row>
+          <hr/>
+        </CardBody>
+        </Card>
+        
+        <Modal show={show1} onHide={handleClose1}> 
+        <Modal.Header closeButton>
+          <Modal.Title>Add promotion </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Promotion</Form.Label>
+              <Form.Control
+                type="Promotion"
+                placeholder="set promotion "
+                value={ Promotion }
+               onChange={(e) => setPromotion( e.target.value)}
+                autoFocus
+              />  
+              <Form.Label>Start Date Promotion</Form.Label>
+              <Form.Control
+                type="StartDatePromotion"
+                placeholder="YYYY-MM-DD"
+                value={ StartDatePromotion }
+                onChange={(e) => setStart(e.target.value)}
+                autoFocus
+              />  
+             <Form.Label>EndDatePromotion Date Promotion</Form.Label>
+              <Form.Control
+                type="EndDatePromotion"
+                placeholder="YYYY-MM-DD"
+                value={ EndDatePromotion }
+                onChange={(e) => setEnd(e.target.value)}
+                autoFocus
+              />              
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button outline color="danger" onClick={handleClose1}>
+            Close
+          </Button>
+          <Button color="primary"  onClick={handleProm}>
+              Add Promotion
+          </Button>
+          
+        </Modal.Footer>
+      </Modal>
+        <Card>
+        <CardBody>
+          <Row>
+            <Col lg="10">
+              <CardTitle tag="h4"> Courses </CardTitle>
+            </Col>
+            <Col lg="2">
+            <Button className="btn"  outline color="primary" onClick={() =>setShow1(true)}> Add Promotion</Button>
             {/* <Button className="btn" outline color="primary" onClick={() => navigate(`/`)}>View All</Button> */}
             </Col>
           </Row>
