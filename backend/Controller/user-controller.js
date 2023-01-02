@@ -487,14 +487,13 @@ const getUserProgress = async (req, res) => {
 
 
 const userRefund = async (req, res) => {
-    const userId = req.body.id;
-    const courseId = req.body.courseId;
+    const userId = req.query.id;
+    const courseId = req.query.courseId;
 
         const refundedCourses=[];
         let courseFound=false;
         console.log(userId);
         if (userId){
-            // const resultUser =await User.find({_id:mongoose.Types.ObjectId(userId)});
             const resultUser= await User.findById(userId);
             console.log(resultUser)
             const userCourses=resultUser.Courses;
@@ -503,30 +502,20 @@ const userRefund = async (req, res) => {
                     courseFound=true;
                 }
             }
-            console.log("zzzzzzzzzzzz");
-
             if (courseFound){
-                console.log("teettttttt");
                 const result = await User.findById(mongoose.Types.ObjectId(userId), { Progress: { $elemMatch: { courseId: mongoose.Types.ObjectId(courseId) } } });         
-                    // console.log(result);
                 if (result){
                     console.log(result);
-                    console.log("beebebebebebbbebebeb");
                     const prog=(result.Progress[0].Progress)*100
                     console.log(prog);
                     const progress=Math.ceil(prog);
                     console.log(progress)               
-                    console.log('1-------------------------------------------------------------')
-
                 } else {
                         res.status(400).json({message:"Please enter a valid userId"});
                     }
-                console.log('2-------------------------------------------------------------')
                 console.log(result);
                 console.log(result.Progress[0].Progress);
-                console.log('3-------------------------------------------------------------')
                if ((result.Progress[0].Progress)<=50){
-                console.log('4-------------------------------------------------------------')
                     console.log(result.Progress);
                     refundedCourses.push(courseId);
                     res.status(200).json( {message :"Your request has been sent successfully to the admin"})
@@ -717,70 +706,4 @@ module.exports = {
      userProgressDecrement, sendCertificate, getUserGrades,intializeProgress}
 
 
-    //find user using id
-        //  if (userId) {
-        //     const result = await User.findOne({ _id: mongoose.Types.ObjectId(userId) });
-        //         console.log("tamtamtammmmm");
-        //         const userCourse = userfound.Courses;
-        //         let courseFound = false;
-        //         // course exists 
-        //         for (let i = 0; i < userCourse.length; i++) {
-        //             if (userCourse[i] == courseId) {
-        //                 courseFound = true;
-        //             }
-        //         }
     
-        // if (courseFound) {
-        //     //user progress in the course
-        //     const refundedCourses=[];
-        //     const result=await User.findOne({_id:mongoose.Types.ObjectId(userId),"Progress.courseId":mongoose.Types.ObjectId(courseId)});
-        //         if (result){
-        //             const prog=result.Progress[0].Progress*100;
-        //             const progress=Math.ceil(prog);
-        //             res.status(200).json(progress);
-        //         } else {
-        //                 res.status(400).json({error:"Please enter a valid userId"});
-        //             }
-        //         //adding course to refunded courses id progress 50% or less 
-        //             if (progress <=  0.5){ 
-        //                 refundedCourses.push(courseId);
-        //                 res.status(200).json( {message :"You have successfully refunded this course"})
-        //             } else {
-        //             res.status(400).json({error:"You can't refund this course because you attended more than 50% of the course"});
-        //             }
-        //         }
-        // // const resultUser = await User.findOne({ _id: mongoose.Types.ObjectId(userId) });
-        // const userCourses = resultUser.Courses;
-        // let courseFound = false;
-
-        // //course exists 
-        // for (let i = 0; i < userCourses.length; i++) {
-        //     if (userCourses[i] == courseId) {
-        //         courseFound = true;
-        //     }
-        // }
-
-        // //get progress of user's course 
-        // if (courseFound) {
-        //     for (let i = 0; i < resultUser.Progress.length; i++) {
-        //         if (resultUser.Progress[i].courseId == courseId) {
-        //             const progress = resultUser.Progress[i].Progress;
-        //             if (progress==0.5){
-        //                 const refund=0;
-        //                 try {
-        //                     //find price of this course 
-        //                     const course = await Course.findOne({ _id: mongoose.Types.ObjectId(courseId) }); 
-        //                     const price = course.Price;
-        //                     //update user's balance
-        //                     const newBalance = resultUser.Wallet + price;
-        //                     resultUser= await User.findByIdAndDelete(courseId);
-        //                     console.log(newBalance);
-        //                     }catch {
-        //                         res.status(400).json({ error: error.message })
-        //                     }
-        //             }
-        
-        //         } else {
-        //             res.status(400).json({ error: "Course not found" });
-        //              } 
-    //     }

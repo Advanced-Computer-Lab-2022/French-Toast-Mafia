@@ -11,6 +11,7 @@ function getAllRequests (req,res) {
    .then ((req) =>{
     return res.status(200).json(req);
     });
+    
 };
 
 const createRequest = async(req,res) => {  //add request   
