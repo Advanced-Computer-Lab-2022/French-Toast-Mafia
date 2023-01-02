@@ -24,6 +24,8 @@ const OpenExerciseElement = ({eId, cId, uId}) => {
 
     const [show, setShow] = useState(false);
     const handleCancel = () => setShow(false);
+    
+    const [grades,setGrades] = useState([]);
     // console.log(eId)
     // var typeIcon;
     // var statusColor;
@@ -36,28 +38,30 @@ const OpenExerciseElement = ({eId, cId, uId}) => {
             setExercise(json)
             setTitle(json.title);
         })
-        if(eId != null && uId != null)
+        if(eId != null && uId != null){
+        
             getGrade(uId, eId).then(json =>{
               setGrades(json);
-            })
+              console.log(json)
+              // setShow(true)
+            }) }
 
       }, []);
 
 
-      const [grades,setGrades] = useState([]);
 
-      const getGrade = () => {
-      if(eId != null && uId != null)
-        axios.get(`http://localhost:5000/User/getUserGrades?id=${uId}&examId=${eId}`).then(
-            (res) => {
-                const resGrades = res.data;
-                console.log(resGrades);
-                setGrades(resGrades);
-            }
-        );
+      // const getGrade = () => {
+      // if(eId != null && uId != null)
+      //   axios.get(`http://localhost:5000/User/getUserGrades?id=${uId}&examId=${eId}`).then(
+      //       (res) => {
+      //           const resGrades = res.data;
+      //           console.log(resGrades);
+      //           setGrades(resGrades);
+      //       }
+      //   );
   
-        setShow(true)
-      }
+       
+      // }
     
   
   return (
@@ -100,7 +104,7 @@ const OpenExerciseElement = ({eId, cId, uId}) => {
               >Enter Exercise</Button>
               </Col>
               <Col>
-              <Button outline color="secondary" onClick={getGrade}>View Grade</Button>
+              <Button outline color="secondary" onClick={() => console.log("clicky!")}>View Grade</Button>
               </Col>
               </Row>
             </ListGroupItem>
