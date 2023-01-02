@@ -105,6 +105,7 @@ const OpenCourseInfo = ({uId, cId, course,instructor,ratingLength, setReportAler
         }
     }).then(json =>{
     handleCloseRev()
+    window.location.reload();
     return setReviewAlert(true)
     })
 
