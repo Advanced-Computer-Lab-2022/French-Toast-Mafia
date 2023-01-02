@@ -36,7 +36,7 @@ const InstructorDashboard = () => {
     const[edit,setEdit] = useState(false);
     const[wallet,setWallet] = useState(0);
     const[percentageTaken,setPercentageTaken] = useState(0);
-  
+    const[Rating, setRating] = useState([]);
  
     const[form, setForm] = useState({});
     const[errors, setErrors] = useState({});
@@ -59,6 +59,7 @@ const InstructorDashboard = () => {
           setInstructorDep(json.Department);
           setInstructorLoc(json.InstrCountry);
           setInstructorBio(json.Biography);
+          setRating(json.InstrRating);
           setProfileViews(json.ProfileViews);
           setCourses(json.CourseGiven);
           setWallet(json.Wallet);
@@ -503,7 +504,8 @@ const handleCCSubmit = async (e) => {
         </Card>
 
         <Row>
-          {/* <Reviews reviews={Rating} />     */}
+          {Rating?.length?   <Reviews reviews={Rating} />  : <Alert color="primary">No Reviews yet.</Alert>}
+          
       </Row>
 
 

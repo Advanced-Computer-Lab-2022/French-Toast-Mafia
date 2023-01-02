@@ -54,7 +54,7 @@ router.get ('/SearchCourse/:id',SearchCourse);
 
 router.get ('/viewInstrInfo',viewInstrInfo);
 
-router.put('/deleteInstrRating',deleteInstrRating);
+router.get('/deleteInstrRating',deleteInstrRating);
 
 router.put('/addInstrRating',addInstrRating);
 

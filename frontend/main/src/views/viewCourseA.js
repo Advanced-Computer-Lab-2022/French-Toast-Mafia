@@ -79,7 +79,7 @@ const ViewCourseA = () => {
       </Row>
       {/***Blog Cards***/}
       <Row>
-         <Reviews reviews={Rating} />
+      {Rating?.length?  <Reviews reviews={Rating} />  : <Alert color="primary">No Reviews yet.</Alert>}
       </Row>
 
     </div>
