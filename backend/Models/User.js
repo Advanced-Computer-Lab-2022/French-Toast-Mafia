@@ -73,7 +73,8 @@ const userSchema = new Schema({
   },
     Wallet: {
     type: Number,
-    required: false
+    required: false,
+    default: 0
   },
    Courses:
   {
