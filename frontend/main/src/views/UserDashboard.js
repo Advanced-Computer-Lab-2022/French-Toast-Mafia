@@ -120,8 +120,7 @@ const UserDashboard = () => {
               </Row>
            
             <hr/>
-            {/* <CardSubtitle tag="h5" className="mt-3 text-muted"><span class="bi bi-percent"></span> taken&nbsp;: {percentageTaken}</CardSubtitle>  */}
-            {/* <CardSubtitle tag="h5" className="mt-3 text-muted"><span class="bi bi-cash"></span> Balance&nbsp;: {wallet} EGP</CardSubtitle>  */}
+            <CardSubtitle tag="h5" className="mt-3 text-muted"><span class="bi bi-cash"></span> Balance&nbsp;: {wallet} EGP</CardSubtitle> 
             </CardBody>
           </Card>
         </Col> 

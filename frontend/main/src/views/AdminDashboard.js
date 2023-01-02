@@ -34,15 +34,20 @@ const AdminDashboard = () => {
     const handleClose2 = () => setShow2(false); 
     const [show2, setShow2] = useState(false);
 
+
+
     const handleShow2 = () => setShow2(true); 
 
     const[AdminName , setAdminName] = useState('')
     const[AdminId , setAdminid] = useState('')
+   
+    const[Done,setDone]= useState(false)
+    const[Done1,setDone1]= useState(false)
+    const[Done2,setDone2]= useState(false)
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        //navigate("/AdminAdded");
 
 
         const admin = { AdminName , AdminId  }
@@ -66,6 +71,7 @@ const AdminDashboard = () => {
 
             setErr(null)
             console.log('new admin added', json)
+            setDone(true);
         }
    }
   
@@ -112,6 +118,7 @@ const AdminDashboard = () => {
 
            setErr(null)
            console.log('new corporate-trainee added', json)
+           setDone1(true)
        }
   }
   
@@ -148,6 +155,7 @@ const AdminDashboard = () => {
 
             setErr(null)
             console.log('new instr added', json)
+            setDone2(true);
         }
   }
 
@@ -217,12 +225,22 @@ const AdminDashboard = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button color="secondary" variant='contained' onClick={handleClose2}>
+          <Button color="primary" variant='contained'  onClick={handleClose2}>
             Close
           </Button>
-          <Button color="primary" variant='contained' onClick={handleSubmit}>
+          &nbsp;
+          <Button color="primary" variant='contained' onClick={handleSubmit} >
               Add Admin
+              
           </Button>
+          {Done?
+        <Alert color="warning"> Admin is Added Successfully! 
+        <Button variant="primary"  type='submit' onClick={handleClose2}>
+      Done
+    </Button>
+    </Alert>:""}
+
+          
           
         </Modal.Footer>
       </Modal>
@@ -303,12 +321,19 @@ const AdminDashboard = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button color="secondary" variant='contained' onClick={handleClose3}>
+          <Button color="primary" variant='contained' onClick={handleClose3}>
             Close
           </Button>
           <Button color="primary" variant='contained' onClick={handleSubmit1}>
               Add 
           </Button>
+
+          {Done1?
+        <Alert color="warning"> User is Added Successfully! 
+        <Button variant="primary"  type='submit' onClick={handleClose3}>
+      Done
+    </Button>
+    </Alert>:""}
           
         </Modal.Footer>
       </Modal>
@@ -363,7 +388,15 @@ const AdminDashboard = () => {
 
           <Button variant="contained" color="primary" onClick={handleSubmit2}>
               Add 
+
           </Button>
+          
+          {Done2?
+        <Alert color="warning"> Instructor is Added Successfully! 
+        <Button variant="primary"  type='submit' onClick={handleClose4}>
+      Done
+    </Button>
+    </Alert>:""}
           
         </Modal.Footer>
       </Modal>
