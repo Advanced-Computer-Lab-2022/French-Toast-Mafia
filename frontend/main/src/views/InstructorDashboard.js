@@ -440,7 +440,7 @@ const handleCCSubmit = async (e) => {
    </Card>
         </Col>
         <Col sm="6" lg="6" xl="6" xxl="6">
-          <Card style={{height:"475px"}}>
+          <Card style={{height:"400px"}}>
             <CardBody>
               <Row>
                 <Col lg="10">
@@ -462,7 +462,7 @@ const handleCCSubmit = async (e) => {
         </Col> 
 
         <Col sm="3" lg="3" xl="3" xxl="3">
-          <Card style={{height:"475px"}}>
+          <Card style={{height:"400px"}}>
             <CardBody>
               <Row>
                 <Col lg="10">
@@ -497,7 +497,7 @@ const handleCCSubmit = async (e) => {
           </Row>
           <hr/>
 
-            <Row style={{ maxHeight : "475px",overflow: "auto"}}>
+            <Row style={{ maxHeight : "450px",overflow: "auto"}}>
               {courses.map(c => <CourseCard cId={c}/>)}
             </Row>
         </CardBody>
