@@ -68,7 +68,6 @@ const OpenCourse = () => {
           }
       }).then(json =>{
       handleCloseRev()
-      window.location.reload();
       return setReviewAlert(true)
       })
   
