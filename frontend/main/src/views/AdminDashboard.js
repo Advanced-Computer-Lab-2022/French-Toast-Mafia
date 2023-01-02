@@ -84,6 +84,12 @@ const AdminDashboard = () => {
    const[Password , setPassword2] = useState('')
    const[Type , setType2] = useState('')
    const[Gender , setGender] = useState('')
+
+   const[Promotion , setPromotion] = useState('')
+   const[StartDatePromotion , setStart] = useState('')
+   const[EndDatePromotion , setEnd] = useState('')
+  
+
    
    const[cpform, setCPForm] = useState({});
    const[cpErrors, setCPErrors] = useState({});
@@ -158,31 +164,60 @@ const AdminDashboard = () => {
       return newErrors
     }
 
-const handleCPSubmit = async (e) => {
-  console.log("jjjjjjjjjjj")
+// const handleCPSubmit = async (e) => {
+//   console.log("jjjjjjjjjjj")
 
+//   e.preventDefault();
+
+//   const formErrors = validateCPForm()
+
+//   if(Object.keys(formErrors).length > 0){
+//       setCPErrors(formErrors)
+//   }
+//   else{
+
+//       await fetch('http://localhost:5000/Admin/addPromotionAll',{
+//           method: 'POST',
+//           body: JSON.stringify({"Promotion" : cpform.promotion,
+//             "StartDatePromotion": cpform.start,
+//             "EndDatePromotion": cpform.end}),
+//           headers : {
+//               'Content-Type':'application/json'
+//           }
+//       }).then(json =>{
+//         handleClose1()
+//         window.location.reload();
+//       })
+//   }
+// }
+
+const handleProm = async (e) => {
   e.preventDefault();
 
-  const formErrors = validateCPForm()
+  const instructor = {Promotion , StartDatePromotion, EndDatePromotion }
+  const response = await fetch('http://localhost:5000/Admin/addPromotionAll' , {
+      method : 'POST' ,
+      body : JSON.stringify(instructor) , 
+      headers : {
+          'Content-Type' : 'application/json'
+      }
+  }) 
 
-  if(Object.keys(formErrors).length > 0){
-      setCPErrors(formErrors)
-  }
-  else{
+  const json = await response.json(instructor)
 
-      await fetch('http://localhost:5000/Admin/addPromotionAll',{
-          method: 'POST',
-          body: JSON.stringify({"Promotion" : cpform.promotion,
-            "StartDatePromotion": cpform.start,
-            "EndDatePromotion": cpform.end}),
-          headers : {
-              'Content-Type':'application/json'
-          }
-      }).then(json =>{
-        handleClose1()
-        window.location.reload();
-      })
+  if(!response.ok){
+      setErr(json.err)
+
   }
+  if(response.ok){
+      setPromotion('')
+      setStart('')
+        setEnd('')
+
+      setErr(null)
+      console.log('new instr added', json)
+  }
+  handleClose1();
 }
 
 
@@ -443,72 +478,56 @@ const handleCPSubmit = async (e) => {
           <hr/>
         </CardBody>
         </Card>
-        <Modal show={show1} onHide={handleClose1}>
+        
+        <Modal show={show1} onHide={handleClose1}> 
         <Modal.Header closeButton>
-          <Modal.Title>Course Promotion</Modal.Title>
+          <Modal.Title>Add promotion </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
-              <Form.Group controlId="Promotion">
-                    <Form.Label>Promotion:</Form.Label>
-                    <Form.Control 
-                        type="text"
-                        placeholder="Ex. '50'"
-                        value = {cpform.promotion}
-                        onChange={(e) => setCPField('promotion', e.target.value)}
-                        isInvalid={!!cpErrors.promotion}
-                    ></Form.Control>
-                    <Form.Control.Feedback type='invalid'>
-                        {cpErrors.promotion}
-                    </Form.Control.Feedback>
-                </Form.Group>
-
-              <br/>
-            <Form.Group controlId="start">
-              <Form.Label>Promotion Start Time:</Form.Label>
-              <Form.Control 
-                        type="text"
-                        placeholder="Ex. 'YYYY-MM-DD'"
-                        value = {cpform.start}
-                        onChange={(e) => setCPField('start', e.target.value)}
-                        isInvalid={!!cpErrors.start}
-                    ></Form.Control>
-                    <Form.Control.Feedback type='invalid'>
-                        {cpErrors.start}
-                    </Form.Control.Feedback>
-      
+            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Promotion</Form.Label>
+              <Form.Control
+                type="Promotion"
+                placeholder="set promotion "
+                value={ Promotion }
+               onChange={(e) => setPromotion( e.target.value)}
+                autoFocus
+              />  
+              <Form.Label>Start Date Promotion</Form.Label>
+              <Form.Control
+                type="StartDatePromotion"
+                placeholder="YYYY-MM-DD"
+                value={ StartDatePromotion }
+                onChange={(e) => setStart(e.target.value)}
+                autoFocus
+              />  
+             <Form.Label>EndDatePromotion Date Promotion</Form.Label>
+              <Form.Control
+                type="EndDatePromotion"
+                placeholder="YYYY-MM-DD"
+                value={ EndDatePromotion }
+                onChange={(e) => setEnd(e.target.value)}
+                autoFocus
+              />              
             </Form.Group>
-               <Form.Group controlId="subject">
-                   <Form.Label>Promotion end time :</Form.Label>
-                   <Form.Control 
-                       type="text"
-                       placeholder="Ex. 'YYYY-MM-DD'"
-                       value = {cpform.end}
-                       onChange={(e) => setCPField('end', e.target.value)}
-                       isInvalid={!!cpErrors.end}
-                   ></Form.Control>
-                   <Form.Control.Feedback type='invalid'>
-                       {cpErrors.end}
-                   </Form.Control.Feedback>
-               </Form.Group>
-               <br/>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button outline color="danger"onClick={handleClose1} >
+          <Button color="secondary" variant='contained' onClick={handleClose1}>
             Close
           </Button>
-          <Button color="primary" onClick={handleCPSubmit}>
-            Save Promotion
+          <Button color="primary" variant='contained' onClick={handleProm}>
+              Add Promotion
           </Button>
+          
         </Modal.Footer>
       </Modal>
-
         <Card>
         <CardBody>
           <Row>
             <Col lg="10">
-              <CardTitle tag="h4">Courses </CardTitle>
+              <CardTitle tag="h4"> Courses </CardTitle>
             </Col>
             <Col lg="2">
             <Button className="btn"  color="primary" variant="contained"  onClick={() =>setShow1(true)}> Add Promotion</Button>
