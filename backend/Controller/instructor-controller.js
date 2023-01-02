@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 const moment = require("moment");
 // const instrlogin = require("../Controller/user-controller");
 const instrlogout = require("../Controller/user-controller");
-
+const {User} = require("../Models/User");
 
 
 function getAllInstructors (req,res) {
@@ -448,21 +448,32 @@ const deleteInstrRating = async(req , res) => {
 
 //add Instructor rating function
 const addInstrRating = async(req , res) => {
+
     const instrId=req.query.id;
     const userId=req.body.id;
     const rating=req.body.rating;
+    const review=req.body.review;
+    const u = await User.findById(mongoose.Types.ObjectId(userId));
+    const username = u.Name;
     const uId=mongoose.Types.ObjectId(userId);
-    const tuple={uId,rating};
+    const tuple={uId,rating,review,username};
     if (instrId){
         try{
-            //check if the user has already rated the instructor
-            const check = await Instructor.findOne({_id:mongoose.Types.ObjectId(instrId), InstrRating:{$elemMatch:{uId:uId}}});
+            //check if the user has already rated the course
+            const check = await course.findOne({_id:mongoose.Types.ObjectId(instrId), InstrRating:{$elemMatch:{uId:uId}}});
             if (!check){
-            const resCourse = await Instructor.findOneAndUpdate({_id:mongoose.Types.ObjectId(instrId)}, { $push: { InstrRating: tuple } }, { new: true });
-            res.status(200).json(resCourse);
+            await Instructor.findOneAndUpdate({_id:mongoose.Types.ObjectId(instrId)}, { $push: { InstrRating: tuple } }, { new: true }).then(async resInstructor => {
+                var sum=0;
+                for (let i = 0; i < resInstructor.InstrRating.length; i++) {
+                    sum+=parseInt(resInstructor.InstrRating[i].rating);
+                }
+                const avg=sum/resInstructor.InstrRating.length;
+            await Instructor.findByIdAndUpdate(instrId , {avgRating:avg}, { new: true }).then(r =>{ return res.status(200).json(resInstructor)});
+            });
+           
             }
             else{
-                res.status(400).json({error:"You have already rated the instructor"});
+                res.status(400).json({error:"User has already rated this instructor"});
             }
 
         }
@@ -556,6 +567,8 @@ const removeExam = async(req, res) =>{
             res.status(200).json(json);
         });
 }
+
+
 
 module.exports={createInstructor,getAllInstructors , selectCountryInstructor ,
      addCourse , addInstructorName, deleteCourse, filterCost, filterRating, filterSubject, 
