@@ -33,6 +33,11 @@ const AdminDashboard = () => {
   
     const handleClose2 = () => setShow2(false); 
     const [show2, setShow2] = useState(false);
+    
+    const [show1, setShow1] = useState(false);
+    
+  
+    const handleClose1 = () => setShow1(false); 
 
     const handleShow2 = () => setShow2(true); 
 
@@ -79,6 +84,10 @@ const AdminDashboard = () => {
    const[Password , setPassword2] = useState('')
    const[Type , setType2] = useState('')
    const[Gender , setGender] = useState('')
+   
+   const[cpform, setCPForm] = useState({});
+   const[cpErrors, setCPErrors] = useState({});
+ 
 
 
    const[err1 , setErr] = useState("")
@@ -122,6 +131,59 @@ const AdminDashboard = () => {
 
     const[InstrEmail , setEmail3] = useState('')
     const[InstrPassword , setPassword3] = useState('')
+
+
+    const setCPField = (field, value) =>{
+      setCPForm({
+          ...cpform,
+          [field]:value,
+      })
+      if(!!cpErrors[field])
+      setCPErrors({
+          ...cpErrors,
+          [field]:null,
+      })
+    }
+    
+    const validateCPForm = () =>{
+      const { promotion, start, end} = cpform
+      const newErrors = {}
+    
+      if(!promotion ||promotion === "")
+      newErrors.promotion = "Please enter a course promotion"
+      if(!start|| start === "")  
+      newErrors.start = "Please enter a start time"
+      if(!end|| end === "")  
+      newErrors.end = "Please enter an end time"
+      return newErrors
+    }
+
+const handleCPSubmit = async (e) => {
+  console.log("jjjjjjjjjjj")
+
+  e.preventDefault();
+
+  const formErrors = validateCPForm()
+
+  if(Object.keys(formErrors).length > 0){
+      setCPErrors(formErrors)
+  }
+  else{
+
+      await fetch('http://localhost:5000/Admin/addPromotionAll',{
+          method: 'POST',
+          body: JSON.stringify({"Promotion" : cpform.promotion,
+            "StartDatePromotion": cpform.start,
+            "EndDatePromotion": cpform.end}),
+          headers : {
+              'Content-Type':'application/json'
+          }
+      }).then(json =>{
+        handleClose1()
+        window.location.reload();
+      })
+  }
+}
 
 
     const handleSubmit2 = async (e) => {
@@ -189,7 +251,6 @@ const AdminDashboard = () => {
       </Row>
       
       {/* Add admin */}
-
       <Modal show={show2} onHide={handleClose2}> 
         <Modal.Header closeButton>
           <Modal.Title>Add Admin</Modal.Title>
@@ -376,6 +437,81 @@ const AdminDashboard = () => {
             </Col>
             <Col lg="2">
             <Button className="btn"  color="primary" variant="contained"  onClick={() => setShow4(true)}>Add New</Button>
+            {/* <Button className="btn" outline color="primary" onClick={() => navigate(`/`)}>View All</Button> */}
+            </Col>
+          </Row>
+          <hr/>
+        </CardBody>
+        </Card>
+        <Modal show={show1} onHide={handleClose1}>
+        <Modal.Header closeButton>
+          <Modal.Title>Course Promotion</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+              <Form.Group controlId="Promotion">
+                    <Form.Label>Promotion:</Form.Label>
+                    <Form.Control 
+                        type="text"
+                        placeholder="Ex. '50'"
+                        value = {cpform.promotion}
+                        onChange={(e) => setCPField('promotion', e.target.value)}
+                        isInvalid={!!cpErrors.promotion}
+                    ></Form.Control>
+                    <Form.Control.Feedback type='invalid'>
+                        {cpErrors.promotion}
+                    </Form.Control.Feedback>
+                </Form.Group>
+
+              <br/>
+            <Form.Group controlId="start">
+              <Form.Label>Promotion Start Time:</Form.Label>
+              <Form.Control 
+                        type="text"
+                        placeholder="Ex. 'YYYY-MM-DD'"
+                        value = {cpform.start}
+                        onChange={(e) => setCPField('start', e.target.value)}
+                        isInvalid={!!cpErrors.start}
+                    ></Form.Control>
+                    <Form.Control.Feedback type='invalid'>
+                        {cpErrors.start}
+                    </Form.Control.Feedback>
+      
+            </Form.Group>
+               <Form.Group controlId="subject">
+                   <Form.Label>Promotion end time :</Form.Label>
+                   <Form.Control 
+                       type="text"
+                       placeholder="Ex. 'YYYY-MM-DD'"
+                       value = {cpform.end}
+                       onChange={(e) => setCPField('end', e.target.value)}
+                       isInvalid={!!cpErrors.end}
+                   ></Form.Control>
+                   <Form.Control.Feedback type='invalid'>
+                       {cpErrors.end}
+                   </Form.Control.Feedback>
+               </Form.Group>
+               <br/>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button outline color="danger"onClick={handleClose1} >
+            Close
+          </Button>
+          <Button color="primary" onClick={handleCPSubmit}>
+            Save Promotion
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+        <Card>
+        <CardBody>
+          <Row>
+            <Col lg="10">
+              <CardTitle tag="h4">Courses </CardTitle>
+            </Col>
+            <Col lg="2">
+            <Button className="btn"  color="primary" variant="contained"  onClick={() =>setShow1(true)}> Add Promotion</Button>
             {/* <Button className="btn" outline color="primary" onClick={() => navigate(`/`)}>View All</Button> */}
             </Col>
           </Row>
