@@ -40,6 +40,7 @@ const Header = () => {
   const[Password , setPassword1] = useState('')
   const[Gender , setGender] = useState('')
   const [checked, setChecked] = React.useState(true);
+  const [type, setType] = useState("Admin");
   
 
   const[err , setErr] = useState(null)
@@ -150,14 +151,14 @@ const handleSignUp = async (e) => {
       const response = await axios ({
         method:'post',
         url: 'http://localhost:5000/Login//' ,
-        data:{ "Email": Email , "Password": Password} ,
+        data:{ "Email": Email , "Password": Password } ,
         headers : {
             'Content-Type' : 'application/json'
             },
     })
     .then((response) => 
       {console.log(response.data.userid)
-    const id= response.data.userid
+    const id= response.data.id
     // console.log(response.data.userid);
     // console.log(response.data.user);
     localStorage.setItem("token", response.data.token);
@@ -166,6 +167,17 @@ const handleSignUp = async (e) => {
         console.log(Password);
         // navigate("/InstructorHome")
         // navigate(`/MyCourses?userId=${id}`);
+    
+         if(type=="Instructor"){
+         // navigate(`/homeA?id=${id}`);
+           navigate(`/InstructorHome?id=${id}`);
+        }
+        else if(type=="Trainee"){
+          navigate(`/home?id=${id}`);
+        }
+        else if(type=="Coprate Trainee"){
+          navigate(`/homeCop?id=${id}`);
+        }
       })
     } catch (error) {
       setError(error.response.data);
@@ -292,6 +304,18 @@ const handleSignUp = async (e) => {
                 onChange={(e) => setPassword1(e.target.value)}
                 autoFocus
               />  
+              <Form.Label> User Type:</Form.Label>
+            <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue="Trainee"
+                name="radio-buttons-group"
+  >
+              <FormControlLabel value="Instructor" control={<Radio />} label="Instructor" onChange={(e) => setType("Instructor")}/>
+              <FormControlLabel value="Trainee" control={<Radio />} label="Trainee" onChange={(e) => setType("Trainee")}/>
+              <FormControlLabel value="Coprate Trainee" control={<Radio />} label="Coprate Trainee" onChange={(e) => setType("Coprate Trainee")}/>
+            </RadioGroup>
+              <br/>
+
               <Link to="/forgotPass" action onClick={handleClose2} >
                 Forget password?
                </Link>
@@ -306,6 +330,7 @@ const handleSignUp = async (e) => {
           <Button color="primary" onClick={handleLogin}>
               Login
           </Button>
+          
           
         </Modal.Footer>
       </Modal>
@@ -388,7 +413,12 @@ const handleSignUp = async (e) => {
           </DropdownToggle>
           <DropdownMenu>
             <DropdownItem header>Info</DropdownItem>
-            <DropdownItem>My Account</DropdownItem>
+            <DropdownItem>   
+              <button  onclick={()=> navigate(`/UserHome?id=${id}`)}> My account </button>
+            {/* <Link to="/UserHome?id=${id}">
+               My Account 
+              </Link> */}
+            </DropdownItem>
             <DropdownItem>Edit Profile</DropdownItem>
             <DropdownItem divider />
             <DropdownItem>My Balance
