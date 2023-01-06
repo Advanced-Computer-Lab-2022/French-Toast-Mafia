@@ -118,14 +118,16 @@ GET /User/viewMyInfo
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. user ID   |
  ```
-Get my courses
- ```
+```
+ Get my courses
+  ```
 GET /User/viewMyCourses
 ```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. user ID   |
  ```
+``` 
  Change password 
   ```
 PUT /User/changePassword
@@ -134,6 +136,7 @@ PUT /User/changePassword
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. user ID   |
  ```
+``` 
  User add course 
   ```
 POST /User/addCourse
@@ -143,6 +146,7 @@ POST /User/addCourse
 | `id` | `string` | **Required**. User ID   |
 | `courseId` | `string` | **Required**. Course ID   |
  ```
+```
  Send password change email 
   ```
 POST /User/sendPassChangeMail
@@ -151,6 +155,7 @@ POST /User/sendPassChangeMail
 | :---------- | :------- | :---------------------------------------- |
 | `Email` | `string` | **Required**. user Email   |
   ```
+``` 
  Remove course 
  ```
 PUT /User/removeCourse
@@ -164,8 +169,9 @@ PUT /User/removeCourse
 | :---------- | :------- | :---------------------------------------- |
 | `--` | `string` | **Required**. Course ID  |
   ```
+``` 
  User Refund 
- ```
+  ```
 POST /User/userRefund
 ```
 | Query        | Type     | Description                               |
@@ -173,8 +179,9 @@ POST /User/userRefund
 | `id` | `string` | **Required**. User ID   |
 | `courseId` | `string` | **Required**. Course ID   |
   ```
+``` 
  Update video progress 
- ```
+  ```
 POST /User/videoProgress
 ```
 | Query        | Type     | Description                               |
@@ -182,12 +189,13 @@ POST /User/videoProgress
 | `id` | `string` | **Required**. User ID   |
 | `courseId` | `string` | **Required**. Course ID   |
 | `subtitleId` | `string` | **Required**. Subtitle ID   |
-
-```
+ ```
+``` 
 | Body        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `Video` | `string` | **Required**. Video Link   |
   ```
+``` 
  Get My progress 
   ```
 GET /User/getUserProgress
@@ -196,8 +204,8 @@ GET /User/getUserProgress
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. User ID   |
 | `courseId` | `string` | **Required**. Course ID   |
-
-```
+ ```
+``` 
  Send Certificate 
   ```
 GET /User/sendCertificate
@@ -205,7 +213,7 @@ GET /User/sendCertificate
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. User ID   |
-
+ ```
 ```
  See my grades 
   ```
@@ -215,8 +223,8 @@ GET /User/getUserGrades
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. User ID   |
 | `examId` | `string` | **Required**. Exam ID   |
-
-```
+ ```
+``` 
  See my info 
   ```
 GET /User/getUser
@@ -224,7 +232,7 @@ GET /User/getUser
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. User ID   |
-
+ ```
 ```
  Remove unknown courses 
  ```
@@ -233,7 +241,7 @@ GET /User/removeUnknownCourses
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. User ID   |
-
+ ```
 ```
  Add promotion 
  ```
@@ -251,7 +259,7 @@ POST /Instructor/addPromotion
 | `Promotion` | `string` | **Required**. Course ID   |
 | `Start Promotion` | `string` | **Required**. Course ID   |
 | `End Promotion` | `string` | **Required**. Course ID   |
-
+ ```
 ```
  Instructor add Course 
  ```
@@ -271,10 +279,8 @@ POST /Instructor/addCourse
 | `LevelOfCourse` | `string` | **Required**. Level of course   |
 | `Cost` | `string` | **Required**. Cost   |
 | `Preview` | `string` | **Required**.Preview  |
-
-
+ ```
 ```
-
  Instructor delete course 
  ```
 POST /Instructor/deleteCourse
@@ -282,7 +288,7 @@ POST /Instructor/deleteCourse
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. Course ID   |
-
+ ```
 ```
  Instructor add exam 
   ```
@@ -302,7 +308,7 @@ POST /Instructor/addExam
 | `choice3` | `string` | **Required**. Choice3 |
 | `choice4` | `string` | **Required**. Choice4   |
 | `correct` | `string` | **Required**. Correct  |
-
+ ```
 ```
  Instructor edit his biography 
   ```
@@ -311,7 +317,7 @@ POST /Instructor/editInstrBiography
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. Instructor ID   |
-
+ ```
 ```
  Instructor edit his email 
   ```
@@ -320,7 +326,7 @@ POST /Instructor/editInstrEmail
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. Instructor ID   |
-
+ ```
 ```
  Instructor edit his data 
  ```
@@ -329,7 +335,7 @@ POST /Instructor/editInstructorData
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. Instructor ID   |
-
+ ```
 ```
  Instructor view his courses 
  ```
@@ -338,7 +344,7 @@ GET /Instructor/ViewMyCourses
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. Instructor ID   |
-
+ ```
 ```
  Instructor view his ratings
  ```
@@ -347,7 +353,7 @@ GET /Instructor/ViewMyRatings
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. Instructor ID   |
-
+ ```
 ```
  Instructor view his reviews 
   ```
@@ -356,7 +362,7 @@ GET /Instructor/ViewMyReview
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. Instructor ID   |
-
+ ```
 ```
  Instructor money in wallet 
   ```
@@ -365,7 +371,7 @@ GET /Instructor/calculateMoney
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `instrId` | `string` | **Required**. Instructor ID   |
-
+ ```
 ```
  Instructor remove exam 
   ```
@@ -374,7 +380,7 @@ GET /Instructor/removeExam
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. Instructor ID   |
-
+ ```
 ```
  Admin add Instructor 
   ```
@@ -384,7 +390,7 @@ POST /Admin/addInstructor
 | :---------- | :------- | :---------------------------------------- |
 | `InstrEmail` | `string` | **Required**. Instructor Email  |
 | `InstrPassword` | `string` | **Required**. Instructor Password   |
-
+ ```
 ```
  Admin add cooperate trainees
  ```
@@ -397,7 +403,7 @@ POST /Admin/createCorporateTrainess
 | `Password` | `string` | **Required**. Password  |
 | `Type` | `string` | **Required**. Type |
 | `Gender` | `string` | **Required**. Gender  |
-
+ ```
 ```
  Admin view course reports 
  ```
@@ -406,7 +412,8 @@ GET /Report/viewCourseReports
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. CourseId  |
-```
+ ```
+``` 
  Admin get reported courses 
  ```
 GET /Report/getReportedCourse
@@ -414,7 +421,8 @@ GET /Report/getReportedCourse
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. CourseId  |
-```
+ ```
+``` 
  Admin view reporter name 
   ```
 GET /Report/getReporterName
@@ -422,7 +430,7 @@ GET /Report/getReporterName
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. userId  |
-```
+ ```
  Admin delete report 
   ```
 GET /Report/delete
@@ -438,6 +446,7 @@ GET /Report/updateType
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. CourseId  |
+ ```
 ```
  Admin update status of request 
   ```
@@ -446,7 +455,8 @@ POST /Report/updateStatus
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. CourseId  |
-```
+ ```
+``` 
  Admin add a followup 
   ```
 POST /Report/addFollowup
@@ -454,13 +464,14 @@ POST /Report/addFollowup
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. report id  |
+ ```
 ```
 ```
 | Body        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. follow id  |
 | `comment` | `string` | **Required**. comment |
-```
+ ```
  Admin delete followup 
   ```
 GET /Report/deleteFollowup
@@ -480,7 +491,7 @@ GET /Report/deleteFollowup
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. course id  |
-```
+ ``` 
 ```
 | Body        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
@@ -488,6 +499,7 @@ GET /Report/deleteFollowup
 | `Description` | `string` | **Required**. Description |
 | `Duration` | `string` | **Required**. Duration  |
 ```
+``` 
  Instructor edit subtitle 
   ```
  POST/Subtitle/editSubtitle
@@ -495,135 +507,150 @@ GET /Report/deleteFollowup
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. Subtitle Id  |
-```
+ ```
+``` 
  Instructor add excercise for subtitle 
   ```
- POST/Subtitle/addExcercise
- ```
+POST/Subtitle/addExcercise
+```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. subtitle id  |
-```
+ ```
 ```
 | Body        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `Question` | `string` | **Required**. question  |
 | `Answer` | `string` | **Required**. answer |
-```
+ ```
+``` 
  Instructor remove all excercises
   ```
- POST/Subtitle/removeAllExcercises
- ```
+POST/Subtitle/removeAllExcercises
+```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. subtitle id  |
-```
+ ```
+``` 
  Instructor delete subtitles
   ```
- GET/Subtitle/deleteSubtitle
- ```
+GET/Subtitle/deleteSubtitle
+```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. subtitle id  |
-```
+ ```
+``` 
  Instructo rdelete subtitles from course 
   ```
- GET/Subtitle/deleteSubtitleFromCourse
- ```
+GET/Subtitle/deleteSubtitleFromCourse
+```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. subtitle id  |
-```
+ ```
+``` 
  Instructor remove all subtitles
   ```
- GET/Subtitle/removeAllSubtitles
- ```
+GET/Subtitle/removeAllSubtitles
+```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. subtitle id  |
-```
+ ```
+``` 
  User get course subtitles videos 
   ```
- GET/Subtitle/getCourseSubtitlesVideo
- ```
+GET/Subtitle/getCourseSubtitlesVideo
+```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. course id  |
-```
+ ```
+``` 
  User get course subtitles excercises  
   ```
- GET/Subtitle/getCourseSubtitlesExcercises
- ```
+GET/Subtitle/getCourseSubtitlesExcercises
+```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. course id  |
-```
+ ```
+``` 
  Instructor add video description for subtitles 
   ```
- POST/Subtitle/addVideoDescription
- ```
+POST/Subtitle/addVideoDescription
+```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. course id  |
-```
+ ```
 ```
 | Body        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `---` | `string` | **Required**. Description  |
-```
+ ```
+``` 
  User get excercises Questions 
   ```
- GET/Subtitle/getExcercisesQuestions
- ```
+GET/Subtitle/getExcercisesQuestions
+```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. course id  |
-```
+ ```
+``` 
  User get excercises answers
   ```
- GET/Subtitle/getExcercisesAnswers
+GET/Subtitle/getExcercisesAnswers
 ```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. course id  |
-```
+ ```
+``` 
  User add notes
   ```
- POST/Subtitle/addNotes
- ```
+POST/Subtitle/addNotes
+```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. subtitle id  |
-```
+ ```
 ```
 | Body        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `---` | `string` | **Required**. Notes |
-```
+ ```
+``` 
  User view course subtitles
   ```
- GET/Subtitle/viewAllCourseSubtitles
- ```
+GET/Subtitle/viewAllCourseSubtitles
+```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. courseId |
-```
+ ```
+``` 
 User view course subtitles videos 
   ```
- GET/Subtitle/viewSubtitleVideo
- ```
+GET/Subtitle/viewSubtitleVideo
+```
  | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. subtitle id |
-```
+ ```
+``` 
 User view course subtitles notes 
   ```
- GET/Subtitle/viewSubtitleNotes
- ```
+GET/Subtitle/viewSubtitleNotes
+```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. subtitle id |
-```
+ ```
+``` 
 Instructor clear all excercises
   ```
  GET/Subtitle/clearAllExercises
@@ -640,15 +667,16 @@ Instructor clear all excercises
 | Body        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `video` | `string` | **Required**. video |
-```
+ ```
+``` 
  Instructor add course exam
   ```
- POST/Subtitle/addCourseExam
- ```
+POST/Subtitle/addCourseExam
+```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. subtitle id |
-```
+ ```
 
  
  
