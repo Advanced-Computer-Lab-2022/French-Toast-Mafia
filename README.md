@@ -10,6 +10,10 @@ This project aim was to help us: <br/>
 • For the user, he'll only be able to report a problem or rate the instructor, but in the future we intend to build a chat system between the users and their instructors
 ## Code Style :sunglasses:
 Our code style is a standard code style.
+## Project Description
+### Theme
+! Our project is an online learning platform that helps individual and cooperate trainees to enroll in a variety of courses and check/track their progress in this course such that there aim is to earn a certificate of completion of there courses. Our platform provide a wide range of courses that are taught by experienced and well rated instructors who have created lectures and challenging exams and excersises to encourage students more and help them master the material provided. 
+! The platform also help instructors to manage their courses and admins to track the requests they receive upon any report or granting access.
 ## Screenshots :camera_flash:
 ### A) As a guest, you can sign up
 ![Sign Up](https://user-images.githubusercontent.com/58050300/210186469-e4f80248-210f-47e6-94b7-d594378f0e1a.png)
