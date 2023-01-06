@@ -275,6 +275,7 @@ GET /Report/deleteFollowup
  
  
  
+ 
 For testing our website:
 - try searching for a course and filter your search results
 - try viewing a course and watch its preview
