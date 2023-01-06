@@ -93,6 +93,92 @@ nodemon app.js
    
 • [Nodemailer](https://nodemailer.com/about/) for sending emails to clients :mailbox:
 ## Tests :microscope:
+ ### Authentication routes
+  create user
+ ```
+POST /Signup//
+```
+ Login 
+  ```
+POST /Login//
+```
+ Filter course rating 
+  ```
+GET /User/viewcoursetitlehoursrating
+```
+ Filter course price 
+  ```
+GET /User/viewcourseprice
+```
+ Select country 
+```
+GET /User/selectCountry
+```
+Get my information
+```
+GET /User/viewMyInfo
+```
+ View my courses
+ ```
+GET /User/ViewMyCourses
+```
+ Change password 
+  ```
+PUT /User/changePassword
+```
+ User add course 
+ ```
+POST /User/addCourse
+```
+ Send password change email 
+  ```
+POST /User/sendPassChangeMail
+```
+ Remove course 
+ ```
+PUT /User/removeCourse
+```
+ User Refund 
+ ```
+POST /User/userRefund
+```
+ See/Check video progress 
+ ```
+POST /User/videoProgress
+```
+ Get My progress 
+  ```
+GET /User/getUserProgress
+```
+ User progress decremented 
+  ```
+POST /User/userProgressDecrement
+```
+ Send Certificate 
+  ```
+GET /User/sendCertificate
+```
+ See my grades 
+  ```
+GET /User/getUserGrades
+```
+ Initialize progress 
+  ```
+GET /User/intializeProgress
+```
+ See my info 
+  ```
+GET /User/getUser
+```
+ Remove unknown courses 
+ ```
+GET /User/removeUnknownCourses
+```
+ 
+ 
+ 
+ 
+ 
 For testing our website:
 - try searching for a course and filter your search results
 - try viewing a course and watch its preview
