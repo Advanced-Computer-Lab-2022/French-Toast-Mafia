@@ -130,11 +130,10 @@ GET /User/viewMyCourses
   ```
 PUT /User/changePassword
 ```
-```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. user ID   |
-```
+ ```
  User add course 
   ```
 POST /User/addCourse
