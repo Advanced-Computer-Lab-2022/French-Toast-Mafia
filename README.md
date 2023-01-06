@@ -680,9 +680,6 @@ POST/Subtitle/addCourseExam
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. subtitle id |
- ```
-
- 
  
 For testing our website:
 - try searching for a course and filter your search results
