@@ -122,6 +122,7 @@ Get my courses
 ```
 GET /User/viewMyCourses
 ```
+ ```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. user ID   |
@@ -138,6 +139,7 @@ PUT /User/changePassword
  ```
 POST /User/addCourse
 ```
+ ```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. User ID   |
