@@ -270,10 +270,91 @@ POST /Report/addFollowup
   ```
 GET /Report/deleteFollowup
 ```
- 
- 
- 
- 
+ Instructor get all subtitles 
+  ```
+ GET/Subtitle/getAllSubtitles
+ ```
+ Instructor add subtitles 
+  ```
+ POST/Subtitle/addSubtitle
+ ```
+ Instructor edit subtitle 
+  ```
+ POST/Subtitle/editSubtitle
+ ```
+ Instructor add excercise for subtitle 
+  ```
+ POST/Subtitle/addExcercise
+ ```
+ Instructor delete excercise for subtitle 
+  ```
+ POST/Subtitle/deleteExcercise
+ ```
+ Instructor remove all excercises
+  ```
+ POST/Subtitle/removeAllExcercises
+ ```
+ Instructor delete subtitles
+  ```
+ GET/Subtitle/deleteSubtitle
+ ```
+ Instructo rdelete subtitles from course 
+  ```
+ GET/Subtitle/deleteSubtitleFromCourse
+ ```
+ Instructor remove all subtitles
+  ```
+ GET/Subtitle/removeAllSubtitles
+ ```
+ User get course subtitles videos 
+  ```
+ GET/Subtitle/getCourseSubtitlesVideo
+ ```
+ User get course subtitles excercises  
+  ```
+ GET/Subtitle/getCourseSubtitlesExcercises
+ ```
+ Instructor add video description for subtitles 
+  ```
+ POST/Subtitle/addVideoDescription
+ ```
+ User get excercises Questions 
+  ```
+ GET/Subtitle/getExcercisesQuestions
+ ```
+ User get excercises answers
+  ```
+ GET/Subtitle/getExcercisesAnswers
+ ```
+ User add notes
+  ```
+ POST/Subtitle/addNotes
+ ```
+ User view course subtitles
+  ```
+ GET/Subtitle/viewAllCourseSubtitles
+ ```
+User view course subtitles videos 
+  ```
+ GET/Subtitle/viewSubtitleVideo
+ ```
+User view course subtitles notes 
+  ```
+ GET/Subtitle/viewSubtitleNotes
+ ```
+Instructor clear all excercises
+  ```
+ GET/Subtitle/clearAllExercises
+ ``` 
+ Instructor add video
+  ```
+ POST/Subtitle/addVideo
+ ```
+ Instructor add course exam
+  ```
+ POST/Subtitle/addCourseExam
+ ```
+
  
  
 For testing our website:
