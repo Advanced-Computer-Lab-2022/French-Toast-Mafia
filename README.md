@@ -39,7 +39,7 @@ Express(.js) — Node.js web framework. <br/>
 React(.js) — a client-side JavaScript framework. <br/>
 Node(.js) — the premier JavaScript web server. <br/>
 [Git](https://git-scm.com/) <br/>
-[Visual Studio Code] (https://code.visualstudio.com/) <br/>
+[VSc] (https://code.visualstudio.com/) <br/>
 [Joi](https://joi.dev/) <br/>
 [JWT](https://jwt.io/) <br/>
 [Postman](https://www.postman.com/) <br/>
