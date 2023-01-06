@@ -174,8 +174,66 @@ GET /User/getUser
  ```
 GET /User/removeUnknownCourses
 ```
- 
- 
+ Add promotion 
+ ```
+POST /Instructor/addPromotion
+```
+ Instructor add Course 
+ ```
+POST /Instructor/addCourse
+```
+ Instructor delete course 
+ ```
+POST /Instructor/deleteCourse
+```
+ Instructor add his country
+ ```
+POST /Instructor/selectCountryInstr
+```
+ Instructor add exam 
+  ```
+POST /Instructor/addExam
+```
+ Instructor edit his biography 
+  ```
+POST /Instructor/editInstrBiography
+```
+ Instructor edit his email 
+  ```
+POST /Instructor/editInstrEmail
+```
+ Instructor edit his data 
+ ```
+POST /Instructor/editInstructorData
+```
+ Instructor view his courses 
+ ```
+GET /Instructor/ViewMyCourses
+```
+ Instructor view his ratings
+ ```
+GET /Instructor/ViewMyRatings
+```
+ Instructor view his reviews 
+  ```
+GET /Instructor/ViewMyReview
+```
+ Instructor money in wallet 
+  ```
+GET /Instructor/calculateMoney
+```
+ Instructor remove exam 
+  ```
+GET /Instructor/removeExam
+```
+ Admin add Instructor 
+  ```
+POST /Admin/addInstructor
+```
+ Admin add cooperate trainees
+ ```
+POST /Admin/createCorporateTrainess
+```
  
  
  
