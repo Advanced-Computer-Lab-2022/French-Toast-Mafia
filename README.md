@@ -292,4 +292,4 @@ https://mui.com/ <br/>
 https://react-bootstrap.github.io/getting-started/introduction/ <br/>
 https://www.npmjs.com/ <br/>
 ## License :black_nib:
-[MIT License](LICENSE.md)
+[Apache 2.0 License](LICENSE.md)
