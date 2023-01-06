@@ -117,15 +117,15 @@ GET /User/viewMyInfo
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. user ID   |
-```
+ ```
 Get my courses
-```
+ ```
 GET /User/viewMyCourses
 ```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. user ID   |
-```
+ ```
  Change password 
   ```
 PUT /User/changePassword
@@ -136,15 +136,14 @@ PUT /User/changePassword
 | `id` | `string` | **Required**. user ID   |
 ```
  User add course 
- ```
+  ```
 POST /User/addCourse
-```
 ```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. User ID   |
 | `courseId` | `string` | **Required**. Course ID   |
-  ```
+ ```
  Send password change email 
   ```
 POST /User/sendPassChangeMail
@@ -161,6 +160,7 @@ PUT /User/removeCourse
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. user ID   |
   ```
+``` 
 | Body        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `--` | `string` | **Required**. Course ID  |
