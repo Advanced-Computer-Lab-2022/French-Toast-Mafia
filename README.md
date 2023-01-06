@@ -8,6 +8,8 @@ This project aim was to help us: <br/>
 • Learn to research and master the use of the MERN Stack. <br/>
 ## Build Status :hammer_and_wrench:
 • For the user, he'll only be able to report a problem or rate the instructor, but in the future we intend to build a chat system between the users and their instructors
+•Users still cannoy refund the course fees if less than 50% of the course is completed & Admin still cannot accept the refund.
+•There's a problem in logging in instructors.
 ## Code Style :sunglasses:
 Our code style is a standard code style.
 ## Project Description
