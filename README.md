@@ -43,7 +43,7 @@ We used [MERN Stack](https://www.mongodb.com/mern-stack) to implement this proje
  • [Joi](https://joi.dev/) <br/>
  • [JWT](https://jwt.io/) <br/>
  • [Postman](https://www.postman.com/) <br/>
- • [Stipe](https://stripe.com) <br/>
+ • [Stripe](https://stripe.com) <br/>
 
 
 ## Features :star2:
