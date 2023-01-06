@@ -119,7 +119,7 @@ GET /User/viewMyInfo
 | `id` | `string` | **Required**. user ID   |
 ```
 Get my courses
-  ```
+```
 GET /User/viewMyCourses
 ```
 | Query        | Type     | Description                               |
