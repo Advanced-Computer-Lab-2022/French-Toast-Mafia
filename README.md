@@ -38,6 +38,7 @@ MongoDB — document database. <br/>
 Express(.js) — Node.js web framework. <br/>
 React(.js) — a client-side JavaScript framework. <br/>
 Node(.js) — the premier JavaScript web server. <br/>
+[joi](https://joi.dev/). <br/>
 
 ## Features :star2:
 ### For Users:<br/>
