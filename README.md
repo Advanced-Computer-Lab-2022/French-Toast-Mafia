@@ -43,7 +43,7 @@ We used [MERN Stack](https://www.mongodb.com/mern-stack) to implement this proje
  • [Joi](https://joi.dev/) <br/>
  • [JWT](https://jwt.io/) <br/>
  • [Postman](https://www.postman.com/) <br/>
- • [Stripe](https://stripe.com) <br/>
+ • [Stipe](https://stripe.com) <br/>
 
 
 ## Features :star2:
@@ -439,6 +439,7 @@ GET /Report/delete
   ```
 GET /Report/getReport
 ```
+``` 
  Admin update type of request 
   ```
 GET /Report/updateType
@@ -466,12 +467,12 @@ POST /Report/addFollowup
 | `id` | `string` | **Required**. report id  |
  ```
 ```
-```
 | Body        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. follow id  |
 | `comment` | `string` | **Required**. comment |
  ```
+``` 
  Admin delete followup 
   ```
 GET /Report/deleteFollowup
@@ -479,15 +480,16 @@ GET /Report/deleteFollowup
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. report id  |
-```
+ ```
+``` 
  Instructor get all subtitles 
   ```
- GET/Subtitle/getAllSubtitles
- ```
+GET/Subtitle/getAllSubtitles
+``` 
  Instructor add subtitles 
   ```
- POST/Subtitle/addSubtitle
- ```
+POST/Subtitle/addSubtitle
+```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. course id  |
@@ -498,12 +500,12 @@ GET /Report/deleteFollowup
 | `Title` | `string` | **Required**. Title  |
 | `Description` | `string` | **Required**. Description |
 | `Duration` | `string` | **Required**. Duration  |
-```
+ ```
 ``` 
  Instructor edit subtitle 
   ```
- POST/Subtitle/editSubtitle
- ```
+POST/Subtitle/editSubtitle
+```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. Subtitle Id  |
