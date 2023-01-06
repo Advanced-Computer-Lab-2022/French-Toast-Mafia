@@ -234,6 +234,44 @@ POST /Admin/addInstructor
  ```
 POST /Admin/createCorporateTrainess
 ```
+ Admin view course reports 
+ ```
+GET /Report/viewCourseReports
+```
+ Admin get reported courses 
+ ```
+GET /Report/getReportedCourse
+```
+ Admin view reporter name 
+  ```
+GET /Report/getReporterName
+```
+ Admin delete report 
+  ```
+GET /Report/delete
+```
+ Admin get all reports 
+  ```
+GET /Report/getReport
+```
+ Admin update type of request 
+  ```
+GET /Report/updateType
+```
+ Admin update status of request 
+  ```
+POST /Report/updateStatus
+```
+ Admin add a followup 
+  ```
+POST /Report/addFollowup
+```
+ Admin delete followup 
+  ```
+GET /Report/deleteFollowup
+```
+ 
+ 
  
  
  
