@@ -33,16 +33,16 @@ Our project was developed using the Agile Methodology, such that it was divided 
 ## Tech/Framework used :bulb:
 We used [MERN Stack](https://www.mongodb.com/mern-stack) to implement this project. <br/>
 
-<strong>MERN<strong> stands for MongoDB, Express, React, Node, after the four key technologies that make up the stack. <br/>
-MongoDB — document database. <br/>
-Express(.js) — Node.js web framework. <br/>
-React(.js) — a client-side JavaScript framework. <br/>
-Node(.js) — the premier JavaScript web server. <br/>
-[Git](https://git-scm.com/) <br/>
-[VSc] (https://code.visualstudio.com/) <br/>
-[Joi](https://joi.dev/) <br/>
-[JWT](https://jwt.io/) <br/>
-[Postman](https://www.postman.com/) <br/>
+ •<strong>MERN<strong> stands for MongoDB, Express, React, Node, after the four key technologies that make up the stack. <br/>
+ •[MongoDB](https://www.mongodb.com) <br/>
+ •[Express.js](https://expressjs.com) <br/>
+ •[React.js](https://reactjs.org) <br/>
+ •[Node.js](https://nodejs.org/en/) <br/>
+ •[Git](https://git-scm.com/) <br/>
+ •[Visual studio code](https://code.visualstudio.com/) <br/>
+ •[Joi](https://joi.dev/) <br/>
+ •[JWT](https://jwt.io/) <br/>
+ •[Postman](https://www.postman.com/) <br/>
 
 
 ## Features :star2:
