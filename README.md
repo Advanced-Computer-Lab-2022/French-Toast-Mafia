@@ -118,11 +118,10 @@ GET /User/viewMyInfo
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. user ID   |
 ```
- Get my courses
-  ```
+Get my courses
+```
 GET /User/viewMyCourses
 ```
- ```
 | Query        | Type     | Description                               |
 | :---------- | :------- | :---------------------------------------- |
 | `id` | `string` | **Required**. user ID   |
